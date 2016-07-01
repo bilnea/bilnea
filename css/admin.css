@@ -1,0 +1,497 @@
+/*
+
+Hoja de estilos de bilnea Theme
+desarrollada por Samuel E. Cerezo
+para bilnea (bilnea.com)
+
+® 2016 Samuel E. Cerezo
+
+*/
+
+/* Tipografías */
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,900);
+
+
+/* Estilos generales */
+
+#bilset {
+	margin-right: 15px;
+	border: 1px solid #bdbdbd;
+	background-color: white;
+	display: table;
+	width: 739px;
+}
+
+#bilset .lateral {
+	width: 200px;
+	display: table-cell;
+	height: 100%;
+	border-right: 1px solid #BDBDBD;
+	background-color: #e1e1e1;
+}
+
+#bilset .lateral > h3:last-child {
+	margin-bottom: -1px;
+}
+
+#bilset input[type=radio] {
+	border: 1px solid #e1e1e1;
+	background-color: white;
+	opacity: 1;
+}
+
+#bilnea h3 {
+	font-weight: normal;
+	font-size: 14px;
+	margin: 0;
+	background-color: #e1e1e1;
+	padding: 10px 15px;
+	border-bottom: 1px solid #bdbdbd;
+	border-right: 1px solid #bdbdbd;
+	color: #888;
+	cursor: pointer;
+	margin-right: -1px;
+}
+
+#bilnea h4 {
+	margin-top: 0;
+	background-color: #289DCC;
+	margin-bottom: 10px;
+	border-radius: 2px;
+	padding: 0 8px;
+	color: white;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+#bilnea .lateral h3.activo {
+	background-color: white;
+	border-right: 1px solid white;
+	font-weight: bold;
+	color: #222;
+}
+
+#bilset .central {
+	display: table-cell;
+	vertical-align: top;
+	padding: 10px;
+}
+
+#bilset .central > div {
+	line-height: 28px;
+	display: none;
+}
+
+#bilset .central > .activo {
+	display: block;
+}
+
+.child {
+	position: relative;
+	z-index: 0;
+}
+
+.child:after {
+	content: '';
+	position: absolute;
+	width: 2px;
+	height: calc(100% - 5px);
+	top: -5px;
+	left: 7px;
+	border-left: 1px dotted rgba(0, 0, 0, 0.1);
+	z-index: -1;
+}
+
+/* Estilos de los elementos interactivos */
+
+#bilset input.peq {
+	width: 100px;
+	border-radius: 5px;
+	font-size: 13px;
+	margin: 3px 0 4px 0;
+}
+
+#bilset input.med {
+	width: 200px;
+	border-radius: 5px;
+	font-size: 13px;
+	margin: 3px 0 4px 0;
+}
+
+#bilset input.gran {
+	width: 300px;
+	border-radius: 5px;
+	font-size: 13px;
+	margin: 3px 0 4px 0;
+}
+
+#bilset select.gran {
+	font-size: 13px;
+	height: 26px;
+	width: 300px;
+	margin: 3px 0 4px 0;
+}
+
+#bilset input[type="checkbox"] {
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	margin: 3px 4px 4px 0;
+}
+
+/* Pestaña Opciones Generales */
+
+#bilset .aurl {
+	background-color: transparent;
+	font-size: 13px;
+	border: 0px;
+	border-bottom: 1px solid #888;
+	-webkit-box-shadow: none;
+	   -moz-box-shadow: none;
+	    -ms-box-shadow: none;
+	     -o-box-shadow: none;
+	        box-shadow: none;
+	outline: none;
+	padding: 0;
+	margin: 0;
+	padding-left: 2px;
+	-webkit-transform: translate(-5px, 2px);
+	   -moz-transform: translate(-5px, 2px);
+	    -ms-transform: translate(-5px, 2px);
+	     -o-transform: translate(-5px, 2px);
+	        transform: translate(-5px, 2px);
+}
+
+#bilset .notice {
+	display: block;
+	border: 1px solid #eee;
+	border-radius: 3px;
+	background-color: #fafafa;
+	line-height: 20px;
+	padding: 6px 10px;
+	margin: 12px 0 0 0;
+}
+
+/* Pestaña Estilos Tipográficos */
+
+.text-container {
+	display: inline-block;
+	width: 100%;
+	margin-left: 10px;
+	vertical-align: bottom;
+	position: relative;
+	margin: 0;
+}
+
+.text-container input[type="text"] {
+	display: block;
+}
+
+.text-container select {
+	width: 100% !important;
+}
+
+.text-container > strong {
+	display: block;
+	line-height: 20px;
+}
+
+.font_styles > div {
+	display: inline-block;
+	text-align: center;
+	width: 21px;
+	font-size: 11px;
+}
+
+.font_styles > div > div {
+	margin-top: -4px;
+}
+
+.font_styles > div:first-child {
+	width: 60px;
+	text-align: left;
+	font-size: 13px;
+}
+
+.font_styles > div input {
+	margin: 0;
+}
+
+input:disabled {
+	background-color: #fafafa !important;
+	opacity: 0.4 !important;
+	cursor: default !important;
+}
+
+.notice.font {
+	display: inline-block !important;
+	width: auto !important;
+	padding: 0 12px !important;
+	vertical-align: top;
+	margin: 7px 1px 0 8px !important;
+}
+
+/* Pestaña Adaptación Responsive */
+
+#tab4 {
+	position: relative;
+}
+
+.icon.big {
+	width: 158px;
+	border: 1px solid #e1e1e1;
+	margin-right: 15px;
+	margin-top: 5px;
+}
+
+/* Pestaña de logotipos */
+
+#tab5 > div {
+	position: relative;
+}
+
+div#logo_principal + div,
+div#logo_inicio + div  {
+	font-size: 16px;
+	display: inline-block;
+	width: 20px;
+	text-align: center;
+	line-height: 20px;
+	display: none;
+	position: absolute;
+	top: 4px;
+	right: 4px;
+}
+
+div#logo_principal + div i,
+div#logo_inicio + div i {
+	cursor: pointer;
+}
+
+#logo_principal,
+#logo_inicio {
+	height: 150px;
+	border: 1px solid #e1e1e1;
+	margin-bottom: 6px;
+	cursor: pointer;
+	display: block;
+	vertical-align: top;
+	width: auto;
+	border-radius: 5px;
+	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	   -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	    -ms-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	     -o-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	        box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: #fdfdfd;
+}
+
+.subir-imagen {
+	padding: 0 5px !important;
+	border-radius: 5px !important;
+	height: 26px !important;
+	line-height: 20px !important;
+	position: absolute;
+    right: 0px;
+	-webkit-box-shadow: none !important;
+	   -moz-box-shadow: none !important;
+	    -ms-box-shadow: none !important;
+	     -o-box-shadow: none !important;
+	        box-shadow: none !important;
+    bottom: 4px;
+}
+
+.iconico {
+	width: 64px;
+	height: 64px;
+	display: inline-block;
+	border: 1px solid #e1e1e1;
+	border-radius: 5px;
+	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	   -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	    -ms-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	     -o-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	        box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	background-color: #fdfdfd;
+	cursor: pointer;
+	background-size: 100% 100%;
+	margin-right: 4px;
+	margin-bottom: -8px;
+}
+
+.iconico + div {
+	width: calc(100% - 74px);
+	display: inline-block;
+	vertical-align: bottom;
+}
+
+.iconico + div input {
+	margin-bottom: 2px !important;
+}
+
+.iconico + div .subir-imagen {
+	bottom: 3px;
+}
+
+#borra_logo1, #borra_logo2,
+#borra_logo3, #borra_logo4,
+#borra_logo5, #borra_logo6,
+#borra_logo7, #borra_logo_login {
+	display: none;
+	margin-left: 2px;
+	margin-right: 4px;
+	cursor: pointer;
+}
+
+/* Pestaña de cabecera */
+
+
+/* Shortcodes */
+
+#bilset code {
+	font-size: 11px;
+}
+
+.shortc p {
+	margin: 0;
+}
+
+.shortc div > em:first-child {
+	width: 50px;
+	display: inline-block;
+}
+
+.shortc div {
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	display: block;
+	padding: 0 6px 3px 6px;
+	border-radius: 2px;
+	margin: 5px 0;
+}
+
+.shortc div * {
+	font-size: 11px;
+}
+
+/* Página de acceso */
+
+#logo_url_login {
+	margin: 0 !important;
+}
+
+#subir_logo_inicio {
+	position: absolute;
+	right: -2px;
+}
+
+/* Colorama */
+
+#back_color, body > .sp-container {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 0px;
+	background-color: #fafafa !important;
+	border: 1px solid #ddd !important;
+	border-radius: 5px !important;
+	padding: 10px !important;
+	width: 142px;
+	padding-bottom: 0 !important;
+	min-height: 118px !important;
+}
+
+#back_color {
+	padding-top: 4px !important;
+}
+
+.sp-picker-container {
+	padding-bottom: 0 !important;
+	margin: 0 !important;
+	width: 142px !important;
+}
+
+body > .sp-container {
+	margin: 20px 0 20px -40px !important;
+}
+
+body > .sp-container .sp-picker-container {
+	width: 120px !important;
+}
+
+body > .sp-container .sp-clear {
+	display: none;
+}
+
+.sp-input-container {
+	margin-bottom: 0 !important;
+}
+
+.color-wrapper {
+	display: block;
+	margin: 0 0 4px 0;
+	padding: 0 0 6px 0;
+	border-bottom: 1px solid #ddd;
+}
+
+.color-wrapper > div {
+	width: 160px;
+	float: right;
+	position: relative;
+}
+
+.color-wrapper .sp-replacer {
+	border-radius: 0 5px 5px 0;
+	position: absolute;
+	top: 1px;
+	right: 0;
+}
+
+.colora.text + .sp-replacer {
+	position: absolute;
+	bottom: 0;
+	right: 0px;
+	border-radius: 0 5px 5px 0;
+}
+
+.sp-input {
+	line-height: 16px;
+}
+
+.color-wrapper.last {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.sp-dd {
+	display: none;
+}
+
+.sp-replacer {
+	background-color: #FAFAFA !important;
+	border: 1px solid #ddd !important;
+	border-radius: 5px;
+	width: 26px;
+	height: 26px;
+	padding: 0 !important;
+}
+
+.sp-preview {
+	border: 1px solid #ddd !important;
+    border-radius: 2px;
+    width: 16px !important;
+    height: 16px !important;
+    margin: 4px;
+    background-size: 8px;
+    background-position: center;
+}
+
+.sp-alpha-handle {
+	opacity: 0.8 !important;
+	border: 2px solid rgb(102, 102, 102) !important;
+	width: 3px !important;
+	border-radius: 2px;
+	background-color: rgba(255, 255, 255, 0.6) !important;
+}

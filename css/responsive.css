@@ -1,0 +1,32 @@
+/* Adaptación responsive */
+
+#mobile-header {
+	display: block;
+	position: relative;
+	width: 100%;
+}
+
+header#header{
+	display: none;
+}
+
+#main_menu > ul > li.current_page_item:after {
+	display: none;
+}
+
+body.menu-fixed {
+	height: 100vh;
+	overflow: hidden;
+}
+
+.sidebar-right {
+	padding-right: 0;
+}
+
+.sidebar-right {
+	padding-left: 0;
+}
+
+aside#sidebar {
+	width: 100%;
+}

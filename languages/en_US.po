@@ -1,0 +1,140 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: bilnea Wordpress theme (1.0)\n"
+"POT-Creation-Date: 2015-12-12 16:40+0100\n"
+"PO-Revision-Date: 2015-12-12 16:44+0100\n"
+"Last-Translator: \n"
+"Language-Team: bilnea <samuelcerezo@bilnea.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_n_noop:1,2;_nx:1,2;_nx_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: footer.php:61
+msgid "Aviso legal"
+msgstr "Legal notice"
+
+#: footer.php:64
+msgid "Política de Privacidad"
+msgstr "Privacy policy"
+
+#: footer.php:67
+msgid "Política de Cookies"
+msgstr "Cookies policy"
+
+#: footer.php:73
+msgid "Desarrollo web por"
+msgstr "Web development by"
+
+#: footer.php:73
+msgid "bilnea. Agencia de Comunicación & Marketing Digital"
+msgstr "bilnea. Communication & Digital Marketing Agency"
+
+#: functions.php:152
+msgid "Menú principal"
+msgstr "Main menu"
+
+#: functions.php:158
+msgid "Barra inferior"
+msgstr "Bottom bar"
+
+#: functions.php:164
+msgid "Barra superior"
+msgstr "Top bar"
+
+#: functions.php:170
+msgid "Menú widget"
+msgstr "Widget menu"
+
+#: inc/shortcodes.php:175
+msgid "Correo electrónico"
+msgstr "Email address"
+
+#: inc/shortcodes.php:178
+msgid "Mensaje"
+msgstr "Message"
+
+#: inc/shortcodes.php:182
+msgid "Provincia"
+msgstr "State"
+
+#: inc/shortcodes.php:189
+msgid "Política de privacidad"
+msgstr "Privacy policy"
+
+#: inc/shortcodes.php:192
+msgid "la"
+msgstr "the"
+
+#: inc/shortcodes.php:195
+msgid "el"
+msgstr "the"
+
+#: inc/shortcodes.php:199
+msgid "He leído, entiendo y acepto "
+msgstr "I have read, understood and accepted the terms of"
+
+#: inc/shortcodes.php:211
+msgid "Completa los siguientes campos con su valor."
+msgstr "Complete the next fields with their values."
+
+#: inc/shortcodes.php:290
+msgid ""
+"Mensaje enviado correctamente. Atenderemos su solicitud a la mayor brevedad. "
+"Se ha enviado una copia del mismo a su dirección de correo electrónico"
+msgstr ""
+
+#: inc/shortcodes.php:309
+msgid "Enviar"
+msgstr "Send"
+
+#: inc/shortcodes.php:374
+msgid "Publicado por "
+msgstr "Published by"
+
+#: inc/shortcodes.php:387 inc/shortcodes.php:601
+msgid "Leer más"
+msgstr "Read more"
+
+#: inc/shortcodes.php:424
+msgid "Inicio"
+msgstr "Home"
+
+#: inc/shortcodes.php:529
+msgid "d/m/Y"
+msgstr "Y/m/d"
+
+#: index.php:32
+msgid "Comment"
+msgstr ""
+
+#: index.php:32
+msgid "1 Comment"
+msgstr ""
+
+#: index.php:32
+msgid "% Comments"
+msgstr ""
+
+#: search.php:35
+#, php-format
+msgid "%u resultado para"
+msgid_plural "%u resultados para"
+msgstr[0] "%u result found for"
+msgstr[1] "%u results found for"
+
+#: search.php:37
+msgid "Ningún resultado para"
+msgstr "No results were found for"
+
+#: search.php:107
+msgid ""
+"Pruebe a redefinir su búsqueda utilizando otro término o visite la página "
+"principal."
+msgstr "Try to refine your search using another term or visit the homepage."
