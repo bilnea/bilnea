@@ -704,6 +704,7 @@ function b_f_blog($atts) {
 		'pagination' => 'true',
 		'class'	=> null,
 		'category' => null,
+		'type' => 'post'
 	), $atts);
 	$pag = (get_query_var('paged')) ? get_query_var('paged') : 1;
 	if (esc_attr($a['number']) != null) {
@@ -712,7 +713,7 @@ function b_f_blog($atts) {
 		$blog_number = b_f_option('b_opt_blog-number');
 	}
 	$o = array(
-		'post_type' => 'post',
+		'post_type' => esc_attr($a['type']),
 		'posts_per_page' => $blog_number,
 		'paged' => $pag,
 		'orderby' => b_f_option('b_opt_blog-order'),
@@ -1441,12 +1442,16 @@ function b_f_accordion_frame($atts, $content = null) {
 		'title' 		=> null,
 		'element' 		=> 'h4',
 		'class' 		=> null,
+		'id' => null,
 	), $atts, 'b_a_frame');
-	$c = '';
+	$c = ''; $i = '';
 	if (esc_attr($a['class']) != null) {
 		$c .= ' '.esc_attr($a['class']);
 	}
-	$out = '<div class="accordion_frame'.$c.'"><'.b_f_sanitize(esc_attr($a['element'])).' class="accordion_title">'.esc_attr($a['title']).'</'.b_f_sanitize(esc_attr($a['element'])).'><div class="accordion_content">'.do_shortcode($content).'</div></div>';
+	if (esc_attr($a['id']) != null) {
+		$i .= ' id="'.esc_attr($a['id']).'"';
+	}
+	$out = '<div'.$i.' class="accordion_frame'.$c.'"><'.b_f_sanitize(esc_attr($a['element'])).' class="accordion_title">'.esc_attr($a['title']).'</'.b_f_sanitize(esc_attr($a['element'])).'><div class="accordion_content">'.do_shortcode($content).'</div></div>';
 	return $out;
 
 }
