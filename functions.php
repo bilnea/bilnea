@@ -302,6 +302,27 @@ if (b_f_option('b_opt_header-links') == 1) {
 }
 
 
+// Boletín de noticias
+
+if (b_f_option('b_opt_subscribers') == 1) {
+	global $wpdb;
+	$table = $wpdb->prefix.'subscribers';
+	if ($wpdb->get_var('SHOW TABLES LIKE '.$table) != $table) {
+		$sql = 'CREATE TABLE '.$table.'(
+			id INTEGER NOT NULL,
+			name VARCHAR(200),
+			last_name VARCHAR(200),
+			email VARCHAR(200),
+			active BOOLEAN,
+			date DATE,
+			hash VARCHAR(200),
+			PRIMARY KEY  (id))';
+		require_once(ABSPATH.'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
+	}
+}
+
+
 // Menús de navegación
 
 register_nav_menus(array('menu_main' 	=> 'Menú principal'));
@@ -432,7 +453,9 @@ function b_f_load()  {
 	wp_register_script('bilnea', get_template_directory_uri().'/js/bilnea.js', array('jquery'), $version, true);
 	$var_array = array(
 		'post_id' => $post->ID,
-		'main_theme_uri' => get_template_directory_uri()
+		'main_theme_uri' => get_template_directory_uri(),
+		'child_theme_uri' => get_stylesheet_directory_uri(),
+		'main_uri' => home_url()
 	);
 	wp_localize_script('bilnea', 'bilnea', $var_array);
 	wp_enqueue_script('bilnea');
@@ -465,6 +488,10 @@ function b_f_load()  {
 	wp_register_script('jquery-ui', get_template_directory_uri().'/js/jquery-ui.js', array('jquery'), $version, true);
 	wp_register_style('jquery-ui-css', get_template_directory_uri().'/css/jquery-ui.css', array());
 	wp_register_style('jquery-ui-css-theme', get_template_directory_uri().'/css/jquery-ui-theme.css', array());
+
+	// Select2
+	wp_register_script('select2', get_template_directory_uri().'/js/select2.min.js', array('jquery'), $version, true);
+	wp_register_style('select2-css', get_template_directory_uri().'/css/select2.min.css', array());
 
 	// Parallax
 	wp_enqueue_script('parallax', get_template_directory_uri().'/js/parallax.js', array('jquery','bilnea'), $version, true);
@@ -512,6 +539,10 @@ function b_f_load()  {
 		wp_enqueue_script('jquery-ui');
 		wp_enqueue_style('jquery-ui-css');
 		wp_enqueue_style('jquery-ui-css-theme');
+	}
+	if (b_f_option('b_opt_select2') == 1) {
+		wp_enqueue_script('select2');
+		wp_enqueue_style('select2-css');
 	}
 	if (b_f_option('b_opt_jquery-mobile') == 1) {
 		wp_enqueue_script('jquery-mobile', get_template_directory_uri().'/js/jquery-mobile.js', array('bilnea'), $version, true);

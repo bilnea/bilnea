@@ -28,7 +28,6 @@ jQuery(function() {
 		if (p.hasClass('accordion_frame') && !p.hasClass('opened')) {
 			p.addClass('opened').children('.accordion_content').slideToggle(400, function() {
 				b_js_adjust_height();
-				console.log('a');
 			});
 		} else if (p.hasClass('accordion_frame') && p.hasClass('opened')) {
 			p.removeClass('opened').children('.accordion_content').slideToggle();

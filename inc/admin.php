@@ -269,6 +269,13 @@ function bilnea_options_page() {
 
 				<!-- Opciones Generales -->
 				<div <?php if ($opt['pestanya'] == 2) { echo 'class="activo"'; }?> id="tab2">
+					<!-- Suscriptiores -->
+					<h4>Boletín de noticias</h4>
+					<input type='checkbox' name='bilnea_settings[b_opt_subscribers]' <?php checked( $opt['b_opt_subscribers'], 1 ); ?> value='1'>Activar módulo de boletín de noticias<br />
+					<div class="notice" style="font-size: 11px; line-height: 15px; display: block !important;">Crea un listado de suscriptores que se recolecten desde los formularios presentes en la web. Activa los shortcodes relacionados con esta funcionalidad.</div>
+					<br />
+
+
 					<!-- Precarga -->
 					<h4>Precarga</h4>
 					<input type='checkbox' name='bilnea_settings[b_opt_loader]' <?php checked( $opt['b_opt_loader'], 1 ); ?> value='1'>Activar módulo de precarga<br />
@@ -299,7 +306,8 @@ function bilnea_options_page() {
 					<h4 style="margin-top: 10px;">Tecnologías de terceros</h4>
 					<input type='checkbox' name='bilnea_settings[b_opt_jquery-ui]' <?php checked( $opt['b_opt_jquery-ui'], 1 ); ?> value='1'>Activar jQuery UI<br />
 					<input type='checkbox' name='bilnea_settings[b_opt_jquery-mobile]' <?php checked( $opt['b_opt_jquery-mobile'], 1 ); ?> value='1'>Activar jQuery mobile<br />
-					<input type='checkbox' name='bilnea_settings[b_opt_jquery-mobile-css]' <?php checked( $opt['b_opt_jquery-mobile-css'], 1 ); ?> value='1'>Activar estilos visuales de jQuery mobile
+					<input type='checkbox' name='bilnea_settings[b_opt_jquery-mobile-css]' <?php checked( $opt['b_opt_jquery-mobile-css'], 1 ); ?> value='1'>Activar estilos visuales de jQuery mobile<br />
+					<input type='checkbox' name='bilnea_settings[b_opt_select2]' <?php checked( $opt['b_opt_select2'], 1 ); ?> value='1'>Activar Select2
 					<br />
 
 					<!-- Mantenimiento -->

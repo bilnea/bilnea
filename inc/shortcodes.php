@@ -23,6 +23,7 @@ function b_f_box($atts, $content = null) {
 		'class' => null,
 		'id' => null,
 		'height' => null,
+		'bgcolor' => null,
 	), $atts);
 	$fw = ''; $fi = ''; $fo = '';
 	switch (esc_attr($a['width'])) {
@@ -84,7 +85,7 @@ function b_f_box($atts, $content = null) {
 	if (esc_attr($a['height']) == 'adjust') { $fw .= ' auto-height'; }
 	if (esc_attr($a['class']) != null) { $fw .= ' '.esc_attr($a['class']); }
 	if (esc_attr($a['id']) != null) { $fi = ' id="'.esc_attr($a['id']).'"'; }
-	if (esc_attr($a['bgcolor']) != null) { $fo = ' style="background-color: '.esc_attr($a['color']).';"'; }
+	if (esc_attr($a['bgcolor']) != null) { $fo = ' style="background-color: '.esc_attr($a['bgcolor']).';"'; }
 	return '<div class="'.$fw.'"'.$fi.$fo.'>'.do_shortcode($content).'</div>';
 }
 
@@ -1484,6 +1485,37 @@ function b_f_timeline($atts) {
 function b_f_sanitize($s) {
 	$out = preg_replace("/[^a-zA-Z0-9]+/", "", html_entity_decode($s, ENT_QUOTES));
 	return $out;
+}
+
+if (b_f_option('b_opt_subscribers') == 1) {
+	function b_newsletters($atts) {
+		$a = shortcode_atts(array(
+			'type' => 'name,email',
+		), $atts);
+		$temp = explode(',', str_replace(' ', '', $a['type']));
+		$out = '<div class="b_newsletters">';
+		$out .= '<input type="text" name="s_name" placeholder="'.__('* Name', 'bilnea').'"r />';
+		if (in_array('last', $temp)) {
+			$out .= '<input type="text" name="s_last" placeholder="'.__('* Last name', 'bilnea').'"r />';
+		}
+		$out .= '<input type="text" name="s_name" placeholder="'.__('* Email', 'bilnea').'"r />';
+		$out .= '<input value="true" type="checkbox" name="s_legal" />';
+		$plh = __('Privacy policy', 'bilnea');
+		switch (substr(explode(' ', $plh)[0], -1)) {
+			case 'a':
+				$art = _x('the', 'female', 'bilnea');
+				break;
+			default:
+				$art = _x('the', 'male', 'bilnea');
+				break;
+		}
+		$out .= '<p>* '.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$plh.'" target="_blank">'.strtolower($plh).'</a>.</p>';
+		$out .= '<div class="s_submit">'.__('Suscribe', 'bilnea').'</div>';
+		$out .= '<div>';
+
+		return $out;
+	}
+	add_shortcode('b_newsletters', 'b_newsletters');
 }
 
 ?>
