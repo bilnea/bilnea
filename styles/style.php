@@ -31,6 +31,8 @@ foreach ($fnt as $key => $value) {
 
 ?>
 
+@charset "UTF-8";
+
 /* Definición de tipografías */
 
 @import url(http://fonts.googleapis.com/css?family=<?= implode('|', $fin) ?>);
@@ -356,6 +358,11 @@ header .logo.image-link {
 
 header#header nav li a {
 	line-height: <?= b_f_size('b_opt_menu-height') ?>;
+}
+
+header#header nav .menu > li > a {
+	height. <?= b_f_size('b_opt_menu-height') ?>;
+	display: inline-block;
 }
 
 header#header ul.menu li:hover:after {

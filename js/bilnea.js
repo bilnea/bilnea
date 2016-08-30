@@ -94,6 +94,11 @@ jQuery(function($) {
 		});
 		$(this).children().last().addClass('last');
 	});
+	$('form.form input:radio:first').attr('checked', true);
+	$('.b_input_radio').each(function() {
+		var n = $(this).attr('name');
+		$('input:radio[name='+n+'][disabled=false]:first').attr('checked', true);
+	})
 	$('.selector-idioma-superior.desplegable > li > a').click(function(e) {
 		e.preventDefault();
 		$('.selector-idioma-superior.desplegable ul:visible').fadeOut(400);
@@ -106,7 +111,7 @@ jQuery(function($) {
 		$('.selector-idioma-superior.desplegable > li ul').addClass('visible');
 		setTimeout(b_js_hover(), 500);
 	});
-	$('input[type="checkbox"]').each(function() {
+	$('input[type="checkbox"]:not(.b_input_checkbox)').each(function() {
 		var t = $(this);
 		$('<div class="fix-check"></div>').insertAfter(t);
 		$('<label for="'+t.attr('id')+'"></label>').appendTo(t.next());
@@ -386,14 +391,14 @@ jQuery('header#header.site-header ul:not(.sub-menu) > .menu-item-has-children').
 	subopen = setTimeout(function() {
 		t.children('.sub-menu').removeClass('open');
 	}, 800);
-})
+});
 
 jQuery('header#header.site-header ul.sub-menu > .menu-item-has-children').mouseleave(function() {
 	var t = jQuery(this);
 	subsubopen = setTimeout(function() {
 		t.children('.sub-menu').removeClass('open');
 	}, 800);
-})
+});
 
 jQuery('#mobile-menu ul:not(.sub-menu) > .menu-item-has-children').click(function() {
 	var s = jQuery(this).children('.sub-menu');
@@ -402,7 +407,7 @@ jQuery('#mobile-menu ul:not(.sub-menu) > .menu-item-has-children').click(functio
 	} else {
 		s.removeClass('open');
 	}
-})
+});
 
 jQuery('#mobile-menu ul.sub-menu > .menu-item-has-children').click(function() {
 	var s = jQuery(this).children('.sub-menu');
@@ -411,11 +416,18 @@ jQuery('#mobile-menu ul.sub-menu > .menu-item-has-children').click(function() {
 	} else {
 		s.removeClass('open');
 	}
-})
+});
 
 jQuery('.commentlist .avatar').each(function() {
 	var a = jQuery(this).attr('srcset'),
 		b = jQuery(this).attr('src');
 	jQuery(this).attr('srcset', a.replace('s=64','s=128').replace(' 2x',''));
 	jQuery(this).attr('src', b.replace('s=32','s=128'));
-})
+});
+
+jQuery('*').filter(function() {
+	if (this.currentStyle) 
+		return this.currentStyle['backgroundImage'] !== 'none';
+	else if (window.getComputedStyle)
+		return document.defaultView.getComputedStyle(this,null).getPropertyValue('background-image') !== 'none';
+}).addClass('b_weighty');

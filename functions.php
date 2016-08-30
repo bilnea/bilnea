@@ -161,6 +161,42 @@ if(!file_exists(get_stylesheet_directory().'/tmp/main.css')) {
 	file_put_contents(get_stylesheet_directory().'/tmp/main.css', $txt);
 }
 
+if(!file_exists(get_stylesheet_directory().'/js/loader.js')) {
+	$file = fopen(get_stylesheet_directory().'/js/loader.js', 'w');
+	$txt = '';
+	$txt .= 'var b_f_load = 0;'."\n";
+	$txt .= 'document.onreadystatechange = function(e) {'."\n";
+	$txt .= '	if(document.readyState=="interactive") {'."\n";
+	$txt .= '		var all = document.getElementsByTagName("*");'."\n";
+	$txt .= '		for (var i=0, max=all.length; i < max; i++) {'."\n";
+	$txt .= '			set_ele(all[i]);'."\n";
+	$txt .= '		}'."\n";
+	$txt .= '	}'."\n";
+	$txt .= '}'."\n";
+	$txt .= ''."\n";
+	$txt .= 'function check_element(ele) {'."\n";
+	$txt .= '	var all = document.getElementsByTagName("*");'."\n";
+	$txt .= '	var totalele=all.length;'."\n";
+	$txt .= '	var per_inc=100/all.length;'."\n";
+	$txt .= ''."\n";
+	$txt .= '	if(jQuery(ele).on()) {'."\n";
+	$txt .= '		b_f_load = (Math.ceil((per_inc+b_f_load)*10000))/10000;'."\n";
+	$txt .= '		if (b_f_load >= 100) {'."\n";
+	$txt .= '			jQuery(\'#loader-wrap\').fadeOut(100, function() {'."\n";
+	$txt .= '				jQuery(\'#loader-wrap\').remove();'."\n";
+	$txt .= '			})'."\n";
+	$txt .= '		}'."\n";
+	$txt .= '	} else {'."\n";
+	$txt .= '		set_ele(ele);'."\n";
+	$txt .= '	}'."\n";
+	$txt .= '}'."\n";
+	$txt .= ''."\n";
+	$txt .= 'function set_ele(set_element) {'."\n";
+	$txt .= '	check_element(set_element);'."\n";
+	$txt .= '}'."\n";
+
+	file_put_contents(get_stylesheet_directory().'/js/loader.js', $txt);
+}
 
 // Archivos innecesarios
 
@@ -220,6 +256,14 @@ function b_f_admin_menu() {
 }
 
 add_action('admin_menu', 'b_f_admin_menu');
+
+function b_f_subscribers_menu() { 
+	add_menu_page('Suscriptores', 'Suscriptores', 'manage_options', 'subscribers', 'bilnea_subscribers_page', 'dashicons-groups', 76);
+}
+
+if (b_f_option('b_opt_subscribers') == 1) {
+	add_action('admin_menu', 'b_f_subscribers_menu');
+}
 
 
 // Variable para almacenar las opciones del tema
@@ -307,8 +351,8 @@ if (b_f_option('b_opt_header-links') == 1) {
 if (b_f_option('b_opt_subscribers') == 1) {
 	global $wpdb;
 	$table = $wpdb->prefix.'subscribers';
-	if ($wpdb->get_var('SHOW TABLES LIKE '.$table) != $table) {
-		$sql = 'CREATE TABLE '.$table.'(
+	if ($wpdb->get_var('SHOW TABLES LIKE "'.$table.'"') != $table) {
+		$sql = 'CREATE TABLE IF NOT EXISTS "'.$table.'" (
 			id INTEGER NOT NULL,
 			name VARCHAR(200),
 			last_name VARCHAR(200),
@@ -450,14 +494,7 @@ function b_f_load()  {
 	// Scripts del tema
 	wp_enqueue_script('fitvids', get_template_directory_uri().'/js/fitvids.js', array('jquery'), $version, true);
 	wp_enqueue_script('main-js', get_stylesheet_directory_uri().'/js/main.js', array('jquery'), $version, true);
-	wp_register_script('bilnea', get_template_directory_uri().'/js/bilnea.js', array('jquery'), $version, true);
-	$var_array = array(
-		'post_id' => $post->ID,
-		'main_theme_uri' => get_template_directory_uri(),
-		'child_theme_uri' => get_stylesheet_directory_uri(),
-		'main_uri' => home_url()
-	);
-	wp_localize_script('bilnea', 'bilnea', $var_array);
+	wp_enqueue_script('bilnea', get_template_directory_uri().'/js/bilnea.js', array('jquery'), $version, true);
 	wp_enqueue_script('bilnea');
 	wp_enqueue_script('anchor', get_template_directory_uri().'/js/anchor.js', array('jquery'), $version, true);
 
@@ -524,7 +561,8 @@ function b_f_load()  {
 
 	// Mapas
 	wp_register_script('map', get_template_directory_uri().'/js/map.js', array('jquery'), $version, true);
-	wp_register_script('google-map', 'https://maps.googleapis.com/maps/api/js?signed_in=false&callback=initMap', array('map'), $version, false);
+	(b_f_option('b_opt_apis_gmaps') != '') ? $agm = '&key='.b_f_option('b_opt_apis_gmaps') : $agm = '';
+	wp_register_script('google-map', 'https://maps.googleapis.com/maps/api/js?signed_in=false&callback=initMap'.$agm, array('map'), $version, false);
 
 	// Condicionales aplicados a los scripts
 	add_filter('script_loader_tag', function ($tag, $handle) {
@@ -1351,6 +1389,28 @@ function b_f_get_excerpt($a, $z=null, $y=0, $x = false) {
 	
 	return $e;
 }
+
+
+// Función para convertir a bytes
+
+function b_f_to_bytes($size){
+    $n = substr($size,0,-2);
+    switch(strtoupper(substr($size,-2))){
+        case "KB":
+            return $n*1024;
+        case "MB":
+            return $n*pow(1024,2);
+        case "GB":
+            return $n*pow(1024,3);
+        case "TB":
+            return $n*pow(1024,4);
+        case "PB":
+            return $n*pow(1024,5);
+        default:
+            return $size;
+    }
+}
+
 
 // Incluimos los datos externos
 

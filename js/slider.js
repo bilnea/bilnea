@@ -59,7 +59,11 @@ $.fn.sss = function(options) {
 	}
 	var target_slide = slides.eq(target);
 
-	target_slide.fadeIn(tiempo);
+	target_slide.fadeIn(tiempo, function() {
+		if ($.isFunction(typeof b_slider_callback !== 'undefined' && b_slider_callback) ) {
+    		b_slider_callback();
+		}
+	});
 	slides.not(target_slide).fadeOut(tiempo);
 
 	animating = false;

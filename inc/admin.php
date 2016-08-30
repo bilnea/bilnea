@@ -269,12 +269,76 @@ function bilnea_options_page() {
 
 				<!-- Opciones Generales -->
 				<div <?php if ($opt['pestanya'] == 2) { echo 'class="activo"'; }?> id="tab2">
-					<!-- Suscriptiores -->
+					<!-- Formulario de contacto -->
+					<h4>Formulario de contacto y envío de correo</h4>
+					<div style="overflow: hidden;">
+						<div style="width: calc(50% - 7px); display: inline-block; float: left; margin-right: 14px;">
+							Correo electrónico de destino
+							<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_form-email]" value="<?php echo $opt['b_opt_form-email']; ?>" placeholder="<?= b_f_default()['b_opt_form-email']; ?>" />
+						</div>
+						<div style="width: calc(50% - 7px); display: inline-block;">
+							Página de redirección al enviar
+							<select name='bilnea_settings[b_opt_form-thanks]' class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
+								<option selected disabled>Selecciona una página</option>
+								<option value="none" <?php selected($opt['b_opt_form-thanks'], 'none') ?>>Sin redirección</option>
+								<option disabled>----------</option>
+								<?php $args = array(
+									'sort_order' => 'asc',
+									'sort_column' => 'post_title',
+									'post_type' => 'page',
+									'post_status' => 'publish'
+								); 
+								$pages = get_pages($args);
+								foreach ($pages as $page) {
+									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_form-thanks'], $page->ID).'>'.$page->post_title.'</option>';
+								}
+								?>
+							</select>
+						</div>
+					</div>
+					<hr style="margin-bottom: 4px;" />
+					<input type='checkbox' name='bilnea_settings[b_opt_smtp]' <?php checked( $opt['b_opt_smtp'], 1 ); ?> value='1'>Envío de emails a través de SMTP
+					<hr style="margin-bottom: 4px;" />
+					<div style="width: 213px; display: inline-block;">Servidor SMTP</div>
+					<input type='text' class="gran" name='bilnea_settings[b_opt_smtp-server]' value='<?php echo $opt['b_opt_smtp-server']; ?>' />
+					<br />
+					<div style="width: 213px; display: inline-block;">Usuario</div>
+					<input type='text' class="gran" name='bilnea_settings[b_opt_smtp-user]' value='<?php echo $opt['b_opt_smtp-user']; ?>' />
+					<br />
+					<div style="width: 213px; display: inline-block;">Contraseña</div>
+					<input type='text' class="gran" name='bilnea_settings[b_opt_smtp-pass]' value='<?php echo $opt['b_opt_smtp-pass']; ?>' />
+					<br />
+					<br />
+
+					<!-- Suscriptores -->
 					<h4>Boletín de noticias</h4>
 					<input type='checkbox' name='bilnea_settings[b_opt_subscribers]' <?php checked( $opt['b_opt_subscribers'], 1 ); ?> value='1'>Activar módulo de boletín de noticias<br />
+					<hr />
+					<div style="overflow: hidden;">
+						<div style="width: calc(33.3333% - 10px); display: inline-block; margin-right: 14px; float: left;">
+							<select name='bilnea_settings[b_opt_newsl_service]' class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
+								<option selected disabled>Selecciona un servicio</option>
+								<option value="wordpress" <?php selected($opt['b_opt_newsl_service'], 'wordpress') ?>>Wordpress</option>
+								<option value="benchmark" <?php selected($opt['b_opt_newsl_service'], 'benchmark') ?>>Benchmark</option>
+							</select>
+						</div>
+						<div style="width: calc(33.3333% - 9px); display: inline-block; float: left; margin-right: 14px;">
+							<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_newsl_username]" value="<?php echo $opt['b_opt_newsl_username']; ?>" placeholder="Usuario" />
+						</div>
+						<div style="width: calc(33.3333% - 9px); display: inline-block;">
+							<input type="password" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_newsl_password]" value="<?php echo $opt['b_opt_newsl_password']; ?>" placeholder="Contraseña" />
+						</div>
+					</div>
 					<div class="notice" style="font-size: 11px; line-height: 15px; display: block !important;">Crea un listado de suscriptores que se recolecten desde los formularios presentes en la web. Activa los shortcodes relacionados con esta funcionalidad.</div>
 					<br />
 
+					<!-- API Keys -->
+					<h4>API Keys</h4>
+					<div>Google Maps</div>
+					<div>
+						<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_apis_gmaps]" value="<?php echo $opt['b_opt_apis_gmaps']; ?>" placeholder="API Key" />
+					</div>
+					<br />
 
 					<!-- Precarga -->
 					<h4>Precarga</h4>
@@ -309,25 +373,17 @@ function bilnea_options_page() {
 					<input type='checkbox' name='bilnea_settings[b_opt_jquery-mobile-css]' <?php checked( $opt['b_opt_jquery-mobile-css'], 1 ); ?> value='1'>Activar estilos visuales de jQuery mobile<br />
 					<input type='checkbox' name='bilnea_settings[b_opt_select2]' <?php checked( $opt['b_opt_select2'], 1 ); ?> value='1'>Activar Select2
 					<br />
-
+					Gestión de usuarios
+					<select>
+						
+					</select>
 					<!-- Mantenimiento -->
 					<h4 style="margin-top: 10px;">Mantenimiento</h4>
 					<input type='checkbox' name='bilnea_settings[b_opt_construction]' <?php checked( $opt['b_opt_construction'], 1 ); ?> value='1'>Activar modo mantenimiento
 					<em class="notice" style="font-size: 11px; line-height: 15px; display: block !important;">
 						La página de mantenimiento se puede personalizar editando los archivos 'index.html' y 'main.css' ubicados en la carpeta 'tmp' del tema activo.<br />Para acceder a la web, utiliza la url <?php echo get_site_url(); ?>/?key=bilnea
 					</em>
-					<h4 style="margin-top: 10px;">Configuración general</h4>
-					<input type='checkbox' name='bilnea_settings[b_opt_smtp]' <?php checked( $opt['b_opt_smtp'], 1 ); ?> value='1'>Envío de emails a través de SMTP
-					<hr style="margin-bottom: 4px;" />
-					<div style="width: 213px; display: inline-block;">Servidor SMTP</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_smtp-server]' value='<?php echo $opt['b_opt_smtp-server']; ?>' />
-					<br />
-					<div style="width: 213px; display: inline-block;">Usuario</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_smtp-user]' value='<?php echo $opt['b_opt_smtp-user']; ?>' />
-					<br />
-					<div style="width: 213px; display: inline-block;">Contraseña</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_smtp-pass]' value='<?php echo $opt['b_opt_smtp-pass']; ?>' />
-					<br />
+
 				</div>
 
 				<!-- Estilos tipográficos -->
@@ -1378,6 +1434,381 @@ function bilnea_options_page() {
 		
 	</form>
 	<?php
+}
+
+function bilnea_subscribers_page() {
+	if (b_f_option('b_opt_newsl_service') == 'wordpress') {
+		$b_s_url = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
+		(isset($_GET['order']) && $_GET['order'] == 'asc') ? $order = 'des' : $order = 'asc';
+		if (isset($_GET['orderby'])) {
+			$sorts = array('b_s_date' => 'sortable asc', 'b_s_email' => 'sortable asc', 'b_s_name' => 'sortable asc', 'b_s_last_name' => 'sortable asc');
+			$sorts[$_GET['orderby']] = 'sorted '.$order;
+		}
+		?>
+		<div class="wrap">
+			<h1>Boletín de noticias</h1>
+			<table class="wp-list-table widefat fixed striped pages">
+				<thead>
+					<tr>
+						<td id="cb" class="manage-column column-cb check-column">
+							<label class="screen-reader-text" for="cb-select-all-1">Seleccionar todos</label>
+							<input id="cb-select-all-1" type="checkbox">
+						</td>
+						<th style="width: 30px;"></th>
+						<th scope="col" id="b_s_date" class="manage-column column-title <?= $sorts['b_s_date'] ?>">
+							<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?page=subscribers&orderby=b_s_date&order=<?= $order ?>">
+								<span>Fecha</span>
+								<span class="sorting-indicator"></span>
+							</a>
+						</th>
+						<th scope="col" id="b_s_email" class="manage-column column-title <?= $sorts['b_s_email'] ?>">
+							<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?page=subscribers&orderby=email&order=<?= $order ?>">
+								<span>Correo electrónico</span>
+								<span class="sorting-indicator"></span>
+							</a>
+						</th>
+						<th scope="col" id="b_s_name" class="manage-column column-title <?= $sorts['b_s_name'] ?>">
+							<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?page=subscribers&orderby=name&order=<?= $order ?>">
+								<span>Nombre</span>
+								<span class="sorting-indicator"></span>
+							</a>
+						</th>
+						<th scope="col" id="b_s_last_name" class="manage-column column-title <?= $sorts['b_s_last_name'] ?>">
+							<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?page=subscribers&orderby=last_name&order=<?= $order ?>">
+								<span>Apellidos</span>
+								<span class="sorting-indicator"></span>
+							</a>
+						</th>
+						<th style="width: 30px;">
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					global $wpdb;
+					$table = $wpdb->prefix.'subscribers';
+					if (isset($_GET['post_id']) && isset($_GET['visibility'])) {
+						$wpdb->update($table, array('active' => $_GET['visibility']), array('id' => $_GET['post_id']));
+					}
+					$subs = $wpdb->get_results('SELECT * FROM '.$table, ARRAY_A);
+					foreach ($subs as $subscriber) {
+						?>
+						<tr id="subscriber-<?= $subscriber['id'] ?>" class="iedit author-self level-0 post-<?= $subscriber['id'] ?> status-publish hentry">
+							<th scope="row" class="check-column">
+								<label class="screen-reader-text" for="cb-select-<?= $subscriber['id'] ?>">Elige suscriptor</label>
+								<input id="cb-select-<?= $subscriber['id'] ?>" type="checkbox" name="post[]" value="<?= $subscriber['id'] ?>">
+								<div class="locked-indicator"></div>
+							</th>
+							<th scope="row" class="check-column-2" style="text-align: center;">
+								<?php
+								$gets = array();
+								$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+								foreach ($temps as $temp) {
+									$args = explode('=', $temp);
+									$gets[$args[0]] = $args[1];
+								}
+								$gets['post_id'] = $subscriber['id'];
+								if ($subscriber['active'] == 1) {
+									$gets['visibility'] = 0;
+								?>
+									<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>"><span class="dashicons dashicons-visibility"></span></a>
+								<?php
+								} else {
+									$gets['visibility'] = 1;
+								?>
+									<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>"><span class="dashicons dashicons-hidden"></span></a>
+								<?php
+								}
+								?>
+							</th>
+							<td class="date column-date" data-colname="Fecha">
+								<?= $subscriber['date'] ?>
+							</td>
+							<td class="title column-email has-row-actions column-primary page-title" data-colname="Correo electrónico">
+								<a class="row-email" href="mailto:<?= $subscriber['email'] ?>"><?= $subscriber['email'] ?></a>
+							</td>
+							<td class="date column-date" data-colname="Nombre">
+								<?= $subscriber['name'] ?>
+							</td>
+							<td class="date column-date" data-colname="Apellidos">
+								<?= $subscriber['last_name'] ?>
+							</td>
+							<td style="text-align: center;">
+
+								<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>">
+									<span class="dashicons dashicons-trash"></span>
+								</a>
+							</td>
+						</tr>
+						<?php
+					}
+					?>
+				</tbody>
+			</table>
+		</div>
+	<?php
+	} else if (b_f_option('b_opt_newsl_service') == 'benchmark') {
+		if (isset($_POST['list_selector'])) {
+			$options = get_option('bilnea_settings');
+			$options['b_opt_newsl_list'] = $_POST['list_selector'];
+			update_option('bilnea_settings', $options);
+		}
+		$b_s_url = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
+		include_once( ABSPATH.WPINC.'/class-IXR.php');
+		$client = new IXR_Client( 'https://api.benchmarkemail.com/1.3', false, 443, 20);
+		$args = array('login', b_f_option('b_opt_newsl_username'), b_f_option('b_opt_newsl_password'));
+		call_user_func_array(array($client, 'query'), $args);
+		$token = $client->getResponse();
+		if (isset($_GET['delete'])) {
+			$args = array('listDeleteContacts', $token, $_GET['list'], $_GET['delete']);
+			call_user_func_array(array($client, 'query'), $args);
+		}
+		(isset($_GET['paged'])) ? $paged = $_GET['paged']  : $paged = 1;
+		(isset($_GET['view'])) ? $view = $_GET['view']  : $view = 50;
+		$args = array('listGet', $token, '', 1, 1000, 'name', 'asc');
+		call_user_func_array(array($client, 'query'), $args);
+		$lists = $client->getResponse();
+		if (count($lists) > 0) {
+			(isset($_GET['list'])) ? $c = $_GET['list'] : $c = $lists[0]['id'];
+			?>
+			<div class="wrap">
+				<h1>Boletín de noticias</h1>
+				<ul class="subsubsub">
+					<?php
+						$i = 1;
+						foreach ($lists as $list) {
+							$gets = array();
+							$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+							foreach ($temps as $temp) {
+								$args = explode('=', $temp);
+								$gets[$args[0]] = $args[1];
+							}
+							$gets['list'] = $list['id'];
+							?>
+							<li class="list-<?= $list['id'] ?>">
+								<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>"<?= ($list['id'] == $c) ? ' class="current"' : '' ?>><?= $list['listname'] ?> <span class="count">(<?= $list['contactcount'] ?>)</span></a><?= ($i == count($lists)) ? '' : ' |' ?>
+							</li>
+							<?php
+							$i++;
+						}
+						(isset($_GET['order']) && $_GET['order'] == 'asc') ? $order = 'des' : $order = 'asc';
+						$sorts = array('date' => 'sorted '.$order, 'email' => 'sortable '.$order);
+						$orderby = 'date';
+						if (isset($_GET['orderby'])) {
+							$sorts[$_GET['orderby']] = 'sorted '.$order;
+							$orderby = $_GET['orderby'];
+						}
+					?>
+				</ul>
+				<div>
+					<?php
+					$args = array('listGet', $token, '', 1, 1000, 'name', 'asc');
+					call_user_func_array(array($client, 'query'), $args);
+					$lists = $client->getResponse();
+					?>
+					<label>Lista por defecto: </label>
+					<form action="#" method="post" name="list_form">
+						<select id="list_selector" name="list_selector">
+							<option selected disabled>Selecciona una lista</option>
+							<?php
+							foreach ($lists as $list) {
+								(b_f_option('b_opt_newsl_list') == $list['id']) ? $seld = ' selected="selected"' : $seld = '';
+								echo '<option value="'.$list['id'].'"'.$seld.'>'.$list['listname'].'</option>';
+							}
+							?>
+						</select>
+					</form>
+					<script type="text/javascript">
+						jQuery(function() {
+							jQuery('#list_selector').change(function() {
+								this.form.submit();
+							})
+						})
+					</script>
+				</div>
+				<table class="wp-list-table widefat fixed striped pages">
+				<thead>
+					<tr>
+						<td id="cb" class="manage-column column-cb check-column">
+							<label class="screen-reader-text" for="cb-select-all-1">Seleccionar todos</label>
+							<input id="cb-select-all-1" type="checkbox">
+						</td>
+						<th scope="col" id="b_s_date" class="manage-column column-title <?= $sorts['date'] ?>">
+							<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?list=<?= $c ?>&page=subscribers&orderby=date&order=<?= $order ?>">
+								<span>Fecha</span>
+								<span class="sorting-indicator"></span>
+							</a>
+						</th>
+						<th scope="col" id="b_s_email" class="manage-column column-title <?= $sorts['email'] ?>">
+							<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?list=<?= $c ?>&page=subscribers&orderby=email&order=<?= $order ?>">
+								<span>Correo electrónico</span>
+								<span class="sorting-indicator"></span>
+							</a>
+						</th>
+						<th scope="col" id="b_s_name" class="manage-column column-title <?= $sorts['b_s_name'] ?>">
+							<span>Nombre</span>
+						</th>
+						<th scope="col" id="b_s_last_name" class="manage-column column-title <?= $sorts['b_s_last_name'] ?>">
+							<span>Apellidos</span>
+						</th>
+						<th style="width: 30px;">
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$args = array('listGetContactsAllFields', $token, $c, '', (int)$paged, (int)$view, $orderby, $order);
+					call_user_func_array(array($client, 'query'), $args);
+					$lists = $client->getResponse();
+					foreach ($lists as $list) {
+						?>
+						<tr id="subscriber-<?= $list['id'] ?>" class="iedit author-self level-0 post-<?= $list['id'] ?> status-publish hentry">
+							<th scope="row" class="check-column">
+								<label class="screen-reader-text" for="cb-select-<?= $list['id'] ?>">Elige suscriptor</label>
+								<input id="cb-select-<?= $list['id'] ?>" type="checkbox" name="post[]" value="<?= $list['id'] ?>">
+								<div class="locked-indicator"></div>
+							</th>
+							<td class="date column-date" data-colname="Fecha">
+								<?php
+								$date = explode(' ', $list['timestamp']);
+								$months = array('Jan' => 'enero',
+												'Feb' => 'febrero',
+												'Mar' => 'marzo',
+												'Apr' => 'abril',
+												'May' => 'mayo',
+												'Jun' => 'junio',
+												'Jul' => 'julio',
+												'Aug' => 'agosto',
+												'Sep' => 'septiembre',
+												'Oct' => 'octubre',
+												'Nov' => 'noviembre',
+												'Dec' => 'diciembre'
+												);
+								echo str_replace(',', '', $date[1]).' '.$months[$date[0]].' '.$date[2];
+								?>
+							</td>
+							<td class="title column-email has-row-actions column-primary page-title" data-colname="Correo electrónico">
+								<a class="row-email" href="mailto:<?= $list['email'] ?>"><?= $list['email'] ?></a>
+							</td>
+							<td class="date column-date" data-colname="Nombre">
+								<?= $list['First Name'] ?>
+							</td>
+							<td class="date column-date" data-colname="Apellidos">
+								<?= $list['Last Name'] ?>
+							</td>
+							<td style="text-align: center;">
+								<?php
+								$gets = array();
+								$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+								foreach ($temps as $temp) {
+									$args = explode('=', $temp);
+									$gets[$args[0]] = $args[1];
+								}
+								$gets['delete'] = $list['id'];
+								?>
+								<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>">
+									<span class="dashicons dashicons-trash"></span>
+								</a>
+							</td>
+						</tr>
+						<?php
+					}
+					?>
+				</tbody>
+			</table>
+			<div class="tablenav bottom">
+				<div class="alignleft actions bulkactions">
+					<label for="bulk-action-selector-bottom" class="screen-reader-text">Selecciona acción en lote</label>
+					<select name="action2" id="bulk-action-selector-bottom">
+						<option value="-1">Acciones en lote</option>
+						<option value="delete" class="hide-if-no-js">Eliminar</option>
+					</select>
+					<input type="submit" id="doaction2" class="button action" value="Aplicar">
+					</div>
+						<div class="alignleft actions">
+					</div>
+					<?php
+					$args = array('listGet', $token, '', 1, 1000, 'name', 'asc');
+					call_user_func_array(array($client, 'query'), $args);
+					$lists = $client->getResponse();
+					$total;
+					foreach ($lists as $list) {
+						if ($list['id'] == $c) {
+							$total =  $list['contactcount'];
+							$total_pages = ceil((int)$total/(int)$view);
+						}
+					}
+					?>
+					<div class="tablenav-pages">
+						<span class="displaying-num"><?= $total ?> elementos</span>
+							<span class="pagination-links">
+								<?php
+								$paged = (int)$paged;
+								if ($paged <= 2) {
+									echo '<span class="tablenav-pages-navspan" aria-hidden="true">«</span>';
+								} else {
+									$gets = array();
+									$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+									foreach ($temps as $temp) {
+										$args = explode('=', $temp);
+										$gets[$args[0]] = $args[1];
+									}
+									$gets['paged'] = 1;
+									echo '<a class="first-page" href="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}".'?'.http_build_query($gets).'"><span class="screen-reader-text">Primera página</span><span aria-hidden="true">«</span></a>';
+								}
+								echo '&nbsp;';
+								if ($paged <= 1) {
+									echo '<span class="tablenav-pages-navspan" aria-hidden="true">‹</span>';
+								} else {
+									$gets = array();
+									$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+									foreach ($temps as $temp) {
+										$args = explode('=', $temp);
+										$gets[$args[0]] = $args[1];
+									}
+									$gets['paged'] = $paged-1;
+									echo '<a class="prev-page" href="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}".'?'.http_build_query($gets).'"><span class="screen-reader-text">Página anterior</span><span aria-hidden="true">‹</span></a>';
+								}
+								?>
+								<span class="screen-reader-text">Página actual</span>
+								<span id="table-paging" class="paging-input">
+									<span class="tablenav-paging-text"><?= $paged ?> de <span class="total-pages"><?= $total_pages ?></span></span>
+								</span>
+								<?php
+								if ($paged >= $total_pages-1) {
+									echo '<span class="tablenav-pages-navspan" aria-hidden="true">›</span>';
+								} else {
+									$gets = array();
+									$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+									foreach ($temps as $temp) {
+										$args = explode('=', $temp);
+										$gets[$args[0]] = $args[1];
+									}
+									$gets['paged'] = $paged+1;
+									echo '<a class="next-page" href="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}".'?'.http_build_query($gets).'"><span class="screen-reader-text">Página anterior</span><span aria-hidden="true">›</span></a>';
+								}
+								echo '&nbsp;';
+								if ($paged >= $total_pages-2) {
+									echo '<span class="tablenav-pages-navspan" aria-hidden="true">»</span>';
+								} else {
+									$gets = array();
+									$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+									foreach ($temps as $temp) {
+										$args = explode('=', $temp);
+										$gets[$args[0]] = $args[1];
+									}
+									$gets['paged'] = $total_pages;
+									echo '<a class="last-page" href="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}".'?'.http_build_query($gets).'"><span class="screen-reader-text">Última página</span><span aria-hidden="true">»</span></a>';
+								}
+								?>
+							</span>
+					</div>
+					<br class="clear">
+				</div>
+		</div>
+		<?php
+		}
+	}
 }
 
 ?>

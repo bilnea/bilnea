@@ -204,6 +204,7 @@ function b_f_link($atts, $content = null) {
 		'nofollow' => false,
 		'noindex' => false,
 		'target' => null,
+		'options' => null,
 	), $atts);
 	$out = '<a href="'.get_permalink(esc_attr($a['id']), false).'" title="'.get_the_title(esc_attr($a['id'])).'"';
 	if (esc_attr($a['class']) != null) {
@@ -248,12 +249,15 @@ function b_f_input($atts) {
 	$a = shortcode_atts(array(
 		'id' => null,
 		'class' => null,
-		'type' => null,
+		'type' => 'text',
 		'required' => 'false',
 		'placeholder' => '',
 		'url' => site_url(b_f_option('b_opt_privacy-url-_'.$lang)),
 		'length' => 5,
 		'allow' => '',
+		'options' => null,
+		'data' => null,
+		'size' => '5MB',
 	), $atts);
 	$fw = ''; $ob = '';
 	if (esc_attr($a['class']) != null) { $fw .= ' '.esc_attr($a['class']); }
@@ -264,126 +268,177 @@ function b_f_input($atts) {
 		} else {
 			$plh = esc_attr($a['placeholder']);
 		}
-	if (esc_attr($a['type']) == 'email') {
-		if (esc_attr($a['placeholder']) == '') { $plh = __('Email', 'bilnea'); }
-		return '<input class="input'.$fw.'"'.$fi.' type="text" name="email" placeholder="'.$ob.$plh.'" />';
-	} else if (esc_attr($a['type']) == 'message') {
-		if (esc_attr($a['placeholder']) == '') { $plh = __('Message', 'bilnea'); }
-		return '<textarea name="mensaje" class="input'.$fw.'"'.$fi.' placeholder="'.$ob.$plh.'"></textarea>';
-	} else if (esc_attr($a['type']) == 'state') {
-		$txt = '<select name="provincia" class="input'.$fw.'"'.$fi.'>';
-		$txt .= '<option selected disabled>'.$ob.__('State', 'bilnea').'</option>';
-		foreach ($prov as $key => $value) {
-			$txt .= '<option value="'.$key.'--'.$value.'">'.$value.'</option>';
-		}
-		$txt .= '</select>';
-		return $txt;
-	} else if (esc_attr($a['type']) == 'legal') {
-		if (esc_attr($a['placeholder']) == '') { $plh = __('Privacy policy', 'bilnea'); }
-		switch (substr(explode(' ', $plh)[0], -1)) {
-			case 'a':
-				$art = _x('the', 'female', 'bilnea');
-				break;
-			default:
-				$art = _x('the', 'male', 'bilnea');
-				break;
-		}
-		$txt  = '<input class="input'.$fw.'" id="legal-'.$ran.'" type="checkbox" name="legal">';
-		$txt .= '<p>'.$ob.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$plh.'" target="_blank">'.strtolower($plh).'</a>.</p>';
-		return $txt;
-	} else if (esc_attr($a['type']) == 'captcha') {
-		session_start();
-		$rnd = rand(0, 99999999);
-		do {
-			$md = md5(microtime()*mktime());
-			preg_replace('([1aeilou0])', "", $md );
-		} while(strlen($md) < esc_attr($a['length']));
-		$key = substr( $md, 0, esc_attr($a['length']) );
-		$_SESSION['key-'.$rnd] = md5($key);
-		$ltr = str_split($key);
-		$txt = '<div class="captcha input'.$fw.'"'.$fi.' data-id="'.$rnd.'">'.$ob.__('Fill in the following fields.', 'bilnea').'<br />';
-		$i = 1;
-		foreach ($ltr as $let) {
-			$txt .= '<input type="text" class="captcha required" name="captcha[]" id="captcha_'.$i.'" placeholder="'.$let.'" size="1" maxlength="1">';
-			$i++;
-		}
-		$txt .= '</div>';
-		return $txt;
-	} else if (esc_attr($a['type']) == 'file') {
-		$ftp = '';
-		if (esc_attr($a['allow']) != '') { $ftp = ' accept="'.esc_attr($a['allow']).'"'; }
-		return '<input class="input'.$fw.'"'.$fi.' type="file"'.$ftp.' name="'.esc_attr($a['type']).'" />';
-	} else if (esc_attr($a['type']) == 'week') {
-		wp_enqueue_script('jquery-ui');
-		wp_enqueue_style('jquery-ui-css');
-		wp_enqueue_style('jquery-ui-css-theme');
-		$out = '<input class="weekpicker-'.$ran.' input'.$fw.'"'.$fi.' type="text" name="weekpicker" placeholder="'.$ob.$plh.'" />'."\n";
-		$out .= '<script type="text/javascript">'."\n";
-		$out .= '	jQuery(function($) {'."\n";
-		$out .= '		var startDate;'."\n";
-		$out .= '		var endDate;'."\n";
-		$out .= '		var selectCurrentWeek = function() {'."\n";
-		$out .= '			window.setTimeout(function () {'."\n";
-		$out .= '				$(\'.weekpickerdiv-'.$ran.'\').find(\'.ui-datepicker-current-day a\').addClass(\'ui-state-active\')'."\n";
-		$out .= '			}, 1);'."\n";
-		$out .= '		}'."\n";
-		$out .= '		$(\'.weekpicker-'.$ran.'\').datepicker( {'."\n";
-		$out .= '			beforeShow: function(input, inst) {'."\n";
-		$out .= '				$(\'#ui-datepicker-div\').addClass(\'weekpickerdiv-'.$ran.'\');'."\n";
-		$out .= '			},'."\n";
-		$out .= '			showOtherMonths: true,'."\n";
-		$out .= '			selectOtherMonths: true,'."\n";
-		$out .= '			showAnim: "fadeIn",'."\n";
-		$out .= '			onSelect: function(dateText, inst) { '."\n";
-		$out .= '				var date = $(this).datepicker(\'getDate\');'."\n";
-		$out .= '				startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());'."\n";
-		$out .= '				endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);'."\n";
-		$out .= '				var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;'."\n";
-		$out .= '				if (typeof callback == \'function\') { callback(\''.$ran.'\', startDate, endDate); };'."\n";
-		$out .= '				selectCurrentWeek();'."\n";
-		$out .= '			},'."\n";
-		$out .= '			beforeShowDay: function(date) {'."\n";
-		$out .= '				var cssClass = \'\';'."\n";
-		$out .= '				if(date >= startDate && date <= endDate)'."\n";
-		$out .= '					cssClass = \'ui-datepicker-current-day\';'."\n";
-		$out .= '				return [true, cssClass];'."\n";
-		$out .= '			},'."\n";
-		$out .= '			onChangeMonthYear: function(year, month, inst) {'."\n";
-		$out .= '				selectCurrentWeek();'."\n";
-		$out .= '			}'."\n";
-		$out .= '		});'."\n";
-		$out .= '		$(\'.weekpickerdiv-'.$ran.' .ui-datepicker-calendar tr\').live(\'mousemove\', function() { $(this).find(\'td a\').addClass(\'ui-state-hover\'); });'."\n";
-		$out .= '		$(\'.weekpickerdiv-'.$ran.' .ui-datepicker-calendar tr\').live(\'mouseleave\', function() { $(this).find(\'td a\').removeClass(\'ui-state-hover\'); });'."\n";
-		$out .= '	});'."\n";
-		$out .= '</script>'."\n";
-		return $out;
-	} else if (esc_attr($a['type']) == 'day') {
-		wp_enqueue_script('jquery-ui');
-		wp_enqueue_style('jquery-ui-css');
-		wp_enqueue_style('jquery-ui-css-theme');
-		$out = '<input class="datepicker-'.$ran.' input'.$fw.'"'.$fi.' type="text" name="datepicker" placeholder="'.$ob.$plh.'" />'."\n";
-		$out .= '<script type="text/javascript">'."\n";
-		$out .= '	jQuery(function($) {'."\n";
-		$out .= '		var startDate;'."\n";
-		$out .= '		var endDate;'."\n";
-		$out .= '		var selectCurrentWeek = function() {'."\n";
-		$out .= '			window.setTimeout(function () {'."\n";
-		$out .= '				$(\'.datepickerdiv-'.$ran.'\').find(\'.ui-datepicker-current-day a\').addClass(\'ui-state-active\')'."\n";
-		$out .= '			}, 1);'."\n";
-		$out .= '		}'."\n";
-		$out .= '		$(\'.datepicker-'.$ran.'\').datepicker( {'."\n";
-		$out .= '			beforeShow: function(input, inst) {'."\n";
-		$out .= '				$(\'#ui-datepicker-div\').addClass(\'datepickerdiv-'.$ran.'\');'."\n";
-		$out .= '			},'."\n";
-		$out .= '			showOtherMonths: true,'."\n";
-		$out .= '			selectOtherMonths: true,'."\n";
-		$out .= '			showAnim: "fadeIn",'."\n";
-		$out .= '		});'."\n";
-		$out .= '	});'."\n";
-		$out .= '</script>'."\n";
-		return $out;
-	} else {
-		return '<input class="input'.$fw.'"'.$fi.' type="text" name="'.esc_attr($a['type']).'" placeholder="'.$ob.$plh.'" />';
+	switch (esc_attr($a['type'])) {
+		case 'email':
+			if (esc_attr($a['placeholder']) == '') { $plh = __('Email', 'bilnea'); }
+			return '<input class="input'.$fw.'"'.$fi.' type="text" name="email" placeholder="'.$ob.$plh.'" />';
+			break;
+		case 'message':
+			if (esc_attr($a['placeholder']) == '') { $plh = __('Message', 'bilnea'); }
+			return '<textarea name="mensaje" class="input'.$fw.'"'.$fi.' placeholder="'.$ob.$plh.'"></textarea>';
+			break;
+		case 'state':
+			$txt = '<select name="provincia" class="input'.$fw.'"'.$fi.'>';
+			if (esc_attr($a['placeholder']) == '') {
+				$txt .= '<option selected disabled>'.$ob.__('State', 'bilnea').'</option>';
+			} else {
+				$txt .= '<option selected disabled>'.$ob.esc_attr($a['placeholder']).'</option>';
+			}
+			if (esc_attr($a['data']) == null) {
+				foreach ($prov as $key => $value) {
+					$txt .= '<option value="'.$key.'--'.$value.'">'.$value.'</option>';
+				}
+			}
+			$txt .= '</select>';
+			return $txt;
+			break;
+		case 'legal':
+			if (esc_attr($a['placeholder']) == '') { $plh = __('Privacy policy', 'bilnea'); }
+			switch (substr(explode(' ', $plh)[0], -1)) {
+				case 'a':
+					$art = _x('the', 'female', 'bilnea');
+					break;
+				default:
+					$art = _x('the', 'male', 'bilnea');
+					break;
+			}
+			$txt  = '<input class="b_input_checkbox'.$fw.'" id="legal-'.$ran.'" type="checkbox" name="legal">';
+			$txt .= '<label for="legal-'.$ran.'" class="'.esc_attr($a['class']).'">'.$ob.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$plh.'" target="_blank">'.strtolower($plh).'</a>.</label>';
+			return $txt;
+			break;
+		case 'captcha':
+			session_start();
+			$rnd = rand(0, 99999999);
+			do {
+				$md = md5(microtime()*mktime());
+				preg_replace('([1aeilou0])', "", $md );
+			} while (strlen($md) < esc_attr($a['length']));
+			$key = substr( $md, 0, esc_attr($a['length']) );
+			$_SESSION['key-'.$rnd] = md5($key);
+			$ltr = str_split($key);
+			$txt = '<div class="captcha input'.$fw.'"'.$fi.' data-id="'.$rnd.'">'.$ob.__('Fill in the following fields.', 'bilnea').'<br />';
+			$i = 1;
+			foreach ($ltr as $let) {
+				$txt .= '<input type="text" class="captcha required" name="captcha[]" id="captcha_'.$i.'" placeholder="'.$let.'" size="1" maxlength="1">';
+				$i++;
+			}
+			$txt .= '</div>';
+			return $txt;
+			break;
+		case 'file':
+			$ftp = '';
+			if (esc_attr($a['allow']) != '') { $ftp = ' accept="'.esc_attr($a['allow']).'"'; }
+			return '<div class="file-button"><div class="icon"></div><div class="text">'.esc_attr($a['placeholder']).'</div></div><input class="input'.$fw.'"'.$fi.' type="file"'.$ftp.' name="'.esc_attr($a['type']).'" multiple data-empty="'.__('No selected file', 'bilnea').'" data-size="'.b_f_to_bytes(esc_attr($a['size'])).'" data-size-error="'.__('Maximum size exceeded', 'bilnea').'" />';
+			break;
+		case 'week':
+			wp_enqueue_script('jquery-ui');
+			wp_enqueue_style('jquery-ui-css');
+			wp_enqueue_style('jquery-ui-css-theme');
+			$out = '<input class="weekpicker-'.$ran.' input'.$fw.'"'.$fi.' type="text" name="weekpicker" placeholder="'.$ob.$plh.'" />'."\n";
+			$out .= '<script type="text/javascript">'."\n";
+			$out .= '	jQuery(function($) {'."\n";
+			$out .= '		var startDate;'."\n";
+			$out .= '		var endDate;'."\n";
+			$out .= '		var selectCurrentWeek = function() {'."\n";
+			$out .= '			window.setTimeout(function () {'."\n";
+			$out .= '				$(\'.weekpickerdiv-'.$ran.'\').find(\'.ui-datepicker-current-day a\').addClass(\'ui-state-active\')'."\n";
+			$out .= '			}, 1);'."\n";
+			$out .= '		}'."\n";
+			$out .= '		$(\'.weekpicker-'.$ran.'\').datepicker( {'."\n";
+			$out .= '			beforeShow: function(input, inst) {'."\n";
+			$out .= '				$(\'#ui-datepicker-div\').addClass(\'weekpickerdiv-'.$ran.'\');'."\n";
+			$out .= '			},'."\n";
+			$out .= '			showOtherMonths: true,'."\n";
+			$out .= '			selectOtherMonths: true,'."\n";
+			$out .= '			showAnim: "fadeIn",'."\n";
+			$out .= '			onSelect: function(dateText, inst) { '."\n";
+			$out .= '				var date = $(this).datepicker(\'getDate\');'."\n";
+			$out .= '				startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());'."\n";
+			$out .= '				endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);'."\n";
+			$out .= '				var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;'."\n";
+			$out .= '				if (typeof callback == \'function\') { callback(\''.$ran.'\', startDate, endDate); };'."\n";
+			$out .= '				selectCurrentWeek();'."\n";
+			$out .= '			},'."\n";
+			$out .= '			beforeShowDay: function(date) {'."\n";
+			$out .= '				var cssClass = \'\';'."\n";
+			$out .= '				if(date >= startDate && date <= endDate)'."\n";
+			$out .= '					cssClass = \'ui-datepicker-current-day\';'."\n";
+			$out .= '				return [true, cssClass];'."\n";
+			$out .= '			},'."\n";
+			$out .= '			onChangeMonthYear: function(year, month, inst) {'."\n";
+			$out .= '				selectCurrentWeek();'."\n";
+			$out .= '			}'."\n";
+			$out .= '		});'."\n";
+			$out .= '		$(\'.weekpickerdiv-'.$ran.' .ui-datepicker-calendar tr\').live(\'mousemove\', function() { $(this).find(\'td a\').addClass(\'ui-state-hover\'); });'."\n";
+			$out .= '		$(\'.weekpickerdiv-'.$ran.' .ui-datepicker-calendar tr\').live(\'mouseleave\', function() { $(this).find(\'td a\').removeClass(\'ui-state-hover\'); });'."\n";
+			$out .= '	});'."\n";
+			$out .= '</script>'."\n";
+			return $out;
+			break;
+		case 'day':
+			wp_enqueue_script('jquery-ui');
+			wp_enqueue_style('jquery-ui-css');
+			wp_enqueue_style('jquery-ui-css-theme');
+			$out = '<input class="datepicker-'.$ran.' input'.$fw.'"'.$fi.' type="text" name="datepicker" placeholder="'.$ob.$plh.'" />'."\n";
+			$out .= '<script type="text/javascript">'."\n";
+			$out .= '	jQuery(function($) {'."\n";
+			$out .= '		var startDate;'."\n";
+			$out .= '		var endDate;'."\n";
+			$out .= '		var selectCurrentWeek = function() {'."\n";
+			$out .= '			window.setTimeout(function () {'."\n";
+			$out .= '				$(\'.datepickerdiv-'.$ran.'\').find(\'.ui-datepicker-current-day a\').addClass(\'ui-state-active\')'."\n";
+			$out .= '			}, 1);'."\n";
+			$out .= '		}'."\n";
+			$out .= '		$(\'.datepicker-'.$ran.'\').datepicker( {'."\n";
+			$out .= '			beforeShow: function(input, inst) {'."\n";
+			$out .= '				$(\'#ui-datepicker-div\').addClass(\'datepickerdiv-'.$ran.'\');'."\n";
+			$out .= '			},'."\n";
+			$out .= '			showOtherMonths: true,'."\n";
+			$out .= '			selectOtherMonths: true,'."\n";
+			$out .= '			showAnim: "fadeIn",'."\n";
+			$out .= '		});'."\n";
+			$out .= '	});'."\n";
+			$out .= '</script>'."\n";
+			return $out;
+			break;
+		case 'select':
+			$rnd = rand(0, 99999999);
+			$out = '<select class="input'.$fw.'"'.$fi.' name="select-'.$rnd.'">'."\n";
+			if ($plh == '') {
+				$out .= '  <option disabled selected>'.__('Select an option', 'bilnea').'</option>'."\n";
+			} else {
+				$out .= '  <option disabled selected>'.$plh.'</option>'."\n";
+			}
+			$sop = explode('|', esc_attr($a['options']));
+			foreach ($sop as $option) {
+				if (count(explode(':', $option)) > 1) {
+					$option = explode(':', $option);
+					$out .= '  <option value="'.$option[0].'">'.$option[1].'</option>'."\n";
+				} else {
+					$out .= '  <option value="'.$option.'">'.$option.'</option>'."\n";
+				}
+			}
+			$out .= '</select>'."\n";
+			return $out;
+			break;
+		case 'radio':
+			$rnd = rand(0, 99999999);
+			$sop = explode('|', esc_attr($a['options']));
+			$out = '';
+			foreach ($sop as $option) {
+				$ran = rand(0, 999);
+				if (count(explode(':', $option)) > 1) {
+					$option = explode(':', $option);
+					$out .= '  <input class="b_input_radio'.$fw.'"type="radio" value="'.$option[0].'" name="radio-'.$rnd.'" id="radio-'.$ran.'"><label for="radio-'.$ran.'">'.$option[1].'</label>'."\n";
+				} else {
+					$out .= '  <input class="b_input_radio'.$fw.'"type="radio" value="'.$option.'" name="radio-'.$rnd.'" id="radio-'.$ran.'"><label for="radio-'.$ran.'">'.$option.'</label>'."\n";
+				}
+			}
+			return $out;
+			break;
+		default:
+			return '<input class="input'.$fw.'"'.$fi.' type="text" name="'.esc_attr($a['type']).'" placeholder="'.$ob.$plh.'" />';
+			break;
 	}
 }
 
@@ -392,7 +447,6 @@ add_shortcode('b_input', 'b_f_input');
 function form($atts, $content = null) {
 	$ran = rand(0, 99999999);
 	global $version;
-	global $opt;
 	$ip = '';
 	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 		$ip=' '.$_SERVER['HTTP_CLIENT_IP'];
@@ -405,12 +459,12 @@ function form($atts, $content = null) {
 		'id' => null,
 		'class' => null,
 		'email' => true,
-		'to' => get_option('admin_email'),
-		'mensaje' => __('Your message has been sent sucesfully. Your request will delay. A copy has been sent to your email.', 'bilnea'),
+		'to' => b_f_option('b_opt_form-email'),
+		'message' => __('Your message has been sent sucesfully. Your request will delay. A copy has been sent to your email.', 'bilnea'),
 		'action' => null,
 		'method' => 'post',
 		'send' => __('Send', 'bilnea'),
-		'subject' => sprintf(esc_html__('Message sent from %s website form', 'bilnea'), get_option('blogname')),
+		'subject' => sprintf(esc_html__('Message sent from %s website form', 'bilnea'), get_option('blogname'))
 	), $atts);
 	$fw = ''; $fi = '';
 	if (esc_attr($a['class']) != null) { $fw .= ' '.esc_attr($a['class']); }
@@ -426,7 +480,17 @@ function form($atts, $content = null) {
 	} else {
 		$mail = array('mailphp' => get_template_directory_uri().'/inc/mail.php');
 	}
-	wp_localize_script('form', 'php', $mail);
+	if (is_numeric(b_f_option('b_opt_form-thanks'))) {
+		$mail['thanks'] = get_permalink(b_f_option('b_opt_form-thanks'));
+		$mail['redirect'] = 'true';
+		if (function_exists('icl_object_id')) {
+			$mail['thanks'] = icl_object_id(b_f_option('b_opt_form-thanks'), 'page', true, ICL_LANGUAGE_CODE);
+		}
+	} else {
+		$mail['thanks'] = b_f_option('b_opt_form-thanks');
+		$mail['redirect'] = 'false';
+	}
+	wp_localize_script('form', 'form_'.$ran, $mail);
 	$txt .= '<form'.$ac.' class="form'.$fw.'"'.$fi.' method="'.esc_attr($a['method']).'" data-id="'.$ran.'">';
 	$txt .= do_shortcode($content);
 	$txt .= '<input type="hidden" value="'.$ip.'" name="ip" id="ip" />';
@@ -705,7 +769,8 @@ function b_f_blog($atts) {
 		'pagination' => 'true',
 		'class'	=> null,
 		'category' => null,
-		'type' => 'post'
+		'type' => 'post',
+		'height' => 'auto'
 	), $atts);
 	$pag = (get_query_var('paged')) ? get_query_var('paged') : 1;
 	if (esc_attr($a['number']) != null) {
@@ -719,11 +784,15 @@ function b_f_blog($atts) {
 		'paged' => $pag,
 		'orderby' => b_f_option('b_opt_blog-order'),
 	);
+	$b_categ = b_f_option('b_opt_blog-categories');
+	if ($b_categ == null) {
+		$b_categ = array('all');
+	}
 	if (esc_attr($a['category']) != null) {
 		$o['category_name'] = esc_attr($a['category']);
 	} else {
-		if (!in_array('all', b_f_option('b_opt_blog-categories'))) {
-			$o['category_name'] = join(',',b_f_option('b_opt_blog-categories'));
+		if (!in_array('all', $b_categ)) {
+			$o['category_name'] = join(',',$b_categ);
 		}
 	}
 	$query = new WP_Query($o);
@@ -732,8 +801,12 @@ function b_f_blog($atts) {
 		while ($query->have_posts()) {
 			$query->the_post();
 			ob_start();
+			$heg = '';
+			if (esc_attr($a['height']) == 'auto') {
+				$heg = ' auto-height';
+			}
 			?>
-			<li class="post-entry">
+			<li class="post-entry<?= $heg ?>">
 				<?php 
 				if (has_post_thumbnail()) {
 					$url = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
@@ -761,7 +834,7 @@ function b_f_blog($atts) {
 				} else {
 					if (b_f_option('b_opt_blog') == 1) {
 						?>
-						<div class="image big" style="background-image: url(<?php echo b_f_option('b_opt_positive-logo'); ?>); background-size: contain;" title="<?php the_title(); ?>">
+						<div class="image big empty" style="background-image: url(<?php echo b_f_option('b_opt_positive-logo'); ?>); background-size: contain;" title="<?php the_title(); ?>">
 							<a class="title" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 								<h2 class="title">
 									<?php the_title(); ?>
@@ -1492,14 +1565,15 @@ if (b_f_option('b_opt_subscribers') == 1) {
 		$a = shortcode_atts(array(
 			'type' => 'name,email',
 		), $atts);
+		$ran = rand(100000, 999999);
 		$temp = explode(',', str_replace(' ', '', $a['type']));
 		$out = '<div class="b_newsletters">';
-		$out .= '<input type="text" name="s_name" placeholder="'.__('* Name', 'bilnea').'"r />';
+		$out .= '<input class="input" type="text" name="s_name" placeholder="'.__('* Name', 'bilnea').'"r />';
 		if (in_array('last', $temp)) {
 			$out .= '<input type="text" name="s_last" placeholder="'.__('* Last name', 'bilnea').'"r />';
 		}
-		$out .= '<input type="text" name="s_name" placeholder="'.__('* Email', 'bilnea').'"r />';
-		$out .= '<input value="true" type="checkbox" name="s_legal" />';
+		$out .= '<input class="input" type="text" name="s_email" placeholder="'.__('* Email', 'bilnea').'"r />';
+		$out .= '<input class="b_input_checkbox" value="true" type="checkbox" id="s_legal-'.$ran.'" name="s_legal-'.$ran.'" />';
 		$plh = __('Privacy policy', 'bilnea');
 		switch (substr(explode(' ', $plh)[0], -1)) {
 			case 'a':
@@ -1509,13 +1583,95 @@ if (b_f_option('b_opt_subscribers') == 1) {
 				$art = _x('the', 'male', 'bilnea');
 				break;
 		}
-		$out .= '<p>* '.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$plh.'" target="_blank">'.strtolower($plh).'</a>.</p>';
+		$out .= '<label for="s_legal-'.$ran.'">* '.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$plh.'" target="_blank">'.strtolower($plh).'</a>.</label>';
 		$out .= '<div class="s_submit">'.__('Suscribe', 'bilnea').'</div>';
-		$out .= '<div>';
+		$out .= '</div>';
 
 		return $out;
 	}
 	add_shortcode('b_newsletters', 'b_newsletters');
 }
+
+function b_rrss($atts) {
+	$a = shortcode_atts(array(
+		'type' => null
+	), $atts);
+	if ($a[type] != null) {
+		switch (esc_attr($a['type'])) {
+			case 'twitter':
+				$twt = b_f_option('b_opt_social-twitter');
+				if (strpos($twt,'twitter.com') === false) {
+					if ($twt[0] == '@') $twt = ltrim($twt, '@');
+					$twt = 'http://twitter.com/'.$twt;
+				}
+				if (strpos($twt,'http://') === false) {
+					$twt = 'http://'.$twt;
+				}
+				$twt = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $twt))));
+				return '<a href="'.$twt.'" target="_blank" class="fa fa-twitter"></a>';
+				break;
+			case 'facebook':
+				$fcb = b_f_option('b_opt_social-facebook');
+				if (strpos($fcb,'facebook.com') === false) {
+					$fcb = '//facebook.com/'.$fcb;
+				}
+				if (strpos($fcb,'http://') === false) {
+					$fcb = '//'.$fcb;
+				}
+				$fcb = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $fcb))));
+				return '<a href="'.$fcb.'" target="_blank" class="fa fa-facebook"></a>';
+				break;
+			case 'google-plus':
+				$gop = b_f_option('b_opt_social-google-plus');
+				if (strpos($gop,'http://') === false) {
+					$gop = 'http://'.$gop;
+				}
+				$gop = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $gop))));
+				return '<a href="'.$gop.'" target="_blank" class="fa fa-google-plus"></a>';
+				break;
+			case 'youtube':
+				$ytb = b_f_option('b_opt_social-youtube');
+				if (strpos($ytb,'http://') === false) {
+					$ytb = 'http://'.$ytb;
+				}
+				$ytb = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $ytb))));
+				return '<a href="'.$ytb.'" target="_blank" class="fa fa-youtube"></a>';
+				break;
+			case 'linkedin':
+				$lkn = b_f_option('b_opt_social-linkedin');
+				if (strpos($lkn,'http://') === false) {
+					$lkn = 'http://'.$lkn;
+				}
+				$lkn = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $lkn))));
+				return '<a href="'.$lkn.'" target="_blank" class="fa fa-linkedin"></a>';
+				break;
+			case 'instagram':
+				$itg = b_f_option('b_opt_social-instagram');
+				if (strpos($itg,'instagram.com') === false) {
+					if ($itg[0] == '@') $itg = ltrim($itg, '@');
+					$itg = 'http://instagram.com/'.$itg;
+				}
+				if (strpos($itg,'http://') === false) {
+					$itg = 'http://'.$itg;
+				}
+				$itg = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $itg))));
+				return '<a href="'.$itg.'" target="_blank" class="fa fa-instagram"></a>';
+				break;
+			case 'pinterest':
+				$pin = b_f_option('b_opt_social-pinterest');
+				if (strpos($pin,'pinterest.com') === false) {
+					$pin = 'http://pinterest.com/'.$pin;
+				}
+				if (strpos($pin,'http://') === false) {
+					$pin = 'http://'.$pin;
+				}
+				$pin = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $pin))));
+				return '<a href="'.$pin.'" target="_blank" class="fa fa-pinterest"></a>';
+				break;
+		}
+	}
+}
+
+add_shortcode('b_rrss', 'b_rrss');
 
 ?>

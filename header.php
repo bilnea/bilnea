@@ -33,14 +33,42 @@ session_start();
 		<![endif]-->
 
 		<?php wp_head(); ?>
+		<script type="text/javascript">
+			var bilnea = {
+				post_id: '<?= $post->ID ?>',
+				main_theme_uri: '<?= get_template_directory_uri() ?>',
+				child_theme_uri: '<?= get_stylesheet_directory_uri() ?>',
+				main_uri: '<?= get_site_url() ?>'
+			}
+		</script>
 		<?php
 		if (b_f_option('b_opt_lightbox') == 1 && b_f_option('b_opt_lightbox-location') == 1) :
 		?>
 		<script type="text/javascript">
 			jQuery(function($) {
-				$('a[href$=".jpg"], a[href$=".jpeg"], a[href$=".gif"], a[href$=".png"]').magnificPopup({
+				$('[href*="youtu.be"]').each(function() {
+					var t = $(this);
+					t.attr('href', t.attr('href').replace('youtu.be/', 'youtube.com/watch?v='));
+				});
+				$('a[rel*="gal"]').each(function() {
+					var t = $(this),
+						r = t.attr('rel');
+					if (!t.parent().hasClass('b_gallery')) {
+						t.parent().addClass('b_gallery');
+					};
+				});
+				$('.b_gallery').each(function() {
+					$(this).magnificPopup({
+						delegate: 'a',
+						type: 'image',
+						gallery: {
+							enabled: true
+						}
+					});
+				});
+				$('*:not(.b_gallery) > a[href$=".jpg"], *:not(.b_gallery) > a[href$=".jpeg"], *:not(.b_gallery) > a[href$=".gif"], *:not(.b_gallery) > a[href$=".png"]').magnificPopup({
 					type: 'image' });
-				$('a[href$="youtube.com"], a[href$="vimeo.com"]').magnificPopup({
+				$('a[href*="youtube.com"], a[href*="vimeo.com"]').magnificPopup({
 					type: 'iframe',
 					patterns: {
 						youtube: {
@@ -81,22 +109,6 @@ session_start();
 						?>
 					});
 				})
-				$('img[rel*="gal"]').each(function() {
-					var t = $(this),
-						r = t.attr('rel');
-					if (!t.parent().hasClass('galeria')) {
-						t.parent().addClass('galeria');
-					};
-				})
-				$('.galeria').each(function() {
-					$(this).magnificPopup({
-						delegate: 'a',
-						type: 'image',
-						gallery: {
-							enabled: true
-						}
-					});
-				});
 			});
 			jQuery(window).on('load scroll', function() {
 				var responsive_width = <?= preg_replace('/[^0-9]/', '', b_f_option('b_opt_responsive')) ?>;
@@ -119,20 +131,14 @@ session_start();
 
 		<?php
 		if (b_f_option('b_opt_loader') == 1) :
-		?>
-		<div id="loader-wrap">
-		<?php
-			include(get_stylesheet_directory().'/loader.php');
-		?>
-			<script type="text/javascript">
-				jQuery(window).on('load', function() {
-					jQuery('#loader-wrap').fadeOut(100, function() {
-						jQuery('#loader-wrap').remove();
-					})
-				})
-			</script>
-		</div>
-		<?php
+			wp_enqueue_script('nprogress-js', get_stylesheet_directory_uri().'/js/loader.js', array('jquery'), $version, true);
+			?>
+			<div id="loader-wrap">
+			<?php
+				include(get_stylesheet_directory().'/loader.php');
+			?>
+			</div>
+			<?php
 		endif;
 		?>
 

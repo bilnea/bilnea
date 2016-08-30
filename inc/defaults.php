@@ -110,7 +110,8 @@ function b_f_default() {
 		'b_opt_blog-read-more-en'	=> 'Read more',
 		'b_opt_blog-date-es'		=> 'd/m/Y',
 		'b_opt_blog-order'			=> 'date',
-		'b_opt_blog'				=> 1
+		'b_opt_blog'				=> 1,
+		'b_opt_form-email'			=> get_option('admin_email'),
 	);
 }
 

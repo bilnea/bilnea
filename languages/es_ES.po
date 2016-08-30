@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bilnea Wordpress theme\n"
-"POT-Creation-Date: 2016-07-01 11:24+0200\n"
-"PO-Revision-Date: 2016-07-01 11:25+0200\n"
+"POT-Creation-Date: 2016-08-24 13:05+0200\n"
+"PO-Revision-Date: 2016-08-24 13:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: Samuel E. Cerezo <samuelcerezo@bilnea.com>\n"
 "Language: es\n"
@@ -36,15 +36,15 @@ msgstr "Hecho con <i class=\"fa fa-heart-o\"></i> por"
 msgid "bilnea. Communication & Digital Marketing Agency"
 msgstr "bilnea. Agencia de Comunicación y Marketing Digital"
 
-#: functions.php:1197
+#: functions.php:1257
 msgid "* I have read, understood and accept the "
 msgstr "* He leído, entiendo y acepto la"
 
-#: functions.php:1197
+#: functions.php:1257
 msgid "privacy policy"
 msgstr "política de privacidad"
 
-#: header.php:164
+#: header.php:166
 #, php-format
 msgid ""
 "We use our own and third-part <em>cookies</em> to analyse the use and "
@@ -59,45 +59,49 @@ msgstr ""
 "configuración u obtener más información <a href=\"%1$s\" target=\"_blank\" "
 "title=\"Política de cookies de %2$s\">aquí</a>."
 
-#: header.php:166
+#: header.php:168
 msgid "Ok"
 msgstr "Aceptar"
 
-#: inc/shortcodes.php:267
+#: inc/shortcodes.php:271
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: inc/shortcodes.php:270
+#: inc/shortcodes.php:275
 msgid "Message"
 msgstr "Mensaje"
 
-#: inc/shortcodes.php:274
+#: inc/shortcodes.php:280
 msgid "State"
 msgstr "Provincia"
 
-#: inc/shortcodes.php:281
+#: inc/shortcodes.php:288 inc/shortcodes.php:1551
 msgid "Privacy policy"
 msgstr "política de privacidad"
 
-#: inc/shortcodes.php:284
+#: inc/shortcodes.php:291 inc/shortcodes.php:1554
 msgctxt "female"
 msgid "the"
 msgstr "la"
 
-#: inc/shortcodes.php:287
+#: inc/shortcodes.php:294 inc/shortcodes.php:1557
 msgctxt "male"
 msgid "the"
 msgstr "el"
 
-#: inc/shortcodes.php:291
+#: inc/shortcodes.php:298 inc/shortcodes.php:1560
 msgid "I have read, understood and accept"
 msgstr "He leído, entiendo y acepto"
 
-#: inc/shortcodes.php:303
+#: inc/shortcodes.php:311
 msgid "Fill in the following fields."
 msgstr "Complete los siguientes campos."
 
-#: inc/shortcodes.php:408
+#: inc/shortcodes.php:400
+msgid "Select an option"
+msgstr "Selecciona una opción"
+
+#: inc/shortcodes.php:456
 msgid ""
 "Your message has been sent sucesfully. Your request will delay. A copy has "
 "been sent to your email."
@@ -105,51 +109,67 @@ msgstr ""
 "Mensaje enviado correctamente. Atenderemos su solicitud a la mayor brevedad. "
 "Se ha enviado una copia a su dirección de correo electrónico."
 
-#: inc/shortcodes.php:411
+#: inc/shortcodes.php:459
 msgid "Send"
 msgstr "Enviar"
 
-#: inc/shortcodes.php:439
+#: inc/shortcodes.php:487
 msgid "Sending"
 msgstr "Enviando"
 
-#: inc/shortcodes.php:508 inc/shortcodes.php:548
+#: inc/shortcodes.php:556 inc/shortcodes.php:596
 msgid "Published by "
 msgstr "Publicado por"
 
-#: inc/shortcodes.php:526 inc/shortcodes.php:566
+#: inc/shortcodes.php:574 inc/shortcodes.php:614
 msgid "Read more"
 msgstr "Leer más"
 
-#: inc/shortcodes.php:610
+#: inc/shortcodes.php:658
 msgid "Home"
 msgstr "Inicio"
 
-#: inc/shortcodes.php:1030
+#: inc/shortcodes.php:1079
 msgid "No posts found"
 msgstr "Sin resultados"
 
-#: inc/shortcodes.php:1035
+#: inc/shortcodes.php:1084
 #, php-format
 msgid "Page %1$s of %2$s"
 msgstr "Página %1$s de %2$s"
 
-#: inc/shortcodes.php:1285
+#: inc/shortcodes.php:1334
 msgid "All"
 msgstr "Todo"
 
-#: inc/shortcodes.php:1307 inc/shortcodes.php:1309
+#: inc/shortcodes.php:1356 inc/shortcodes.php:1358
 msgid "Tweet this"
 msgstr "Tuitéalo"
 
-#: inc/shortcodes.php:1465
+#: inc/shortcodes.php:1518
 msgid "It's not possible to get latest tweets. No username configured"
 msgstr ""
 "No ha sido posible obtener los últimos tuits. No se ha definido usuario"
 
-#: inc/shortcodes.php:1468
+#: inc/shortcodes.php:1521
 msgid "No tweets"
 msgstr "Sin tuits"
+
+#: inc/shortcodes.php:1545
+msgid "* Name"
+msgstr "* Nombre"
+
+#: inc/shortcodes.php:1547
+msgid "* Last name"
+msgstr "* Apellidos"
+
+#: inc/shortcodes.php:1549
+msgid "* Email"
+msgstr "* Correo electrónico"
+
+#: inc/shortcodes.php:1561
+msgid "Suscribe"
+msgstr "Suscríbete"
 
 #: index.php:29
 msgid "Comment"
@@ -162,6 +182,24 @@ msgstr "1 comentario"
 #: index.php:29
 msgid "% Comments"
 msgstr "% comentarios"
+
+#: php/subscriber.php:37
+msgid "Please confirm your newsletter subscription by visiting the link below:"
+msgstr ""
+"Por favor, confirma la suscripción al boletín de noticias en el siguiente "
+"enlace:"
+
+#: php/subscriber.php:39
+msgid ""
+"If you have registered for a subscription accidentally or the newsletter was "
+"not ordered in your name, please ignore this email."
+msgstr ""
+"Si te has suscrito al boletín de noticias de manera accidental o no has "
+"solicitado la suscripción, por favor ignota este correo electrónico."
+
+#: php/subscriber.php:43
+msgid "Thanks for subscribing"
+msgstr "Gracias por suscribirte"
 
 #: search.php:29
 #, php-format
