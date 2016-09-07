@@ -32,25 +32,33 @@ function initMap() {
 				draggable: eval('drag_'+a)
 			});
 			var mark = window['markers_'+a];
-			for (var i = mark.length - 1; i >= 0; i--) {
-				var este = mark[i];
-				if (typeof este['icon'] === 'undefined') {
+			for (var i = 0; i < mark.length; i++) {
+				var marker = mark[i];
+				if (typeof marker['icon'] === 'undefined') {
 					window['marker_'+a] = new google.maps.Marker({
-						position: {lat: este['position']['lat'], lng: este['position']['lng']},
-						map: window[este['map']]
+						position: {lat: marker['position']['lat'], lng: marker['position']['lng']},
+						map: window[marker['map']]
 					});
 				} else {
-					var size = parseInt(este['icon']['size']);
+					var size = parseInt(marker['icon']['size']);
 					window['marker_'+a] = new google.maps.Marker({
-						position: {lat: este['position']['lat'], lng: este['position']['lng']},
-						map: window[este['map']],
+						position: {lat: marker['position']['lat'], lng: marker['position']['lng']},
+						map: window[marker['map']],
 						icon: {
-							url: este['icon']['url'],
+							url: marker['icon']['url'],
 							scaledSize: new google.maps.Size(size, size),
 							origin: new google.maps.Point(0,0),
-							anchor: new google.maps.Point((size/2), (size/2))
+							anchor: new google.maps.Point((size/2), size)
 						}
 					});
+					if (marker['info'] != undefined) {
+						window['marker_'+a].infowindow = new google.maps.InfoWindow({
+							content: marker['info']
+						});
+						google.maps.event.addListener(window['marker_'+a], 'click', function() {
+							this.infowindow.open(window['map_'+a], this);
+						});
+					};
 				}
 			};
 		}

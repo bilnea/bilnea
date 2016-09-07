@@ -137,6 +137,7 @@ function b_f_slideshow($atts, $content = null) {
 	$a = shortcode_atts(array(
 		'url' => get_template_directory_uri().'/img/empty-grid.png',
 		'position' => 'cc',
+		'class' => null,
 	), $atts);
 	$img = ''; $cen = 'center';
 	switch (esc_attr($a['position'])) {
@@ -160,7 +161,8 @@ function b_f_slideshow($atts, $content = null) {
 		default: $cen = 'center'; break;
 	}
 	if (esc_attr($a['url']) != null) { $img = ' style="background-image: url('.str_replace('b_root', preg_replace('(^https?://)', '', get_site_url()), esc_url(esc_attr($a['url']))).'); background-position: '.$cen.';"'; }
-	return '<div'.$img.'>'.do_shortcode($content).'</div>';
+	if (esc_attr($a['class']) != null) { $cls = ' data-class="'.esc_attr($a['class']).'"'; } else { $cls = ''; }
+	return '<div'.$img.$cls.'>'.do_shortcode($content).'</div>';
 }
 
 function b_f_button($atts, $content = null) {
@@ -1229,6 +1231,7 @@ function b_f_map($atts, $content = null) {
 	wp_enqueue_script('google-map');
 	$out .= '<script type="text/javascript">'."\n";
 	$out .= '	var map_'.$ran.';'."\n";
+	$out .= '	var map_'.$ran.';'."\n";
 	$out .= '	var center_'.$ran.' = {lat: '.explode(',', $cen)[0].', lng: '.explode(',', $cen)[1].'};'."\n";
 	$out .= '	var poi_'.$ran.' = \''.esc_attr($a['poi']).'\';'."\n";
 	$out .= '	var zoom_'.$ran.' = '.esc_attr($a['zoom']).';'."\n";
@@ -1238,34 +1241,40 @@ function b_f_map($atts, $content = null) {
 	$out .= '	var m_control_'.$ran.' = '.esc_attr($a['m_control']).';'."\n";
 	$out .= '	var z_control_'.$ran.' = '.esc_attr($a['z_control']).';'."\n";
 	$out .= '	var markers_'.$ran.' = new Array();'."\n";
-	$out .= '</script>'.do_shortcode($content)."\n";
+	$out .= '</script><div class="map-options" data-id="'.$ran.'">'.do_shortcode($content).'</div>'."\n";
 	return $out;
 }
 
 add_shortcode('b_map', 'b_f_map');
 
-function b_f_marker($atts) {
+function b_f_marker($atts, $content = null) {
 	$a = shortcode_atts(array(
 		'position' => '37.992900,-1.114391',
 		'icon' => null,
 		'size' => '40',
 	), $atts);
-	$out ='<foo id="foo"></div>'."\n";
-	$out .= '<script type="text/javascript">'."\n";
-	$out .= 'jQuery(function() {';
-	$out .= '	var a = jQuery(\'#foo\').prev().prev().attr(\'id\').replace(\'map-\', \'\');'."\n";
-	$out .= '		jQuery(\'#foo\').remove();'."\n";
+	$out .= '<script type="text/javascript" id="b_map_script">'."\n";
+	$out .= 'jQuery(function() {'."\n";
+	$out .= '	var a = jQuery(\'#b_map_script\').remove(\'attr\', \'id\').closest(\'.map-options\').attr(\'data-id\');'."\n";
 	$out .= '		var marker = {'."\n";
 	$out .= '			position: {lat: '.explode(',', str_replace(' ', '', esc_attr($a['position'])))[0].', lng: '.explode(',', str_replace(' ', '', esc_attr($a['position'])))[1].'},'."\n";
 	$out .= '			map: \'map_\'+a,'."\n";
 	if (esc_attr($a['icon']) != null) {
 		$out .= '			icon: {'."\n";
-		$out .= '				url: \''.esc_attr($a['icon']).'\','."\n";
+		if (is_numeric(esc_attr($a['icon']))) {
+			$u = wp_get_attachment_url(esc_attr($a['icon']));
+			$out .= '				url: \''.$u.'\','."\n";
+		} else {
+			$out .= '				url: \''.esc_attr($a['icon']).'\','."\n";
+		}
 		$out .= '				size: \''.esc_attr($a['size']).'\''."\n";
-		$out .= '			}'."\n";
+		$out .= '			},'."\n";
+		if ($content != null) {
+			$out .= '		info: \''.$content.'\''."\n";
+		}
 	}
 	$out .= '		};'."\n";
-	$out .= '		var b = window[\'markers_\'+a];';
+	$out .= '		var b = window[\'markers_\'+a];'."\n";
 	$out .= '		b.push(marker);'."\n";
 	$out .= '	});'."\n";
 	$out .= '</script>'."\n";

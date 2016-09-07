@@ -106,6 +106,7 @@ function bilnea_options_page() {
 				}
 				?>
 				<h3 <?php if ($opt['pestanya'] == 10) { echo 'class="activo"'; }?>>Textos legales</h3>
+				<h3 <?php if ($opt['pestanya'] == 11) { echo 'class="activo"'; }?>>Redirecciones y SEO</h3>
 			</div>
 
 			<!-- Bloque central -->
@@ -1420,6 +1421,45 @@ function bilnea_options_page() {
 						<?php
 					}
 					?>
+				</div>
+
+				<!-- Redirecciones y SEO -->
+				<div id="tab10" <?php if ($opt['pestanya'] == 11) { echo 'class="activo"'; }?>>
+					<h4>URLs</h4>
+					<div class="subsubsub" style="display: block; width: 100%;">
+						<a class="current">Todos (<?= wp_count_posts()->publish ?>)</a>
+						<?php
+						$b_var_post_types_list = array();
+						foreach (get_post_types() as $type) {
+							$type = get_post_type_object($type);
+							if ($type->public == 1 && $type->name != 'attachment') {
+								?>
+								<a data-slug="<?= $type->name ?>"><?= $type->label ?> <span class="count">(<?= wp_count_posts($type->name)->publish ?>)</span></a>
+								<?php
+								array_push($b_var_post_types_list, $type->name);
+							}
+						}
+						?>
+					</div>
+					<div class="content">
+						<?php
+						$args = array (
+							'post_status' => array('publish'),
+							'post_type' => $b_var_post_types_list,
+							'nopaging' => true,
+							'posts_per_page' => '1',
+						);
+						$query = new WP_Query($args);
+						if ($query->have_posts()) {
+							while ($query->have_posts()) {
+								$query->the_post();
+								global $post;
+								echo '<hr style="margin: 0;" /><div style="display: block; width: auto;" class="'.get_post_type().'">'.get_the_title().'<input class="gran" style="width: 100%; display: block; margin-top: -2px;" type="text" data-id="'.get_the_ID().'" placeholder="'.$post->post_name.'" /></div>';
+							}
+						}
+						wp_reset_postdata();
+						?>
+					</div>
 				</div>
 			</div>
 		</div>
