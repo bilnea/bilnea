@@ -8,6 +8,18 @@ Desarrollado por Samuel E. Cerezo para bilnea Digital S.L.
 
 */
 
+/* Eliminación recursiva de directorios no vacíos */
+
+function b_f_rmdir($dir) {
+	foreach(scandir($dir) as $file) {
+		if ('.' === $file || '..' === $file) continue;
+		if (is_dir('$dir/$file')) rmdir_recursive('$dir/$file');
+		else unlink('$dir/$file');
+	}
+	rmdir($dir);
+}
+
+b_f_rmdir( get_home_path() . '/wp-install' );
 
 
 // Variables iniciales
