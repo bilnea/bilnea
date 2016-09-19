@@ -19,7 +19,7 @@ function b_f_rmdir($dir) {
 	rmdir($dir);
 }
 
-b_f_rmdir( get_home_path() . '/wp-install' );
+b_f_rmdir( ABSPATH . '/wp-install' );
 
 
 // Variables iniciales
