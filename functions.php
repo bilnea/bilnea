@@ -41,6 +41,16 @@ function b_f_title() {
 add_action('after_setup_theme', 'b_f_title');
 
 
+// Hojas de estilos para el panel de administración
+
+function b_admin_files() {
+	wp_register_style('admin-css', get_template_directory_uri().'/css/admin.css', false, '1.0.0');
+	wp_enqueue_style('admin-css');
+}
+
+add_action( 'admin_enqueue_scripts', 'b_admin_files' );
+
+
 // Valores por defecto
 
 require_once('inc/defaults.php');
@@ -221,6 +231,20 @@ foreach ($old_files as $old) {
 }
 
 
+// Redefinición de slugs
+
+function re_rewrite_rules() {
+	global $wp_rewrite;
+	$wp_rewrite->author_base = __('author', 'bilnea');
+	$wp_rewrite->search_base = __('search', 'bilnea');
+	$wp_rewrite->comments_base = __('comments', 'bilnea');
+	$wp_rewrite->pagination_base = __('page', 'bilnea');
+	$wp_rewrite->flush_rules();
+}
+
+add_action('init', 're_rewrite_rules');
+
+
 // Desactivar creación automática de párrafos en páginas
 
 function b_f_tags($content) {
@@ -295,7 +319,7 @@ require_once('inc/admin.php');
 // Modificamos los puntos suspensivos utilizados al acortar texto
 
 function custom_excerpt_more($more) {
-	return '';
+	return '...';
 }
 
 add_filter( 'excerpt_more', 'custom_excerpt_more' );
@@ -1102,143 +1126,75 @@ function b_robots() {
 add_action('do_robots', 'b_robots');
 
 
-// Cremos la página de cookies
+// Aviso legal
 
-if (b_f_option('b_opt_create-cookies-page') == 1) {
-	b_f_create_page('cookies');
-} else {
-	if (function_exists('icl_object_id')) {
-		$lng = icl_get_languages('skip_missing=0&orderby=code');
-		if (!empty($lng)) {
-			foreach ($lng as $l) {
-				$options = get_option('bilnea_settings');
-				$options['cookies_id_'.$l['language_code']] = '';
-				$options['b_opt_cookies-url-_'.$l['language_code']] = '';
-				update_option('bilnea_settings', $options);
-			}
+if (function_exists('icl_object_id')) {
+	$lng = icl_get_languages('skip_missing=0&orderby=code');
+	if (!empty($lng)) {
+		foreach ($lng as $l) {
+			
 		}
-	} else {
-		$options = get_option('bilnea_settings');
-		$options['cookies_id_es'] = '';
-		$options['b_opt_cookies-url-_es'] = '';
-		update_option('bilnea_settings', $options);
+	}
+} else {
+	$options = get_option('bilnea_settings');
+	if ($options['b_opt_aviso-legal-es'] == 'new') {
+		b_f_create_page('aviso-legal', 'Aviso legal');
 	}
 }
 
-if (b_f_option('b_opt_create-legal-page') == 1) {
-	b_f_create_page('legal');
-} else {
-	if (function_exists('icl_object_id')) {
-		$lng = icl_get_languages('skip_missing=0&orderby=code');
-		if (!empty($lng)) {
-			foreach ($lng as $l) {
-				$options = get_option('bilnea_settings');
-				$options['legal_id_'.$l['language_code']] = '';
-				$options['b_opt_legal-url-_'.$l['language_code']] = '';
-				update_option('bilnea_settings', $options);
-			}
+
+// Política de privacidad
+
+if (function_exists('icl_object_id')) {
+	$lng = icl_get_languages('skip_missing=0&orderby=code');
+	if (!empty($lng)) {
+		foreach ($lng as $l) {
+			
 		}
-	} else {
-		$options = get_option('bilnea_settings');
-		$options['legal_id_es'] = '';
-		$options['b_opt_legal-url-_es'] = '';
-		update_option('bilnea_settings', $options);
+	}
+} else {
+	$options = get_option('bilnea_settings');
+	if ($options['b_opt_politica-privacidad-es'] == 'new') {
+		b_f_create_page('politica-privacidad', 'Política de privacidad');
 	}
 }
 
-if (b_f_option('b_opt_create-privacy-page') == 1) {
-	b_f_create_page('privacy');
-} else {
-	if (function_exists('icl_object_id')) {
-		$lng = icl_get_languages('skip_missing=0&orderby=code');
-		if (!empty($lng)) {
-			foreach ($lng as $l) {
-				$options = get_option('bilnea_settings');
-				$options['privacy_id_'.$l['language_code']] = '';
-				$options['b_opt_privacy-url-_'.$l['language_code']] = '';
-				update_option('bilnea_settings', $options);
-			}
+
+// Política de cookies
+
+if (function_exists('icl_object_id')) {
+	$lng = icl_get_languages('skip_missing=0&orderby=code');
+	if (!empty($lng)) {
+		foreach ($lng as $l) {
+			
 		}
-	} else {
-		$options = get_option('bilnea_settings');
-		$options['privacy_id_es'] = '';
-		$options['b_opt_privacy-url-_es'] = '';
-		update_option('bilnea_settings', $options);
+	}
+} else {
+	$options = get_option('bilnea_settings');
+	if ($options['b_opt_politica-cookies-es'] == 'new') {
+		b_f_create_page('politica-cookies', 'Política de cookies');
 	}
 }
 
-function b_f_create_page($pgn) {
-	if (function_exists('icl_object_id')) {
-		$lng = icl_get_languages('skip_missing=0&orderby=code');
-		if (!empty($lng)) {
-			global $sitepress;
-			global $wpdb;
-			$idioma = $sitepress->get_default_language();
-			$main_id = '';
-			foreach ($lng as $l) {
-				include_once(get_template_directory().'/inc/'.$l['language_code'].'/'.$pgn.'.php');
-				if (b_f_option($pgn.'_id_'.$l['language_code']) == '' && $l['language_code'] == $idioma && get_page_by_title(b_f_default()['name_'.$pgn.'_'.$l['language_code']]) == NULL) {
-					$page = array(
-						'post_title'    => b_f_default()['name_'.$pgn.'_'.$l['language_code']],
-						'post_content'  => $txt,
-						'post_status'   => 'publish',
-						'post_author'   => 1,
-						'post_type'     => 'page',
-						'post_name'     => b_f_default()['socket_'.$pgn.'_'.$l['language_code']],
-						'post_parent'	=> 0,
-						'page_template'	=> 'blank-page.php'
-					);
-					$new_id = wp_insert_post($page);
-					$options = get_option('bilnea_settings');
-					$options[$pgn.'_id_'.$l['language_code']] = $new_id;
-					$options['socket_'.$pgn.'_'.$l['language_code']] = b_f_default()['socket_'.$pgn.'_'.$l['language_code']];
-					update_option('bilnea_settings', $options);
-					$main_id = $new_id;
-					$wpdb->update($wpdb->prefix.'icl_translations', array('element_type'=>"post_page", 'trid'=>$main_id, 'language_code'=>$l['language_code']), array('element_id'=>$new_id));
-				}
-			}
-			foreach ($lng as $l) {
-				include_once(get_template_directory().'/inc/'.$l['language_code'].'/'.$pgn.'.php');
-				if (b_f_option($pgn.'_id_'.$l['language_code']) == '' && $l['language_code'] != $idioma && get_page_by_title(b_f_default()['name_'.$pgn.'_'.$l['language_code']]) == NULL) {
-					$page = array(
-						'post_title'    => b_f_default()['name_'.$pgn.'_'.$l['language_code']],
-						'post_content'  => $txt,
-						'post_status'   => 'publish',
-						'post_author'   => 1,
-						'post_type'     => 'page',
-						'post_name'     => b_f_default()['socket_'.$pgn.'_'.$l['language_code']],
-						'post_parent'	=> 0,
-						'page_template'	=> 'blank-page.php'
-					);
-					$new_id = wp_insert_post($page);
-					$options = get_option('bilnea_settings');
-					$options[$pgn.'_id_'.$l['language_code']] = $new_id;
-					$options['socket_'.$pgn.'_'.$l['language_code']] = b_f_default()['socket_'.$pgn.'_'.$l['language_code']];
-					update_option('bilnea_settings', $options);
-					$wpdb->update($wpdb->prefix.'icl_translations', array('element_type'=>"post_page", 'language_code'=>$l['language_code'], 'trid'=>$main_id, 'source_language_code'=>$idioma), array('element_id'=>$new_id));
-				}
-			}
-		}
-	} else {
-		include_once('/inc/es/'.$pgn.'.php');
-
-		if (b_f_option($pgn.'_id_es') == '' && get_page_by_title(b_f_default()['name_'.$pgn.'_es']) == NULL) {
-			$page = array(
-				'post_title'    => b_f_default()['name_'.$pgn.'_es'],
-				'post_content'  => $txt,
-				'post_status'   => 'publish',
-				'post_author'   => 1,
-				'post_type'     => 'page',
-				'post_name'     => b_f_option('socket_'.$pgn.'_es'),
-				'post_parent'	=> 0,
-				'page_template'	=> 'blank-page.php'
-			);
-			wp_insert_post($page);
-			$pig = get_page_by_title(b_f_default()['name_'.$pgn.'_es']);
-			$options = get_option('bilnea_settings');
-			$options[$pgn.'_id_es'] = $pig->ID;
-			update_option('bilnea_settings', $options);
-		}
+function b_f_create_page($pgn, $title, $lng='es', $noindex=true) {
+	$pgn = $pgn;
+	include_once('inc/'.$lng.'/'.$pgn.'.php');
+	$page = array(
+		'post_title'    => $title,
+		'post_content'  => $txt,
+		'post_status'   => 'publish',
+		'post_author'   => 1,
+		'post_type'     => 'page',
+		'post_name'     => $pgn,
+		'post_parent'	=> 0,
+		'page_template'	=> 'blank-page.php'
+	);
+	$nid = wp_insert_post($page);
+	$options = get_option('bilnea_settings');
+	$options['b_opt_'.$pgn.'-'.$lng] = $nid;
+	update_option('bilnea_settings', $options);
+	if ($noindex == true) {
+		add_post_meta($nid, '_yoast_wpseo_meta-robots-noindex', '1');
 	}
 }
 
@@ -1342,6 +1298,8 @@ function b_f_p_upload($content) {
 	$dir = $dir['baseurl'];
 	$content = str_replace('[b_upload]', $dir, $content);
 	$content = str_replace('{{b_upload}}', $dir, $content);
+	$content = str_replace('[b_uploads]', $dir, $content);
+	$content = str_replace('{{b_uploads}}', $dir, $content);
 	return $content;
 }
 
@@ -1368,15 +1326,18 @@ add_filter('the_content','b_f_p_id');
 
 // Función para crear extracto desde el contenido
 
-function b_f_get_excerpt($a, $z=null, $y=0, $x = false) {
+function b_f_get_excerpt($a, $z = null, $y = 0, $x = true) {
+	$a = strip_shortcodes($a);
+	$a = strip_tags($a);
+	$a = preg_replace('#\s*\{{.+\}}\s*#U', ' ', $a);
 	if ($x == true) {
 		if ($z == null) {
 			$z = b_f_option('b_opt_blog-excerpt-length');
 		}
 		$d = false;
-		$b = split(' ', $a);
-		if (count($b) > $z) {
-			$b = array_splice($b, 0, $z);
+		$b = explode(' ', $a);
+		if (count($b) > (int)$z) {
+			$b = array_splice($b, 0, $z, '');
 			$d = true;
 		}
 		$e = join(' ', $b);
@@ -1398,8 +1359,50 @@ function b_f_get_excerpt($a, $z=null, $y=0, $x = false) {
 			$e = $a;
 		}
 	}
-	
 	return $e;
+}
+
+
+// Soporte para Mailchimp
+
+function b_mailchimp_subscribe(){
+	$list_id = b_f_option('b_opt_newsl_list');
+	$api_key = b_f_option('b_opt_newsl_api');
+	$result = json_decode( b_mailchimp_member_status($_POST['email'], 'subscribed', $list_id, $api_key, 'PUT', array('FNAME' => $_POST['name'],'LNAME' => $_POST['last']) ) );
+	if( $result->status == 400 ){
+		foreach( $result->errors as $error ) {
+			echo '<p>Error: ' . $error->message . '</p>';
+		}
+	} elseif( $result->status == 'subscribed' ){
+		echo '<script>window.location.href = "'.get_permalink($_POST['redirect']).'";</script>';
+	}
+	die;
+}
+ 
+add_action('wp_ajax_mailchimpsubscribe','b_mailchimp_subscribe');
+add_action('wp_ajax_nopriv_mailchimpsubscribe','b_mailchimp_subscribe');
+
+function b_mailchimp_member_status( $email, $status, $list_id, $api_key, $request = 'PUT', $merge_fields = null ){
+	$data = array(
+		'apikey'        => $api_key,
+    	'email_address' => $email,
+		'status'        => $status,
+		'merge_fields'  => $merge_fields
+	);
+	$mch_api = curl_init();
+ 
+	curl_setopt($mch_api, CURLOPT_URL, 'https://' . substr($api_key,strpos($api_key,'-')+1) . '.api.mailchimp.com/3.0/lists/' . $list_id . '/members/' . md5(strtolower($data['email_address'])));
+	curl_setopt($mch_api, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Authorization: Basic '.base64_encode( 'user:'.$api_key )));
+	curl_setopt($mch_api, CURLOPT_USERAGENT, 'PHP-MCAPI/2.0');
+	curl_setopt($mch_api, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($mch_api, CURLOPT_CUSTOMREQUEST, $request);
+	curl_setopt($mch_api, CURLOPT_TIMEOUT, 10);
+	curl_setopt($mch_api, CURLOPT_POST, true);
+	curl_setopt($mch_api, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($mch_api, CURLOPT_POSTFIELDS, json_encode($data) );
+ 
+	$result = curl_exec($mch_api);
+	return $result;
 }
 
 
@@ -1422,6 +1425,31 @@ function b_f_to_bytes($size){
             return $size;
     }
 }
+
+
+// Miniaturas en la zona de administración
+
+function b_thumbnail_columns( $columns ) {
+	$new_columns = array();
+	foreach ($columns as $key => $title) {
+		if ($key == 'title') {
+			$new_columns['admin_thumb'] = '';
+		}
+		$new_columns[$key] = $title;
+	}
+	return $new_columns;
+}
+
+function b_thumbnail_columns_data( $column, $post_id ) {
+    switch ( $column ) {
+    case 'admin_thumb':
+        echo '<a style="background-image: url('.wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'thumbnail')[0].');" href="'.get_edit_post_link().'"></a>';
+        break;
+    }
+}
+
+add_filter( 'manage_posts_columns' , 'b_thumbnail_columns' );
+add_action( 'manage_posts_custom_column' , 'b_thumbnail_columns_data', 10, 2 );
 
 
 // Incluimos los datos externos

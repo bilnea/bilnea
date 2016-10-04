@@ -27,6 +27,7 @@ session_start();
 		<meta name="format-detection" content="telephone=no" />
 		<link rel="profile" href="http://gmpg.org/xfn/11" />
 		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+		<meta name="google-site-verification" content="GdJqIk4U155XZ00WJC35MYyCNxNmLgOaWphI6ZQujK4" />
 
 		<!--[if lt IE 9]>
 		<script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>

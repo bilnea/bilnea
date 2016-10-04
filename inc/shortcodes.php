@@ -561,7 +561,7 @@ function b_f_s_recent_posts($atts){
 	$i = 1;
 	while($query->have_posts()) : $query->the_post();
 		if ((esc_attr($a['featured']) == 'true' && $i == 1) || esc_attr($a['featured']) == 'false') {
-			$e .= '<div class="'.$fw.' featured-post">';
+			$e .= '<div class="'.$fw.' featured-post auto-height">';
 			if (esc_attr($a['image']) == 'true') {
 				$e .= '<a class="recent-posts-image" href="'.get_permalink().'" title="'.get_the_title().'"';
 				if (has_post_thumbnail()) {
@@ -572,13 +572,15 @@ function b_f_s_recent_posts($atts){
 			if (esc_attr($a['date']) == 'true' || esc_attr($a['author']) == 'true') {
 				$e .= '<div class="meta-info">';
 				if (esc_attr($a['author']) == 'true') {
-					$e .= __('Published by ', 'bilnea').get_the_author().' ';
+					$e .= '<span class="author">'.__('Published by ', 'bilnea').get_the_author().'</span> ';
 				}
 				if (esc_attr($a['date']) == 'true' && esc_attr($a['author']) == 'true') {
-					$e .= 'el ';
+					$e .= '<span class="date">'.__('the', 'bilnea').' ';
+				} else if (esc_attr($a['date']) == 'true') {
+					$e .= '<span class="date">';
 				}
 				if (esc_attr($a['date']) == 'true') {
-					$e .= get_the_date();
+					$e .= get_the_date().'</span>';
 				}
 				$e .= '</div>';
 			}
@@ -587,7 +589,7 @@ function b_f_s_recent_posts($atts){
 				if (get_the_excerpt() != '') {
 					$e .= '<div class="excerpt">'.get_the_excerpt().'</div>';
 				} else {
-					$e .= '<div class="excerpt">'.b_f_get_excerpt(the_content()).'</div>';
+					$e .= '<div class="excerpt">'.b_f_get_excerpt(get_the_content()).'</div>';
 				}
 				
 				$e .= '<a class="read-more" href="'.get_permalink().'">'.__('Read more', 'bilnea').'</a>';
@@ -612,13 +614,15 @@ function b_f_s_recent_posts($atts){
 				if (esc_attr($a['date']) == 'true' || esc_attr($a['author']) == 'true') {
 					$e .= '<div class="meta-info">';
 					if (esc_attr($a['author']) == 'true') {
-						$e .= __('Published by ', 'bilnea').get_the_author().' ';
+						$e .= '<span class="author">'.__('Published by ', 'bilnea').get_the_author().'</span> ';
 					}
 					if (esc_attr($a['date']) == 'true' && esc_attr($a['author']) == 'true') {
-						$e .= 'el ';
+						$e .= '<span class="date">'.__('the', 'bilnea').' ';
+					} else if (esc_attr($a['date']) == 'true') {
+						$e .= '<span class="date">';
 					}
 					if (esc_attr($a['date']) == 'true') {
-						$e .= get_the_date();
+						$e .= get_the_date().'</span>';
 					}
 					$e .= '</div>';
 				}
@@ -627,7 +631,7 @@ function b_f_s_recent_posts($atts){
 					if (get_the_excerpt() != '') {
 						$e .= '<div class="excerpt">'.get_the_excerpt().'</div>';
 					} else {
-						$e .= '<div class="excerpt">'.b_f_get_excerpt(the_content()).'</div>';
+						$e .= '<div class="excerpt">'.b_f_get_excerpt(get_the_content()).'</div>';
 					}
 					
 					$e .= '<a class="read-more" href="'.get_permalink().'">'.__('Read more', 'bilnea').'</a>';
@@ -1390,7 +1394,22 @@ function b_f_tweet($atts, $content = null) {
 	if ($a != '') {
 		return '<div class="tweeter">'.$content.'<div class="tweet-author"><a target="_blank" rel="nofollow" href="https://twitter.com/'.$a.'">@'.$a.'</div><div class="tweet-link"><a href="https://twitter.com/home?status='.urlencode($content).'%20via%20@'.$a.'" class="fa fa-twitter" target="_blank" rel="nofollow">&nbsp;&nbsp;'.__('Tweet this', 'bilnea').'</a></div></div>';
 	} else {
-		return '<div class="tweeter">'.$content.'<div class="tweet-link"><a href="https://twitter.com/home?status='.urlencode($content).'" class="fa fa-twitter" target="_blank" rel="nofollow">&nbsp;&nbsp;'.__('Tweet this', 'bilnea').'</a></div></div>';
+		$options = get_option('bilnea_settings');
+		if ($option['b_opt_social-twitter'] != '') {
+			if (strpos($option['b_opt_social-twitter'],'twitter.com') === false) {
+				if ($option['b_opt_social-twitter'][0] == '@') {
+					$twitter_user = ltrim($option['b_opt_social-twitter'], '@');
+				} else {
+					$twitter_user = $option['b_opt_social-twitter'];
+				}
+			} else {
+				preg_match("|https?://(www\.)?twitter\.com/(#!/)?@?([^/]*)|", "http://twitter.com/samuelcerezo", $matches);
+				$twitter_user = $matches[3];
+			}
+			return '<div class="tweeter">'.$content.'<div class="tweet-link"><a href="https://twitter.com/home?status='.urlencode($content).'%20vía%20@'.$twitter_user.'" class="fa fa-twitter" target="_blank" rel="nofollow">&nbsp;&nbsp;'.__('Tweet this', 'bilnea').'</a></div></div>';
+		} else {
+			return '<div class="tweeter">'.$content.'<div class="tweet-link"><a href="https://twitter.com/home?status='.urlencode($content).'" class="fa fa-twitter" target="_blank" rel="nofollow">&nbsp;&nbsp;'.__('Tweet this', 'bilnea').'</a></div></div>';
+		}
 	}
 }
 
@@ -1573,15 +1592,16 @@ if (b_f_option('b_opt_subscribers') == 1) {
 	function b_newsletters($atts) {
 		$a = shortcode_atts(array(
 			'type' => 'name,email',
+			'redirect' => b_f_option('b_opt_newsl_redirect'),
 		), $atts);
 		$ran = rand(100000, 999999);
 		$temp = explode(',', str_replace(' ', '', $a['type']));
 		$out = '<div class="b_newsletters">';
-		$out .= '<input class="input" type="text" name="s_name" placeholder="'.__('* Name', 'bilnea').'"r />';
+		$out .= '<input class="input" type="text" name="s_name" placeholder="'.__('* Name', 'bilnea').'" />';
 		if (in_array('last', $temp)) {
-			$out .= '<input type="text" name="s_last" placeholder="'.__('* Last name', 'bilnea').'"r />';
+			$out .= '<input type="text" name="s_last" placeholder="'.__('* Last name', 'bilnea').'" />';
 		}
-		$out .= '<input class="input" type="text" name="s_email" placeholder="'.__('* Email', 'bilnea').'"r />';
+		$out .= '<input class="input" type="email" name="s_email" placeholder="'.__('* Email', 'bilnea').'" />';
 		$out .= '<input class="b_input_checkbox" value="true" type="checkbox" id="s_legal-'.$ran.'" name="s_legal-'.$ran.'" />';
 		$plh = __('Privacy policy', 'bilnea');
 		switch (substr(explode(' ', $plh)[0], -1)) {
@@ -1594,10 +1614,16 @@ if (b_f_option('b_opt_subscribers') == 1) {
 		}
 		$out .= '<label for="s_legal-'.$ran.'">* '.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$plh.'" target="_blank">'.strtolower($plh).'</a>.</label>';
 		$out .= '<div class="s_submit">'.__('Suscribe', 'bilnea').'</div>';
+		if (b_f_option('b_opt_newsl_service') == 'mailchimp') {
+			$api_key = b_f_option('b_opt_newsl_api');
+			wp_enqueue_script('b_mailchimp', get_template_directory_uri().'/js/mailchimp.js', array('jquery'), $version, true);
+		}
+		$out .= '<input type="hidden" class="redirect_to" value="'.esc_attr($a['redirect']).'" />';
 		$out .= '</div>';
 
 		return $out;
 	}
+	
 	add_shortcode('b_newsletters', 'b_newsletters');
 }
 
@@ -1608,74 +1634,53 @@ function b_rrss($atts) {
 	if ($a[type] != null) {
 		switch (esc_attr($a['type'])) {
 			case 'twitter':
-				$twt = b_f_option('b_opt_social-twitter');
-				if (strpos($twt,'twitter.com') === false) {
-					if ($twt[0] == '@') $twt = ltrim($twt, '@');
-					$twt = 'http://twitter.com/'.$twt;
+				$link = b_f_option('b_opt_social-twitter');
+				if (strpos($link,'twitter.com') === false) {
+					if ($link[0] == '@') $link = ltrim($link, '@');
+					$link = 'http://twitter.com/'.$link;
 				}
-				if (strpos($twt,'http://') === false) {
-					$twt = 'http://'.$twt;
-				}
-				$twt = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $twt))));
-				return '<a href="'.$twt.'" target="_blank" class="fa fa-twitter"></a>';
+				$link = 'https://'.preg_replace('#^https?://#', '', $link);
+				return '<a href="'.$link.'" target="_blank" class="fa fa-twitter"></a>';
 				break;
 			case 'facebook':
-				$fcb = b_f_option('b_opt_social-facebook');
-				if (strpos($fcb,'facebook.com') === false) {
-					$fcb = '//facebook.com/'.$fcb;
+				$link = b_f_option('b_opt_social-facebook');
+				if (strpos($link,'facebook.com') === false) {
+					$link = 'http://facebook.com/'.$link;
 				}
-				if (strpos($fcb,'http://') === false) {
-					$fcb = '//'.$fcb;
-				}
-				$fcb = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $fcb))));
-				return '<a href="'.$fcb.'" target="_blank" class="fa fa-facebook"></a>';
+				$link = 'https://'.preg_replace('#^https?://#', '', $link);
+				return '<a href="'.$link.'" target="_blank" class="fa fa-facebook"></a>';
 				break;
 			case 'google-plus':
-				$gop = b_f_option('b_opt_social-google-plus');
-				if (strpos($gop,'http://') === false) {
-					$gop = 'http://'.$gop;
-				}
-				$gop = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $gop))));
-				return '<a href="'.$gop.'" target="_blank" class="fa fa-google-plus"></a>';
+				$link = b_f_option('b_opt_social-google-plus');
+				$link = 'https://'.preg_replace('#^https?://#', '', $link);
+				return '<a href="'.$link.'" target="_blank" class="fa fa-google-plus"></a>';
 				break;
 			case 'youtube':
-				$ytb = b_f_option('b_opt_social-youtube');
-				if (strpos($ytb,'http://') === false) {
-					$ytb = 'http://'.$ytb;
-				}
-				$ytb = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $ytb))));
-				return '<a href="'.$ytb.'" target="_blank" class="fa fa-youtube"></a>';
+				$link = b_f_option('b_opt_social-youtube');
+				$link = 'https://'.preg_replace('#^https?://#', '', $link);
+				return '<a href="'.$link.'" target="_blank" class="fa fa-youtube"></a>';
 				break;
 			case 'linkedin':
-				$lkn = b_f_option('b_opt_social-linkedin');
-				if (strpos($lkn,'http://') === false) {
-					$lkn = 'http://'.$lkn;
-				}
-				$lkn = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $lkn))));
-				return '<a href="'.$lkn.'" target="_blank" class="fa fa-linkedin"></a>';
+				$link = b_f_option('b_opt_social-linkedin');
+				$link = 'https://'.preg_replace('#^https?://#', '', $link);
+				return '<a href="'.$link.'" target="_blank" class="fa fa-linkedin"></a>';
 				break;
 			case 'instagram':
-				$itg = b_f_option('b_opt_social-instagram');
-				if (strpos($itg,'instagram.com') === false) {
-					if ($itg[0] == '@') $itg = ltrim($itg, '@');
-					$itg = 'http://instagram.com/'.$itg;
+				$link = b_f_option('b_opt_social-instagram');
+				if (strpos($link,'instagram.com') === false) {
+					if ($link[0] == '@') $link = ltrim($link, '@');
+					$link = 'http://instagram.com/'.$link;
 				}
-				if (strpos($itg,'http://') === false) {
-					$itg = 'http://'.$itg;
-				}
-				$itg = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $itg))));
-				return '<a href="'.$itg.'" target="_blank" class="fa fa-instagram"></a>';
+				$link = 'https://'.preg_replace('#^https?://#', '', $link);
+				return '<a href="'.$link.'" target="_blank" class="fa fa-instagram"></a>';
 				break;
 			case 'pinterest':
-				$pin = b_f_option('b_opt_social-pinterest');
-				if (strpos($pin,'pinterest.com') === false) {
-					$pin = 'http://pinterest.com/'.$pin;
+				$link = b_f_option('b_opt_social-pinterest');
+				if (strpos($link,'pinterest.com') === false) {
+					$link = 'http://pinterest.com/'.$link;
 				}
-				if (strpos($pin,'http://') === false) {
-					$pin = 'http://'.$pin;
-				}
-				$pin = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $pin))));
-				return '<a href="'.$pin.'" target="_blank" class="fa fa-pinterest"></a>';
+				$link = 'https://'.preg_replace('#^https?://#', '', $link);
+				return '<a href="'.$link.'" target="_blank" class="fa fa-pinterest"></a>';
 				break;
 		}
 	}

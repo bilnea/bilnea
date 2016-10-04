@@ -1,6 +1,29 @@
 <?php
 
-include_once(get_template_directory().'/inc/cookies_list.php');
+$wordfence = 'wfvt_XXXXXX';
+foreach ($_COOKIE as $name => $content) {
+	if (strpos($name, 'wfvt_') === 0) {
+		$wordfence = $name;
+	}
+}
+
+$cookies_list = array(
+	'PHPSESSID' => array(
+		get_bloginfo('name'),
+		get_site_url(),
+		'Usada por el lenguaje de programación PHP, crea una sesión de navegación única que almacena las variables de la sesión. Caduca al finalizar la navegación por el sitio web.'
+	),
+	$wordfence => array(
+		'WordFence',
+		'https://www.wordfence.com/terms-of-use-and-privacy-policy/',
+		'Cookie usada para garantizar la seguridad del sitio web y evitar accesos no deseados. Recopila información de los visitantes y bloquea el acceso de aquellos que puedan comprometer la estabilidad y seguridad del sitio web.'
+	),
+	'_ga' => array(
+		'Google',
+		'https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage',
+		'Almacenan datos anónimos de navegación como tiempo de la sesión de navegación y páginas visitadas con el fin de realizar estadísticas globales sobre las visitas realizadas al sitio web.'
+	)
+);
 
 $txt = '';
 $txt .= '<div class="legal">'."\n";
@@ -25,7 +48,7 @@ $txt .= '<h4>Otras cookies de terceros</h4>'."\n";
 $txt .= '<p>En algunas de nuestras páginas se pueden instalar cookies de terceros que permitan gestionar y mejorar los servicios que éstos ofrecen. Un ejemplo de este uso son los enlaces a las redes sociales que permiten compartir nuestros contenidos.</p>'."\n";
 $txt .= '<h3></h3>'."\n";
 $txt .= '<p>¿Cómo puedo configurar mis preferencias?</p>'."\n";
-$txt .= '<p>Usted puede permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la configuración de las opciones de su navegador de internet.</p>'."\n";
+$txt .= '<p>Usted puede permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la configuración de las b_f_optiones de su navegador de internet.</p>'."\n";
 $txt .= '<p>A continuación le ofrecemos enlaces en los que encontrará información sobre cómo puede activar sus preferencias en los principales navegadores:</p>'."\n";
 $txt .= '<ul>'."\n";
 $txt .= '<li>Internet Explorer <a href="http://support.microsoft.com/kb/196955/es" target="_blank" rel="nofollow" title="Internet Explorer 5">5</a> / <a href="http://support.microsoft.com/kb/283185/es" target="_blank" rel="nofollow" title="Internet Explorer 6">6</a> / <a href="http://windows.microsoft.com/es-ES/windows-vista/Block-or-allow-cookies" target="_blank" rel="nofollow" title="Internet Explorer 7">7</a> / <a href="http://windows.microsoft.com/es-ES/windows-vista/Block-or-allow-cookies" target="_blank" rel="nofollow" title="Internet Explorer 8">8</a> / <a href="http://windows.microsoft.com/es-ES/windows7/How-to-manage-cookies-in-Internet-Explorer-9" target="_blank" rel="nofollow" title="Internet Explorer™ 9">9</a> / <a href="http://windows.microsoft.com/es-es/internet-explorer/ie-security-privacy-settings#ie=ie-10" target="_blank" rel="nofollow" title="Internet Explorer™ 10">10</a> / <a href="http://windows.microsoft.com/es-es/internet-explorer/ie-security-privacy-settings#ie=ie-11" target="_blank" rel="nofollow" title="Internet Explorer™ 11">11</a></li>'."\n";
@@ -39,13 +62,16 @@ $txt .= '<li><a href="http://docs.blackberry.com/en/smartphone_users/deliverable
 $txt .= '</ul>'."\n";
 $txt .= '<h3>¿Qué ocurre si se deshabilitan las cookies?</h3>'."\n";
 $txt .= '<p>En el caso de bloquear o no aceptar la instalación de cookies es posible que ciertos servicios ofrecidos por nuestro sitio web que necesitan su uso queden deshabilitados y, por tanto, no estén disponibles para usted por lo que no podrá aprovechar por completo todo lo que nuestra web y aplicaciones le ofrecen. Es posible también que la calidad de funcionamiento de la página web pueda disminuir.</p>'."\n";
-if (opcion('active_cookies_lis') == 1) {
+if (b_f_option('b_opt_create-cookies-table') == 1) {
 	$txt .= '<h3>Tipos de cookies</h3>'."\n";
 	foreach ($_COOKIE as $cookie => $value) {
 		if (array_key_exists($cookie, $cookies_list)) {
 			$name = get_bloginfo('name');
 			if ($cookies_list[$cookie][0] != '') {
 				$name = $cookies_list[$cookie][0];
+			}
+			if ($name == '_ga') {
+				$name .= ', _gat';
 			}
 			if ($cookies_list[$cookie][1] != '') {
 				$url = '<strong>'.$name.'</strong> <a href="'.$cookies_list[$cookie][1].'" rel="nofollow,noindex" title="Política de cookies '.$name.'"><strong>[+]</strong></a>';
@@ -68,7 +94,7 @@ $txt .= '<h3>Aceptación de cookies</h3>'."\n";
 $txt .= '<p>Si usted sigue navegando después de haberle informado sobre nuestra Política de cookies entendemos que acepta la utilización de las cookies.</p>'."\n";
 $txt .= '<p>Al acceder a este sitio web o aplicación por primera vez, verá una ventana donde se le informa de la utilización de las cookies y donde puede consultar esta política de cookies. Si usted consiente la utilización de cookies, continúa navegando o hace clic en algún link se entenderá que usted ha consentido nuestra política de cookies y, por tanto, la instalación de las mismas en su equipo o dispositivo.</p>'."\n";
 $txt .= '<p>Además del uso de nuestras cookies propias, permitimos a terceros establecer cookies y acceder a ellas en su ordenador. El consentimiento del uso de las cookies de esta empresa está ligado a la navegación por este sitio web.</p>'."\n";
-$txt .= '<p>Para cualquier consulta sobre el uso de cookies en nuestro sitio web puede dirigirse al teléfono <a href="tel://'.opcion('user_phone').'" title="Teléfono">'.opcion('user_phone').'</a> o a la dirección de correo electrónico <a href="mailto:'.opcion('user_email').'" title="Correo electrónico">'.opcion('user_email').'</a></p>'."\n";
+$txt .= '<p>Para cualquier consulta sobre el uso de cookies en nuestro sitio web puede dirigirse al teléfono <a href="tel://'.b_f_option('user_phone').'" title="Teléfono">'.b_f_option('user_phone').'</a> o a la dirección de correo electrónico <a href="mailto:'.b_f_option('user_email').'" title="Correo electrónico">'.b_f_option('user_email').'</a></p>'."\n";
 $txt .= '</div>'."\n";
 
 ?>

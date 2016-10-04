@@ -80,11 +80,14 @@ function bilnea_options_page() {
 	<script src="<?php echo esc_attr($bil.'/js/'); ?>admin.js"></script>
 
 	<!-- Ficheros de estilos -->
-	<link rel="stylesheet" href="<?php echo esc_attr($bil.'/css/'); ?>admin.css" />
 	<link rel="stylesheet" href="<?php echo esc_attr($bil.'/css/'); ?>spectrum.css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	
 	<form action="options.php" method="post" id="bilnea">
+
+		<!-- Otras oociones -->
+		<input type="hidden" value="<?= b_f_option('b_opt_newsl_list') ?>" name="bilnea_settings[b_opt_newsl_list]" />
+
 		<h2>Opciones del tema</h2>
 		<div id="bilset">
 
@@ -316,19 +319,38 @@ function bilnea_options_page() {
 					<input type='checkbox' name='bilnea_settings[b_opt_subscribers]' <?php checked( $opt['b_opt_subscribers'], 1 ); ?> value='1'>Activar módulo de boletín de noticias<br />
 					<hr />
 					<div style="overflow: hidden;">
-						<div style="width: calc(33.3333% - 10px); display: inline-block; margin-right: 14px; float: left;">
+						<div style="width: calc(50% - 7px); display: inline-block; margin-right: 14px; float: left;">
+							Servicio de boletines
 							<select name='bilnea_settings[b_opt_newsl_service]' class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
 								<option selected disabled>Selecciona un servicio</option>
 								<option value="wordpress" <?php selected($opt['b_opt_newsl_service'], 'wordpress') ?>>Wordpress</option>
+								<option value="mailchimp" <?php selected($opt['b_opt_newsl_service'], 'mailchimp') ?>>Mailchimp</option>
 								<option value="benchmark" <?php selected($opt['b_opt_newsl_service'], 'benchmark') ?>>Benchmark</option>
 							</select>
 						</div>
-						<div style="width: calc(33.3333% - 9px); display: inline-block; float: left; margin-right: 14px;">
-							<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_newsl_username]" value="<?php echo $opt['b_opt_newsl_username']; ?>" placeholder="Usuario" />
+						<div style="width: calc(50% - 7px); display: inline-block;">
+							Página de redirección al enviar
+							<select name='bilnea_settings[b_opt_newsl_redirect]' class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
+								<option selected disabled>Selecciona una página</option>
+								<option value="none" <?php selected($opt['b_opt_newsl_redirect'], 'none') ?>>Sin redirección</option>
+								<option disabled>----------</option>
+								<?php $args = array(
+									'sort_order' => 'asc',
+									'sort_column' => 'post_title',
+									'post_type' => 'page',
+									'post_status' => 'publish'
+								); 
+								$pages = get_pages($args);
+								foreach ($pages as $page) {
+									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_newsl_redirect'], $page->ID).'>'.$page->post_title.'</option>';
+								}
+								?>
+							</select>
 						</div>
-						<div style="width: calc(33.3333% - 9px); display: inline-block;">
-							<input type="password" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_newsl_password]" value="<?php echo $opt['b_opt_newsl_password']; ?>" placeholder="Contraseña" />
+						<div style="width: 100%; display: inline-block; float: left; margin-right: 14px; margin-top: 7px;">
+							<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_newsl_api]" value="<?php echo $opt['b_opt_newsl_api']; ?>" placeholder="API Key" />
 						</div>
+
 					</div>
 					<div class="notice" style="font-size: 11px; line-height: 15px; display: block !important;">Crea un listado de suscriptores que se recolecten desde los formularios presentes en la web. Activa los shortcodes relacionados con esta funcionalidad.</div>
 					<br />
@@ -880,7 +902,7 @@ function bilnea_options_page() {
 					<hr />
 					<input type='checkbox' name='bilnea_settings[b_opt_top-bar]' <?php checked( $opt['b_opt_top-bar'], 1 ); ?> value='1'> Mostrar barra superior
 					<br />
-					<input type='checkbox' name='bilnea_settings[b_opt_menu-top-bar]' <?php checked( $opt['menu-top-bar'], 1 ); ?> value='1'> <span>Incluir menú en barra superior</span>
+					<input type='checkbox' name='bilnea_settings[b_opt_menu-top-bar]' <?php checked( $opt['b_opt_menu-top-bar'], 1 ); ?> value='1'> <span>Incluir menú en barra superior</span>
 					<br />
 					<input type='checkbox' name='bilnea_settings[b_opt_topbar-rss]' <?php checked( $opt['b_opt_topbar-rss'], 1 ); ?> value='1'> <span>Incluir iconos redes sociales</span>
 					<hr />
@@ -1270,7 +1292,7 @@ function bilnea_options_page() {
 
 				<!-- Textos legales -->
 				<div id="tab9" <?php if ($opt['pestanya'] == 10) { echo 'class="activo"'; }?>>
-					<h4>Configuración general</h4>
+					<h4>Datos personales</h4>
 					<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
 						Nombre legal
 						<br />
@@ -1284,7 +1306,7 @@ function bilnea_options_page() {
 					<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
 						Correo electrónico
 						<br />
-						<input type="text" id="user_email" class="gran" name='bilnea_settings[user_email]' style="width: 100%;" value='<?php echo $opt['user_email']; ?>' placeholder='<?= b_f_default()['user_email']; ?>'>
+						<input type="text" id="user_email" class="gran" name='bilnea_settings[user_email]' style="width: 100%;" value='<?php echo $opt['user_email']; ?>' >
 					</div>
 					<div style="width: calc(50% - 10px); display: inline-block;">
 						Teléfono
@@ -1294,9 +1316,10 @@ function bilnea_options_page() {
 					Dirección postal
 					<br />
 					<input type="text" id="user_address" class="gran" name='bilnea_settings[user_address]' style="width: 100%;" value='<?php echo $opt['user_address']; ?>'>
-					<br />
-					<h4 style="margin-top: 10px;">Aviso legal</h4>
-					<input type='checkbox' name='bilnea_settings[b_opt_create-legal-page]' <?php checked( $opt['b_opt_create-legal-page'], 1 ); ?> value='1'> <span>Crear página de aviso legal</span>
+					<div class="notice" style="font-size: 12px;">
+						Información que se mostrará en las páginas de textos legales, en caso de crearlas de manera automática.
+					</div>
+					<h4 style="margin-top: 10px;">Páginas</h4>
 					<?php
 					if (function_exists('icl_object_id')) {
 						global $sitepress;
@@ -1305,77 +1328,83 @@ function bilnea_options_page() {
 						$lng = icl_get_languages('skip_missing=0&orderby=code');
 						if (!empty($lng)) {
 							$int = 0;
-							?>
-							<div class="notice" style="font-size: 12px;">
-								<?php
-								foreach ($lng as $l) {
-									if ($int > 0) { echo '<hr />'; }
-									?>
-									Url de aviso legal en <?= strtolower($l['translated_name']); ?> <em>(en blanco no muestra enlace)</em>
-									<br />
-									<label for="bilnea_settings[b_opt_legal-url-_<?= $l['language_code']?>]"><?php echo $sitepress->language_url($l['language_code']); ?></label>
-									<input style="font-size: 12px; -webkit-transform: translate(-5px, 1px); -moz-transform: translate(-5px, 1px); -ms-transform: translate(-5px, 1px); -o-transform: translate(-5px, 1px); transform: translate(-5px, 1px);" type='text' class="aurl" name='bilnea_settings[b_opt_legal-url-_<?= $l['language_code']?>]' value='<?php echo $opt['b_opt_legal-url-_'.$l['language_code']]; ?>'>
-									<?php
-									$int++;
-								}
+							foreach ($lng as $l) {
+								if ($int > 0) { echo '<hr />'; }
 								?>
-							</div>
+								<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
+									Aviso legal en <?= strtolower($l['translated_name']); ?> 
+								</div>
+								<div style="width: calc(50% - 10px); display: inline-block;">
+									CIF / NIF
+									<br />
+									<input type="text" id="user_cif" class="gran" name='bilnea_settings[user_cif]' style="width: 100%;" value='<?php echo $opt['user_cif']; ?>'>
+								</div>
+								
+								<br />
+								<label for="bilnea_settings[b_opt_legal-url-_<?= $l['language_code']?>]"><?php echo $sitepress->language_url($l['language_code']); ?></label>
+								<input style="font-size: 12px; -webkit-transform: translate(-5px, 1px); -moz-transform: translate(-5px, 1px); -ms-transform: translate(-5px, 1px); -o-transform: translate(-5px, 1px); transform: translate(-5px, 1px);" type='text' class="aurl" name='bilnea_settings[b_opt_legal-url-_<?= $l['language_code']?>]' value='<?php echo $opt['b_opt_legal-url-_'.$l['language_code']]; ?>'>
+								<?php
+								$int++;
+							}
+							?>
 						<?php
 						}
 						$sitepress->switch_lang($clg);
 					} else {
 						?>
-						<div class="notice" style="font-size: 12px;">
-							Url de aviso legal <em>(en blanco no muestra enlace)</em>
-							<br />
-							<label for="bilnea_settings[b_opt_legal-url-_es"><?php echo get_site_url(); ?>/</label>
-							<input type='text' class="aurl" name='bilnea_settings[b_opt_legal-url-_es]' value='<?php echo $opt['b_opt_legal-url-_es']; ?>'>
+						<!-- Aviso legal -->
+						<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
+							Aviso legal
 						</div>
-						<?php
-					}
-					?>
-					<h4 style="margin-top: 10px;">Política de privacidad</h4>
-					<input type='checkbox' name='bilnea_settings[b_opt_create-privacy-page]' <?php checked( $opt['b_opt_create-privacy-page'], 1 ); ?> value='1'> <span>Crear página de política de privacidad</span>
+						<div style="width: calc(50% - 10px); display: inline-block;">
+							<select name='bilnea_settings[b_opt_aviso-legal-es]' class="gran" style="margin-top: -2px; width: 100% !important;">
+								<option disabled="disabled" selected>Seleccionar opción</option>
+								<option value="new">Crear página</option>
+								<?php
+								foreach (get_pages() as $page) {
+									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_aviso-legal-es'], $page->ID).'>'.$page->post_title.'</option>';
+								}
+								?>
+							</select>
+						</div>
+						<hr />
+
+						<!-- Política de privacidad -->
+						<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
+							Política de privacidad
+						</div>
+						<div style="width: calc(50% - 10px); display: inline-block;">
+							<select name='bilnea_settings[b_opt_politica-privacidad-es]' class="gran" style="margin-top: -2px; width: 100% !important;">
+								<option disabled="disabled" selected>Seleccionar opción</option>
+								<option value="new">Crear página</option>
+								<?php
+								foreach (get_pages() as $page) {
+									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_politica-privacidad-es'], $page->ID).'>'.$page->post_title.'</option>';
+								}
+								?>
+							</select>
+						</div>
+						<hr />
+
+						<!-- Aviso legal -->
+						<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
+							Política de cookies
+						</div>
+						<div style="width: calc(50% - 10px); display: inline-block;">
+							<select name='bilnea_settings[b_opt_politica-cookies-es]' class="gran" style="margin-top: -2px; width: 100% !important;">
+								<option disabled="disabled" selected>Seleccionar opción</option>
+								<option value="new">Crear página</option>
+								<?php
+								foreach (get_pages() as $page) {
+									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_politica-cookies-es'], $page->ID).'>'.$page->post_title.'</option>';
+								}
+								?>
+							</select>
+						</div>
 					<?php
-					if (function_exists('icl_object_id')) {
-						global $sitepress;
-						$clg = $sitepress->get_current_language();
-						$sitepress->switch_lang('es');
-						$lng = icl_get_languages('skip_missing=0&orderby=code');
-						if (!empty($lng)) {
-							$int = 0;
-							?>
-							<div class="notice" style="font-size: 12px;">
-								<?php
-								foreach ($lng as $l) {
-									if ($int > 0) { echo '<hr />'; }
-									?>
-									Url de política de privacidad en <?= strtolower($l['translated_name']); ?> <em>(en blanco no muestra enlace)</em>
-									<br />
-									<label for="bilnea_settings[b_opt_privacy-url-_<?= $l['language_code']?>]"><?php echo $sitepress->language_url($l['language_code']); ?></label>
-									<input style="font-size: 12px; -webkit-transform: translate(-5px, 1px); -moz-transform: translate(-5px, 1px); -ms-transform: translate(-5px, 1px); -o-transform: translate(-5px, 1px); transform: translate(-5px, 1px);" type='text' class="aurl" name='bilnea_settings[b_opt_privacy-url-_<?= $l['language_code']?>]' value='<?php echo $opt['b_opt_privacy-url-_'.$l['language_code']]; ?>'>
-									<?php
-									$int++;
-								}
-								?>
-							</div>
-						<?php
-						}
-						$sitepress->switch_lang($clg);
-					} else {
-						?>
-						<div class="notice" style="font-size: 12px;">
-							Url de política de privacidad <em>(en blanco no muestra enlace)</em>
-							<br />
-							<label for="bilnea_settings[b_opt_privacy-url-_es]"><?php echo get_site_url(); ?>/</label>
-							<input type='text' class="aurl" name='bilnea_settings[b_opt_privacy-url-_es]' value='<?php echo $opt['b_opt_privacy-url-_es']; ?>'>
-						</div>
-						<?php
 					}
 					?>
-					<h4 style="margin-top: 10px;">Política de cookies</h4>
-					<input type='checkbox' name='bilnea_settings[b_opt_create-cookies-page]' <?php checked($opt['b_opt_create-cookies-page'], 1); ?> value='1'> <span>Crear página de política de cookies</span>
-					<br />
+					<h4 style="margin-top: 10px;">Configuración</h4>
 					<input type='checkbox' name='bilnea_settings[b_opt_create-cookies-table]' <?php checked($opt['b_opt_create-cookies-table'], 1); ?> value='1'> <span>Generar tabla de cookies de manera automática</span>
 					<hr />
 					<input type='checkbox' name='bilnea_settings[b_opt_cookies-warning]' <?php checked($opt['b_opt_cookies-warning'], 1); ?> value='1'> <span>Mostrar el aviso legal de cookies</span>
@@ -1384,43 +1413,6 @@ function bilnea_options_page() {
 						<br />
 						<input type='radio' name='bilnea_settings[b_opt_show-cookies]' <?php checked($opt['b_opt_show-cookies'], 2); ?> value='2'><span>Mostrar en la zona inferior</span>
 					</div>
-					<?php
-					if (function_exists('icl_object_id')) {
-						global $sitepress;
-						$clg = $sitepress->get_current_language();
-						$sitepress->switch_lang('es');
-						$lng = icl_get_languages('skip_missing=0&orderby=code');
-						if (!empty($lng)) {
-							$int = 0;
-							?>
-							<div class="notice" style="font-size: 12px;">
-								<?php
-								foreach ($lng as $l) {
-									if ($int > 0) { echo '<hr />'; }
-									?>
-									Url de política de cookies en <?= strtolower($l['translated_name']); ?> <em>(en blanco no muestra enlace)</em>
-									<br />
-									<label for="bilnea_settings[b_opt_legal-url-_<?= $l['language_code']?>]"><?php echo $sitepress->language_url($l['language_code']); ?></label>
-									<input style="font-size: 12px; -webkit-transform: translate(-5px, 1px); -moz-transform: translate(-5px, 1px); -ms-transform: translate(-5px, 1px); -o-transform: translate(-5px, 1px); transform: translate(-5px, 1px);" type='text' class="aurl" name='bilnea_settings[b_opt_legal-url-_<?= $l['language_code']?>]' value='<?php echo $opt['b_opt_legal-url-_'.$l['language_code']]; ?>'>
-									<?php
-									$int++;
-								}
-								?>
-							</div>
-						<?php
-						}
-						$sitepress->switch_lang($clg);
-					} else {
-						?>
-						<div class="notice" style="font-size: 12px;">
-							Url de política de cookies <em>(en blanco no muestra enlace)</em>
-							<br />
-							<label for="bilnea_settings[b_opt_legal-url-_es"><?php echo get_site_url(); ?>/</label>
-							<input type='text' class="aurl" name='bilnea_settings[b_opt_legal-url-_es]' value='<?php echo $opt['b_opt_legal-url-_es']; ?>'>
-						</div>
-						<?php
-					}
-					?>
 				</div>
 
 				<!-- Redirecciones y SEO -->
@@ -1613,7 +1605,7 @@ function bilnea_subscribers_page() {
 			?>
 			<div class="wrap">
 				<h1>Boletín de noticias</h1>
-				<ul class="subsubsub">
+				<ul class="subsubsub" style="float: none;">
 					<?php
 						$i = 1;
 						foreach ($lists as $list) {
@@ -1764,6 +1756,397 @@ function bilnea_subscribers_page() {
 						<option value="delete" class="hide-if-no-js">Eliminar</option>
 					</select>
 					<input type="submit" id="doaction2" class="button action" value="Aplicar">
+					</div>
+						<div class="alignleft actions">
+					</div>
+					<?php
+					$args = array('listGet', $token, '', 1, 1000, 'name', 'asc');
+					call_user_func_array(array($client, 'query'), $args);
+					$lists = $client->getResponse();
+					$total;
+					foreach ($lists as $list) {
+						if ($list['id'] == $c) {
+							$total =  $list['contactcount'];
+							$total_pages = ceil((int)$total/(int)$view);
+						}
+					}
+					?>
+					<div class="tablenav-pages">
+						<span class="displaying-num"><?= $total ?> elementos</span>
+							<span class="pagination-links">
+								<?php
+								$paged = (int)$paged;
+								if ($paged <= 2) {
+									echo '<span class="tablenav-pages-navspan" aria-hidden="true">«</span>';
+								} else {
+									$gets = array();
+									$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+									foreach ($temps as $temp) {
+										$args = explode('=', $temp);
+										$gets[$args[0]] = $args[1];
+									}
+									$gets['paged'] = 1;
+									echo '<a class="first-page" href="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}".'?'.http_build_query($gets).'"><span class="screen-reader-text">Primera página</span><span aria-hidden="true">«</span></a>';
+								}
+								echo '&nbsp;';
+								if ($paged <= 1) {
+									echo '<span class="tablenav-pages-navspan" aria-hidden="true">‹</span>';
+								} else {
+									$gets = array();
+									$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+									foreach ($temps as $temp) {
+										$args = explode('=', $temp);
+										$gets[$args[0]] = $args[1];
+									}
+									$gets['paged'] = $paged-1;
+									echo '<a class="prev-page" href="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}".'?'.http_build_query($gets).'"><span class="screen-reader-text">Página anterior</span><span aria-hidden="true">‹</span></a>';
+								}
+								?>
+								<span class="screen-reader-text">Página actual</span>
+								<span id="table-paging" class="paging-input">
+									<span class="tablenav-paging-text"><?= $paged ?> de <span class="total-pages"><?= $total_pages ?></span></span>
+								</span>
+								<?php
+								if ($paged >= $total_pages-1) {
+									echo '<span class="tablenav-pages-navspan" aria-hidden="true">›</span>';
+								} else {
+									$gets = array();
+									$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+									foreach ($temps as $temp) {
+										$args = explode('=', $temp);
+										$gets[$args[0]] = $args[1];
+									}
+									$gets['paged'] = $paged+1;
+									echo '<a class="next-page" href="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}".'?'.http_build_query($gets).'"><span class="screen-reader-text">Página anterior</span><span aria-hidden="true">›</span></a>';
+								}
+								echo '&nbsp;';
+								if ($paged >= $total_pages-2) {
+									echo '<span class="tablenav-pages-navspan" aria-hidden="true">»</span>';
+								} else {
+									$gets = array();
+									$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+									foreach ($temps as $temp) {
+										$args = explode('=', $temp);
+										$gets[$args[0]] = $args[1];
+									}
+									$gets['paged'] = $total_pages;
+									echo '<a class="last-page" href="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}".'?'.http_build_query($gets).'"><span class="screen-reader-text">Última página</span><span aria-hidden="true">»</span></a>';
+								}
+								?>
+							</span>
+					</div>
+					<br class="clear">
+				</div>
+		</div>
+		<?php
+		}
+	} else if (b_f_option('b_opt_newsl_service') == 'mailchimp') {
+		$api_key = b_f_option('b_opt_newsl_api');
+		$b_s_url = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
+		if (isset($_POST['list_selector'])) {
+			$options = get_option('bilnea_settings');
+			$options['b_opt_newsl_list'] = $_POST['list_selector'];
+			update_option('bilnea_settings', $options);
+		}
+		function b_mailchimp($url, $request_type, $api_key, $data = array()) {
+			if ($request_type == 'GET') {
+				$url .= '?' . http_build_query($data);
+			}
+			$mch = curl_init();
+			$headers = array(
+				'Content-Type: application/json',
+				'Authorization: Basic '.base64_encode( 'user:'. $api_key )
+			);
+			curl_setopt($mch, CURLOPT_URL, $url);
+			curl_setopt($mch, CURLOPT_HTTPHEADER, $headers);
+			curl_setopt($mch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($mch, CURLOPT_CUSTOMREQUEST, $request_type);
+			curl_setopt($mch, CURLOPT_TIMEOUT, 10);
+			curl_setopt($mch, CURLOPT_SSL_VERIFYPEER, false);
+			if($request_type != 'GET') {
+				curl_setopt($mch, CURLOPT_POST, true);
+				curl_setopt($mch, CURLOPT_POSTFIELDS, json_encode($data));
+			}	 
+			return curl_exec($mch);
+		}
+		if (isset($_GET['visibility'])) {
+			switch ($_GET['visibility']) {
+				case '0':
+					$result = json_decode( b_mailchimp_member_status($_GET['email'], 'unsubscribed', $_GET['list_id'], $api_key, 'PATCH' ) );
+					if( $result->status == 400 ) {
+						foreach( $result->errors as $error ) {
+							echo '<p>Error: ' . $error->message . '</p>';
+						}
+					}
+					break;
+				case '1':
+					$result = json_decode( b_mailchimp_member_status($_GET['email'], 'subscribed', $_GET['list_id'], $api_key, 'PATCH' ) );
+					if( $result->status == 400 ) {
+						foreach( $result->errors as $error ) {
+							echo '<p>Error: ' . $error->message . '</p>';
+						}
+					}
+					break;
+			}
+		}
+		if (isset($_GET['delete'])) {
+			$result = json_decode( b_mailchimp_member_status($_GET['delete'], 'unsubscribed', $_GET['list_id'], $api_key, 'DELETE' ) );
+			if( $result->status == 400 ) {
+				foreach( $result->errors as $error ) {
+					echo '<p>Error: ' . $error->message . '</p>';
+				}
+			}
+		}
+		if (isset($_POST['action2']) && $_POST['action2'] == delete) {
+			$users = explode(',', $_POST['c_ids']);
+			foreach ($users as $user) {
+				$userdata = explode('::', $user);
+				$result = json_decode( b_mailchimp_member_status($userdata[0], 'unsubscribed', $userdata[1], $api_key, 'DELETE' ) );
+			}
+		}
+	
+		$data = array(
+			'fields' => 'lists'
+		);
+		$url = 'https://'.substr($api_key,strpos($api_key,'-')+1).'.api.mailchimp.com/3.0/lists/';
+		$result = json_decode(b_mailchimp($url, 'GET', $api_key, $data));
+		$lists = $result->lists;
+		if (count($lists) > 0) {
+			(isset($_GET['list'])) ? $c = $_GET['list'] : $c = $lists[0]->id;
+			?>
+			<div class="wrap">
+				<h1>Boletín de noticias</h1>
+				<ul class="subsubsub" style="float: none;">
+					<li class="all">
+						<a class="current" href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?page=subscribers">Todos <span class="count">(0)</span></a>
+					</li>
+					<?php
+						if(!empty($lists)) {
+							$total = 0;
+							foreach($lists as $list) {
+								$turl = $url.$list->id.'/members/';
+								$tdata = array(
+									'fields' => 'members'
+								);
+								$total_members = json_decode(b_mailchimp($turl, 'GET', $api_key, $tdata))->members;
+								$total = $total+count($total_members);
+								$gets = array();
+								$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+								$gets['page'] = 'subscribers';
+								$gets['list_view'] = $list->id;
+								?>
+								<li class="list-<?= $list->id ?>">
+									|&nbsp;<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>"><?= $list->name ?> <span class="count">(<?= count($total_members) ?>)</span></a>
+								</li>
+								<?php
+								$i++;
+							}
+							(isset($_GET['order']) && $_GET['order'] == 'asc') ? $order = 'des' : $order = 'asc';
+							$sorts = array('date' => 'sorted '.$order, 'email' => 'sortable '.$order);
+							$orderby = 'date';
+							if (isset($_GET['orderby'])) {
+								$sorts[$_GET['orderby']] = 'sorted '.$order;
+								$orderby = $_GET['orderby'];
+							}
+							?>
+							<script type="text/javascript">
+								jQuery(function() {
+									<?php if (isset($_GET['list_view'])) : ?>
+									jQuery('.subsubsub a.current').removeClass('current');
+									jQuery('.subsubsub a[href*="<?= $_GET['list_view'] ?>"]').addClass('current');
+									<?php endif; ?>
+									jQuery('.subsubsub .all a span').text('(<?= $total ?>)');
+								})
+							</script>
+							<?php
+						}
+						?>
+				</ul>
+				<div>
+					<label>Lista por defecto: </label>
+					<form action="#" method="post" name="list_form">
+						<select id="list_selector" name="list_selector" style="margin: 4px 0 8px 0;">
+							<option selected disabled>Selecciona una lista</option>
+							<?php
+							foreach ($lists as $list) {
+								(b_f_option('b_opt_newsl_list') == $list->id) ? $seld = ' selected="selected"' : $seld = '';
+								echo '<option value="'.$list->id.'"'.$seld.'>'.$list->name.'</option>';
+							}
+							?>
+						</select>
+					</form>
+					<script type="text/javascript">
+						jQuery(function() {
+							jQuery('#list_selector').change(function() {
+								this.form.submit();
+							})
+						})
+					</script>
+				</div>
+				<table class="wp-list-table widefat fixed striped pages">
+				<thead>
+					<tr>
+						<td id="cb" class="manage-column column-cb check-column">
+							<label class="screen-reader-text" for="cb-select-all-1">Seleccionar todos</label>
+							<input id="cb-select-all-1" type="checkbox">
+						</td>
+						<td style="width: 30px;"></td>
+						<th scope="col" id="b_s_date" class="manage-column column-title <?= $sorts['date'] ?>">
+							<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?list=<?= $c ?>&page=subscribers&orderby=date&order=<?= $order ?>">
+								<span>Fecha</span>
+								<span class="sorting-indicator"></span>
+							</a>
+						</th>
+						<th scope="col" id="b_s_email" class="manage-column column-title <?= $sorts['email'] ?>">
+							<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?list=<?= $c ?>&page=subscribers&orderby=email&order=<?= $order ?>">
+								<span>Correo electrónico</span>
+								<span class="sorting-indicator"></span>
+							</a>
+						</th>
+						<th scope="col" id="b_s_name" class="manage-column column-title <?= $sorts['b_s_name'] ?>">
+							<span>Nombre</span>
+						</th>
+						<th scope="col" id="b_s_last_name" class="manage-column column-title <?= $sorts['b_s_last_name'] ?>">
+							<span>Boletín de noticias</span>
+						</th>
+						<th style="width: 30px;">
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					foreach ($lists as $list) {
+						$url .= $list->id.'/members/';
+						$data = array(
+							'fields' => 'members'
+						);
+						$result = json_decode(b_mailchimp($url, 'GET', $api_key, $data));
+						foreach ($result->members as $member) {
+							?>
+							<tr id="subscriber-<?= $member->id ?>" class="iedit author-self level-0 post-<?= $member->id ?> status-publish hentry">
+								<th scope="row" class="check-column">
+									<label class="screen-reader-text" for="cb-select-<?= $member->id ?>">Elige suscriptor</label>
+									<input id="cb-select-<?= $member->id ?>" type="checkbox" name="post[]" value="<?= $member->email_address ?>::<?= $list->id ?>">
+									<div class="locked-indicator"></div>
+								</th>
+								<th scope="row" class="check-column-2" style="text-align: center;">
+									<?php
+									$gets = array();
+									$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+									foreach ($temps as $temp) {
+										$args = explode('=', $temp);
+										$gets[$args[0]] = $args[1];
+									}
+									$gets['email'] = $member->email_address;
+									$gets['list_id'] = $list->id;
+									if ($member->status == 'subscribed') {
+										$gets['visibility'] = 0;
+									?>
+										<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>"><span class="dashicons dashicons-visibility"></span></a>
+									<?php
+									} else {
+										$gets['visibility'] = 1;
+									?>
+										<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>"><span class="dashicons dashicons-hidden"></span></a>
+									<?php
+									}
+									?>
+								</th>
+								<td class="date column-date" data-colname="Fecha">
+									<?php
+									$date = explode('-', explode('T', $member->timestamp_opt)[0]);
+									$months = array('01' => 'enero',
+													'02' => 'febrero',
+													'03' => 'marzo',
+													'04' => 'abril',
+													'05' => 'mayo',
+													'06' => 'junio',
+													'07' => 'julio',
+													'08' => 'agosto',
+													'09' => 'septiembre',
+													'10' => 'octubre',
+													'11' => 'noviembre',
+													'12' => 'diciembre'
+													);
+									echo str_replace(',', '', $date[2]).' '.$months[$date[1]].' '.$date[0];
+									?>
+								</td>
+								<td class="title column-email has-row-actions column-primary page-title" data-colname="Correo electrónico">
+									<a class="row-email" href="mailto:<?= $member->email_address ?>"><?= $member->email_address ?></a>
+								</td>
+								<td class="name column-name" data-colname="Nombre">
+									<?= $member->merge_fields->FNAME ?> <?= $member->merge_fields->LNAME ?>
+								</td>
+								<td class="list column-list" data-colname="Boletín de noticias">
+									<?= $list->name ?> 
+								</td>
+								<td style="text-align: center;">
+									<?php
+									$gets = array();
+									$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+									foreach ($temps as $temp) {
+										$args = explode('=', $temp);
+										$gets[$args[0]] = $args[1];
+									}
+									unset($gets['list_view']);
+									$gets['delete'] = $member->email_address;
+									?>
+									<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>">
+										<span class="dashicons dashicons-trash"></span>
+									</a>
+								</td>
+							</tr>
+							<?php
+						}
+					}
+					?>
+				</tbody>
+			</table>
+			<div class="tablenav bottom">
+				<div class="alignleft actions bulkactions">
+					<label for="bulk-action-selector-bottom" class="screen-reader-text">Selecciona acción en lote</label>
+					<form action="" method="post" name="actions" id="form_actions">
+						<select name="action2" id="bulk-action-selector-bottom">
+							<option value="-1">Acciones en lote</option>
+							<option value="delete" class="hide-if-no-js">Eliminar</option>
+						</select>
+						<input type="hidden" id="c_ids" name="c_ids" />
+						<input type="submit" id="doaction2" class="button action" value="Aplicar" />
+					</form>
+					<script type="text/javascript">
+						function update_checkboxes() {
+							var all_checkboxes = [];
+							jQuery('[name="post[]"]:checked').each(function() {
+								all_checkboxes.push(jQuery(this).val());
+							});
+							jQuery('#c_ids').val(all_checkboxes.join(','));
+						}
+						jQuery(function() {
+							jQuery('#cb-select-all-1').click(function() {
+								if (this.checked) {
+									jQuery('[name="post[]"]').each(function() {
+										this.checked = true;                        
+									});
+								} else {
+									jQuery('[name="post[]"]').each(function() {
+										this.checked = false;                        
+									});
+								}
+							});
+							jQuery('[id*="cb-select"]').click(update_checkboxes);
+							jQuery('#doaction2').click(function(event) {
+								event.preventDefault();
+								if (jQuery('#bulk-action-selector-bottom').val() != '-1') {
+									switch (jQuery('#bulk-action-selector-bottom').val()) {
+										case 'delete':
+											update_checkboxes;
+											jQuery('#form_actions').submit();
+											break;
+									}
+								};
+							});
+						});
+					</script>
 					</div>
 						<div class="alignleft actions">
 					</div>

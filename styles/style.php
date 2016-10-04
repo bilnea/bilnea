@@ -39,7 +39,7 @@ foreach ($fnt as $key => $value) {
 
 /* Estilos generales */
 
-* {
+.main_container  * {
 	font-size: <?= b_f_size('b_opt_text_ttf-size') ?>;
 	font-family: <?= b_f_option('b_opt_text_ttf-font') ?>;
 	<?php if (strpos(b_f_option('b_opt_text_ttf-style'), 'italic')) { ?>
@@ -55,9 +55,9 @@ foreach ($fnt as $key => $value) {
 	<?php endif; ?>
 }
 
-b, b *,
-strong,
-strong * {
+.main_container  b, .main_container  b *,
+.main_container  strong,
+.main_container  strong * {
 	font-size: <?= b_f_size('b_opt_bold_ttf-size') ?>;
 	font-family: <?= b_f_option('b_opt_bold_ttf-font') ?>;
 	<?php if (strpos(b_f_option('b_opt_bold_ttf-style'), 'italic')) { ?>
@@ -73,7 +73,7 @@ strong * {
 	<?php endif; ?>
 }
 
-a, a * {
+.main_container a, .main_container a * {
 	font-size: <?= b_f_size('b_opt_link_ttf-size') ?>;
 	font-family: <?= b_f_option('b_opt_link_ttf-font') ?>;
 	<?php if (strpos(b_f_option('b_opt_link_ttf-style'), 'italic')) { ?>
@@ -365,7 +365,8 @@ header#header nav .menu > li > a {
 	display: inline-block;
 }
 
-header#header ul.menu li:hover:after {
+header#header ul.menu li:hover:after,
+header#header ul.menu li[class*="current"]::after {
 	background-color: <?= b_f_color('b_opt_active-color') ?>;
 }
 
@@ -426,6 +427,10 @@ header#header nav li * {
 
 .selector-idioma-superior.desplegable .selector-abajo {
 	border-top: 3px solid <?= b_f_color('b_opt_top-bar_ttf-color') ?>;
+}
+
+.sub-menu {
+	display: none;
 }
 
 /* Pie de página */
