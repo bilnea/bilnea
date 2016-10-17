@@ -11,15 +11,23 @@ Desarrollado por Samuel E. Cerezo para bilnea Digital S.L.
 /* Eliminación recursiva de directorios no vacíos */
 
 function b_f_rmdir($dir) {
-	foreach(scandir($dir) as $file) {
-		if ('.' === $file || '..' === $file) continue;
-		if (is_dir('$dir/$file')) rmdir_recursive('$dir/$file');
-		else unlink('$dir/$file');
+	if (is_dir($dir)) {
+		$objects = scandir($dir);
+		foreach ($objects as $object) {
+			if ($object != '.' && $object != '..') {
+				if (filetype($dir.'/'.$object) == 'dir') {
+					b_f_rmdir($dir.'/'.$object);
+				} else {
+					unlink($dir.'/'.$object);
+				}
+			}
+		}
+		reset($objects);
+		rmdir($dir);
 	}
-	rmdir($dir);
 }
 
-b_f_rmdir( ABSPATH . '/wp-install' );
+b_f_rmdir( ABSPATH . 'wp-install' );
 
 
 // Variables iniciales
@@ -263,10 +271,10 @@ remove_filter('the_content', 'wptexturize');
 // Eliminar versión de WordPress
 
 function b_f_version($url) {
-    if (strpos($url, 'ver='.get_bloginfo('version'))) {
-        $url = remove_query_arg('ver', $url);
-    }
-    return $url;
+	if (strpos($url, 'ver='.get_bloginfo('version'))) {
+		$url = remove_query_arg('ver', $url);
+	}
+	return $url;
 }
 
 add_filter('style_loader_src', 'b_f_version', 9999);
@@ -901,7 +909,7 @@ add_filter('widget_text', 'do_shortcode');
 
 if ((b_f_option('b_opt_wp-admin') != '' && b_f_option('b_opt_wp-admin') != 'wp-admin') && !is_user_logged_in()) {
 	if ($_SERVER['PHP_SELF'] != '/wp-admin/admin-ajax.php') {
-		if ((strpos($_SERVER['REQUEST_URI'], 'wp-login.php') || strpos($_SERVER['REQUEST_URI'], 'wp-admin')) && !strpos($_SERVER['HTTP_REFERER'], b_f_option('b_opt_wp-admin'))) {
+		if (((strpos($_SERVER['REQUEST_URI'], 'wp-login.php') && !isset($_POST['log'])) || strpos($_SERVER['REQUEST_URI'], 'wp-admin')) && !strpos($_SERVER['HTTP_REFERER'], b_f_option('b_opt_wp-admin'))) {
 			include_once(get_stylesheet_directory().'/404.php');
 			die();
 		} else if (strpos($_SERVER['REQUEST_URI'], b_f_option('b_opt_wp-admin'))) {
@@ -933,7 +941,7 @@ add_action('wp_logout','b_f_go_home');
 // Página de acceso
 
 function b_f_login_logo_url() {
-    return home_url();
+	return home_url();
 }
 
 add_filter( 'login_headerurl', 'b_f_login_logo_url' );
@@ -942,7 +950,7 @@ function b_f_login_title() {
 	ob_start();
 	bloginfo('name');
 	$name = ob_get_clean();
-    return 'Administración web '.$name;
+	return 'Administración web '.$name;
 }
 
 add_filter( 'login_headertitle', 'b_f_login_title' );
@@ -1050,7 +1058,7 @@ function metabox_sidebar_guardar($post_id) {
 	}
 	if (!current_user_can('edit_page', $post_id)) {
 		return;
- 	}
+	}
 	$data = $_POST['custom_sidebar'];
 	update_post_meta($post_id, 'custom_sidebar', $data);
 }
@@ -1385,7 +1393,7 @@ add_action('wp_ajax_nopriv_mailchimpsubscribe','b_mailchimp_subscribe');
 function b_mailchimp_member_status( $email, $status, $list_id, $api_key, $request = 'PUT', $merge_fields = null ){
 	$data = array(
 		'apikey'        => $api_key,
-    	'email_address' => $email,
+		'email_address' => $email,
 		'status'        => $status,
 		'merge_fields'  => $merge_fields
 	);
@@ -1409,21 +1417,21 @@ function b_mailchimp_member_status( $email, $status, $list_id, $api_key, $reques
 // Función para convertir a bytes
 
 function b_f_to_bytes($size){
-    $n = substr($size,0,-2);
-    switch(strtoupper(substr($size,-2))){
-        case "KB":
-            return $n*1024;
-        case "MB":
-            return $n*pow(1024,2);
-        case "GB":
-            return $n*pow(1024,3);
-        case "TB":
-            return $n*pow(1024,4);
-        case "PB":
-            return $n*pow(1024,5);
-        default:
-            return $size;
-    }
+	$n = substr($size,0,-2);
+	switch(strtoupper(substr($size,-2))){
+		case "KB":
+			return $n*1024;
+		case "MB":
+			return $n*pow(1024,2);
+		case "GB":
+			return $n*pow(1024,3);
+		case "TB":
+			return $n*pow(1024,4);
+		case "PB":
+			return $n*pow(1024,5);
+		default:
+			return $size;
+	}
 }
 
 
@@ -1441,11 +1449,11 @@ function b_thumbnail_columns( $columns ) {
 }
 
 function b_thumbnail_columns_data( $column, $post_id ) {
-    switch ( $column ) {
-    case 'admin_thumb':
-        echo '<a style="background-image: url('.wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'thumbnail')[0].');" href="'.get_edit_post_link().'"></a>';
-        break;
-    }
+	switch ( $column ) {
+	case 'admin_thumb':
+		echo '<a style="background-image: url('.wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'thumbnail')[0].');" href="'.get_edit_post_link().'"></a>';
+		break;
+	}
 }
 
 add_filter( 'manage_posts_columns' , 'b_thumbnail_columns' );

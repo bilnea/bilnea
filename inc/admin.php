@@ -493,7 +493,7 @@ function bilnea_options_page() {
 					$opt = get_option('bilnea_settings');
 					foreach ($opt as $oti => $val) {
 						if (strpos($oti, 'ttf-font') !== false) {
-							$tmp = str_replace('b_opt_', '', split('ttf-', $oti)[0]);
+							$tmp = str_replace('b_opt_', '', explode('ttf-', $oti)[0]);
 							$siz = $opt['b_opt_'.$tmp.'ttf-style'];
 							if (!isset($fnt[$val])) {
 								$fnt[$val] = array($siz);

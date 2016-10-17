@@ -17,7 +17,6 @@ jQuery(function() {
 			type: 'POST',
 			data: data,
 			success: function(data) {
-				console.log(data);
 				jQuery(data).appendTo('head');
 			}
 		});
