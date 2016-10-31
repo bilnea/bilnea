@@ -8,37 +8,125 @@ Desarrollado por Samuel E. Cerezo para bilnea Digital S.L.
 
 */
 
-/* Eliminación recursiva de directorios no vacíos */
 
-function b_f_rmdir($dir) {
-	if (is_dir($dir)) {
-		$objects = scandir($dir);
-		foreach ($objects as $object) {
-			if ($object != '.' && $object != '..') {
-				if (filetype($dir.'/'.$object) == 'dir') {
-					b_f_rmdir($dir.'/'.$object);
-				} else {
-					unlink($dir.'/'.$object);
+// Versiones de la plataforma
+
+$b_g_version = '3.0';
+
+if (!function_exists('b_f_versions')) {
+	
+	function b_f_versions($var_resource) {
+		switch ($var_resource) {
+
+			// Font Awesome
+			case 'font-awesome':
+				return '4.6.3';
+				break;
+
+			// jQuery UI
+			case 'jquery-ui':
+				return '1.11.4';
+				break;
+
+			// Select2
+			case 'select2':
+				return '4.0.3';
+				break;
+
+			// Fitvids
+			case 'fitvids':
+				return '1.0';
+				break;
+
+			// Query Object
+			case 'query-object':
+				return '2.2.3';
+				break;
+
+			// Magnific Popup
+			case 'magnific-popup':
+				return '1.0.0';
+				break;
+
+			// Animate Colors
+			case 'animate-colors':
+				return '1.6.0';
+				break;
+
+			// Hyphenator
+			case 'hyphenator':
+				return '5.2.0';
+				break;
+
+			// jQuery UI Mobile
+			case 'jquery-ui-mobile':
+				return '1.4.5';
+				break;
+
+			// Animate.css
+			case 'animate-css':
+				return '3.5.0';
+				break;
+
+			// Spectrum
+			case 'spectrum':
+				return '1.8.0';
+				break;
+
+		}
+
+	}
+
+}
+
+
+// Carga de ficheros por directorio
+
+if (!function_exists('b_f_include')) {
+	
+	function b_f_include($var_dir, $var_recursively = true) {
+		if(is_dir($var_dir)) {
+			$var_relative = str_replace(dirname(__FILE__).'/', '', $var_dir);
+			$var_scan = scandir($var_dir);
+			unset($var_scan[0], $var_scan[1]);
+			foreach($var_scan as $var_file) {
+				if(is_dir($var_dir.'/'.$var_file) && $var_recursively == true) {
+					b_f_include($var_dir.'/'.$var_file);
+				} else if (!is_dir($var_dir.'/'.$var_file)) {
+					require($var_relative.'/'.$var_file);
 				}
 			}
 		}
-		reset($objects);
-		rmdir($dir);
 	}
+
 }
 
-b_f_rmdir( ABSPATH . 'wp-install' );
+
+// Variables globales
+
+include('inc/data/data.globals.php');
 
 
-// Variables iniciales
+// Variables por defecto
 
-$num_slid = 0;
+include('inc/data/data.defaults.php');
 
 
-// Borrar elementos de prueba
+// Funciones PHP
+
+b_f_include(get_template_directory().'/inc/functions');
+
+
+// Eliminación del directorio de instalación
+
+rmdir(ABSPATH.'wp-install', true);
+
+
+// Borrado de elementos de prueba
 
 wp_delete_post(1, true);
 wp_delete_post(2, true);
+
 
 // Mostrar título
 
@@ -47,21 +135,6 @@ function b_f_title() {
 }
 
 add_action('after_setup_theme', 'b_f_title');
-
-
-// Hojas de estilos para el panel de administración
-
-function b_admin_files() {
-	wp_register_style('admin-css', get_template_directory_uri().'/css/admin.css', false, '1.0.0');
-	wp_enqueue_style('admin-css');
-}
-
-add_action( 'admin_enqueue_scripts', 'b_admin_files' );
-
-
-// Valores por defecto
-
-require_once('inc/defaults.php');
 
 
 // Localización del tema
@@ -75,6 +148,390 @@ function b_f_locale() {
 load_default_textdomain();
 
 add_filter('locale', 'b_f_locale');
+
+?>
+
+<script type="text/javascript">
+	console.log('bilnea Theme <?= $b_g_version ?>\n----------------------\n');
+</script>
+
+<?php
+
+
+// Preparación scripts
+
+if (!function_exists('b_f_load_scripts')) {
+	
+	function b_f_load_scripts()  {
+
+		// Variables globales
+		global $b_g_version;
+
+		// Scripts del tema
+		wp_register_script('functions.main', get_template_directory_uri().'/js/internal/functions.main.js', array('jquery'), $b_g_version, true);
+		wp_register_script('functions.anchor', get_template_directory_uri().'/js/internal/functions.anchor.js', array('jquery'), $b_g_version, true);
+		wp_register_script('functions.accordion', get_template_directory_uri().'/js/internal/functions.accordion.js', array('jquery'), $b_g_version, true);
+		wp_register_script('functions.design.parallax', get_template_directory_uri().'/js/internal/functions.design.parallax.js', array('jquery'), $b_g_version, true);
+		wp_register_script('functions.design.menu', get_template_directory_uri().'/js/internal/functions.design.menu.js', array('jquery'), $b_g_version, true);
+		wp_register_script('functions.admin', get_template_directory_uri().'/js/internal/functions.admin.js', array('jquery', 'functions.functionality.spectrum', 'wp-color-picker'), $b_g_version, true);
+			
+		// Scripts del tema hijo
+		wp_register_script('functions.child.main', get_stylesheet_directory_uri().'/js/main.js', array('jquery', 'functions.admin'), $b_g_version, true);
+
+		// jQuery UI
+		wp_register_script('functions.core.jquery.ui', get_template_directory_uri().'/js/external/functions.core.jquery.ui.js', array('jquery'), b_f_versions('jquery-ui'), true);
+
+		// Select2
+		wp_register_script('functions.design.select2', get_template_directory_uri().'/js/external/functions.design.select2.js', array('jquery'), b_f_versions('select2'), true);
+
+		// Fitvids
+		wp_register_script('functions.design.fitvids', get_template_directory_uri().'/js/external/functions.design.fitvids.js', array('jquery'), b_f_versions('fitvids'), true);
+
+		// Query object
+		wp_register_script('functions.core.jquery.queryobject', get_template_directory_uri().'/js/external/functions.core.jquery.queryobject.js', array('jquery'), b_f_versions('query-object'), true);
+
+		// Anticopia
+		wp_register_script('functions.anticopy', get_template_directory_uri().'/js/internal/functions.anticopy.js', array(), $b_g_version, true);
+
+		// Lightbox
+		wp_register_script('functions.design.magnificpopup', get_template_directory_uri().'/js/external/functions.design.magnificpopup.js', array('jquery'), b_f_versions('magnific-popup'), false);
+
+		// Animación de colores
+		wp_register_script('functions.design.animatecolors', get_template_directory_uri().'/js/external/functions.design.animatecolors.js', array('jquery'), b_f_versions('animate-colors'), true);
+
+		// Wow!
+		wp_register_script('functions.design.wow', get_template_directory_uri().'/js/external/functions.design.wow.js', array('jquery'), b_f_versions('wow'), true);
+
+		// Hyphenator
+		wp_register_script('functions.design.hyphenator', get_template_directory_uri().'/js/external/functions.design.hyphenator.js', array('jquery'), b_f_versions('hyphenator'), true);
+
+		// jQuery UI Mobile
+		wp_register_script('functions.core.jquery.mobile', get_template_directory_uri().'/js/external/functions.core.jquery.mobile.js', array('bilnea'), b_f_versions('jquery-ui-mobile'), true);
+
+		// Spectrum
+		wp_register_script('functions.functionality.spectrum', get_template_directory_uri().'/js/external/functions.functionality.spectrum.js', array('jquery'), b_f_versions('spectrum'), true);
+
+	}
+
+}
+
+
+// Carga scripts Frontend
+
+if (!function_exists('b_f_frontend_scripts')) {
+	
+	function b_f_frontend_scripts() {
+
+		// Variables globales
+		global $post;
+		global $b_g_version;
+
+		// Variables locales
+		$var_log = 'Scripts loaded:\n';
+
+		// Carga scripts
+		b_f_load_scripts();
+
+		wp_enqueue_script('functions.main');
+		wp_enqueue_script('functions.anchor');
+		wp_enqueue_script('functions.accordion');
+		wp_enqueue_script('functions.child.main');
+
+		wp_enqueue_script('functions.design.fitvids');
+		$var_log .= 'Fitvids '.b_f_versions('fitvids').'\n';
+
+		wp_enqueue_script('functions.core.jquery.queryobject');
+		$var_log .= 'Query Object '.b_f_versions('queryobject').'\n';
+
+		wp_enqueue_script('functions.design.animatecolors');
+		$var_log .= 'Animated Colors '.b_f_versions('animatecolors').'\n';
+
+		if (b_f_option('b_opt_anticopy') == 1) {
+			wp_enqueue_script('functions.anticopy');
+		}
+
+		if (b_f_option('b_opt_lightbox') == 1) {
+			wp_enqueue_script('functions.design.magnificpopup');
+			$var_log .= 'Magnific Popup '.b_f_versions('magnificpopup').'\n';
+		}
+
+		if (b_f_option('b_opt_sticky-menu-animated') == 1) {
+			$var_temp = array(
+				'responsive' => b_f_option('b_opt_responsive')
+			);
+			wp_localize_script('functions.design.menu', 'menu', $var_temp);
+			wp_enqueue_script('functions.design.menu');
+		}
+
+		if (b_f_option('b_opt_hyphenator') == 1) {
+			$var_temp = array(
+				'selector' => b_f_option('b_opt_hyphenator-selector')
+			);
+			wp_localize_script('functions.design.hyphenator', 'hyphenator', $var_temp);
+			wp_enqueue_script('functions.design.hyphenator');
+			$var_log .= 'Hyphenator '.b_f_versions('hyphenator').'\n';
+		}
+
+		if (b_f_option('b_opt_jquery-ui') == 1) {
+			wp_enqueue_script('functions.core.jquery.ui');
+			$var_log .= 'jQuery UI '.b_f_versions('jquery-ui').'\n';
+		}
+
+		if (b_f_option('b_opt_select2') == 1) {
+			wp_enqueue_script('functions.design.select2');
+			$var_log .= 'Select2 '.b_f_versions('select2').'\n';
+		}
+
+		if (b_f_option('b_opt_jquery-mobile') == 1) {
+			wp_enqueue_script('functions.core.jquery.mobile');
+			$var_log .= 'jQuery UI Mobile '.b_f_versions('jquery-ui-mobile').'\n';
+		}
+
+		// Scripts específicos de la página
+		if (file_exists(get_stylesheet_directory().'/js/'.$post->post_type.'-'.$post->ID.'.js')) {
+			wp_enqueue_script($post->post_type.'-'.$post->ID.'-js', get_stylesheet_directory_uri().'/js/'.$post->post_type.'-'.$post->ID.'.js', array('jquery'), $version, true );
+		}
+
+		add_filter('script_loader_tag', function ($var_tag, $var_handle) {
+			if ('functions.google.map' !== $var_handle) {
+				return $var_tag;
+			} else {
+				return str_replace("&#038;", "&", str_replace(' src', ' async defer src', $var_tag));
+			}
+		}, 10, 2);
+
+		?>
+
+		<script type="text/javascript">
+			console.log('<?= $var_log ?>');
+		</script>
+
+		<?php
+
+	}
+
+	add_action('wp_enqueue_scripts', 'b_f_frontend_scripts');
+
+}
+
+
+// Carga scripts Backend
+
+if (!function_exists('b_f_backend_scripts')) {
+	
+	function b_f_backend_scripts() {
+
+		// Variables globales
+		global $b_g_version;
+
+		// Variables locales
+		$var_log = 'Scripts loaded:\n';
+
+		// Carga scripts
+		b_f_load_scripts();
+
+		wp_enqueue_script('functions.admin');
+		wp_enqueue_script('functions.accordion');
+
+		wp_enqueue_script('functions.core.jquery.ui');
+		$var_log .= 'jQuery UI '.b_f_versions('jquery-ui').'\n';
+
+		wp_enqueue_script('functions.design.select2');
+		$var_log .= 'Select2 '.b_f_versions('select2').'\n';
+
+		wp_enqueue_script('functions.functionality.spectrum');
+		$var_log .= 'Spectrum '.b_f_versions('spectrum').'\n';
+
+		add_filter('script_loader_tag', function ($var_tag, $var_handle) {
+			if ('functions.google.map' !== $var_handle) {
+				return $var_tag;
+			} else {
+				return str_replace("&#038;", "&", str_replace(' src', ' async defer src', $var_tag));
+			}
+		}, 10, 2);
+			
+		?>
+
+		<script type="text/javascript">
+			console.log('<?= $var_log ?>');
+		</script>
+
+		<?php
+
+		wp_enqueue_script('wp-color-picker');
+
+		wp_enqueue_script('thickbox');
+		wp_enqueue_script('media-upload');
+		wp_enqueue_media();
+
+	}
+
+	add_action('admin_enqueue_scripts', 'b_f_backend_scripts');
+
+}
+
+?>
+
+<?php
+
+
+// Preparación hojas de estilos
+
+if (!function_exists('b_f_load_styles')) {
+	
+	function b_f_load_styles()  {
+
+		// Variables globales
+		global $b_g_version;
+
+		// Hojas de estilos del tema
+		wp_register_style('styles.bilnea', get_stylesheet_directory_uri().'/style.css', false, $b_g_version);
+		wp_register_style('styles.main', get_template_directory_uri().'/styles/styles.main.php', false, $b_g_version);
+		wp_register_style('styles.admin', get_template_directory_uri().'/css/internal/styles.admin.css', array('styles.functionality.spectrum'), $b_g_version);
+		
+
+		// Hojas de estilos del tema hijo
+		wp_register_style('styles.child.main', get_stylesheet_directory_uri().'/css/main.css', false, $b_g_version);
+		wp_register_style('styles.child.admin', get_stylesheet_directory_uri().'/css/admin.css', false, $b_g_version);
+
+		// Font Awesome
+		wp_register_style('styles.design.fonts.awesome', get_template_directory_uri().'/css/external/styles.design.fonts.awesome.css', false, b_f_versions('font-awesome'));
+
+		// Lightbox
+		wp_register_style('styles.design.magnificpopup', get_template_directory_uri().'/css/external/styles.design.magnificpopup.css', false, b_f_versions('magnificpopup'));
+
+		// jQuery UI
+		wp_register_style('styles.core.jquery.ui', get_template_directory_uri().'/css/external/styles.core.jquery.ui.theme.css', false, b_f_versions('jquery-ui'));
+		wp_register_style('styles.core.jquery.ui.theme', get_template_directory_uri().'/css/external/styles.core.jquery.ui.theme.css', false, b_f_versions('jquery-ui'));
+
+		// Select2
+		wp_register_style('styles.design.select2', get_template_directory_uri().'/css/external/styles.design.select2.css', false, b_f_versions('select2'));
+
+		// Animate.css
+		wp_register_style('styles.design.animate', get_template_directory_uri().'/css/external/styles.design.animate.css', false, b_f_versions('animate-css'));
+
+		// Spectrum
+		wp_register_style('styles.functionality.spectrum', get_template_directory_uri().'/css/external/styles.functionality.spectrum.css', false, b_f_versions('spectrum'));
+
+	}
+
+}
+
+
+// Hojas de estilos del frontend
+
+if (!function_exists('b_f_frontend_styles')) {
+	
+	function b_f_frontend_styles() {
+
+		// Variables globales
+		global $post;
+		global $b_g_version;
+
+		// Variables locales
+		$var_log = 'Styles loaded:\n';
+
+		// Carga estilos
+		b_f_load_styles();
+
+		wp_enqueue_style('styles.bilnea');
+		wp_enqueue_style('styles.main');
+		wp_enqueue_style('styles.child.main');
+
+		wp_enqueue_style('styles.design.font.awesome');
+		$var_log .= 'Font Awesome '.b_f_versions('font-awesome').'\n';
+
+		if (b_f_option('b_opt_lightbox') == 1) {
+			wp_enqueue_style('styles.design.magnificpopup');
+		}
+
+		if (b_f_option('b_opt_jquery-ui') == 1) {
+			wp_enqueue_style('styles.core.jquery.ui');
+			wp_enqueue_style('styles.core.jquery.ui.theme');
+		}
+
+		if (b_f_option('b_opt_select2') == 1) {
+			wp_enqueue_style('styles.design.select2');
+		}
+
+		if (b_f_option('b_opt_jquery-mobile') == 1 && b_f_option('b_opt_jquery-mobile-css') == 1) {
+			wp_enqueue_style('styles.core.jquery.mobile', get_template_directory_uri().'/css/external/styles.core.jquery.mobile.css', array());
+		}
+
+		// Hojas de estilo específicas de la página
+		if (file_exists(get_stylesheet_directory_uri().'/css/'.$post->post_type.'-'.$post->ID.'.css')) {
+			wp_enqueue_style($post->post_type.'-'.$post->ID.'-css', get_stylesheet_directory_uri().'/css/'.$post->post_type.'-'.$post->ID.'.css', array(), $version, true );
+		}
+
+		?>
+
+		<script type="text/javascript">
+			console.log('<?= $var_log ?>');
+		</script>
+
+		<?php
+
+	}
+
+	add_action('wp_enqueue_scripts', 'b_f_frontend_styles');
+
+}
+
+
+// Hojas de estilos del backend
+
+if (!function_exists('b_f_backend_styles')) {
+	
+	function b_f_backend_styles() {
+
+		// Variables globales
+		global $b_g_version;
+
+		// Variables locales
+		$var_log = 'Styles loaded:\n';
+
+		// Carga estilos
+		b_f_load_styles();
+
+		wp_enqueue_style('styles.functionality.spectrum');
+
+		wp_enqueue_style('styles.admin');
+		wp_enqueue_style('styles.child.admin');
+
+		wp_enqueue_style('styles.design.fonts.awesome');
+		$var_log .= 'Font Awesome '.b_f_versions('font-awesome').'\n';
+
+		if (b_f_option('b_opt_lightbox') == 1) {
+			wp_enqueue_style('styles.design.magnificpopup');
+		}
+
+		wp_enqueue_style('styles.core.jquery.ui');
+		wp_enqueue_style('styles.core.jquery.ui.theme');
+
+		wp_enqueue_style('styles.design.select2');
+
+		?>
+
+		<script type="text/javascript">
+			console.log('<?= $var_log ?>');
+		</script>
+
+		<?php
+
+		wp_enqueue_style('wp-color-picker');
+
+		wp_enqueue_style('thickbox');
+
+	}
+
+	add_action('admin_enqueue_scripts', 'b_f_backend_styles');
+
+}
+
+
+
+
+
 
 
 // Archivos necesarios
@@ -281,28 +738,16 @@ add_filter('style_loader_src', 'b_f_version', 9999);
 add_filter('script_loader_src', 'b_f_version', 9999);
 
 
-// Gestor de medios
-
-function b_f_media() {
-	wp_enqueue_style('thickbox');
-	wp_enqueue_script('thickbox');
-	wp_enqueue_script('media-upload');
-	wp_enqueue_media();
-}
-
-add_action('admin_enqueue_scripts', 'b_f_media');
-
-
 // Añadir tema al panel de administración
 
 function b_f_admin_menu() { 
-	add_menu_page('Opciones del tema', 'bilnea', 'manage_options', 'bilnea', 'bilnea_options_page', get_template_directory_uri().'/img/b-bilnea.png', 75);
+	add_menu_page('Opciones del tema', 'bilnea', 'manage_options', 'bilnea', 'b_f_options_page', get_template_directory_uri().'/img/b-bilnea.png', 75);
 }
 
 add_action('admin_menu', 'b_f_admin_menu');
 
 function b_f_subscribers_menu() { 
-	add_menu_page('Suscriptores', 'Suscriptores', 'manage_options', 'subscribers', 'bilnea_subscribers_page', 'dashicons-groups', 76);
+	add_submenu_page('bilnea', 'Suscriptores', 'Suscriptores', 'manage_options', 'subscribers', 'bilnea_subscribers_page');
 }
 
 if (b_f_option('b_opt_subscribers') == 1) {
@@ -319,10 +764,6 @@ function b_f_variables() {
 add_action('admin_init', 'b_f_variables');
 
 
-// Carga del panel de administración del tema
-
-require_once('inc/admin.php');
-
 
 // Modificamos los puntos suspensivos utilizados al acortar texto
 
@@ -333,16 +774,7 @@ function custom_excerpt_more($more) {
 add_filter( 'excerpt_more', 'custom_excerpt_more' );
 
 
-// Función que devuelve el valor de una opción
 
-function b_f_option($term) {
-	$set = get_option('bilnea_settings', b_f_default());
-	$sat = $set[$term];
-	if ($sat == '') {
-		$sat = b_f_default()[$term];
-	}
-	return $sat;
-}
 
 
 // Función que devuelve un valor en métrica
@@ -392,23 +824,7 @@ if (b_f_option('b_opt_header-links') == 1) {
 
 // Boletín de noticias
 
-if (b_f_option('b_opt_subscribers') == 1) {
-	global $wpdb;
-	$table = $wpdb->prefix.'subscribers';
-	if ($wpdb->get_var('SHOW TABLES LIKE "'.$table.'"') != $table) {
-		$sql = 'CREATE TABLE IF NOT EXISTS "'.$table.'" (
-			id INTEGER NOT NULL,
-			name VARCHAR(200),
-			last_name VARCHAR(200),
-			email VARCHAR(200),
-			active BOOLEAN,
-			date DATE,
-			hash VARCHAR(200),
-			PRIMARY KEY  (id))';
-		require_once(ABSPATH.'wp-admin/includes/upgrade.php');
-		dbDelta($sql);
-	}
-}
+
 
 
 // Menús de navegación
@@ -520,136 +936,7 @@ add_action( 'widgets_init', 'b_f_sidebar' );
 
 // Scripts y Hojas de estilo del tema
 
-function b_f_load()  {
-	global $post;
-	global $version;
 
-	// Font Awesome
-	wp_enqueue_style('font-awesome', get_template_directory_uri().'/css/font-awesome.css');
-
-	// Última versión de Font Awesome
-	wp_enqueue_style('font-awesome-cdn', 'http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css');
-	
-	// Hojas de estilos
-	wp_enqueue_style('style-css', get_stylesheet_directory_uri().'/style.css', array());
-	wp_enqueue_style('style-php', get_template_directory_uri().'/styles/style.php', array());
-	wp_enqueue_style('main-css', get_stylesheet_directory_uri().'/css/main.css', array());
-
-	// Scripts del tema
-	wp_enqueue_script('fitvids', get_template_directory_uri().'/js/fitvids.js', array('jquery'), $version, true);
-	wp_enqueue_script('main-js', get_stylesheet_directory_uri().'/js/main.js', array('jquery'), $version, true);
-	wp_enqueue_script('bilnea', get_template_directory_uri().'/js/bilnea.js', array('jquery'), $version, true);
-	wp_enqueue_script('bilnea');
-	wp_enqueue_script('anchor', get_template_directory_uri().'/js/anchor.js', array('jquery'), $version, true);
-
-	// Query object
-	wp_enqueue_script('query-object', get_template_directory_uri().'/js/jquery.query-object.js', array('jquery'), $version, true);
-
-	// Anticopia
-	if (b_f_option('b_opt_anticopy') == 1) {
-		wp_enqueue_script('anticopy', get_template_directory_uri().'/js/anticopy.js', array(), $version, true);
-	}
-
-	// Lightbox
-	if (b_f_option('b_opt_lightbox') == 1) {
-		wp_enqueue_script('lightbox', get_template_directory_uri().'/js/magnific-popup.js', array('jquery'), $version, false);
-		wp_enqueue_style('lightbox', get_template_directory_uri().'/css/magnific-popup.css');
-	}
-
-	// Slider
-	wp_register_script('slider', get_template_directory_uri().'/js/slider.js', array('jquery'), $version, true);
-
-	// Acordeón
-	wp_register_script('b_s_accordion', get_template_directory_uri().'/js/accordion.js', array('jquery'), $version, true);
-
-	// Animación de colores
-	wp_enqueue_script('animate-colors', get_template_directory_uri().'/js/jquery.animate-colors.js', array('jquery'), $version, true);
-
-	// jQuery UI
-	wp_register_script('jquery-ui', get_template_directory_uri().'/js/jquery-ui.js', array('jquery'), $version, true);
-	wp_register_style('jquery-ui-css', get_template_directory_uri().'/css/jquery-ui.css', array());
-	wp_register_style('jquery-ui-css-theme', get_template_directory_uri().'/css/jquery-ui-theme.css', array());
-
-	// Select2
-	wp_register_script('select2', get_template_directory_uri().'/js/select2.min.js', array('jquery'), $version, true);
-	wp_register_style('select2-css', get_template_directory_uri().'/css/select2.min.css', array());
-
-	// Parallax
-	wp_enqueue_script('parallax', get_template_directory_uri().'/js/parallax.js', array('jquery','bilnea'), $version, true);
-
-	// Animate.css
-	wp_enqueue_style('animate', get_template_directory_uri().'/css/animate.css', array());
-
-	// Wow!
-	wp_enqueue_script('wow', get_template_directory_uri().'/js/wow.js', array('jquery'), $version, true);
-
-	// Animación del menú
-	if (b_f_option('b_opt_sticky-menu-animated') == 1) {
-		wp_register_script('menu', get_template_directory_uri().'/js/menu.js', array('jquery'), $version, true);
-		$men_array = array(
-			'responsive' => b_f_option('b_opt_responsive')
-		);
-		wp_localize_script('menu', 'menu', $men_array);
-		wp_enqueue_script('menu');
-	}
-
-	// Hyphenator
-	if (b_f_option('b_opt_hyphenator') == 1) {
-		wp_register_script('hyphenator', get_template_directory_uri().'/js/hyphenator.js', array('jquery'), $version, true);
-		$hyp_array = array(
-			'selector' => b_f_option('b_opt_hyphenator-selector')
-		);
-		wp_localize_script('hyphenator', 'hyphenator', $hyp_array);
-		wp_enqueue_script('hyphenator');
-	}
-
-	// Mapas
-	wp_register_script('map', get_template_directory_uri().'/js/map.js', array('jquery'), $version, true);
-	(b_f_option('b_opt_apis_gmaps') != '') ? $agm = '&key='.b_f_option('b_opt_apis_gmaps') : $agm = '';
-	wp_register_script('google-map', 'https://maps.googleapis.com/maps/api/js?signed_in=false&callback=initMap'.$agm, array('map'), $version, false);
-
-	// Condicionales aplicados a los scripts
-	add_filter('script_loader_tag', function ($tag, $handle) {
-		if ('google-map' !== $handle)
-			return $tag;
-			return str_replace("&#038;", "&", str_replace(' src', ' async defer src', $tag));
-	}, 10, 2);
-	$asp = $_SERVER['REQUEST_URI'];
-	$tkn = explode('/', $asp);
-	$jsp = $tkn[sizeof($tkn)-1];
-	if (b_f_option('b_opt_jquery-ui') == 1) {
-		wp_enqueue_script('jquery-ui');
-		wp_enqueue_style('jquery-ui-css');
-		wp_enqueue_style('jquery-ui-css-theme');
-	}
-	if (b_f_option('b_opt_select2') == 1) {
-		wp_enqueue_script('select2');
-		wp_enqueue_style('select2-css');
-	}
-	if (b_f_option('b_opt_jquery-mobile') == 1) {
-		wp_enqueue_script('jquery-mobile', get_template_directory_uri().'/js/jquery-mobile.js', array('bilnea'), $version, true);
-		if (b_f_option('b_opt_jquery-mobile-css') == 1) {
-			wp_enqueue_style('jquery-mobile-css', get_template_directory_uri().'/css/jquery-mobile.css', array());
-		} else {
-			wp_enqueue_script('jquery-mobile-js', get_template_directory_uri().'/js/jquery-mobile-min.js', array('jquery-mobile'));
-		}
-	}
-	
-	// Scripts específicos de la página
-	if (file_exists(get_stylesheet_directory().'/js/'.$post->post_type.'-'.$post->ID.'.js')) {
-		wp_enqueue_script($post->post_type.'-'.$post->ID.'-js', get_stylesheet_directory_uri().'/js/'.$post->post_type.'-'.$post->ID.'.js', array('jquery'), $version, true );
-	}
-	if (file_exists(get_stylesheet_directory_uri().'/css/'.$post->post_type.'-'.$post->ID.'.css')) {
-		wp_enqueue_style($post->post_type.'-'.$post->ID.'-css', get_stylesheet_directory_uri().'/css/'.$post->post_type.'-'.$post->ID.'.css', array(), $version, true );
-	}
-
-	// Hoja de estilos responsive
-	if (b_f_option('responsive_active') != 1) {
-		wp_enqueue_style('responsive', get_template_directory_uri().'/css/responsive.css', array(), '', 'all and (max-width: '.b_f_option('b_opt_responsive').')');
-	}
-}
-
-add_action('wp_enqueue_scripts', 'b_f_load');
 
 
 // Añadir clase si se accede desde dispositivo móvil
@@ -741,106 +1028,28 @@ if (function_exists('icl_object_id') && b_f_option('b_opt_language-header') == 1
 
 // Redes sociales. $arg = clase del elemento padre. $opt = opciones (1: iconos normales, 2: iconos cuadrados)
 
-function b_f_rrss($arg='',$opt=1) {
+function b_f_rrss($arg='', $opt=1) {
+	($opt == 2) ? $opt = '-square' : $opt = '';
 
-	switch ($opt) {
-		case 2:
-			$opt = '-square';
-			break;
-		
-		default:
-			$opt = '';
-			break;
+	$txt = '<ul class="'.$arg.'">';
+
+	$socials = explode(',', b_f_option('b_opt_social-order'));
+
+	foreach ($socials as $social) {
+		if (b_f_option('b_opt_social-'.$social) != '') {
+			$url = b_f_option('b_opt_social-'.$social);
+			if (strpos($url, $social.'.com') === false) {
+				$url = '//'.$social.'.com/'.$url;
+			}
+			if (strpos($url,'http://') === false) {
+				$url = '//'.$url;
+			}
+			$url = str_replace('////', '//', str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $url)))));
+			$txt .= '<li><a href="'.$url.'" title="'.str_replace('-', ' ', ucfirst($social)).'" target="_blank" rel="nofollow"><i style="background-color: '.b_f_option('b_opt_social-'.$social.'-color').';" class="fa fa-'.$social.$opt.'"></i></a></li>';
+		}
 	}
 
-	$txt = '';
-
-	if (b_f_option('b_opt_social-facebook') != '' || b_f_option('b_opt_social-twitter') != '' || b_f_option('b_opt_social-google-plus') != '' || b_f_option('b_opt_social-youtube') != '' || b_f_option('b_opt_social-linkedin') != '' || b_f_option('b_opt_social-instagram') != '' || b_f_option('b_opt_social-pinterest') != '') {
-		$wrk = true;
-	} else {
-		$wrk = false;
-	}
-
-	if ($wrk) { $txt = '<ul class="'.$arg.'">'; }
-
-	if (b_f_option('b_opt_social-facebook') != '') {
-		$fcb = b_f_option('b_opt_social-facebook');
-		if (strpos($fcb,'facebook.com') === false) {
-			$fcb = '//facebook.com/'.$fcb;
-		}
-		if (strpos($fcb,'http://') === false) {
-			$fcb = '//'.$fcb;
-		}
-		$fcb = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $fcb))));
-		$txt .= '<li><a href="'.$fcb.'" title="Facebook" target="_blank" rel="nofollow"><i class="fa fa-facebook'.$opt.'"></i></a></li>';
-	}
-
-	if (b_f_option('b_opt_social-twitter') != '') {
-		$twt = b_f_option('b_opt_social-twitter');
-		if (strpos($twt,'twitter.com') === false) {
-			if ($twt[0] == '@') $twt = ltrim($twt, '@');
-			$twt = 'http://twitter.com/'.$twt;
-		}
-		if (strpos($twt,'http://') === false) {
-			$twt = 'http://'.$twt;
-		}
-		$twt = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $twt))));
-		$txt .= '<li><a href="'.$twt.'" title="Twitter" target="_blank" rel="nofollow"><i class="fa fa-twitter'.$opt.'"></i></a></li>';
-	}
-
-	if (b_f_option('b_opt_social-google-plus') != '') {
-		$gop = b_f_option('b_opt_social-google-plus');
-		if (strpos($gop,'http://') === false) {
-			$gop = 'http://'.$gop;
-		}
-		$gop = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $gop))));
-		$txt .= '<li><a href="'.$gop.'" title="Google+" target="_blank" rel="nofollow"><i class="fa fa-google-plus'.$opt.'"></i></a></li>';
-	}
-
-	if (b_f_option('b_opt_social-youtube') != '') {
-		$ytb = b_f_option('b_opt_social-youtube');
-		if (strpos($ytb,'http://') === false) {
-			$ytb = 'http://'.$ytb;
-		}
-		$ytb = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $ytb))));
-		$txt .= '<li><a href="'.$ytb.'" title="Youtube" target="_blank" rel="nofollow"><i class="fa fa-youtube'.$opt.'"></i></a></li>';
-	}
-
-	if (b_f_option('b_opt_social-linkedin') != '') {
-		$lkn = b_f_option('b_opt_social-linkedin');
-		if (strpos($lkn,'http://') === false) {
-			$lkn = 'http://'.$lkn;
-		}
-		$lkn = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $lkn))));
-		$txt .= '<li><a href="'.$lkn.'" title="Linkedin" target="_blank" rel="nofollow"><i class="fa fa-linkedin'.$opt.'"></i></a></li>';
-	}
-
-	if (b_f_option('b_opt_social-instagram') != '') {
-		$itg = b_f_option('b_opt_social-instagram');
-		if (strpos($itg,'instagram.com') === false) {
-			if ($itg[0] == '@') $itg = ltrim($itg, '@');
-			$itg = 'http://instagram.com/'.$itg;
-		}
-		if (strpos($itg,'http://') === false) {
-			$itg = 'http://'.$itg;
-		}
-		$itg = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $itg))));
-		$txt .= '<li><a href="'.$itg.'" title="Instagram" target="_blank" rel="nofollow"><i class="fa fa-instagram'.$opt.'"></i></a></li>';
-	}
-
-	if (b_f_option('b_opt_social-pinterest') != '') {
-		$pin = b_f_option('b_opt_social-pinterest');
-		if (strpos($pin,'pinterest.com') === false) {
-			$pin = 'http://pinterest.com/'.$pin;
-		}
-		if (strpos($pin,'http://') === false) {
-			$pin = 'http://'.$pin;
-		}
-		$pin = str_replace('http', '', str_replace('https', '', str_replace('http:', '', str_replace('https:', '', $pin))));
-		$txt .= '<li><a href="'.$pin.'" title="Pinterest" target="_blank" rel="nofollow"><i class="fa fa-pinterest'.$opt.'"></i></a></li>';
-	}
-
-	if ($wrk) { $txt .= '</ul>'; }
+	$txt .= '</ul>';
 
 	return $txt;
 }
@@ -1387,8 +1596,8 @@ function b_mailchimp_subscribe(){
 	die;
 }
  
-add_action('wp_ajax_mailchimpsubscribe','b_mailchimp_subscribe');
-add_action('wp_ajax_nopriv_mailchimpsubscribe','b_mailchimp_subscribe');
+add_action('wp_ajax_b_mailchimpsubscribe','b_mailchimp_subscribe');
+add_action('wp_ajax_nopriv_b_mailchimpsubscribe','b_mailchimp_subscribe');
 
 function b_mailchimp_member_status( $email, $status, $list_id, $api_key, $request = 'PUT', $merge_fields = null ){
 	$data = array(
@@ -1414,62 +1623,96 @@ function b_mailchimp_member_status( $email, $status, $list_id, $api_key, $reques
 }
 
 
+
+
+// Envío de formularios
+
+
+
+
 // Función para convertir a bytes
 
-function b_f_to_bytes($size){
-	$n = substr($size,0,-2);
-	switch(strtoupper(substr($size,-2))){
-		case "KB":
-			return $n*1024;
-		case "MB":
-			return $n*pow(1024,2);
-		case "GB":
-			return $n*pow(1024,3);
-		case "TB":
-			return $n*pow(1024,4);
-		case "PB":
-			return $n*pow(1024,5);
-		default:
-			return $size;
+if (!function_exists('b_f_to_bytes')) {
+	
+	function b_f_to_bytes($var_size){
+		$var_unit = substr($var_size,0,-2);
+		switch(strtoupper(substr($var_size,-2))){
+			case 'KB':
+				return $var_unit * 1024;
+			case 'MB':
+				return $var_unit * pow(1024,2);
+			case 'GB':
+				return $var_unit * pow(1024,3);
+			case 'TB':
+				return $var_unit * pow(1024,4);
+			case 'PB':
+				return $var_unit * pow(1024,5);
+			default:
+				return $var_size;
+		}
 	}
 }
 
 
 // Miniaturas en la zona de administración
 
-function b_thumbnail_columns( $columns ) {
-	$new_columns = array();
-	foreach ($columns as $key => $title) {
+function b_f_thumbnail_columns($var_columns) {
+	$var_new_columns = array();
+	foreach ($var_columns as $key => $value) {
 		if ($key == 'title') {
 			$new_columns['admin_thumb'] = '';
 		}
-		$new_columns[$key] = $title;
+		$var_new_columns[$key] = $value;
 	}
-	return $new_columns;
+	return $var_new_columns;
 }
 
-function b_thumbnail_columns_data( $column, $post_id ) {
-	switch ( $column ) {
-	case 'admin_thumb':
-		echo '<a style="background-image: url('.wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'thumbnail')[0].');" href="'.get_edit_post_link().'"></a>';
-		break;
+function b_f_thumbnail_columns_data($var_column, $var_post_id) {
+	switch ($var_column) {
+		case 'admin_thumb':
+			echo '<a style="background-image: url('.wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'thumbnail')[0].');" href="'.get_edit_post_link().'"></a>';
+			break;
 	}
 }
 
-add_filter( 'manage_posts_columns' , 'b_thumbnail_columns' );
-add_action( 'manage_posts_custom_column' , 'b_thumbnail_columns_data', 10, 2 );
+foreach (get_post_types() as $post_type) {
+	if (post_type_supports($post_type, 'thumbnail')) {
+		add_filter('manage_posts_columns', 'b_thumbnail_columns');
+		add_action('manage_posts_custom_column', 'b_thumbnail_columns_data', 10, 2);
+	}
+}
 
 
-// Incluimos los datos externos
+// Soporte para SVG
 
-require_once('inc/data.php');
+if (!function_exists('b_f_svg')) {
+
+	function b_f_svg($var_mime_types) {
+		$var_mime_types['svg'] = 'image/svg+xml';
+		return $var_mime_types;
+	}
+
+	add_filter('upload_mimes', 'b_f_svg');
+}
 
 
-// Incluimos los widgets
+// Widgets
 
-require_once('inc/widgets.php');
+b_f_include(get_template_directory().'/inc/widgets');
 
 
-// Incluimos los shortcodes
+// Shortcodes
 
-require_once('inc/shortcodes.php');
+b_f_include(get_template_directory().'/inc/shortcodes');
+
+
+// Funciones Ajax
+
+b_f_include(get_template_directory().'/inc/ajax');
+
+
+// Panel de administración
+
+b_f_include(get_template_directory().'/inc/admin', false);
+
+?>

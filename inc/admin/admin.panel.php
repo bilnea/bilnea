@@ -1,87 +1,124 @@
 <?php
 
-// Creamos la función que llamará al selector de fuentes
+if (__FILE__ == $_SERVER['PHP_SELF']) {
+	die();
+}
 
-require_once('fonts.php');
 
-function b_f_fonts($fon) {
-	$opt = get_option('bilnea_settings');
+// Muestreo de fuentes tipográficas
+
+function b_f_fonts($var_font) {
+
+	global $b_g_google_api;
+
+	$var_fonts = json_decode(file_get_contents(('https://www.googleapis.com/webfonts/v1/webfonts?key='.$b_g_google_api)));
+
+	$b_g_google_fonts = array();
+
+	foreach ($var_fonts->items as $font) {
+		$var_sizes = $font->variants;
+		foreach ($var_sizes as &$temp) {
+			if ($temp == 'regular') { $temp = '400'; }
+			if ($temp == 'italic') { $temp = '400italic'; }
+		}
+		$b_g_google_fonts['"'.$font->family.'", '.$font->category] = array(
+			'name' => str_replace(' ', '+', $font->family),
+			'sizes' => $var_sizes
+		);
+	}
+
 	?>
-	<div style="display: inline-block; width: calc(100% - 256px);">
+
+	<!-- Selector tipográfico -->
+	<div class="font-selector">
 		Fuente tipográfica
-		<select name='bilnea_settings[b_opt_<?= $fon ?>_ttf-font]' class="gran font-selector" style="margin-top: -2px; width: 100% !important;">
+		<select name="bilnea_settings[b_opt_<?= $var_font ?>_ttf-font]" class="gran font-selector">
 			<option disabled="disabled">Seleccionar</option>
 			<?php
-			global $fun;
-			foreach ($fun as $fn1 => $fn2) {
-				if ($opt['b_opt_'.$fon.'_ttf-font'] == '') {
-					b_f_default()['b_opt_'.$fon.'_ttf-font'];
-				} else {
-					$fnt = $opt['b_opt_'.$fon.'_ttf-font'];
-				}
-			?>
-				<option value='<?= $fn1 ?>' <?php selected($fnt, $fn1); ?> data="<?= join(',',$fn2['sizes']) ?>"><?= str_replace('+', ' ', $fn2['name']) ?></option>
-			<?php
+			
+			foreach ($b_g_google_fonts as $key => $value) {
+				$var_current_font = b_f_option('b_opt_'.$var_font.'_ttf-font');
+				echo '<option value="'.$key.'" '.selected($var_current_font, $key).' data="'.implode(',', $value['sizes']).'">'.str_replace('+', ' ', $value['name']).'</option>';
 			}
+
 			?>
 		</select>
 	</div>
-	<div style="display: inline-block; width: 70px; margin-left: 8px;">
+
+	<!-- Selector tamaño -->
+	<div class="font-size-picker">
 		Tamaño
-		<input type='text' class="sp-input" name='bilnea_settings[b_opt_<?= $fon ?>_ttf-size]' value='<?php echo $opt['b_opt_'.$fon.'_ttf-size']; ?>' placeholder="<?= b_f_default()['b_opt_'.$fon.'_ttf-size']; ?>">
+		<input type="text" class="sp-input" name="bilnea_settings[b_opt_<?= $var_font ?>_ttf-size]" value="<?= b_f_option('b_opt_'.$var_font.'_ttf-size'); ?>" placeholder="<?= b_f_default('b_opt_'.$var_font.'_ttf-size'); ?>">
 	</div>
-	<div style="display: inline-block; width: 160px; position: relative; margin-left: 8px;">
+
+	<!-- Selector color -->
+	<div class="font-color-picker">
 		Color
-		<input type="text" class="sp-input" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-color]" value="<?php echo $opt['b_opt_'.$fon.'_ttf-color']; ?>" placeholder="<?= b_f_default()['b_opt_'.$fon.'_ttf-color']; ?>" />
+		<input type="text" class="sp-input" name="bilnea_settings[b_opt_<?= $var_font ?>_ttf-color]" value="<?= b_f_option('b_opt_'.$var_font.'_ttf-color'); ?>" placeholder="<?= b_f_default('b_opt_'.$var_font.'_ttf-color'); ?>" />
 		<input type="text" class="colora text peq">
 	</div>
+
+	<!-- Selector estilo -->
 	<div class="font_styles" style="position: relative;">
 		<div>Regular<br />Cursiva</div>
-		<div><input type="radio" value="100" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" <?php checked( $opt['b_opt_'.$fon.'_ttf-style'], '100' ); ?> /><br /><input type="radio" value="100italic" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" /></div>
-		<div><input type="radio" value="200" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" <?php checked( $opt['b_opt_'.$fon.'_ttf-style'], '200' ); ?> /><br /><input type="radio" value="200italic" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" /></div>
-		<div><input type="radio" value="300" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" <?php checked( $opt['b_opt_'.$fon.'_ttf-style'], '300' ); ?> /><br /><input type="radio" value="300italic" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" /></div>
-		<div><input type="radio" value="400" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" <?php checked( $opt['b_opt_'.$fon.'_ttf-style'], '400' ); ?> /><br /><input type="radio" value="400italic" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" /></div>
-		<div><input type="radio" value="500" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" <?php checked( $opt['b_opt_'.$fon.'_ttf-style'], '500' ); ?> /><br /><input type="radio" value="500italic" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" /></div>
-		<div><input type="radio" value="600" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" <?php checked( $opt['b_opt_'.$fon.'_ttf-style'], '600' ); ?> /><br /><input type="radio" value="600italic" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" /></div>
-		<div><input type="radio" value="700" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" <?php checked( $opt['b_opt_'.$fon.'_ttf-style'], '700' ); ?> /><br /><input type="radio" value="700italic" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" /></div>
-		<div><input type="radio" value="800" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" <?php checked( $opt['b_opt_'.$fon.'_ttf-style'], '800' ); ?> /><br /><input type="radio" value="800italic" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" /></div>
-		<div><input type="radio" value="900" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" <?php checked( $opt['b_opt_'.$fon.'_ttf-style'], '900' ); ?> /><br /><input type="radio" value="900italic" name="bilnea_settings[b_opt_<?= $fon ?>_ttf-style]" /></div>
-		<div class="notice font"><span style="font-family: 'Roboto'; font-weight: 100;">a</span> ... <span style="font-family: 'Roboto'; font-weight: 900;">a</span><br /><span style="font-family: 'Roboto'; font-weight: 100; font-style: italic;">a</span> ... <span style="font-family: 'Roboto'; font-weight: 900; font-style: italic;">a</span></div>
-		<div style="width: auto; margin-left: 8px; font-size: 13px; margin-top: 2px; vertical-align: bottom; margin-bottom: -1px;">
-			<input style="float: left; margin-top: 6px;" type='checkbox' name='bilnea_settings[b_opt_<?= $fon ?>_ttf-uppercase]' <?php checked( $opt['b_opt_'.$fon.'_ttf-uppercase'], 1 ); ?> value='1'>Mayúsculas
+		<?php
+
+			$var_weights = array('100','200','300','400','500','600','700','800','900');
+
+			foreach ($var_weights as $var_weight) {
+
+				?>
+
+				<div>
+					<input type="radio" value="<?= $var_weight ?>" name="bilnea_settings[b_opt_<?= $var_font ?>_ttf-style]" <?php checked(b_f_option('b_opt_'.$var_font.'_ttf-style'), $var_weight); ?> />
+					<br />
+					<input type="radio" value="<?= $var_weight ?>italic" name="bilnea_settings[b_opt_<?= $var_font ?>_ttf-style]" <?php checked(b_f_option('b_opt_'.$var_font.'_ttf-style'), $var_weight.'italic'); ?> />
+				</div>
+
+				<?php
+
+			}
+
+		?>
+
+		<div class="notice font">
+			<span style="font-family: 'Roboto'; font-weight: 100;">a</span> ... <span style="font-family: 'Roboto'; font-weight: 900;">a</span>
 			<br />
-			<input style="float: left; margin-top: 6px; margin-right: -2px;" type='checkbox' name='bilnea_settings[b_opt_<?= $fon ?>_ttf-underline]' <?php checked( $opt['b_opt_'.$fon.'_ttf-underline'], 1 ); ?> value='1'>Subrayado
+			<span style="font-family: 'Roboto'; font-weight: 100; font-style: italic;">a</span> ... <span style="font-family: 'Roboto'; font-weight: 900; font-style: italic;">a</span>
 		</div>
+
+		<div class="font-uppercase">
+			<input style="float: left; margin-top: 6px;" type="checkbox" name="bilnea_settings[b_opt_<?= $var_font ?>_ttf-uppercase]" <?php checked(b_f_option('b_opt_'.$var_font.'_ttf-uppercase'), 1); ?> value="1">Mayúsculas
+			<br />
+			<input style="float: left; margin-top: 6px;" type="checkbox" name="bilnea_settings[b_opt_<?= $var_font ?>_ttf-underline]" <?php checked(b_f_option('b_opt_'.$var_font.'_ttf-underline'), 1); ?> value="1">Subrayado
+		</div>
+
 	</div>
 	<?php
 }
 
 if (strpos($_SERVER['HTTP_REFERER'], 'page=bilnea') === false) {
-	$options = get_option('bilnea_settings');
-	$options['pestanya'] = 1;
-	update_option('bilnea_settings', $options);
+	$var_options = get_option('bilnea_settings');
+	$var_options['tab'] = 1;
+	update_option('bilnea_settings', $var_options);
 }
 
 
 // Creamos la página de administración
 
-function bilnea_options_page() { 
+function b_f_options_page() {
 
-	$opt = get_option('bilnea_settings');
-	$bil = get_template_directory_uri();
+	// Variables globales
+	global $b_g_version;
+
+	// Variables locales
+	$var_dir = get_template_directory_uri();
 
 	?>
 
-	<!-- Ficheros de script con las funciones javascript-->
-	<script src="<?php echo esc_attr($bil.'/js/'); ?>spectrum.js"></script>
 	<script type="text/javascript">
-		var img_url = '<?php echo $bil; ?>/img/icono-imagen.png';
+		var img_url = '<?php echo $var_dir; ?>/img/icono-imagen.png';
 	</script>
-	<script src="<?php echo esc_attr($bil.'/js/'); ?>admin.js"></script>
-
-	<!-- Ficheros de estilos -->
-	<link rel="stylesheet" href="<?php echo esc_attr($bil.'/css/'); ?>spectrum.css" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	
 	<form action="options.php" method="post" id="bilnea">
 
@@ -93,324 +130,44 @@ function bilnea_options_page() {
 
 			<!-- Bloque lateral -->
 			<div class="lateral">
-				<h3 <?php if (!isset($opt['pestanya']) || $opt['pestanya'] == 1) { echo 'class="activo"'; }?>>Opciones Generales</h3>
-				<h3 <?php if ($opt['pestanya'] == 2) { echo 'class="activo"'; }?>>Desarrollo</h3>
-				<h3 <?php if ($opt['pestanya'] == 3) { echo 'class="activo"'; }?>>Estilos tipográficos</h3>
-				<h3 <?php if ($opt['pestanya'] == 4) { echo 'class="activo"'; }?>>Adaptación responsive</h3>
-				<h3 <?php if ($opt['pestanya'] == 5) { echo 'class="activo"'; }?>>Logotipo e iconos</h3>
-				<h3 <?php if ($opt['pestanya'] == 6) { echo 'class="activo"'; }?>>Cabecera</h3>
-				<h3 <?php if ($opt['pestanya'] == 7) { echo 'class="activo"'; }?>>Pie de página</h3>
-				<h3 <?php if ($opt['pestanya'] == 8) { echo 'class="activo"'; }?>>Blog</h3>
+				<h3 <?php if (b_f_option('tab') === null || b_f_option('tab') == 1) { echo 'class="active"'; }?>>Opciones Generales</h3>
+				<h3 <?php if (b_f_option('tab') == 2) { echo 'class="active"'; }?>>Desarrollo</h3>
+				<h3 <?php if (b_f_option('tab') == 3) { echo 'class="active"'; }?>>Estilos tipográficos</h3>
+				<h3 <?php if (b_f_option('tab') == 4) { echo 'class="active"'; }?>>Adaptación responsive</h3>
+				<h3 <?php if (b_f_option('tab') == 5) { echo 'class="active"'; }?>>Logotipo e iconos</h3>
+				<h3 <?php if (b_f_option('tab') == 6) { echo 'class="active"'; }?>>Cabecera</h3>
+				<h3 <?php if (b_f_option('tab') == 7) { echo 'class="active"'; }?>>Pie de página</h3>
+				<h3 <?php if (b_f_option('tab') == 8) { echo 'class="active"'; }?>>Blog</h3>
 				<?php
 				if (function_exists('icl_object_id')) {
 				?>
-				<h3 <?php if ($opt['pestanya'] == 9) { echo 'class="activo"'; }?>>Multidioma</h3>
+				<h3 <?php if (b_f_option('tab') == 9) { echo 'class="active"'; }?>>Multidioma</h3>
 				<?php
 				}
 				?>
-				<h3 <?php if ($opt['pestanya'] == 10) { echo 'class="activo"'; }?>>Textos legales</h3>
-				<h3 <?php if ($opt['pestanya'] == 11) { echo 'class="activo"'; }?>>Redirecciones y SEO</h3>
+				<h3 <?php if (b_f_option('tab') == 10) { echo 'class="active"'; }?>>Textos legales</h3>
+				<h3 <?php if (b_f_option('tab') == 11) { echo 'class="active"'; }?>>Redirecciones y SEO</h3>
 			</div>
 
 			<!-- Bloque central -->
 			<div class="central">
 
 				<!-- Opciones Generales -->
-				<div <?php if (!isset($opt['pestanya']) || $opt['pestanya'] == 1) { echo 'class="activo"'; }?> id="tab1">
-					<div class="main-info">
-						<img src="<?php echo $bil.'/img/bilneador.png'; ?>" style="max-width: 300px; margin: auto; display: block;" />
-						<div style="text-align: center; margin-bottom: 20px; font-size: 11px; font-style: italic; line-height: 15px;">
-							<a target="_blank" rel="nofollow" href="http://bilnea.com" title="Web" class="fa-stack fa-lg" style="width: 1em; height: 1em; line-height: 1em; font-size: 1em; margin-right: 3px; text-decoration: none;">
-								<i class="fa fa-square fa-stack-2x" style="font-size: 16px; line-height: 4px; color: #444;"></i>
-								<i class="fa fa-globe fa-stack-1x" style="font-size: 10px; line-height: 5px; color: white; margin-left: 1px;"></i>
-							</a>
-							<a target="_blank" rel="nofollow" href="http://www.twitter.com/bilnea" title="Twitter"><i class="fa fa-twitter-square" style="color: #444; font-size: 16px; margin-bottom: 8px;"></i></a> 
-							<a target="_blank" rel="nofollow" href="https://www.facebook.com/bilnea" title="Facebook"><i class="fa fa-facebook-square" style="color: #444; font-size: 16px; margin-bottom: 8px;"></i></a> 
-							<a target="_blank" rel="nofollow" href="https://plus.google.com/u/0/b/104107449468243339016/104107449468243339016/posts" title="Google +"><i class="fa fa-google-plus-square" style="color: #444; font-size: 16px; margin-bottom: 8px;"></i></a> 
-							<a target="_blank" rel="nofollow" href="http://www.linkedin.com/company/3047975?trk=tyah" title="Linkedin"><i class="fa fa-linkedin-square" style="color: #444; font-size: 16px; margin-bottom: 8px;"></i></a> 
-							<a target="_blank" rel="nofollow" href="http://www.youtube.com/user/bilneamarketing?sub_confirmation=1" title="Youtube"><i class="fa fa-youtube-square" style="color: #444; font-size: 16px; margin-bottom: 8px;"></i></a> 
-							<a target="_blank" rel="nofollow" href="http://pinterest.com/bilnea/" title="Pinterest"><i class="fa fa-pinterest-square" style="color: #444; font-size: 16px; margin-bottom: 8px;"></i></a>
-							<br />
-							&reg; 2016 bilnea. Versión 2.0 (junio 2016).
-							<br /><br />
-							Todas las medidas se expresan en unidades css válidas de cada propiedad, definiendo la unidad empleada. Los colores se expresan en formato hexadecimal. En aquellos parámetros que no tengan definido un valor, se tomará el valor por defecto.
-						</div>
-					</div>
-
-					<h4>Opciones generales</h4>
-					<div style="display: inline-block; border-right: 1px solid #eee; padding-right: 5px; margin-right: 8px;">
-						<div style="width: 228px; display: inline-block;">Ancho exterior</div>
-						<input style="text-align: right;" type='text' class="peq" name='bilnea_settings[b_opt_exterior-width]' value='<?php echo $opt['b_opt_exterior-width']; ?>' placeholder="<?= b_f_default()['b_opt_exterior-width']; ?>">
-						<br />
-						<div style="width: 228px; display: inline-block;">Ancho interior</div>
-						<input style="text-align: right;" type='text' class="peq" name='bilnea_settings[b_opt_interior-width]' value='<?php echo $opt['b_opt_interior-width']; ?>' placeholder="<?= b_f_default()['b_opt_interior-width']; ?>">
-						<br />
-						<div style="width: 228px; display: inline-block;">Ancho barra lateral</div>
-						<input style="text-align: right;" type='text' class="peq" name='bilnea_settings[b_opt_sidebar-width]' value='<?php echo $opt['b_opt_sidebar-width']; ?>' placeholder="<?= b_f_default()['b_opt_sidebar-width']; ?>">
-						<br />
-						<div style="width: 228px; display: inline-block;">Alto cabecera</div>
-						<input style="text-align: right;" type='text' class="peq" name='bilnea_settings[b_opt_header-height]' value='<?php echo $opt['b_opt_header-height']; ?>' placeholder="<?= b_f_default()['b_opt_header-height']; ?>">
-						<br />
-						<div style="width: 228px; display: inline-block;">Alto menú</div>
-						<input style="text-align: right;" type='text' class="peq" name='bilnea_settings[b_opt_menu-height]' value='<?php echo $opt['b_opt_menu-height']; ?>' placeholder="<?= b_f_default()['b_opt_menu-height']; ?>">
-						<br />
-						<div style="width: 228px; display: inline-block;">Alto logotipo</div>
-						<input style="text-align: right;" type='text' class="peq" name='bilnea_settings[b_opt_logo-height]' value='<?php echo $opt['b_opt_logo-height']; ?>' placeholder="<?= b_f_default()['b_opt_logo-height']; ?>">
-					</div>
-					<div class="texto-color" id="back_color" style="display: inline-block; vertical-align: top; margin-right: 0px;">
-						Fondo de la página
-						<br />
-						<input type='text' class="color peq" name='bilnea_settings[b_opt_body_bg_color]' value='<?php echo $opt['b_opt_body_bg_color']; ?>' placeholder="<?= b_f_default()['b_opt_body_bg_color']; ?>">
-					</div>
-					<hr />
-					<div style="width: 349px; display: inline-block;">Separación entre columnas y bloques de división</div>
-					<input style="text-align: right;" type='text' class="peq" name='bilnea_settings[b_opt_column_separator]' value='<?php echo $opt['b_opt_column_separator']; ?>' placeholder="<?= b_f_default()['b_opt_column_separator']; ?>">
-					<hr />
-					<input type='checkbox' name='bilnea_settings[b_opt_body-width]' <?php checked( $opt['b_opt_body-width'], 1 ); ?> value='1'>
-					<label for='bilnea_settings[b_opt_body-width]'>Página encajada</label>
-					<hr />
-					<em style="font-size: 11px; color: #333; line-height: 15px; display: block;">
-						* Ancho exterior define el ancho de la caja contenedora. Ancho interior define el ancho del bloque interior.
-					</em>
-					<br />
-					<h4>Colores</h4>
-
-					<!-- Bloques principales -->
-					<div class="color-wrapper">
-						Fondo barra superior
-						<div>
-							<input type="text" class="sp-input" name="bilnea_settings[b_opt_topbar-color]" value="<?php echo $opt['b_opt_topbar-color']; ?>" placeholder="<?= b_f_default()['b_opt_topbar-color']; ?>" />
-							<input type="text" class="colora peq">
-						</div>
-					</div>
-					<div class="color-wrapper">
-						Fondo cabecera
-						<div>
-							<input type="text" class="sp-input" name="bilnea_settings[b_opt_header-color]" value="<?php echo $opt['b_opt_header-color']; ?>" placeholder="<?= b_f_default()['b_opt_header-color']; ?>" />
-							<input type="text" class="colora peq">
-						</div>
-					</div>
-					<div class="color-wrapper">
-						Fondo cuerpo central
-						<div>
-							<input type="text" class="sp-input" name="bilnea_settings[b_opt_main-color]" value="<?php echo $opt['b_opt_main-color']; ?>" placeholder="<?= b_f_default()['b_opt_main-color']; ?>" />
-							<input type="text" class="colora peq">
-						</div>
-					</div>
-					<div class="color-wrapper">
-						Fondo pie de página
-						<div>
-							<input type="text" class="sp-input" name="bilnea_settings[b_opt_footer-color]" value="<?php echo $opt['b_opt_footer-color']; ?>" placeholder="<?= b_f_default()['b_opt_footer-color']; ?>" />
-							<input type="text" class="colora peq">
-						</div>
-					</div>
-					<div class="color-wrapper">
-						Fondo menú principal
-						<div>
-							<input type="text" class="sp-input" name="bilnea_settings[b_opt_menu-color]" value="<?php echo $opt['b_opt_menu-color']; ?>" placeholder="<?= b_f_default()['b_opt_menu-color']; ?>" />
-							<input type="text" class="colora peq">
-						</div>
-					</div>
-					<div class="color-wrapper">
-						Fondo elemento activo
-						<div>
-							<input type="text" class="sp-input" name="bilnea_settings[b_opt_active-color]" value="<?php echo $opt['b_opt_active-color']; ?>" placeholder="<?= b_f_default()['b_opt_active-color']; ?>" />
-							<input type="text" class="colora peq">
-						</div>
-					</div>
-					<div class="color-wrapper">
-						Fondo socket
-						<div>
-							<input type="text" class="sp-input" name="bilnea_settings[b_opt_socket-color]" value="<?php echo $opt['b_opt_socket-color']; ?>" placeholder="<?= b_f_default()['b_opt_socket-color']; ?>" />
-							<input type="text" class="colora peq">
-						</div>
-					</div>
-					<div class="color-wrapper last">
-						Fondo submenú
-						<div>
-							<input type="text" class="sp-input" name="bilnea_settings[b_opt_submenu-color]" value="<?php echo $opt['b_opt_submenu-color']; ?>" placeholder="<?= b_f_default()['b_opt_submenu-color']; ?>" />
-							<input type="text" class="colora peq">
-						</div>
-					</div>
-	
-					<!-- Redes sociales -->
-					<br />
-					<h4>Redes Sociales</h4>
-					<div style="width: 213px; display: inline-block;">Facebook</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_social-facebook]' value='<?php echo $opt['b_opt_social-facebook']; ?>' placeholder="url o usuario">
-					<br />
-					<div style="width: 213px; display: inline-block;">Twitter</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_social-twitter]' value='<?php echo $opt['b_opt_social-twitter']; ?>' placeholder="url o usuario">
-					<br />
-					<div style="width: 213px; display: inline-block;">Google+</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_social-google-plus]' value='<?php echo $opt['b_opt_social-google-plus']; ?>' placeholder="url">
-					<br />
-					<div style="width: 213px; display: inline-block;">Youtube</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_social-youtube]' value='<?php echo $opt['b_opt_social-youtube']; ?>' placeholder="url">
-					<br />
-					<div style="width: 213px; display: inline-block;">Linkedin</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_social-linkedin]' value='<?php echo $opt['b_opt_social-linkedin']; ?>' placeholder="url">
-					<br />
-					<div style="width: 213px; display: inline-block;">Instagram</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_social-instagram]' value='<?php echo $opt['b_opt_social-instagram']; ?>' placeholder="url o usuario">
-					<br />
-					<div style="width: 213px; display: inline-block;">Pinterest</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_social-pinterest]' value='<?php echo $opt['b_opt_social-pinterest']; ?>' placeholder="url o usuario">
-					<br /><br />
+				<div <?php if (!isset($opt['tab']) || $opt['tab'] == 1) { echo 'class="active"'; }?> id="tab1">
 					
-					<!-- Mejoras de seguridad -->
-					<h4>Seguridad</h4>
-					<input type='checkbox' name='bilnea_settings[b_opt_anticopy]' <?php checked( $opt['b_opt_anticopy'], 1 ); ?> value='1'>Activar protección anticopia
-					<br />
-					<input type='checkbox' name='bilnea_settings[b_opt_antibot]' <?php checked( $opt['b_opt_antibot'], 1 ); ?> value='1'>Protección antibot en formulario de comentarios del blog
-					<hr />
-					Personalización de la url de acceso al panel
-					<br />
-					<label for='bilnea_settings[b_opt_wp-admin]'><?php echo get_site_url(); ?>/</label>
-					<input type='text' class="aurl" name='bilnea_settings[b_opt_wp-admin]' value='<?php echo $opt['b_opt_wp-admin']; ?>' placeholder="wp-admin">
-					<em class="notice" style="font-size: 11px; line-height: 15px;">¡IMPORTANTE! Recuerda guardar esta url. Será la nueva ruta de acceso al panel de administración de WordPress y el acceso wp-admin ya no funcionará.</em>
+					<?php include('panel/panel.general.php'); ?>
+
 				</div>
 
 				<!-- Opciones Generales -->
-				<div <?php if ($opt['pestanya'] == 2) { echo 'class="activo"'; }?> id="tab2">
-					<!-- Formulario de contacto -->
-					<h4>Formulario de contacto y envío de correo</h4>
-					<div style="overflow: hidden;">
-						<div style="width: calc(50% - 7px); display: inline-block; float: left; margin-right: 14px;">
-							Correo electrónico de destino
-							<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_form-email]" value="<?php echo $opt['b_opt_form-email']; ?>" placeholder="<?= b_f_default()['b_opt_form-email']; ?>" />
-						</div>
-						<div style="width: calc(50% - 7px); display: inline-block;">
-							Página de redirección al enviar
-							<select name='bilnea_settings[b_opt_form-thanks]' class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
-								<option selected disabled>Selecciona una página</option>
-								<option value="none" <?php selected($opt['b_opt_form-thanks'], 'none') ?>>Sin redirección</option>
-								<option disabled>----------</option>
-								<?php $args = array(
-									'sort_order' => 'asc',
-									'sort_column' => 'post_title',
-									'post_type' => 'page',
-									'post_status' => 'publish'
-								); 
-								$pages = get_pages($args);
-								foreach ($pages as $page) {
-									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_form-thanks'], $page->ID).'>'.$page->post_title.'</option>';
-								}
-								?>
-							</select>
-						</div>
-					</div>
-					<hr style="margin-bottom: 4px;" />
-					<input type='checkbox' name='bilnea_settings[b_opt_smtp]' <?php checked( $opt['b_opt_smtp'], 1 ); ?> value='1'>Envío de emails a través de SMTP
-					<hr style="margin-bottom: 4px;" />
-					<div style="width: 213px; display: inline-block;">Servidor SMTP</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_smtp-server]' value='<?php echo $opt['b_opt_smtp-server']; ?>' />
-					<br />
-					<div style="width: 213px; display: inline-block;">Usuario</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_smtp-user]' value='<?php echo $opt['b_opt_smtp-user']; ?>' />
-					<br />
-					<div style="width: 213px; display: inline-block;">Contraseña</div>
-					<input type='text' class="gran" name='bilnea_settings[b_opt_smtp-pass]' value='<?php echo $opt['b_opt_smtp-pass']; ?>' />
-					<br />
-					<br />
-
-					<!-- Suscriptores -->
-					<h4>Boletín de noticias</h4>
-					<input type='checkbox' name='bilnea_settings[b_opt_subscribers]' <?php checked( $opt['b_opt_subscribers'], 1 ); ?> value='1'>Activar módulo de boletín de noticias<br />
-					<hr />
-					<div style="overflow: hidden;">
-						<div style="width: calc(50% - 7px); display: inline-block; margin-right: 14px; float: left;">
-							Servicio de boletines
-							<select name='bilnea_settings[b_opt_newsl_service]' class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
-								<option selected disabled>Selecciona un servicio</option>
-								<option value="wordpress" <?php selected($opt['b_opt_newsl_service'], 'wordpress') ?>>Wordpress</option>
-								<option value="mailchimp" <?php selected($opt['b_opt_newsl_service'], 'mailchimp') ?>>Mailchimp</option>
-								<option value="benchmark" <?php selected($opt['b_opt_newsl_service'], 'benchmark') ?>>Benchmark</option>
-							</select>
-						</div>
-						<div style="width: calc(50% - 7px); display: inline-block;">
-							Página de redirección al enviar
-							<select name='bilnea_settings[b_opt_newsl_redirect]' class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
-								<option selected disabled>Selecciona una página</option>
-								<option value="none" <?php selected($opt['b_opt_newsl_redirect'], 'none') ?>>Sin redirección</option>
-								<option disabled>----------</option>
-								<?php $args = array(
-									'sort_order' => 'asc',
-									'sort_column' => 'post_title',
-									'post_type' => 'page',
-									'post_status' => 'publish'
-								); 
-								$pages = get_pages($args);
-								foreach ($pages as $page) {
-									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_newsl_redirect'], $page->ID).'>'.$page->post_title.'</option>';
-								}
-								?>
-							</select>
-						</div>
-						<div style="width: 100%; display: inline-block; float: left; margin-right: 14px; margin-top: 7px;">
-							<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_newsl_api]" value="<?php echo $opt['b_opt_newsl_api']; ?>" placeholder="API Key" />
-						</div>
-
-					</div>
-					<div class="notice" style="font-size: 11px; line-height: 15px; display: block !important;">Crea un listado de suscriptores que se recolecten desde los formularios presentes en la web. Activa los shortcodes relacionados con esta funcionalidad.</div>
-					<br />
-
-					<!-- API Keys -->
-					<h4>API Keys</h4>
-					<div>Google Maps</div>
-					<div>
-						<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_apis_gmaps]" value="<?php echo $opt['b_opt_apis_gmaps']; ?>" placeholder="API Key" />
-					</div>
-					<br />
-
-					<!-- Precarga -->
-					<h4>Precarga</h4>
-					<input type='checkbox' name='bilnea_settings[b_opt_loader]' <?php checked( $opt['b_opt_loader'], 1 ); ?> value='1'>Activar módulo de precarga<br />
-					<div class="notice" style="font-size: 11px; line-height: 15px; display: block !important;">Activa un elemento flotante que desaparecerá una vez terminada la carga de la página. Este elemento se puede modificar editando el archivo 'loader.php'.</div>
-					<br />
-
-					<!-- Lightbox -->
-					<h4>Lightbox</h4>
-					<input type='checkbox' name='bilnea_settings[b_opt_lightbox]' <?php checked( $opt['b_opt_lightbox'], 1 ); ?> value='1'>Activar lightbox<br />
-					<div style="display: inline-block;">
-						<input type='radio' name='bilnea_settings[b_opt_lightbox-location]' <?php checked( $opt['b_opt_lightbox-location'], 1 ); ?> value='1'>Para todas las imágenes y elementos multimedia
-					</div>
-					<br />
-					<div style="display: inline-block;">
-						<input type='radio' name='bilnea_settings[b_opt_lightbox-location]' <?php checked( $opt['b_opt_lightbox-location'], 2 ); ?> value='2'>Bajo demanda (a través de shortcode)
-					</div>
-					<br />
-
-					<!-- hyphenator -->
-					<h4 style="margin-top: 10px;">Legibilidad</h4>
-					<input type='checkbox' name='bilnea_settings[b_opt_hyphenator]' <?php checked( $opt['b_opt_hyphenator'], 1 ); ?> value='1'>Activar hyphenator *<br />
-					Clase CSS sobre la que se actuará
-					<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_hyphenator-selector]" value="<?php echo $opt['b_opt_hyphenator-selector']; ?>" placeholder="<?php echo b_f_default()['b_opt_hyphenator-selector']; ?>" />
-					<div class="notice" style="font-size: 11px; line-height: 15px; display: block !important;">* Separa sílabas de manera automática en los saltos de línea para ajustar el párrafo al ancho del elemento contenedor.</div>
-
-
-					<!-- Scripts -->
-					<h4 style="margin-top: 10px;">Tecnologías de terceros</h4>
-					<input type='checkbox' name='bilnea_settings[b_opt_jquery-ui]' <?php checked( $opt['b_opt_jquery-ui'], 1 ); ?> value='1'>Activar jQuery UI<br />
-					<input type='checkbox' name='bilnea_settings[b_opt_jquery-mobile]' <?php checked( $opt['b_opt_jquery-mobile'], 1 ); ?> value='1'>Activar jQuery mobile<br />
-					<input type='checkbox' name='bilnea_settings[b_opt_jquery-mobile-css]' <?php checked( $opt['b_opt_jquery-mobile-css'], 1 ); ?> value='1'>Activar estilos visuales de jQuery mobile<br />
-					<input type='checkbox' name='bilnea_settings[b_opt_select2]' <?php checked( $opt['b_opt_select2'], 1 ); ?> value='1'>Activar Select2
-					<br />
-					Gestión de usuarios
-					<select>
-						
-					</select>
-					<!-- Mantenimiento -->
-					<h4 style="margin-top: 10px;">Mantenimiento</h4>
-					<input type='checkbox' name='bilnea_settings[b_opt_construction]' <?php checked( $opt['b_opt_construction'], 1 ); ?> value='1'>Activar modo mantenimiento
-					<em class="notice" style="font-size: 11px; line-height: 15px; display: block !important;">
-						La página de mantenimiento se puede personalizar editando los archivos 'index.html' y 'main.css' ubicados en la carpeta 'tmp' del tema activo.<br />Para acceder a la web, utiliza la url <?php echo get_site_url(); ?>/?key=bilnea
-					</em>
+				<div <?php if ($opt['tab'] == 2) { echo 'class="active"'; }?> id="tab2">
+					
+					<?php include('panel/panel.development.php'); ?>
 
 				</div>
 
 				<!-- Estilos tipográficos -->
-				<div <?php if ($opt['pestanya'] == 3) { echo 'class="activo"'; }?> id="tab3">
+				<div <?php if ($opt['tab'] == 3) { echo 'class="activo"'; }?> id="tab3">
 					<h4>Texto plano</h4>
 
 					<!-- Texto plano -->
@@ -508,14 +265,14 @@ function bilnea_options_page() {
 					$idx = 0;
 
 					foreach ($fnt as $key => $value) {
-						global $fun;
+						global $b_g_google_fonts;
 						if ($idx > 0) {
 							echo '<hr />';
 						}
 						$idx++;
 					?>
 					<fieldset class="text-container">
-						<strong><?php echo str_replace('+', ' ', $fun[$key]['name']); ?></strong>
+						<strong><?php echo str_replace('+', ' ', $b_g_google_fonts[$key]['name']); ?></strong>
 						<div class="font_styles" style="position: relative;">
 							<div>Regular<br />Cursiva</div>
 								<?php
@@ -525,7 +282,7 @@ function bilnea_options_page() {
 								for ($i = 1; $i < 10; $i++) {
 									$j = $i*100;
 									$dsb = ''; $ckc = '';
-									if (!in_array($j, $fun[$key]['sizes'])) {
+									if (!in_array($j, $b_g_google_fonts[$key]['sizes'])) {
 										$dsb = ' disabled';
 									}
 									if (in_array($j, $value)) {
@@ -533,25 +290,25 @@ function bilnea_options_page() {
 									}
 								?>
 								<div>
-								<input type="checkbox" value="<?= $fun[$key]['name'].'|'.$j ?>"<?= $dsb ?><?= $ckc ?> <?php checked(in_array($fun[$key]['name'].'|'.$j, $opt['b_opt_custom-font'])); ?> name="bilnea_settings[b_opt_custom-font][]"><br />
+								<input type="checkbox" value="<?= $b_g_google_fonts[$key]['name'].'|'.$j ?>"<?= $dsb ?><?= $ckc ?> <?php checked(in_array($b_g_google_fonts[$key]['name'].'|'.$j, $opt['b_opt_custom-font'])); ?> name="bilnea_settings[b_opt_custom-font][]"><br />
 								<?php
 									$j = $j.'italic';
 									$dsb = ''; $ckc = '';
-									if (!in_array($j, $fun[$key]['sizes'])) {
+									if (!in_array($j, $b_g_google_fonts[$key]['sizes'])) {
 										$dsb = ' disabled';
 									}
 									if (in_array($j, $value)) {
 										$ckc = ' checked';
 									}
 								?>
-								<input type="checkbox" value="<?= $fun[$key]['name'].'|'.$j ?>"<?= $dsb ?><?= $ckc ?> <?php checked(in_array($fun[$key]['name'].'|'.$j, $opt['b_opt_custom-font'])); ?> name="bilnea_settings[b_opt_custom-font][]">
+								<input type="checkbox" value="<?= $b_g_google_fonts[$key]['name'].'|'.$j ?>"<?= $dsb ?><?= $ckc ?> <?php checked(in_array($b_g_google_fonts[$key]['name'].'|'.$j, $opt['b_opt_custom-font'])); ?> name="bilnea_settings[b_opt_custom-font][]">
 								</div>
 							<?php
 							}
 							?>
 							<div class="notice font"><span style="font-family: 'Roboto'; font-weight: 100;">a</span> ... <span style="font-family: 'Roboto'; font-weight: 900;">a</span><br /><span style="font-family: 'Roboto'; font-weight: 100; font-style: italic;">a</span> ... <span style="font-family: 'Roboto'; font-weight: 900; font-style: italic;">a</span></div>
-							<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=<?php echo $fun[$key]['name']; ?>">
-							<div style="vertical-align: top; font-size: 30px; display: inline-block; line-height: 52px; width: 170px; font-family: '<?php echo str_replace('+', ' ', $fun[$key]['name']); ?>';">AaBbCc</div>
+							<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=<?php echo $b_g_google_fonts[$key]['name']; ?>">
+							<div style="vertical-align: top; font-size: 30px; display: inline-block; line-height: 52px; width: 170px; font-family: '<?php echo str_replace('+', ' ', $b_g_google_fonts[$key]['name']); ?>';">AaBbCc</div>
 						</div>
 					</fieldset>
 					<?php
@@ -561,7 +318,7 @@ function bilnea_options_page() {
 				</div>
 
 				<!-- Adaptación responsive -->
-				<div <?php if ($opt['pestanya'] == 4) { echo 'class="activo"'; }?> id="tab4">
+				<div <?php if ($opt['tab'] == 4) { echo 'class="activo"'; }?> id="tab4">
 					<h4>Menú responsive</h4>
 					<label for="mobile_menu_opt1"><img src="<?php echo get_template_directory_uri().'/img/menu_movil_1.jpg'; ?>" class="icon big" /></label>
 					<label for="mobile_menu_opt2"><img src="<?php echo get_template_directory_uri().'/img/menu_movil_2.jpg'; ?>" class="icon big" /></label>
@@ -601,7 +358,7 @@ function bilnea_options_page() {
 				</div>
 
 				<!-- Logotipo e iconos -->
-				<div <?php if ($opt['pestanya'] == 5) { echo 'class="activo"'; }?> id="tab5">
+				<div <?php if ($opt['tab'] == 5) { echo 'class="activo"'; }?> id="tab5">
 					<h4>Logotipo principal</h4>
 					<?php
 					if (!isset($opt['b_opt_main-logo'])) :
@@ -813,7 +570,7 @@ function bilnea_options_page() {
 				</div>
 
 				<!-- Cabecera -->
-				<div <?php if ($opt['pestanya'] == 6) { echo 'class="activo"'; }?> id="tab6">
+				<div <?php if ($opt['tab'] == 6) { echo 'class="activo"'; }?> id="tab6">
 					<h4>Depurar el código</h4>
 					<input type='checkbox' name='bilnea_settings[b_opt_header-version]' <?php checked( $opt['b_opt_header-version'], 1 ); ?> value='1'>
 					<label for='bilnea_settings[b_opt_header-version]'>Eliminar versión de WordPress</label>
@@ -929,7 +686,7 @@ function bilnea_options_page() {
 				</div>
 
 				<!-- Pie de página -->
-				<div <?php if ($opt['pestanya'] == 7) { echo 'class="activo"'; }?> id="cent3">
+				<div <?php if ($opt['tab'] == 7) { echo 'class="activo"'; }?> id="cent3">
 					<h4>Footer</h4>
 					<input type='checkbox' name='bilnea_settings[footer_show]' <?php checked( $opt['footer_show'], 1 ); ?> value='1'>
 					<label for='bilnea_settings[footer_show]'>Mostrar el 'footer'</label>
@@ -1019,7 +776,7 @@ function bilnea_options_page() {
 				</div>
 
 				<!-- Blog -->
-				<div id="tab7" <?php if ($opt['pestanya'] == 8) { echo 'class="activo"'; }?>>
+				<div id="tab7" <?php if ($opt['tab'] == 8) { echo 'class="activo"'; }?>>
 					<h4>Formato blog</h4>
 					<label for="blog_opt1"><img src="<?php echo get_template_directory_uri().'/img/bilnea-blog-1.jpg'; ?>" class="icon big" /></label>
 					<label for="blog_opt2"><img src="<?php echo get_template_directory_uri().'/img/bilnea-blog-2.jpg'; ?>" class="icon big" /></label>
@@ -1237,7 +994,7 @@ function bilnea_options_page() {
 				<?php
 				if (function_exists('icl_object_id')) {
 				?>
-				<div <?php if ($opt['pestanya'] == 9) { echo 'class="activo"'; }?> id="tab8">
+				<div <?php if ($opt['tab'] == 9) { echo 'class="activo"'; }?> id="tab8">
 					<h4>Configuración multidioma para la cabecera</h4>
 					<input type='checkbox' name='bilnea_settings[b_opt_language]' <?php checked( $opt['b_opt_language'], 1 ); ?> value='1'> <span>Mostrar el selector de idioma en la cabecera</span>
 					<div style="display: block;" class="child">
@@ -1291,7 +1048,7 @@ function bilnea_options_page() {
 				?>
 
 				<!-- Textos legales -->
-				<div id="tab9" <?php if ($opt['pestanya'] == 10) { echo 'class="activo"'; }?>>
+				<div id="tab9" <?php if ($opt['tab'] == 10) { echo 'class="activo"'; }?>>
 					<h4>Datos personales</h4>
 					<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
 						Nombre legal
@@ -1357,12 +1114,12 @@ function bilnea_options_page() {
 							Aviso legal
 						</div>
 						<div style="width: calc(50% - 10px); display: inline-block;">
-							<select name='bilnea_settings[b_opt_aviso-legal-es]' class="gran" style="margin-top: -2px; width: 100% !important;">
+							<select name='bilnea_settings[b_opt_legal-advice-es]' class="gran" style="margin-top: -2px; width: 100% !important;">
 								<option disabled="disabled" selected>Seleccionar opción</option>
 								<option value="new">Crear página</option>
 								<?php
 								foreach (get_pages() as $page) {
-									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_aviso-legal-es'], $page->ID).'>'.$page->post_title.'</option>';
+									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_legal-advice-es'], $page->ID).'>'.$page->post_title.'</option>';
 								}
 								?>
 							</select>
@@ -1374,12 +1131,12 @@ function bilnea_options_page() {
 							Política de privacidad
 						</div>
 						<div style="width: calc(50% - 10px); display: inline-block;">
-							<select name='bilnea_settings[b_opt_politica-privacidad-es]' class="gran" style="margin-top: -2px; width: 100% !important;">
+							<select name='bilnea_settings[b_opt_privacy-policy-es]' class="gran" style="margin-top: -2px; width: 100% !important;">
 								<option disabled="disabled" selected>Seleccionar opción</option>
 								<option value="new">Crear página</option>
 								<?php
 								foreach (get_pages() as $page) {
-									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_politica-privacidad-es'], $page->ID).'>'.$page->post_title.'</option>';
+									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_privacy-policy-es'], $page->ID).'>'.$page->post_title.'</option>';
 								}
 								?>
 							</select>
@@ -1391,12 +1148,12 @@ function bilnea_options_page() {
 							Política de cookies
 						</div>
 						<div style="width: calc(50% - 10px); display: inline-block;">
-							<select name='bilnea_settings[b_opt_politica-cookies-es]' class="gran" style="margin-top: -2px; width: 100% !important;">
+							<select name='bilnea_settings[b_opt_cookies-policy-es]' class="gran" style="margin-top: -2px; width: 100% !important;">
 								<option disabled="disabled" selected>Seleccionar opción</option>
 								<option value="new">Crear página</option>
 								<?php
 								foreach (get_pages() as $page) {
-									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_politica-cookies-es'], $page->ID).'>'.$page->post_title.'</option>';
+									echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_cookies-policy-es'], $page->ID).'>'.$page->post_title.'</option>';
 								}
 								?>
 							</select>
@@ -1416,7 +1173,7 @@ function bilnea_options_page() {
 				</div>
 
 				<!-- Redirecciones y SEO -->
-				<div id="tab10" <?php if ($opt['pestanya'] == 11) { echo 'class="activo"'; }?>>
+				<div id="tab10" <?php if ($opt['tab'] == 11) { echo 'class="activo"'; }?>>
 					<h4>URLs</h4>
 					<div class="subsubsub" style="display: block; width: 100%;">
 						<a class="current">Todos (<?= wp_count_posts()->publish ?>)</a>
@@ -1455,7 +1212,7 @@ function bilnea_options_page() {
 				</div>
 			</div>
 		</div>
-		<input type="hidden" id="pestanya" name='bilnea_settings[pestanya]' value='<?php echo $opt['pestanya']; ?>'>
+		<input type="hidden" id="tab" name='bilnea_settings[tab]' value='<?php echo $opt['tab']; ?>'>
 		
 		<?php
 		settings_fields('pluginPage');
@@ -1904,11 +1661,10 @@ function bilnea_subscribers_page() {
 				$result = json_decode( b_mailchimp_member_status($userdata[0], 'unsubscribed', $userdata[1], $api_key, 'DELETE' ) );
 			}
 		}
-	
+		$url = 'https://'.substr($api_key,strpos($api_key,'-')+1).'.api.mailchimp.com/3.0/lists/';
 		$data = array(
 			'fields' => 'lists'
 		);
-		$url = 'https://'.substr($api_key,strpos($api_key,'-')+1).'.api.mailchimp.com/3.0/lists/';
 		$result = json_decode(b_mailchimp($url, 'GET', $api_key, $data));
 		$lists = $result->lists;
 		if (count($lists) > 0) {
@@ -1924,25 +1680,21 @@ function bilnea_subscribers_page() {
 						if(!empty($lists)) {
 							$total = 0;
 							foreach($lists as $list) {
-								$turl = $url.$list->id.'/members/';
-								$tdata = array(
-									'fields' => 'members'
-								);
-								$total_members = json_decode(b_mailchimp($turl, 'GET', $api_key, $tdata))->members;
-								$total = $total+count($total_members);
+								$total_members = $list->stats->member_count;
+								$total = $total+$total_members;
 								$gets = array();
 								$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
 								$gets['page'] = 'subscribers';
 								$gets['list_view'] = $list->id;
 								?>
 								<li class="list-<?= $list->id ?>">
-									|&nbsp;<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>"><?= $list->name ?> <span class="count">(<?= count($total_members) ?>)</span></a>
+									|&nbsp;<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>"><?= $list->name ?> <span class="count">(<?= $total_members ?>)</span></a>
 								</li>
 								<?php
 								$i++;
 							}
-							(isset($_GET['order']) && $_GET['order'] == 'asc') ? $order = 'des' : $order = 'asc';
-							$sorts = array('date' => 'sorted '.$order, 'email' => 'sortable '.$order);
+							(isset($_GET['order']) && $_GET['order'] == 'asc') ? $order = 'desc' : $order = 'asc';
+							$sorts = array('date' => 'sortable '.$order, 'email' => 'sortable '.$order, 'status' => 'sortable '.$order);
 							$orderby = 'date';
 							if (isset($_GET['orderby'])) {
 								$sorts[$_GET['orderby']] = 'sorted '.$order;
@@ -1962,26 +1714,104 @@ function bilnea_subscribers_page() {
 						}
 						?>
 				</ul>
-				<div>
-					<label>Lista por defecto: </label>
-					<form action="#" method="post" name="list_form">
-						<select id="list_selector" name="list_selector" style="margin: 4px 0 8px 0;">
-							<option selected disabled>Selecciona una lista</option>
+				<div class="tablenav top">
+					<div style="display: inline-block;">
+						<form action="#" method="post" name="list_form">
+							<label>Lista por defecto: </label>
+							<select id="list_selector" name="list_selector" style="margin: 4px 0 8px 0;">
+								<option selected disabled>Selecciona una lista</option>
+								<?php
+								foreach ($lists as $list) {
+									(b_f_option('b_opt_newsl_list') == $list->id) ? $seld = ' selected="selected"' : $seld = '';
+									echo '<option value="'.$list->id.'"'.$seld.'>'.$list->name.'</option>';
+								}
+								?>
+							</select>
+						</form>
+						<script type="text/javascript">
+							jQuery(function() {
+								jQuery('#list_selector').change(function() {
+									this.form.submit();
+								})
+							})
+						</script>
+					</div>
+					<?php
+					(isset($_GET['count'])) ? $view = $_GET['count'] : $view = 25;
+					(isset($_GET['paged'])) ? $paged = $_GET['paged'] : $paged = 1;
+					$total;
+					foreach ($lists as $list) {
+						if ($list->id == $c) {
+							$total = $list->stats->member_count;
+							$total_pages = ceil((int)$total/(int)$view);
+						}
+					}
+					?>
+					<div class="tablenav-pages">
+						<span class="displaying-num"><?= $total ?> suscriptores</span>
+							<span class="pagination-links">
+								<?php
+								$paged = (int)$paged;
+								if ($paged <= 2) {
+									echo '<span class="tablenav-pages-navspan" aria-hidden="true">«</span>';
+								} else {
+									$gets = array();
+									$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+									foreach ($temps as $temp) {
+										$args = explode('=', $temp);
+										$gets[$args[0]] = $args[1];
+									}
+									$gets['paged'] = 1;
+									echo '<a class="first-page" href="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}".'?'.http_build_query($gets).'"><span class="screen-reader-text">Primera página</span><span aria-hidden="true">«</span></a>';
+								}
+								echo '&nbsp;';
+								if ($paged <= 1) {
+									echo '<span class="tablenav-pages-navspan" aria-hidden="true">‹</span>';
+								} else {
+									$gets = array();
+									$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+									foreach ($temps as $temp) {
+										$args = explode('=', $temp);
+										$gets[$args[0]] = $args[1];
+									}
+									$gets['paged'] = $paged-1;
+									echo '<a class="prev-page" href="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}".'?'.http_build_query($gets).'"><span class="screen-reader-text">Página anterior</span><span aria-hidden="true">‹</span></a>';
+								}
+								?>
+								<span class="screen-reader-text">Página actual</span>
+								<span id="table-paging" class="paging-input">
+									<span class="tablenav-paging-text"><?= $paged ?> de <span class="total-pages"><?= $total_pages ?></span>
+								</span>
+							</span>
 							<?php
-							foreach ($lists as $list) {
-								(b_f_option('b_opt_newsl_list') == $list->id) ? $seld = ' selected="selected"' : $seld = '';
-								echo '<option value="'.$list->id.'"'.$seld.'>'.$list->name.'</option>';
+							if ($paged >= $total_pages-1) {
+								echo '<span class="tablenav-pages-navspan" aria-hidden="true">›</span>';
+							} else {
+								$gets = array();
+								$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+								foreach ($temps as $temp) {
+									$args = explode('=', $temp);
+									$gets[$args[0]] = $args[1];
+								}
+								$gets['paged'] = $paged+1;
+								echo '<a class="next-page" href="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}".'?'.http_build_query($gets).'"><span class="screen-reader-text">Página anterior</span><span aria-hidden="true">›</span></a>';
+							}
+							echo '&nbsp;';
+							if ($paged >= $total_pages-2) {
+								echo '<span class="tablenav-pages-navspan" aria-hidden="true">»</span>';
+							} else {
+								$gets = array();
+								$temps = explode('&', explode('?', $_SERVER['REQUEST_URI'], 2)[1]);
+								foreach ($temps as $temp) {
+									$args = explode('=', $temp);
+									$gets[$args[0]] = $args[1];
+								}
+								$gets['paged'] = $total_pages;
+								echo '<a class="last-page" href="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}".'?'.http_build_query($gets).'"><span class="screen-reader-text">Última página</span><span aria-hidden="true">»</span></a>';
 							}
 							?>
-						</select>
-					</form>
-					<script type="text/javascript">
-						jQuery(function() {
-							jQuery('#list_selector').change(function() {
-								this.form.submit();
-							})
-						})
-					</script>
+						</span>
+					</div>
 				</div>
 				<table class="wp-list-table widefat fixed striped pages">
 				<thead>
@@ -2009,6 +1839,12 @@ function bilnea_subscribers_page() {
 						<th scope="col" id="b_s_last_name" class="manage-column column-title <?= $sorts['b_s_last_name'] ?>">
 							<span>Boletín de noticias</span>
 						</th>
+						<th scope="col" id="b_s_status" class="manage-column column-title <?= $sorts['status'] ?>">
+							<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?list=<?= $c ?>&page=subscribers&orderby=status&order=<?= $order ?>">
+								<span>Estado</span>
+								<span class="sorting-indicator"></span>
+							</a>
+						</th>
 						<th style="width: 30px;">
 						</th>
 					</tr>
@@ -2017,16 +1853,68 @@ function bilnea_subscribers_page() {
 					<?php
 					foreach ($lists as $list) {
 						$url .= $list->id.'/members/';
-						$data = array(
-							'fields' => 'members'
-						);
-						$result = json_decode(b_mailchimp($url, 'GET', $api_key, $data));
-						foreach ($result->members as $member) {
+						(isset($_GET['view'])) ? $count = $_GET['view'] : $count = 25;
+						(isset($_GET['paged'])) ? $offset = $_GET['paged']*$count : $offset = 0;
+						$total_members = $list->stats->member_count;
+						($total_members > 500) ? $steps = ceil($total_members/500) : $steps = 1;
+						$members = array();
+						for ($i = 0; $i < $steps; $i++) { 
+							$data = array(
+								'fields' => 'members',
+								'count' => 500,
+								'offset' => $i*500
+							);
+							$result = json_decode(b_mailchimp($url, 'GET', $api_key, $data));
+							foreach ($result->members as $member) {
+								array_push($members, array(
+									'id' => $member->id,
+									'timestamp_signup' => $member->timestamp_signup,
+									'email_address' => $member->email_address,
+									'name' => $member->merge_fields->FNAME.' '.$member->merge_fields->LNAME,
+									'status' => $member->status
+								));
+							};
+						}
+						if (isset($_GET['orderby'])) {
+							switch ($_GET['orderby']) {
+								case 'date':
+									function sort_members($x, $y) {
+										return strcasecmp($x['timestamp_signup'], $y['timestamp_signup']);
+									}
+									usort($members, 'sort_members');
+									break;
+								case 'email':
+									function sort_members($x, $y) {
+										return strcasecmp($x['email_address'], $y['email_address']);
+									}
+									usort($members, 'sort_members');
+									break;
+								case 'name':
+									function sort_members($x, $y) {
+										return strcasecmp($x['name'], $y['name']);
+									}
+									usort($members, 'sort_members');
+									break;
+								case 'status':
+									function sort_members($x, $y) {
+										return strcasecmp($x['status'], $y['status']);
+									}
+									usort($members, 'sort_members');
+									break;
+							}
+						}
+						if (isset($_GET['order']) && $_GET['order'] == 'desc') {
+							$members = array_reverse($members);
+						}
+						(isset($_GET['view'])) ? $view = $_GET['view'] : $view = 25;
+						(isset($_GET['paged'])) ? $paged = $_GET['paged'] : $paged = 1;
+						$x = ($paged-1)*$view;
+						for ($i = $x; $i < ($view*$paged); $i++) { 
 							?>
-							<tr id="subscriber-<?= $member->id ?>" class="iedit author-self level-0 post-<?= $member->id ?> status-publish hentry">
+							<tr id="subscriber-<?= $members[$i]['id'] ?>" class="iedit author-self level-0 post-<?= $members[$i]['id'] ?> status-publish hentry">
 								<th scope="row" class="check-column">
-									<label class="screen-reader-text" for="cb-select-<?= $member->id ?>">Elige suscriptor</label>
-									<input id="cb-select-<?= $member->id ?>" type="checkbox" name="post[]" value="<?= $member->email_address ?>::<?= $list->id ?>">
+									<label class="screen-reader-text" for="cb-select-<?= $members[$i]['id'] ?>">Elige suscriptor</label>
+									<input id="cb-select-<?= $members[$i]['id'] ?>" type="checkbox" name="post[]" value="<?= $members[$i]['email_address'] ?>::<?= $list->id ?>">
 									<div class="locked-indicator"></div>
 								</th>
 								<th scope="row" class="check-column-2" style="text-align: center;">
@@ -2037,9 +1925,9 @@ function bilnea_subscribers_page() {
 										$args = explode('=', $temp);
 										$gets[$args[0]] = $args[1];
 									}
-									$gets['email'] = $member->email_address;
-									$gets['list_id'] = $list->id;
-									if ($member->status == 'subscribed') {
+									$gets['email'] = $members[$i]['email_address'];
+									$gets['list_id'] = $members[$i]['id'];
+									if ($members[$i]['status'] == 'subscribed') {
 										$gets['visibility'] = 0;
 									?>
 										<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>"><span class="dashicons dashicons-visibility"></span></a>
@@ -2054,7 +1942,7 @@ function bilnea_subscribers_page() {
 								</th>
 								<td class="date column-date" data-colname="Fecha">
 									<?php
-									$date = explode('-', explode('T', $member->timestamp_opt)[0]);
+									$date = explode('-', explode('T', $members[$i]['timestamp_signup'])[0]);
 									$months = array('01' => 'enero',
 													'02' => 'febrero',
 													'03' => 'marzo',
@@ -2072,13 +1960,31 @@ function bilnea_subscribers_page() {
 									?>
 								</td>
 								<td class="title column-email has-row-actions column-primary page-title" data-colname="Correo electrónico">
-									<a class="row-email" href="mailto:<?= $member->email_address ?>"><?= $member->email_address ?></a>
+									<a class="row-email" href="mailto:<?= $members[$i]['email_address'] ?>"><?= $members[$i]['email_address'] ?></a>
 								</td>
 								<td class="name column-name" data-colname="Nombre">
-									<?= $member->merge_fields->FNAME ?> <?= $member->merge_fields->LNAME ?>
+									<?= $members[$i]['name'] ?>
 								</td>
 								<td class="list column-list" data-colname="Boletín de noticias">
 									<?= $list->name ?> 
+								</td>
+								<td class="list column-list" data-colname="Estado">
+									<?php
+									switch ($members[$i]['status']) {
+										case 'pending':
+											echo 'Sin confirmar';
+											break;
+										case 'subscribed':
+											echo 'Suscrito';
+											break;
+										case 'unsubscribed':
+											echo 'Dado de baja';
+											break;
+										case 'cleaned':
+											echo 'Baneado';
+											break;
+									}
+									?>
 								</td>
 								<td style="text-align: center;">
 									<?php
@@ -2089,7 +1995,7 @@ function bilnea_subscribers_page() {
 										$gets[$args[0]] = $args[1];
 									}
 									unset($gets['list_view']);
-									$gets['delete'] = $member->email_address;
+									$gets['delete'] = $members[$i]['email_address'];
 									?>
 									<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>">
 										<span class="dashicons dashicons-trash"></span>
@@ -2147,23 +2053,20 @@ function bilnea_subscribers_page() {
 							});
 						});
 					</script>
-					</div>
-						<div class="alignleft actions">
-					</div>
-					<?php
-					$args = array('listGet', $token, '', 1, 1000, 'name', 'asc');
-					call_user_func_array(array($client, 'query'), $args);
-					$lists = $client->getResponse();
-					$total;
-					foreach ($lists as $list) {
-						if ($list['id'] == $c) {
-							$total =  $list['contactcount'];
-							$total_pages = ceil((int)$total/(int)$view);
-						}
+				</div>
+				<?php
+				(isset($_GET['count'])) ? $view = $_GET['count'] : $view = 25;
+				(isset($_GET['paged'])) ? $paged = $_GET['paged'] : $paged = 1;
+				$total;
+				foreach ($lists as $list) {
+					if ($list->id == $c) {
+						$total = $list->stats->member_count;
+						$total_pages = ceil((int)$total/(int)$view);
 					}
-					?>
-					<div class="tablenav-pages">
-						<span class="displaying-num"><?= $total ?> elementos</span>
+				}
+				?>
+				<div class="tablenav-pages">
+					<span class="displaying-num"><?= $total ?> suscriptores</span>
 							<span class="pagination-links">
 								<?php
 								$paged = (int)$paged;

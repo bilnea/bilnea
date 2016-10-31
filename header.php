@@ -375,9 +375,13 @@ session_start();
 					}
 				?>
 				<div class="logo_wrapper" style="display: <?= $lgl; ?>;">
-					<a href="<?php echo esc_url(home_url('/')); ?>" title="<?= bloginfo('name') ?>" class="logo" style="display: none;">
-						<img src="<?= b_f_option('b_opt_main-logo') ?>" />
-					</a>
+					<?php
+					if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
+						echo '<a href="'.esc_url(home_url('/')).'" title="'.get_option('blogname').'" class="logo">'.file_get_contents(b_f_option('b_opt_main-logo')).'</a>';
+					} else {
+						echo '<a href="'.esc_url(home_url('/')).'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
+					}
+					?>
 				</div>
 				<?php
 				endif;

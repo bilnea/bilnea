@@ -1,12 +1,11 @@
-jQuery(function() {
+jQuery(function($) {
+	$('form[data-id]').each(function() {
+		var ran = $(this).attr('data-id');
 
-	jQuery('form[data-id]').each(function() {
-		var ran = jQuery(this).attr('data-id');
-
-		jQuery('body').on('keyup', 'input.captcha', function() {
+		$('body').on('keyup', 'input.captcha', function() {
 			var key = event.keyCode || event.charCode;
-			var inputs = jQuery('input.captcha');
-			if ((jQuery(this).val().length === this.size) && key != 32) {
+			var inputs = $('input.captcha');
+			if (($(this).val().length === this.size) && key != 32) {
 				inputs.eq(inputs.index(this) + 1).focus();
 			} 
 			if( key == 8 || key == 46 ) {
@@ -16,24 +15,24 @@ jQuery(function() {
 				}
 			}
 		});
-		jQuery('.input.required:not([name="email"])').on('keyup', function() {
-			var t = jQuery(this);
+		$('.input.required:not([name="email"])').on('keyup', function() {
+			var t = $(this);
 			if (t.val() == '') {
 				t.addClass('invalid').removeClass('valid');
 			} else {
 				t.addClass('valid').removeClass('invalid');
 			}
 		});
-		jQuery('.input:not(required)').on('keyup', function() {
-			var t = jQuery(this);
+		$('.input:not(required)').on('keyup', function() {
+			var t = $(this);
 			if (t.val() == '') {
 				t.removeClass('valid');
 			} else {
 				t.addClass('valid');
 			}
 		});
-		jQuery('input.captcha.required').on('keyup', function() {
-			var t = jQuery(this),
+		$('input.captcha.required').on('keyup', function() {
+			var t = $(this),
 				p = t.attr('placeholder');
 			if (t.val() == '') {
 				t.addClass('invalid').removeClass('valid');
@@ -45,16 +44,16 @@ jQuery(function() {
 				}
 			}
 		});
-		jQuery('input.required[type="checkbox"]').change(function() {
-			var t = jQuery(this);
+		$('input.required[type="checkbox"]').change(function() {
+			var t = $(this);
 			if (t.is(':checked')) {
 				t.addClass('valid').removeClass('invalid');
 			} else {
 				t.addClass('invalid').removeClass('valid');
 			}
 		});
-		jQuery('.input.required[name="email"]').on('keyup', function() {
-			var t = jQuery(this);
+		$('.input.required[name="email"]').on('keyup', function() {
+			var t = $(this);
 			if (t.val() == '') {
 				t.addClass('invalid').removeClass('valid');
 			} else {
@@ -65,59 +64,66 @@ jQuery(function() {
 				}
 			}
 		});
-		jQuery('#form-send').click(function() {
-			var f = jQuery(this).prev(),
-				g = 0;
-			jQuery(f.find(jQuery('input.required, textarea.required'))).each(function() {
-				var t = jQuery(this);
+		$('#form-send').click(function() {
+			var f = $(this).prev(),
+				g = 0,
+				x = '';
+			$(f.find($('input.required, textarea.required'))).each(function() {
+				var t = $(this);
 				t.removeClass('invalid');
 				if (t.val() == '') {
 					t.addClass('invalid');
 					g++;
+					t = '1';
 				};
-			})
-			if(f.find(jQuery('input[name="email"]')).val() != '' && !b_js_check_email(f.find(jQuery('input[name="email"]')).val())) {
-				f.find(jQuery('input[name="email"]')).addClass('invalid');
+			});
+			if (f.find($('input[name$="email"]')).val() != '' && !b_js_check_email(f.find($('input[name$="email"]')).val())) {
+				f.find($('input[name$="email"]')).addClass('invalid');
 				g++;
-			}
-			jQuery(f.find(jQuery('input.captcha'))).each(function() {
-				var t = jQuery(this);
+				t = '2';
+			};
+			$(f.find($('input.captcha'))).each(function() {
+				var t = $(this);
 				if (t.val() != t.attr('placeholder')) {
 					t.addClass('invalid');
 					g++;
+					t = '3';
 				};
-			})
-			jQuery(f.find(jQuery('select.required'))).each(function() {
-				var t = jQuery(this);
+			});
+			$(f.find($('select.required'))).each(function() {
+				var t = $(this);
 				if (t.children('option:selected').is(':disabled')) {
 					t.addClass('invalid');
 					g++;
+					t = '4';
 				};
-			})
-			jQuery(f.find(jQuery('input.required[type="checkbox"]'))).each(function() {
-				var t = jQuery(this);
+			});
+			$(f.find($('input.required[type="checkbox"]'))).each(function() {
+				var t = $(this);
 				if (t[0].checked == false) {
 					t.addClass('invalid');
 					g++;
+					t = '5';
 				};
-			})
-			jQuery(f.find(jQuery('input.required[type="checkbox"]'))).next().click(function() {
-				var t = jQuery(this);
+			});
+			$(f.find($('input.required[type="checkbox"]'))).next().click(function() {
+				var t = $(this);
 				t.parent().removeClass('invalid');
-			})
-			jQuery(f.find(jQuery('input[type="file"].invalid'))).each(function() {
-				g++
-			})
-			jQuery('.required.invalid').on('click focus', function() {
-				jQuery(this).removeClass('invalid');
-			})
+			});
+			$(f.find($('input[type="file"].invalid'))).each(function() {
+				g++;
+				t = '6';
+			});
+			$('.required.invalid').on('click focus', function() {
+				$(this).removeClass('invalid');
+			});
 			if (g == 0) {
 				var a = f.next().data('send'),
 					b = f.next().data('sending');
-				jQuery.ajax({
+				$.ajax({
 					url: bilnea.main_uri+'/wp-admin/admin-ajax.php',
 					type: 'POST',
-					data: f.serialize()+'&cid='+f.find(jQuery('div.captcha')).data('id')+'&eid='+f.data('id')+'&redirect='+f.data('redirect')+'&action=b_send_form',
+					data: f.serialize()+'&cid='+f.find($('div.captcha')).data('id')+'&eid='+f.data('id')+'&redirect='+f.data('redirect')+'&action=b_send_form',
 					beforeSend: function() {
 						f.next().text(b).addClass('sending');
 					},
@@ -131,13 +137,13 @@ jQuery(function() {
 	});
 });
 
-jQuery(function() {
-	jQuery('.file-button > *').click(function() {
-		jQuery(this).parent().next().click();
+jQuery(function($) {
+	$('.file-button > *').click(function() {
+		$(this).parent().next().click();
 	})
-	jQuery('input[type="file"]').change(function() {
+	$('input[type="file"]').change(function() {
 		var n = [],
-			t = jQuery(this);
+			t = $(this);
 		t.prev().children('.text').html('');
 		var s = 0;
 		for (var i = 0; i < t.get(0).files.length; ++i) {
@@ -152,7 +158,7 @@ jQuery(function() {
 			t.prev().children('.text').html('<span>'+t.attr('data-empty')+'</span>');
 		} else {
 			for (var i = 0; i < n.length; i++) {
-				jQuery('<span>'+n[i]+'</span>').appendTo(t.prev().children('.text'));
+				$('<span>'+n[i]+'</span>').appendTo(t.prev().children('.text'));
 			};
         }
     });

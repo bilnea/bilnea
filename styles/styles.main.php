@@ -352,8 +352,9 @@ header#header .header > .container {
 	color: <?= b_f_color('b_opt_menu-color') ?>;
 }
 
-header .logo.image-link {
+header a.logo {
 	height: <?= b_f_size('b_opt_logo-height') ?>;
+	display: inline-block;
 }
 
 header#header nav li a {

@@ -527,6 +527,15 @@ html[lang="ar"] .ar {
 	z-index: 1;
 }
 
+/* Correción de errores */
+
+#wp-admin-bar-user-info .avatar {
+	max-height: none !important;
+}
+
+#wpadminbar .ab-submenu .ab-item, #wpadminbar .quicklinks .menupop ul li a span {
+	color: #b4b9be !important;
+}
 
 /* Definición de estilos por defecto */
 
@@ -961,7 +970,6 @@ header#header nav li {
 .header-top li {
 	list-style: none;
 	padding: 0 4px;
-	border-left: 1px solid;
 	display: inline-block;
 }
 
@@ -979,7 +987,6 @@ header#header nav li {
 }
 
 .header-top li + ul > li:first-child {
-	border-left: 1px solid;
 	padding-left: 4px;
 }
 

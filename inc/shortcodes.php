@@ -1,169 +1,8 @@
 <?php
 
-function b_f_row($atts, $content = null) {
-	$a = shortcode_atts(array(
-		'width' => 0,
-		'class' => null,
-		'id' => null,
-		'bgcolor' => null,
-	), $atts);
-	$fw = ''; $fi = ''; $fo = '';
-	if (esc_attr($a['width']) != 1) { $fw = 'container'; }
-	if (esc_attr($a['class']) != null) { $fw .= ' '.esc_attr($a['class']); }
-	if (esc_attr($a['id']) != null) { $fi = ' id="'.esc_attr($a['id']).'"'; }
-	if (esc_attr($a['bgcolor']) != null) { $fo = ' style="background-color: '.esc_attr($a['bgcolor']).';"'; }
-	return '<div class="'.$fw.'"'.$fi.$fo.'>'.do_shortcode($content).'</div>';
-}
 
-add_shortcode('b_row', 'b_f_row');
 
-function b_f_box($atts, $content = null) {
-	$a = shortcode_atts(array(
-		'width' => 1,
-		'class' => null,
-		'id' => null,
-		'height' => null,
-		'bgcolor' => null,
-	), $atts);
-	$fw = ''; $fi = ''; $fo = '';
-	switch (esc_attr($a['width'])) {
-		case '1/1': $fw = 'x11'; break;
-		case '1/2': $fw = 'x12'; break;
-		case '1/3': $fw = 'x13'; break;
-		case '1/4': $fw = 'x14'; break;
-		case '1/5': $fw = 'x15'; break;
-		case '1/6': $fw = 'x16'; break;
-		case '1/7': $fw = 'x17'; break;
-		case '1/8': $fw = 'x18'; break;
-		case '1/9': $fw = 'x19'; break;
-		case '1/10': $fw = 'x10'; break;
-		case '2/2': $fw = 'x11'; break;
-		case '2/3': $fw = 'x23'; break;
-		case '2/4': $fw = 'x12'; break;
-		case '2/5': $fw = 'x25'; break;
-		case '2/6': $fw = 'x13'; break;
-		case '2/7': $fw = 'x27'; break;
-		case '2/8': $fw = 'x14'; break;
-		case '2/9': $fw = 'x29'; break;
-		case '2/10': $fw = 'x15'; break;
-		case '3/3': $fw = 'x11'; break;
-		case '3/4': $fw = 'x34'; break;
-		case '3/5': $fw = 'x35'; break;
-		case '3/6': $fw = 'x12'; break;
-		case '3/7': $fw = 'x37'; break;
-		case '3/8': $fw = 'x38'; break;
-		case '3/9': $fw = 'x13'; break;
-		case '3/10': $fw = 'x30'; break;
-		case '4/4': $fw = 'x14'; break;
-		case '4/5': $fw = 'x45'; break;
-		case '4/6': $fw = 'x23'; break;
-		case '4/7': $fw = 'x47'; break;
-		case '4/8': $fw = 'x12'; break;
-		case '4/9': $fw = 'x49'; break;
-		case '4/10': $fw = 'x40'; break;
-		case '5/5': $fw = 'x11'; break;
-		case '5/6': $fw = 'x56'; break;
-		case '5/7': $fw = 'x57'; break;
-		case '5/8': $fw = 'x58'; break;
-		case '5/9': $fw = 'x59'; break;
-		case '5/10': $fw = 'x12'; break;
-		case '6/6': $fw = 'x11'; break;
-		case '6/7': $fw = 'x67'; break;
-		case '6/8': $fw = 'x34'; break;
-		case '6/9': $fw = 'x69'; break;
-		case '6/10': $fw = 'x35'; break;
-		case '7/7': $fw = 'x11'; break;
-		case '7/8': $fw = 'x78'; break;
-		case '7/9': $fw = 'x79'; break;
-		case '7/10': $fw = 'x70'; break;
-		case '8/8': $fw = 'x11'; break;
-		case '8/9': $fw = 'x89'; break;
-		case '8/10': $fw = 'x45'; break;
-		case '9/9': $fw = 'x11'; break;
-		case '9/10': $fw = 'x90'; break;
-	}
-	if (esc_attr($a['height']) == 'adjust') { $fw .= ' auto-height'; }
-	if (esc_attr($a['class']) != null) { $fw .= ' '.esc_attr($a['class']); }
-	if (esc_attr($a['id']) != null) { $fi = ' id="'.esc_attr($a['id']).'"'; }
-	if (esc_attr($a['bgcolor']) != null) { $fo = ' style="background-color: '.esc_attr($a['bgcolor']).';"'; }
-	return '<div class="'.$fw.'"'.$fi.$fo.'>'.do_shortcode($content).'</div>';
-}
 
-add_shortcode('b_box', 'b_f_box');
-add_shortcode('b_box_inside', 'b_f_box');
-
-function b_f_slider($atts, $content = null) {
-	wp_enqueue_script('slider');
-	global $num_slid;
-	add_shortcode('b_show', 'b_f_slideshow');
-	$a = shortcode_atts(array(
-		'start' => true,
-		'on' => 1,
-		'fade' => 400,
-		'time' => 7,
-		'buttons' => true,
-		'width' => 1,
-		'height' => '400px',
-		'id' => null,
-	), $atts);
-	$sty = ''; $cls = ''; $sid = '';
-	if (esc_attr($a['id']) != null) { $sid = ' id="'.esc_attr($a['id']).'"'; }
-	if (esc_attr($a['width']) == 0) { $cls = ' container'; }
-	elseif (esc_attr($a['width']) > 0 && esc_attr($a['width']) <= 1) { $sty .= 'width: '.(esc_attr($a['width'])*100).'%;'; }
-	elseif (is_numeric(esc_attr($a['width']))) { $sty .= 'width: '.esc_attr($a['width']).'px'; }
-	else { $sty .= 'width: '.esc_attr($a['width']);	}
-	if (esc_attr($a['height']) > 0 && esc_attr($a['height']) <= 1) { $sty .= ' height: '.(esc_attr($a['height'])*100).'vh;'; }
-	elseif (is_numeric(esc_attr($a['height']))) { $sty .= ' height: '.esc_attr($a['height']).'px'; }
-	else { $sty .= ' height: '.esc_attr($a['height']); }
-	$num_slid++;
-	return '<div class="slider-'.$num_slid.$cls.'" style="'.$sty.'"'.$sid.'>'.do_shortcode($content).'</div>'."\r\n"
-		 . '<script type="text/javascript">'."\r\n"
-		 . 'jQuery(function() {'."\r\n"
-		 . '	jQuery(\'.slider-'.$num_slid.'\').sss({'."\r\n"
-		 . '		slideShow: '.esc_attr($a['start']).','."\r\n"
-		 . '		startOn:  '.(esc_attr($a['on'])-1).','."\r\n"
-		 . '		transition:  '.esc_attr($a['fade']).','."\r\n"
-		 . '		speed:  '.(esc_attr($a['time'])*1000).','."\r\n"
-		 . '		showNav:  '.esc_attr($a['buttons'])."\r\n"
-		 . '	})'."\r\n"
-		 . '})'."\r\n"
-		 . '</script>';
-	$num_slid++;
-}
-
-add_shortcode('b_slider', 'b_f_slider');
-
-function b_f_slideshow($atts, $content = null) {
-	$a = shortcode_atts(array(
-		'url' => get_template_directory_uri().'/img/empty-grid.png',
-		'position' => 'cc',
-		'class' => null,
-	), $atts);
-	$img = ''; $cen = 'center';
-	switch (esc_attr($a['position'])) {
-		case 'cc': $cen = 'center'; break;
-		case 'ct': $cen = 'center top'; break;
-		case 'tc': $cen = 'center top'; break;
-		case 'cb': $cen = 'center bottom'; break;
-		case 'bc': $cen = 'center bottom'; break;
-		case 'lc': $cen = 'left center'; break;
-		case 'cl': $cen = 'left center'; break;
-		case 'rc': $cen = 'right center'; break;
-		case 'cr': $cen = 'right center'; break;
-		case 'lt': $cen = 'left top'; break;
-		case 'tl': $cen = 'left top'; break;
-		case 'rt': $cen = 'right top'; break;
-		case 'tr': $cen = 'right top'; break;
-		case 'lb': $cen = 'left bottom'; break;
-		case 'bl': $cen = 'left bottom'; break;
-		case 'rb': $cen = 'right bottom'; break;
-		case 'br': $cen = 'right bottom'; break;
-		default: $cen = 'center'; break;
-	}
-	if (esc_attr($a['url']) != null) { $img = ' style="background-image: url('.str_replace('b_root', preg_replace('(^https?://)', '', get_site_url()), esc_url(esc_attr($a['url']))).'); background-position: '.$cen.';"'; }
-	if (esc_attr($a['class']) != null) { $cls = ' data-class="'.esc_attr($a['class']).'"'; } else { $cls = ''; }
-	return '<div'.$img.$cls.'>'.do_shortcode($content).'</div>';
-}
 
 function b_f_button($atts, $content = null) {
 	$a = shortcode_atts(array(
@@ -240,115 +79,167 @@ function b_f_url($atts) {
 
 add_shortcode('b_url', 'b_f_url');
 
+
+// b_f_input
+// Genera campos de formulario
+
 function b_f_input($atts) {
-	$lang = 'es';
-	if (function_exists('icl_object_id')) {
-		$lang = ICL_LANGUAGE_CODE;
-	}
-	global $opt;
-	global $prov;
-	$ran =rand(10000, 99999);
+
+	// Variables globales
+	global $b_g_lang;
+
+	// Atributos
 	$a = shortcode_atts(array(
 		'id' => null,
 		'class' => null,
 		'type' => 'text',
 		'required' => 'false',
 		'placeholder' => '',
-		'url' => site_url(b_f_option('b_opt_privacy-url-_'.$lang)),
 		'length' => 5,
 		'allow' => '',
 		'options' => null,
 		'data' => null,
 		'size' => '5MB',
+		'label' => null,
+		'url' => b_f_option('b_opt_privacy-policy-'.$b_g_lang),
 	), $atts);
-	$fw = ''; $ob = '';
-	if (esc_attr($a['class']) != null) { $fw .= ' '.esc_attr($a['class']); }
-	if (esc_attr($a['required']) == 'true') { $fw .= ' required'; $ob = '* '; }
-	if (esc_attr($a['id']) != null) { $fi = ' id="'.esc_attr($a['id']).'"'; }
-	if (esc_attr($a['placeholder']) == 'null') {
-			$plh = '';
-		} else {
-			$plh = esc_attr($a['placeholder']);
-		}
+
+	// Número aleatorio para identificar el campo
+	$var_random = rand(10000, 99999);
+	
+	// Variables específicas
+	(esc_attr($a['class']) != null) ? $var_class = ' '.esc_attr($a['class']) : $var_class = '';
+	if (esc_attr($a['required']) == 'true') {
+		$var_class .= ' required';
+		$var_required = '* ';
+	} else {
+		$var_required = '';
+	}
+	(esc_attr($a['id']) != null) ? $var_id = ' id="'.esc_attr($a['id']).'"' : $var_id = '';
+	(esc_attr($a['placeholder']) == 'null') ? $var_placeholder = '' : $var_placeholder = esc_attr($a['placeholder']);
+
+	// Construcción del campo
 	switch (esc_attr($a['type'])) {
+
+		// Correo electrónico
 		case 'email':
-			if (esc_attr($a['placeholder']) == '') { $plh = __('Email', 'bilnea'); }
-			return '<input class="input'.$fw.'"'.$fi.' type="text" name="email" placeholder="'.$ob.$plh.'" />';
-			break;
-		case 'message':
-			if (esc_attr($a['placeholder']) == '') { $plh = __('Message', 'bilnea'); }
-			return '<textarea name="mensaje" class="input'.$fw.'"'.$fi.' placeholder="'.$ob.$plh.'"></textarea>';
-			break;
-		case 'state':
-			$txt = '<select name="provincia" class="input'.$fw.'"'.$fi.'>';
-			if (esc_attr($a['placeholder']) == '') {
-				$txt .= '<option selected disabled>'.$ob.__('State', 'bilnea').'</option>';
+			if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Email', 'bilnea'); }
+			if (esc_attr($a['label']) == 'true') {
+				return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_email" /></label>';
 			} else {
-				$txt .= '<option selected disabled>'.$ob.esc_attr($a['placeholder']).'</option>';
+				return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_email" placeholder="'.$var_required.$var_placeholder.'" />';
+			}
+			break;
+
+		// Mensaje
+		case 'message':
+			if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Message', 'bilnea'); }
+			if (esc_attr($a['label']) == 'true') {
+				return '<label>'.$var_required.$var_placeholder.'<textarea name="b_i_message" class="input'.$var_class.'"'.$var_id.'></textarea></label>';
+			} else {
+				return '<textarea name="b_i_message" class="input'.$var_class.'"'.$var_id.' placeholder="'.$var_required.$var_placeholder.'"></textarea>';
+			}
+			break;
+
+		// Selector de provincia
+		case 'state':
+
+			// Datos externos
+			require_once('data/states.php');
+
+			if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('State', 'bilnea'); }
+			if (esc_attr($a['label']) == 'true') {
+				$out = '<label>'.$var_required.$var_placeholder.'<select name="b_i_state" class="input'.$var_class.'"'.$var_id.'>';
+			} else {
+				$out = '<select name="b_i_state" class="input'.$var_class.'"'.$var_id.'><option selected disabled>'.$var_required.$var_placeholder.'</option>';
 			}
 			if (esc_attr($a['data']) == null) {
-				foreach ($prov as $key => $value) {
-					$txt .= '<option value="'.$key.'--'.$value.'">'.$value.'</option>';
+				foreach ($b_d_state as $key => $value) {
+					$out .= '<option value="'.$key.'--'.$value.'">'.$value.'</option>';
 				}
 			}
-			$txt .= '</select>';
-			return $txt;
+			$out .= '</select>';
+			if (esc_attr($a['label']) == 'true') { $out .= '</label>'; }
+			return $out;
 			break;
+
+		// Aviso legal
 		case 'legal':
-			if (esc_attr($a['placeholder']) == '') { $plh = __('Privacy policy', 'bilnea'); }
-			switch (substr(explode(' ', $plh)[0], -1)) {
+			if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Privacy policy', 'bilnea'); }
+			switch (substr(explode(' ', $var_placeholder)[0], -1)) {
 				case 'a':
-					$art = _x('the', 'female', 'bilnea');
+					$var_gendre = _x('the', 'female', 'bilnea');
 					break;
 				default:
-					$art = _x('the', 'male', 'bilnea');
+					$var_gendre = _x('the', 'male', 'bilnea');
 					break;
 			}
-			$txt  = '<input class="b_input_checkbox'.$fw.'" id="legal-'.$ran.'" type="checkbox" name="legal">';
-			$txt .= '<label for="legal-'.$ran.'" class="'.esc_attr($a['class']).'">'.$ob.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$plh.'" target="_blank">'.strtolower($plh).'</a>.</label>';
-			return $txt;
+			$out  = '<input class="b_input_checkbox'.$var_class.'" id="legal-'.$var_random.'" type="checkbox" name="b_i_legal">';
+			$out .= '<label for="legal-'.$var_random.'" class="'.esc_attr($a['class']).'">'.$var_required.__('I have read, understood and accept', 'bilnea').' '.$var_gendre.' <a href="'.esc_attr($a['url']).'" title="'.$var_placeholder.'" target="_blank">'.strtolower($var_placeholder).'</a>.</label>';
+			return $out;
 			break;
+
+		// Verificación captcha
 		case 'captcha':
 			session_start();
-			$rnd = rand(0, 99999999);
+			$var_captcha = rand(0, 99999999);
 			do {
-				$md = md5(microtime()*mktime());
-				preg_replace('([1aeilou0])', "", $md );
-			} while (strlen($md) < esc_attr($a['length']));
-			$key = substr( $md, 0, esc_attr($a['length']) );
-			$_SESSION['key-'.$rnd] = md5($key);
-			$ltr = str_split($key);
-			$txt = '<div class="captcha input'.$fw.'"'.$fi.' data-id="'.$rnd.'">'.$ob.__('Fill in the following fields.', 'bilnea').'<br />';
-			$i = 1;
-			foreach ($ltr as $let) {
-				$txt .= '<input type="text" class="captcha required" name="captcha[]" id="captcha_'.$i.'" placeholder="'.$let.'" size="1" maxlength="1">';
-				$i++;
+				$var_md5 = md5(microtime()*mktime());
+				preg_replace('([1aeilou0])', "", $var_md5 );
+			} while (strlen($var_md5) < esc_attr($a['length']));
+			$var_key = substr( $var_md5, 0, esc_attr($a['length']) );
+			$_SESSION['key-'.$var_captcha] = md5($var_key);
+			$var_character = str_split($var_key);
+			if (esc_attr($a['label']) == 'true') {
+				$out = '<div class="captcha input'.$var_class.'"'.$var_id.' data-id="'.$var_captcha.'">'.$var_required.sprintf(__('Fill in the following field with <strong>"%s"</strong>', 'bilnea'), $var_key).'<br />';
+				$out .= '<input type="text" class="captcha required" name="captcha[]" id="captcha_unique" size="'.esc_attr($a['length']).'" maxlength="'.esc_attr($a['length']).'">';
+			} else {
+				$out = '<div class="captcha input'.$var_class.'"'.$var_id.' data-id="'.$var_captcha.'">'.$var_required.__('Fill in the following fields.', 'bilnea').'<br />';
+				$i = 1;
+				foreach ($var_character as $let) {
+					$out .= '<input type="text" class="captcha required" name="captcha[]" id="captcha_'.$i.'" placeholder="'.$let.'" size="1" maxlength="1">';
+					$i++;
+				}
+				$out .= '</div>';
 			}
-			$txt .= '</div>';
-			return $txt;
+			return $out;
 			break;
+
+		// Archivo adjunto
 		case 'file':
 			$ftp = '';
 			if (esc_attr($a['allow']) != '') { $ftp = ' accept="'.esc_attr($a['allow']).'"'; }
-			return '<div class="file-button"><div class="icon"></div><div class="text">'.esc_attr($a['placeholder']).'</div></div><input class="input'.$fw.'"'.$fi.' type="file"'.$ftp.' name="'.esc_attr($a['type']).'" multiple data-empty="'.__('No selected file', 'bilnea').'" data-size="'.b_f_to_bytes(esc_attr($a['size'])).'" data-size-error="'.__('Maximum size exceeded', 'bilnea').'" />';
+			return '<div class="file-button"><div class="icon"></div><div class="text">'.esc_attr($a['placeholder']).'</div></div><input class="input'.$var_class.'"'.$var_id.' type="file"'.$ftp.' name="'.esc_attr($a['type']).'" multiple data-empty="'.__('No selected file', 'bilnea').'" data-size="'.b_f_to_bytes(esc_attr($a['size'])).'" data-size-error="'.__('Maximum size exceeded', 'bilnea').'" />';
 			break;
+
+		// Selector de semana
 		case 'week':
+
+			// Carga de scripts
 			wp_enqueue_script('jquery-ui');
 			wp_enqueue_style('jquery-ui-css');
 			wp_enqueue_style('jquery-ui-css-theme');
-			$out = '<input class="weekpicker-'.$ran.' input'.$fw.'"'.$fi.' type="text" name="weekpicker" placeholder="'.$ob.$plh.'" />'."\n";
+
+			// Construcción del selector
+			if (esc_attr($a['label']) == 'true') {
+				$out = '<label>'.$var_required.$var_placeholder.'<input class="weekpicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="weekpicker" /></label>'."\n";
+			} else {
+				$out = '<input class="weekpicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="weekpicker" placeholder="'.$var_required.$var_placeholder.'" />'."\n";
+			}
+
+			// Script específico
 			$out .= '<script type="text/javascript">'."\n";
 			$out .= '	jQuery(function($) {'."\n";
 			$out .= '		var startDate;'."\n";
 			$out .= '		var endDate;'."\n";
 			$out .= '		var selectCurrentWeek = function() {'."\n";
 			$out .= '			window.setTimeout(function () {'."\n";
-			$out .= '				$(\'.weekpickerdiv-'.$ran.'\').find(\'.ui-datepicker-current-day a\').addClass(\'ui-state-active\')'."\n";
+			$out .= '				$(\'.weekpickerdiv-'.$var_random.'\').find(\'.ui-datepicker-current-day a\').addClass(\'ui-state-active\')'."\n";
 			$out .= '			}, 1);'."\n";
 			$out .= '		}'."\n";
-			$out .= '		$(\'.weekpicker-'.$ran.'\').datepicker( {'."\n";
+			$out .= '		$(\'.weekpicker-'.$var_random.'\').datepicker( {'."\n";
 			$out .= '			beforeShow: function(input, inst) {'."\n";
-			$out .= '				$(\'#ui-datepicker-div\').addClass(\'weekpickerdiv-'.$ran.'\');'."\n";
+			$out .= '				$(\'#ui-datepicker-div\').addClass(\'weekpickerdiv-'.$var_random.'\');'."\n";
 			$out .= '			},'."\n";
 			$out .= '			showOtherMonths: true,'."\n";
 			$out .= '			selectOtherMonths: true,'."\n";
@@ -358,7 +249,7 @@ function b_f_input($atts) {
 			$out .= '				startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());'."\n";
 			$out .= '				endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);'."\n";
 			$out .= '				var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;'."\n";
-			$out .= '				if (typeof callback == \'function\') { callback(\''.$ran.'\', startDate, endDate); };'."\n";
+			$out .= '				if (typeof callback == \'function\') { callback(\''.$var_random.'\', startDate, endDate); };'."\n";
 			$out .= '				selectCurrentWeek();'."\n";
 			$out .= '			},'."\n";
 			$out .= '			beforeShowDay: function(date) {'."\n";
@@ -371,29 +262,41 @@ function b_f_input($atts) {
 			$out .= '				selectCurrentWeek();'."\n";
 			$out .= '			}'."\n";
 			$out .= '		});'."\n";
-			$out .= '		$(\'.weekpickerdiv-'.$ran.' .ui-datepicker-calendar tr\').live(\'mousemove\', function() { $(this).find(\'td a\').addClass(\'ui-state-hover\'); });'."\n";
-			$out .= '		$(\'.weekpickerdiv-'.$ran.' .ui-datepicker-calendar tr\').live(\'mouseleave\', function() { $(this).find(\'td a\').removeClass(\'ui-state-hover\'); });'."\n";
+			$out .= '		$(\'.weekpickerdiv-'.$var_random.' .ui-datepicker-calendar tr\').live(\'mousemove\', function() { $(this).find(\'td a\').addClass(\'ui-state-hover\'); });'."\n";
+			$out .= '		$(\'.weekpickerdiv-'.$var_random.' .ui-datepicker-calendar tr\').live(\'mouseleave\', function() { $(this).find(\'td a\').removeClass(\'ui-state-hover\'); });'."\n";
 			$out .= '	});'."\n";
 			$out .= '</script>'."\n";
 			return $out;
 			break;
+
+		// Selector de día
 		case 'day':
+
+			// Carga de scripts
 			wp_enqueue_script('jquery-ui');
 			wp_enqueue_style('jquery-ui-css');
 			wp_enqueue_style('jquery-ui-css-theme');
-			$out = '<input class="datepicker-'.$ran.' input'.$fw.'"'.$fi.' type="text" name="datepicker" placeholder="'.$ob.$plh.'" />'."\n";
+
+			// Construcción del selector
+			if (esc_attr($a['label']) == 'true') {
+				$out = '<label>'.$var_required.$var_placeholder.'<input class="datepicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="datepicker" /></label>'."\n";
+			} else {
+				$out = '<input class="datepicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="datepicker" placeholder="'.$var_required.$var_placeholder.'" />'."\n";
+			}
+			
+			// Script específico
 			$out .= '<script type="text/javascript">'."\n";
 			$out .= '	jQuery(function($) {'."\n";
 			$out .= '		var startDate;'."\n";
 			$out .= '		var endDate;'."\n";
 			$out .= '		var selectCurrentWeek = function() {'."\n";
 			$out .= '			window.setTimeout(function () {'."\n";
-			$out .= '				$(\'.datepickerdiv-'.$ran.'\').find(\'.ui-datepicker-current-day a\').addClass(\'ui-state-active\')'."\n";
+			$out .= '				$(\'.datepickerdiv-'.$var_random.'\').find(\'.ui-datepicker-current-day a\').addClass(\'ui-state-active\')'."\n";
 			$out .= '			}, 1);'."\n";
 			$out .= '		}'."\n";
-			$out .= '		$(\'.datepicker-'.$ran.'\').datepicker( {'."\n";
+			$out .= '		$(\'.datepicker-'.$var_random.'\').datepicker( {'."\n";
 			$out .= '			beforeShow: function(input, inst) {'."\n";
-			$out .= '				$(\'#ui-datepicker-div\').addClass(\'datepickerdiv-'.$ran.'\');'."\n";
+			$out .= '				$(\'#ui-datepicker-div\').addClass(\'datepickerdiv-'.$var_random.'\');'."\n";
 			$out .= '			},'."\n";
 			$out .= '			showOtherMonths: true,'."\n";
 			$out .= '			selectOtherMonths: true,'."\n";
@@ -403,16 +306,19 @@ function b_f_input($atts) {
 			$out .= '</script>'."\n";
 			return $out;
 			break;
+
+		// Selector
 		case 'select':
-			$rnd = rand(0, 99999999);
-			$out = '<select class="input'.$fw.'"'.$fi.' name="select-'.$rnd.'">'."\n";
-			if ($plh == '') {
-				$out .= '  <option disabled selected>'.__('Select an option', 'bilnea').'</option>'."\n";
+			$var_key = rand(0, 99999999);
+			if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Select an option', 'bilnea'); }
+			if (esc_attr($a['label']) == 'true') {
+				$out = '<label><select class="input'.$var_class.'"'.$var_id.' name="b_i_select-'.$var_key.'">'."\n";
 			} else {
-				$out .= '  <option disabled selected>'.$plh.'</option>'."\n";
+				$out = '<select class="input'.$var_class.'"'.$var_id.' name="b_i_select-'.$var_key.'">'."\n";
+				$out .= '  <option disabled selected>'.$var_placeholder.'</option>'."\n";
 			}
-			$sop = explode('|', esc_attr($a['options']));
-			foreach ($sop as $option) {
+			$var_options = explode('|', esc_attr($a['options']));
+			foreach ($var_options as $option) {
 				if (count(explode(':', $option)) > 1) {
 					$option = explode(':', $option);
 					$out .= '  <option value="'.$option[0].'">'.$option[1].'</option>'."\n";
@@ -421,94 +327,107 @@ function b_f_input($atts) {
 				}
 			}
 			$out .= '</select>'."\n";
+			if (esc_attr($a['placeholder']) == '') { $out .= '</label>'; }
 			return $out;
 			break;
+
+		// Radio
 		case 'radio':
-			$rnd = rand(0, 99999999);
-			$sop = explode('|', esc_attr($a['options']));
-			$out = '';
-			foreach ($sop as $option) {
-				$ran = rand(0, 999);
+			$var_key = rand(0, 99999999);
+			$var_options = explode('|', esc_attr($a['options']));
+			if (esc_attr($a['label']) == 'true') {
+				$out = '<fieldset><legend>'.$var_required.$var_placeholder.'</legend>';
+			} else {
+				$out = '';
+			}
+			foreach ($var_options as $option) {
+				$var_random = rand(0, 999);
 				if (count(explode(':', $option)) > 1) {
 					$option = explode(':', $option);
-					$out .= '  <input class="b_input_radio'.$fw.'"type="radio" value="'.$option[0].'" name="radio-'.$rnd.'" id="radio-'.$ran.'"><label for="radio-'.$ran.'">'.$option[1].'</label>'."\n";
+					$out .= '  <input class="b_input_radio'.$var_class.'"type="radio" value="'.$option[0].'" name="b_i_radio-'.$var_key.'" id="radio-'.$var_random.'"><label for="radio-'.$var_random.'">'.$option[1].'</label>'."\n";
 				} else {
-					$out .= '  <input class="b_input_radio'.$fw.'"type="radio" value="'.$option.'" name="radio-'.$rnd.'" id="radio-'.$ran.'"><label for="radio-'.$ran.'">'.$option.'</label>'."\n";
+					$out .= '  <input class="b_input_radio'.$var_class.'"type="radio" value="'.$option.'" name="b_i_radio-'.$var_key.'" id="radio-'.$var_random.'"><label for="radio-'.$var_random.'">'.$option.'</label>'."\n";
 				}
 			}
+			if (esc_attr($a['label']) == 'true') { $out .= '</fieldset>'; }
 			return $out;
 			break;
+
+		// Otros campos
 		default:
-			return '<input class="input'.$fw.'"'.$fi.' type="text" name="'.esc_attr($a['type']).'" placeholder="'.$ob.$plh.'" />';
+			return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.esc_attr($a['type']).'" placeholder="'.$ob.$var_placeholder.'" />';
 			break;
 	}
 }
 
 add_shortcode('b_input', 'b_f_input');
 
-function form($atts, $content = null) {
-	$ran = rand(0, 99999999);
-	global $version;
-	$ip = '';
-	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-		$ip=' '.$_SERVER['HTTP_CLIENT_IP'];
-	} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-		$ip=' '.$_SERVER['HTTP_X_FORWARDED_FOR'];
-	} else {
-		$ip=' '.$_SERVER['REMOTE_ADDR'];
-	}
+
+// b_f_form
+// Genera un formulario.
+
+function b_form($atts, $content = null) {
+
+	// Atributos
 	$a = shortcode_atts(array(
 		'id' => null,
 		'class' => null,
 		'email' => true,
 		'to' => b_f_option('b_opt_form-email'),
 		'message' => __('Your message has been sent sucesfully. Your request will delay. A copy has been sent to your email.', 'bilnea'),
-		'action' => null,
-		'method' => 'post',
 		'send' => __('Send', 'bilnea'),
+		'redirect' => b_f_option('b_opt_form-thanks'),
 		'subject' => sprintf(esc_html__('Message sent from %s website form', 'bilnea'), get_option('blogname'))
 	), $atts);
-	$fw = ''; $fi = '';
-	if (esc_attr($a['class']) != null) { $fw .= ' '.esc_attr($a['class']); }
-	if (esc_attr($a['id']) != null) { $fi = ' id="'.esc_attr($a['id']).'"'; }
-	$_SESSION['mail-'.$ran] = esc_attr($a['to']);
-	$_SESSION['mens-'.$ran] = esc_attr($a['mensaje']);
-	$_SESSION['blogname'] = get_option('blogname');
-	$_SESSION['siteurl'] = site_url();
-	if (esc_attr($a['action']) != null) { $ac = ' action="'.esc_attr($a['action']).'"'; } else { $ac = ''; }
-	wp_enqueue_script('form', get_template_directory_uri().'/js/form.js', array(), $version, true );
-	if(file_exists(get_stylesheet_directory().'/mail.php')) {
-		$mail = array('mailphp' => get_stylesheet_directory_uri().'/mail.php');
+
+	// Variables globales
+	global $b_g_version;
+
+	// Número aleatorio para identificar al formulario
+	$var_random = rand(0, 99999999);
+
+	// Dirección IP del visitante
+	$var_ip = '';
+	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+		$var_ip = ' '.$_SERVER['HTTP_CLIENT_IP'];
+	} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		$var_ip = ' '.$_SERVER['HTTP_X_FORWARDED_FOR'];
 	} else {
-		$mail = array('mailphp' => get_template_directory_uri().'/inc/mail.php');
+		$var_ip = ' '.$_SERVER['REMOTE_ADDR'];
 	}
-	if (is_numeric(b_f_option('b_opt_form-thanks'))) {
-		$mail['thanks'] = get_permalink(b_f_option('b_opt_form-thanks'));
-		$mail['redirect'] = 'true';
-		if (function_exists('icl_object_id')) {
-			$mail['thanks'] = icl_object_id(b_f_option('b_opt_form-thanks'), 'page', true, ICL_LANGUAGE_CODE);
-		}
-	} else {
-		$mail['thanks'] = b_f_option('b_opt_form-thanks');
-		$mail['redirect'] = 'false';
+	
+	// Variables específicas
+	(esc_attr($a['class']) != null) ? $var_class = ' '.esc_attr($a['class']) : $var_class = '';
+	(esc_attr($a['id']) != null) ? $var_id = ' id="'.esc_attr($a['id']).'"' : $var_id = '';
+
+	// Variables de sesión
+	$_SESSION['b_form_'.$var_random.'-to'] = esc_attr($a['to']);
+	$_SESSION['b_form_'.$var_random.'-success'] = esc_attr($a['message']);
+	$_SESSION['b_form_'.$var_random.'-subject'] = esc_attr($a['subject']);
+
+	// Redirección del formulario
+	if (esc_attr($a['redirect']) == 'true' && is_numeric(b_f_option('b_opt_form-thanks'))) {
+		$_SESSION['b_form_'.$var_random.'-redirect'] = b_f_option('b_opt_form-thanks');
 	}
-	wp_localize_script('form', 'form_'.$ran, $mail);
-	$txt .= '<form'.$ac.' class="form'.$fw.'"'.$fi.' method="'.esc_attr($a['method']).'" data-id="'.$ran.'">';
-	$txt .= do_shortcode($content);
-	$txt .= '<input type="hidden" value="'.$ip.'" name="ip" id="ip" />';
-	$txt .= '<input type="hidden" name="b_f_subject" value="'.esc_attr($a['subject']).'" />';
-	if ($opt['b_opt_smtp']) {
-		$txt .= '<input type="hidden" value="smtp" name="method" id="method" />';
-	} else {
-		$txt .= '<input type="hidden" value="mail" name="method" id="method" />';
+	if (is_numeric(esc_attr($a['redirect']))) {
+		$_SESSION['b_form_'.$var_random.'-redirect'] = esc_attr($a['redirect']);
 	}
-	$txt .= '</form>';
-	$txt .= '<div id="form-send" data-send="'.esc_attr($a['send']).'" data-sending="'.__('Sending', 'bilnea').'">'.esc_attr($a['send']).'</div>';
-	$txt .= '<div class="response"></div>';
-	return $txt;
+
+	// Javascript del formulario
+	wp_enqueue_script('b_form', get_template_directory_uri().'/js/form.js', array(), $b_g_version, true);
+
+	// Construcción del formulario
+	$out = '<form class="form'.$var_class.'"'.$var_id.' method="post" data-id="'.$var_random.'">';
+	$out .= do_shortcode($content);
+	$out .= '<input type="hidden" value="'.$var_ip.'" name="b_form_ip" id="ip" />';
+	$out .= '</form>';
+	$out .= '<div id="form-send" data-send="'.esc_attr($a['send']).'" data-sending="'.__('Sending', 'bilnea').'" data-id="'.$var_random.'">'.esc_attr($a['send']).'</div>';
+	$out .= '<div class="response"></div>';
+
+	return $out;
 }
 
-add_shortcode('b_form', 'form');
+add_shortcode('b_form', 'b_form');
 
 function root() {
 	return get_site_url();
@@ -1603,8 +1522,8 @@ if (b_f_option('b_opt_subscribers') == 1) {
 		}
 		$out .= '<input class="input" type="email" name="s_email" placeholder="'.__('* Email', 'bilnea').'" />';
 		$out .= '<input class="b_input_checkbox" value="true" type="checkbox" id="s_legal-'.$ran.'" name="s_legal-'.$ran.'" />';
-		$plh = __('Privacy policy', 'bilnea');
-		switch (substr(explode(' ', $plh)[0], -1)) {
+		$var_placeholder = __('Privacy policy', 'bilnea');
+		switch (substr(explode(' ', $var_placeholder)[0], -1)) {
 			case 'a':
 				$art = _x('the', 'female', 'bilnea');
 				break;
@@ -1612,7 +1531,7 @@ if (b_f_option('b_opt_subscribers') == 1) {
 				$art = _x('the', 'male', 'bilnea');
 				break;
 		}
-		$out .= '<label for="s_legal-'.$ran.'">* '.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$plh.'" target="_blank">'.strtolower($plh).'</a>.</label>';
+		$out .= '<label for="s_legal-'.$ran.'">* '.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$var_placeholder.'" target="_blank">'.strtolower($var_placeholder).'</a>.</label>';
 		$out .= '<div class="s_submit">'.__('Suscribe', 'bilnea').'</div>';
 		if (b_f_option('b_opt_newsl_service') == 'mailchimp') {
 			$api_key = b_f_option('b_opt_newsl_api');
@@ -1687,5 +1606,84 @@ function b_rrss($atts) {
 }
 
 add_shortcode('b_rrss', 'b_rrss');
+
+// Línea de tiempo de Twitter
+
+function b_twitter($atts) {
+	global $mes;
+	$a = shortcode_atts(array(
+		'username' => null,
+		'number' => 5,
+		'retweet' => true,
+		'response' => false,
+	), $atts);
+
+	// Claves de acceso
+	$api_key = urlencode(b_f_option('b_opt_apis_twitter_api-key'));
+	$api_secret = urlencode(b_f_option('b_opt_apis_twitter_api-secret'));
+
+	// Variables temporales
+	$data_username = esc_attr($a['username']);
+	$data_count = esc_attr($a['number']);
+
+	// Token de acceso
+	$api_credentials = base64_encode($api_key.':'.$api_secret);
+
+	$auth_headers = 'Authorization: Basic '.$api_credentials."\r\n";
+	$auth_headers .= 'Content-Type: application/x-www-form-urlencoded;charset=UTF-8'."\r\n";
+
+	$auth_context = stream_context_create(
+	    array(
+	        'http' => array(
+	            'header' => $auth_headers,
+	            'method' => 'POST',
+	            'content'=> http_build_query(array('grant_type' => 'client_credentials', )),
+	        )
+	    )
+	);
+
+	$auth_response = json_decode(file_get_contents('https://api.twitter.com/oauth2/token', 0, $auth_context), true);
+	$auth_token = $auth_response['access_token'];
+
+	// Tweets del usuario
+	$data_context = stream_context_create( array( 'http' => array( 'header' => 'Authorization: Bearer '.$auth_token."\r\n", ) ) );
+
+	// Información del usuario
+	$out = '<ul class="twitter-shortcode">';
+	$data = json_decode(file_get_contents('https://api.twitter.com/1.1/users/show.json?screen_name='.urlencode($data_username), 0, $data_context), true);
+	$out .= '<li class="user-profile" data-id="'.$data['id'].'"><a href="https://twitter.com/'.strtolower($data['screen_name']).'" target="" rel="nofollow" class="tw-profile-pic" style="background-image: url('.$data['profile_image_url'].');"></a><div>'.$data['name'].'<br /><a href="https://twitter.com/'.strtolower($data['screen_name']).'" target="" rel="nofollow" class="tw-user">@'.$data['screen_name'].'</a><a href="https://twitter.com/'.strtolower($ddata['screen_name']).'" target="" rel="nofollow" class="fa fa-twitter"></a></div></li>';
+
+	// Configuración adiccional
+	$params = '';
+	if (esc_attr($a['response']) == false) {
+		$params .= '&exclude_replies=true';
+	}
+	if (esc_attr($a['retweet']) == false) {
+		$params .= '&include_rts=false';
+	}
+
+	$data = json_decode(file_get_contents('https://api.twitter.com/1.1/statuses/user_timeline.json?tweet_mode=extended&count='.$data_count.$params.'&screen_name='.urlencode($data_username), 0, $data_context), true);
+
+	foreach ($data as $tweet) {
+		$text = $tweet['full_text'];
+		preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $text, $match);
+		$main_url = end($match[0]);
+		foreach ($tweet['entities']['media'] as $media) {
+			$text = str_replace($media['url'], '<a href="'.$media['media_url'].'" class="fa fa-picture-o"></a>', $text);
+		}
+		foreach ($tweet['entities']['urls'] as $url) {
+			$text = str_replace($url['url'], '<a class="tw-url" href="'.$url['expanded_url'].'" target="_blank" rel="nofollow">'.$url['display_url'].'</a>', $text);
+		}
+		$text = str_replace($main_url, '', $text);
+		$text = preg_replace('/#(\w+)/', ' <a href="https://twitter.com/hashtag/$1" class="tw-hashtag">#$1</a>', $text);
+		$out .= '<li tweet-id="'.$tweet['id'].'"><a href="'.$main_url.'">@'.$tweet['user']['screen_name'].'</a><span class="tw-date">'.date('j', strtotime($tweet['created_at'])).' '.$mes[date('n', strtotime($tweet['created_at']))-1].' '.date('Y, G:i', strtotime($tweet['created_at'])).'</span><p>'.$text.'</p></li>';
+	}
+
+	$out .= '</ul>';
+
+	return $out;
+}
+
+add_shortcode('b_twitter', 'b_twitter');
 
 ?>

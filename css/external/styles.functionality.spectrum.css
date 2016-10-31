@@ -544,7 +544,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 }
 
 .sp-clear-enabled .sp-clear:before {
-	content: "\f1f8";
+	content: "\f00d";
 	font-family: 'FontAwesome';
 }
 

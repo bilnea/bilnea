@@ -41,6 +41,8 @@ get_header();
 						</div><!-- Meta -->
 						
 					</article>
+
+				<?php endwhile; // OK, let's stop the post loop once we've displayed it ?>
 				
 				<?php
 					// If comments are open or we have at least one comment, load up the default comment template provided by Wordpress
@@ -48,7 +50,6 @@ get_header();
 						comments_template( '', true );
 				?>
 
-				<?php endwhile; // OK, let's stop the post loop once we've displayed it ?>
 
 			<?php else : // Well, if there are no posts to display and loop through, let's apologize to the reader (also your 404 error) ?>
 				

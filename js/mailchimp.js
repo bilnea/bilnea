@@ -10,7 +10,7 @@ jQuery(function() {
 			name: n,
 			last: l,
 			redirect: r,
-			action: 'mailchimpsubscribe'
+			action: 'b_mailchimp_subscribe'
 		}
 		jQuery.ajax({
 			url: bilnea.main_uri+'/wp-admin/admin-ajax.php',

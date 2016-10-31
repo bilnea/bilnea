@@ -1,6 +1,6 @@
 <?php
 
-$prov = array(
+$b_d_state = array(
 	'02' =>	'Albacete',
 	'03' => 'Alicante',
 	'04' => 'Almería',

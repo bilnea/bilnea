@@ -1,14 +1,14 @@
 jQuery(function($) {
 	var inp = 'input[name="bilnea_settings';
 	$('.lateral h3').click(function() {
-		if (!$(this).hasClass('activo')) {
-			$('.lateral h3').removeClass('activo');
-			$(this).addClass('activo');
+		if (!$(this).hasClass('active')) {
+			$('.lateral h3').removeClass('active');
+			$(this).addClass('active');
 			var indice = $('.lateral h3').index(this);
 			$('#pestanya').val(indice+1);
-			$('.central .activo').fadeOut(250, function() {
-				$('.central .activo').removeClass('activo');
-				$('.central > div:nth-child('+(indice+1)+')').fadeIn(250).addClass('activo');
+			$('.central .active').fadeOut(250, function() {
+				$('.central .active').removeClass('active');
+				$('.central > div:nth-child('+(indice+1)+')').fadeIn(250).addClass('active');
 			})
 		};
 	})
@@ -416,20 +416,24 @@ jQuery(function($) {
 		$(inp+'[b_opt_smtp-server]"]').removeAttr('disabled').prev().css('color', '#444');
 		$(inp+'[b_opt_smtp-user]"]').removeAttr('disabled').prev().css('color', '#444');
 		$(inp+'[b_opt_smtp-pass]"]').removeAttr('disabled').prev().css('color', '#444');
+		$(inp+'[b_opt_smtp-port]"]').removeAttr('disabled').prev().css('color', '#444');
 	} else {
 		$(inp+'[b_opt_smtp-server]"]').attr('disabled', 'disabled').prev().css('color', '#999');
 		$(inp+'[b_opt_smtp-user]"]').attr('disabled', 'disabled').prev().css('color', '#999');
 		$(inp+'[b_opt_smtp-pass]"]').attr('disabled', 'disabled').prev().css('color', '#999');
+		$(inp+'[b_opt_smtp-port]"]').attr('disabled', 'disabled').prev().css('color', '#999');
 	}
 	$(inp+'[b_opt_smtp]"]').change(function() {
 		if (this.checked) {
 			$(inp+'[b_opt_smtp-server]"]').removeAttr('disabled').prev().css('color', '#444');
 			$(inp+'[b_opt_smtp-user]"]').removeAttr('disabled').prev().css('color', '#444');
 			$(inp+'[b_opt_smtp-pass]"]').removeAttr('disabled').prev().css('color', '#444');
+			$(inp+'[b_opt_smtp-port]"]').removeAttr('disabled').prev().css('color', '#444');
 		} else {
 			$(inp+'[b_opt_smtp-server]"]').attr('disabled', 'disabled').prev().css('color', '#999');
 			$(inp+'[b_opt_smtp-user]"]').attr('disabled', 'disabled').prev().css('color', '#999');
 			$(inp+'[b_opt_smtp-pass]"]').attr('disabled', 'disabled').prev().css('color', '#999');
+			$(inp+'[b_opt_smtp-port]"]').attr('disabled', 'disabled').prev().css('color', '#999');
 		}
 	});
 	$('.font-selector').each(function() {
@@ -482,5 +486,6 @@ jQuery(function($) {
 	});
 	$('.sp-input').on('keyup change', function() {
 		$(this).next().spectrum('set', $(this).val());
-	})
+	});
+	$('select').select2();
 })

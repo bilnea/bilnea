@@ -1,3 +1,5 @@
+@charset 'utf-8';
+
 /*
 
 Hoja de estilos de bilnea Theme
@@ -12,8 +14,62 @@ para bilnea (bilnea.com)
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,900);
 
-
 /* Estilos generales */
+
+.select2-container .select2-selection--single {
+	height: 24px !important;
+	margin: 3px 0;
+}
+
+.select2-container {
+	margin: -3px 0 !important;
+}
+
+.select2-drop-active {
+	border: 1px solid #aaa;
+	border-top: none;
+}
+
+.select2-drop.select2-drop-above.select2-drop-active {
+	border-top: 1px solid #aaa;
+}
+
+.select2-container-active .select2-choice,
+.select2-container-active .select2-choices {
+	border: 1px solid #aaa;
+	outline: none;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+	outline: none !important;
+	-webkit-box-shadow: none !important;
+	        box-shadow: none !important;
+	line-height: 22px !important;
+}
+
+hr {
+	border-bottom: 0;
+	border-top: 1px solid #aaa;
+	margin: 4px 0;
+}
+
+input:not([type="submit"]) {
+	border-color: #aaa !important;
+	outline: 0 !important;
+	box-shadow: none !important;
+}
+
+img.bilneador {
+	max-width: 300px;
+	margin: auto;
+	display: block;
+}
+
+.wp-submenu a[href="admin.php?page=bilnea"] {
+	display: none !important;
+}
 
 #bilset {
 	margin-right: 15px;
@@ -65,7 +121,7 @@ para bilnea (bilnea.com)
 	letter-spacing: 1px;
 }
 
-#bilnea .lateral h3.activo {
+#bilnea .lateral h3.active {
 	background-color: white;
 	border-right: 1px solid white;
 	font-weight: bold;
@@ -83,7 +139,7 @@ para bilnea (bilnea.com)
 	display: none;
 }
 
-#bilset .central > .activo {
+#bilset .central > .active {
 	display: block;
 }
 
@@ -141,6 +197,39 @@ para bilnea (bilnea.com)
 
 /* Pestaña Opciones Generales */
 
+.main-info > div {
+	text-align: center;
+	margin-bottom: 20px;
+	font-size: 11px;
+	font-style: italic;
+	line-height: 15px;
+}
+
+.main-info > div a {
+	text-decoration: none;
+	outline: 0;
+	box-shadow: none;
+}
+
+.main-info > div a i {
+	color: #444;
+	font-size: 16px;
+	margin-bottom: 8px
+
+}
+
+#back_color .sp-input {
+	margin: 6px 0px 10px 0;
+	padding: 2px 7px;
+}
+
+.general-options {
+	display: inline-block;
+	border-right: 1px solid #aaa;
+	padding-right: 7px;
+	margin-right: 6px;
+}
+
 #bilset .aurl {
 	background-color: transparent;
 	font-size: 13px;
@@ -197,6 +286,10 @@ para bilnea (bilnea.com)
 }
 
 .font_styles > div {
+	display: inline-block;
+}
+
+.font_styles > div:not(.font-uppercase) {
 	display: inline-block;
 	text-align: center;
 	width: 21px;
@@ -394,16 +487,12 @@ div#logo_inicio + div i {
 	vertical-align: top;
 	margin-right: 0px;
 	background-color: #fafafa !important;
-	border: 1px solid #ddd !important;
+	border: 1px solid #aaa !important;
 	border-radius: 5px !important;
 	padding: 10px !important;
 	width: 142px;
 	padding-bottom: 0 !important;
 	min-height: 118px !important;
-}
-
-#back_color {
-	padding-top: 4px !important;
 }
 
 .sp-picker-container {
@@ -430,9 +519,9 @@ body > .sp-container .sp-clear {
 
 .color-wrapper {
 	display: block;
-	margin: 0 0 4px 0;
+	margin: 0 0 6px 0;
 	padding: 0 0 6px 0;
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #aaa;
 }
 
 .color-wrapper > div {
@@ -444,8 +533,8 @@ body > .sp-container .sp-clear {
 .color-wrapper .sp-replacer {
 	border-radius: 0 5px 5px 0;
 	position: absolute;
-	top: 1px;
 	right: 0;
+	top: 0;
 }
 
 .colora.text + .sp-replacer {
@@ -471,7 +560,7 @@ body > .sp-container .sp-clear {
 
 .sp-replacer {
 	background-color: #FAFAFA !important;
-	border: 1px solid #ddd !important;
+	border: 1px solid #aaa !important;
 	border-radius: 5px;
 	width: 26px;
 	height: 26px;
@@ -479,7 +568,7 @@ body > .sp-container .sp-clear {
 }
 
 .sp-preview {
-	border: 1px solid #ddd !important;
+	border: 1px solid #aaa !important;
     border-radius: 2px;
     width: 16px !important;
     height: 16px !important;
@@ -507,4 +596,68 @@ body > .sp-container .sp-clear {
 	height: 80px;
 	border-radius: 50%;
 	border: 4px solid rgba(0, 0, 0, 0.4);
+}
+
+/* Redes sociales */
+
+#admin-rrss i {
+	position: absolute;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	margin: 3px 0 0 1px;
+	background-color: #f0f0f0;
+	border-radius: 5px 0 0 5px;
+	text-align: center;
+	border-right: 1px solid #aaa;
+	cursor: ns-resize;
+}
+
+#admin-rrss .color-wrapper > div {
+	margin-top: 2px;
+}
+
+#admin-rrss .color-wrapper > input {
+	padding: 5px 0 5px 34px;
+	margin: 2px 0 0 0;
+	width: 350px;
+}
+
+#admin-rrss > div {
+	max-width: 518px;
+}
+
+#admin-rrss > div.ui-sortable-helper {
+	border-bottom: 1px solid transparent;
+}
+
+#admin-rrss > div:last-child {
+	border-bottom: 0;
+}
+
+.font-size-picker {
+	display: inline-block;
+	width: 70px;
+	margin-left: 8px;
+}
+
+.font-color-picker {
+	display: inline-block;
+	width: 160px;
+	position: relative;
+	margin-left: 8px;
+}
+
+#back_color .sp-clear-enabled .sp-clear {
+	bottom: -28px !important;
+	height: 20px !important;
+}
+
+#back_color .sp-clear {
+	bottom: -28px !important;
+	height: 20px !important;
+	line-height: 20px;
+	font-size: 10px;
+	color: #888;
+	border-left: 1px solid #aaa;
 }
