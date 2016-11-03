@@ -544,7 +544,7 @@ if (!function_exists('b_f_backend_styles')) {
 
 // Archivos necesarios
 
-$new_files = ['404.php','css/login.css','js/login.js','css/main.css','js/main.js', 'loader.php'];
+$new_files = ['404.php','css/login.css','js/login.js','css/main.css','js/main.js', 'css/admin.css','loader.php'];
 
 if(!file_exists(get_stylesheet_directory().'/css')) {
 	mkdir(get_stylesheet_directory().'/css', 0755, true);
