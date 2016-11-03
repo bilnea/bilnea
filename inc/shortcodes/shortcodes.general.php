@@ -256,33 +256,44 @@ if (!function_exists('b_s_title')) {
 
 // Categorias
 
+if (!function_exists('b_s_file')) {
 
-if (!function_exists('b_s_categories')) {
+	function b_s_file($atts, $content = null) {
 
-	function b_s_categories($atts) {
-
-		// Atributos
+		// Atributo
 		$a = shortcode_atts(array(
-			'orderby' => 'name',
-			'all' => __('All', 'bilnea'),
-			'term' => 'category',
 			'class' => null,
+			'id' => null,
+			'target' => null,
+			'echo' => false,
 		), $atts);
 
 		// Variables locales
-		$var_options = array(
-			'hide_empty' => 0,
-			'title_li' => '',
-			'echo' => 0,
-			'show_option_all' => esc_attr($a['all']),
-			'taxonomy' => esc_attr($a['term'])
-		);
+		(esc_attr($a['class']) != null) ? $var_class = esc_attr($a['class']) : $var_class = '';
+		(esc_attr($a['target']) != null) ? $var_target = ' target="blank"': $var_target = '';
 
-		return '<ul class="category-wrapper '.esc_attr($a['class']).'">'.wp_list_categories($var_options).'</ul>';
-
+		if (esc_attr($a['id']) != null) {
+			$var_id = esc_attr($a['id']);
+			$var_url = wp_get_attachment_url($var_id);
+			$var_extension = strtolower(pathinfo($var_url, PATHINFO_EXTENSION));
+			$var_filename = basename($var_url);
+			if ($content == null) {
+				$content = $var_filename;
+			}
+			if (($var_extension == 'png') || ($var_extension == 'gif') || ($var_extension == 'tiff') || ($var_extension == 'jpg') || ($var_extension == 'jpeg')) {
+				$out = '<img src="'.$var_url.'" class="'.$var_class.'" />';
+			} else {
+				$out = '<a href="'.$var_url.'"'.$var_target.' class="'.$var_class.'">'.$content.'</a>';
+			}
+		}
+		if (esc_attr($a['echo']) == true) {
+			return $var_url;
+		} else {
+			return $out;
+		}
 	}
 
-	add_shortcode('b_categories', 'b_s_categories');
+	add_shortcode('b_file', 'b_s_file');
 }
 
 ?>

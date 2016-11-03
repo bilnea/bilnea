@@ -35,7 +35,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 		&reg; 2016 bilnea. Versión <?= $b_g_version ?> (noviembre 2016).
 		<br />
 		<br />
-		Todas las medidas se expresan en unidades css válidas de cada propiedad, definiendo la unidad empleada. Los colores se expresan en formato hexadecimal. En aquellos parámetros que no tengan definido un valor, se tomará el valor por defecto.
+		Todas las medidas se expresan en unidades css válidas de cada propiedad, definiendo la unidad empleada. En aquellos parámetros que no tengan definido un valor, se tomará el valor por defecto.
 	</div>
 </div>
 
@@ -69,12 +69,12 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 <div style="width: 349px; display: inline-block;">Separación entre columnas y bloques de división</div>
 <input style="text-align: right;" type="text" class="peq" name="bilnea_settings[b_opt_column_separator]" value="<?= b_f_option('b_opt_column_separator') ?>" placeholder="<?= b_f_default('b_opt_column_separator'); ?>">
 <hr />
-<input type="checkbox" name="bilnea_settings[b_opt_body-width]" <?php checked(b_f_option('b_opt_body-width'), 1 ); ?> value="1">
+<input type="checkbox" name="bilnea_settings[b_opt_body-width]" <?php checked(b_f_option('b_opt_body-width'), 1 ); ?> value="1" class="disabler" data-connect="header-style" data-reverse>
 <label for="bilnea_settings[b_opt_body-width]">Página encajada</label>
-<hr />
-<em style="font-size: 11px; color: #333; line-height: 15px; display: block;">
+<em class="notice" style="font-size: 11px; line-height: 15px;">
 	* Ancho exterior define el ancho de la caja contenedora. Ancho interior define el ancho del bloque interior.
 </em>
+<br />
 
 <!-- Bloques principales -->
 <div class="color-wrapper">
@@ -126,7 +126,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 		<input type="text" class="colora peq">
 	</div>
 </div>
-<div class="color-wrapper last">
+<div class="color-wrapper last" style="margin-bottom: 10px;">
 	Fondo submenú
 	<div>
 		<input type="text" class="sp-input" name="bilnea_settings[b_opt_submenu-color]" value="<?= b_f_option('b_opt_submenu-color') ?>" placeholder="<?= b_f_default('b_opt_submenu-color') ?>" />
@@ -135,7 +135,6 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 </div>
 
 <!-- Redes sociales -->
-<br />
 <h4>Redes Sociales</h4>
 <div id="admin-rrss">
 

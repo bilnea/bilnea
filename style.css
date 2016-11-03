@@ -913,6 +913,12 @@ header#header nav li {
 #cookie_warning {
 	background-color: white;
 	position: fixed;
+	padding: 10px 40px 10px 10px;
+	text-align: center;
+	left: 0;
+	right: 0;
+	z-index: 100000;
+	top: 0;
 }
 
 #cookie_warning * {

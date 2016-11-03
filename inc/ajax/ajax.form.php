@@ -19,6 +19,7 @@ if (!function_exists('b_a_send_form')) {
 
 			// Variables globales
 			global $b_g_hash;
+			global $b_g_language;
 
 			// Variables locales
 			$var_name = get_bloginfo('name');
@@ -35,7 +36,7 @@ if (!function_exists('b_a_send_form')) {
 			$var_headers .= 'Content-Type: text/html; charset=UTF-8';
 
 			// Preparación de datos
-			$var_table = $wpdb->prefix.'forms_users';
+			$var_table = $wpdb->prefix.'form_users';
 			$var_temp = array();
 			if (isset($_POST['b_i_name']) && $_POST['b_i_name'] != '') {
 				$var_temp['name'] = $_POST['b_i_name'];
@@ -58,7 +59,8 @@ if (!function_exists('b_a_send_form')) {
 				'formname' => rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_formname']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0"),
 				'ip' => $_POST['b_i_ip'],
 				'page' => rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_page']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0"),
-				'status' => 'sent'
+				'status' => 'sent',
+				'lang' => $b_g_language
 			);
 
 			// Correo electrónico
@@ -75,22 +77,6 @@ if (!function_exists('b_a_send_form')) {
 			setlocale(LC_ALL, 'es_ES');
 
 			// Configuración SMTP
-			function b_f_smtp_server(PHPMailer $var_smtp) {
-				$var_smtp->Host = b_f_option('b_opt_smtp-server');
-				$var_smtp->Port = b_f_option('b_opt_smtp-port');
-				$var_smtp->Username = b_f_option('b_opt_smtp-user');
-				$var_smtp->Password = b_f_option('b_opt_smtp-pass');
-				if (b_f_option('b_opt_smtp-auth') == 1) {
-					$var_smtp->SMTPAuth = true;
-				}
-				if (b_f_option('b_opt_smtp-secure') == 1 && b_f_option('b_opt_smtp-protocol') == 'ssl') {
-					$phpmailer->SMTPSecure = 'ssl';
-				}
-				if (b_f_option('b_opt_smtp-secure') == 1 && b_f_option('b_opt_smtp-protocol') == 'tls') {
-					$phpmailer->SMTPSecure = 'tls';
-				}
-			    $phpmailer->IsSMTP();
-			}
 			if (b_f_option('b_opt_smtp') == 1) {
 				add_action('phpmailer_init', 'b_f_smtp_server');
 			}

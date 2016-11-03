@@ -73,6 +73,11 @@ if (!function_exists('b_f_versions')) {
 				return '1.8.0';
 				break;
 
+			// Spectrum
+			case 'wow':
+				return '1.1.2';
+				break;
+
 		}
 
 	}
@@ -119,7 +124,13 @@ b_f_include(get_template_directory().'/inc/functions');
 
 // Eliminación del directorio de instalación
 
-rmdir(ABSPATH.'wp-install', true);
+require_once(ABSPATH . 'wp-admin/includes/file.php');
+
+WP_Filesystem();
+
+global $wp_filesystem;
+
+$wp_filesystem->rmdir(ABSPATH.'wp-install', true);
 
 
 // Borrado de elementos de prueba
@@ -195,6 +206,7 @@ if (!function_exists('b_f_load_scripts')) {
 
 		// Lightbox
 		wp_register_script('functions.design.magnificpopup', get_template_directory_uri().'/js/external/functions.design.magnificpopup.js', array('jquery'), b_f_versions('magnific-popup'), false);
+		wp_register_script('functions.design.magnificpopup.internal', get_template_directory_uri().'/js/internal/functions.design.magnificpopup.js', array('functions.design.magnificpopup'), b_f_versions('magnific-popup'), false);
 
 		// Animación de colores
 		wp_register_script('functions.design.animatecolors', get_template_directory_uri().'/js/external/functions.design.animatecolors.js', array('jquery'), b_f_versions('animate-colors'), true);
@@ -243,6 +255,9 @@ if (!function_exists('b_f_frontend_scripts')) {
 		wp_enqueue_script('functions.core.jquery.queryobject');
 		$var_log .= 'Query Object '.b_f_versions('queryobject').'\n';
 
+		wp_enqueue_script('functions.design.wow');
+		$var_log .= 'Wow '.b_f_versions('wow').'\n';
+
 		wp_enqueue_script('functions.design.animatecolors');
 		$var_log .= 'Animated Colors '.b_f_versions('animatecolors').'\n';
 
@@ -252,6 +267,7 @@ if (!function_exists('b_f_frontend_scripts')) {
 
 		if (b_f_option('b_opt_lightbox') == 1) {
 			wp_enqueue_script('functions.design.magnificpopup');
+			wp_enqueue_script('functions.design.magnificpopup.internal');
 			$var_log .= 'Magnific Popup '.b_f_versions('magnificpopup').'\n';
 		}
 
@@ -440,6 +456,9 @@ if (!function_exists('b_f_frontend_styles')) {
 
 		wp_enqueue_style('styles.design.font.awesome');
 		$var_log .= 'Font Awesome '.b_f_versions('font-awesome').'\n';
+
+		wp_enqueue_style('styles.design.animate');
+		$var_log .= 'Animate.css '.b_f_versions('animate-css').'\n';
 
 		if (b_f_option('b_opt_lightbox') == 1) {
 			wp_enqueue_style('styles.design.magnificpopup');

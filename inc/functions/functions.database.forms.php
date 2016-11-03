@@ -16,7 +16,7 @@ if (!function_exists('b_f_table_contact')) {
 
 		// Variables locales
 		$var_charset = $wpdb->get_charset_collate();
-		$var_table = $wpdb->prefix.'forms_users';
+		$var_table = $wpdb->prefix.'form_users';
 
 		// Creación de la tabla
 		if ($wpdb->get_var('SHOW TABLES LIKE "'.$var_table.'"') != $var_table) {
@@ -29,6 +29,9 @@ if (!function_exists('b_f_table_contact')) {
 					`email` varchar(200),
 					`formname` varchar(100),
 					`status` varchar(100),
+					`read` varchar(10) DEFAULT "no",
+					`lang` varchar(10) DEFAULT "es",
+					`response` longtext,
 					PRIMARY KEY (id),
 					UNIQUE KEY (id)) '.$var_charset.';';
 
