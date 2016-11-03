@@ -122,17 +122,6 @@ include('inc/data/data.defaults.php');
 b_f_include(get_template_directory().'/inc/functions');
 
 
-// Eliminación del directorio de instalación
-
-require_once(ABSPATH . 'wp-admin/includes/file.php');
-
-WP_Filesystem();
-
-global $wp_filesystem;
-
-$wp_filesystem->rmdir(ABSPATH.'wp-install', true);
-
-
 // Borrado de elementos de prueba
 
 wp_delete_post(1, true);
