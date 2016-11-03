@@ -1,3 +1,5 @@
+console.log('bilnea Theme '+bilnea.version+'\n');
+
 jQuery(function($) {
 	var hh = $('header#header').outerHeight();
 	$('header#header.sticky + .content-wrapper').css('padding-top', hh);

@@ -149,14 +149,6 @@ load_default_textdomain();
 
 add_filter('locale', 'b_f_locale');
 
-?>
-
-<script type="text/javascript">
-	console.log('bilnea Theme <?= $b_g_version ?>\n----------------------\n');
-</script>
-
-<?php
-
 
 // Preparación scripts
 
@@ -233,6 +225,10 @@ if (!function_exists('b_f_frontend_scripts')) {
 		// Carga scripts
 		b_f_load_scripts();
 
+		$var_temp = array(
+			'version' => $b_g_version
+		);
+		wp_localize_script('functions.main', 'bilnea', $var_temp);
 		wp_enqueue_script('functions.main');
 		wp_enqueue_script('functions.anchor');
 		wp_enqueue_script('functions.accordion');
@@ -294,7 +290,7 @@ if (!function_exists('b_f_frontend_scripts')) {
 
 		// Scripts específicos de la página
 		if (file_exists(get_stylesheet_directory().'/js/'.$post->post_type.'-'.$post->ID.'.js')) {
-			wp_enqueue_script($post->post_type.'-'.$post->ID.'-js', get_stylesheet_directory_uri().'/js/'.$post->post_type.'-'.$post->ID.'.js', array('jquery'), $version, true );
+			wp_enqueue_script($post->post_type.'-'.$post->ID.'-js', get_stylesheet_directory_uri().'/js/'.$post->post_type.'-'.$post->ID.'.js', array('jquery'), $b_g_version, true );
 		}
 
 		add_filter('script_loader_tag', function ($var_tag, $var_handle) {
@@ -335,6 +331,10 @@ if (!function_exists('b_f_backend_scripts')) {
 		// Carga scripts
 		b_f_load_scripts();
 
+		$var_temp = array(
+			'version' => $b_g_version
+		);
+		wp_localize_script('functions.admin', 'bilnea', $var_temp);
 		wp_enqueue_script('functions.admin');
 		wp_enqueue_script('functions.accordion');
 
@@ -468,7 +468,7 @@ if (!function_exists('b_f_frontend_styles')) {
 
 		// Hojas de estilo específicas de la página
 		if (file_exists(get_stylesheet_directory_uri().'/css/'.$post->post_type.'-'.$post->ID.'.css')) {
-			wp_enqueue_style($post->post_type.'-'.$post->ID.'-css', get_stylesheet_directory_uri().'/css/'.$post->post_type.'-'.$post->ID.'.css', array(), $version, true );
+			wp_enqueue_style($post->post_type.'-'.$post->ID.'-css', get_stylesheet_directory_uri().'/css/'.$post->post_type.'-'.$post->ID.'.css', array(), $b_g_version, true );
 		}
 
 		?>
@@ -1318,7 +1318,7 @@ function b_f_blog_spam($commentdata) {
 if(function_exists('add_action')) {
 	$ukey = md5(b_f_visitor_ip().date('Y-m-d', time()));
 	add_action('preprocess_comment', 'b_f_blog_spam');
-	wp_register_script('blog-spam', get_template_directory_uri().'/js/blog-spam.js', array('jquery'), $version, true);
+	wp_register_script('blog-spam', get_template_directory_uri().'/js/blog-spam.js', array('jquery'), $b_g_version, true);
 	$var_array = array(
 		'key' => $ukey
 	);
@@ -1457,7 +1457,7 @@ if (defined('WYSIJA')) {
 		}
 	}
 	$text = __('* I have read, understood and accept the ', 'bilnea').'<a href="'.$url.'" target="_blank">'.__('privacy policy', 'bilnea').'</a>.';
-	wp_register_script('mailpoet-bilnea', get_template_directory_uri().'/js/mailpoet.js', array('jquery'), $version, true);
+	wp_register_script('mailpoet-bilnea', get_template_directory_uri().'/js/mailpoet.js', array('jquery'), $b_g_version, true);
 	$var_array = array(
 		'text' => $text
 	);

@@ -1,3 +1,5 @@
+console.log('bilnea Theme '+bilnea.version+'\n');
+
 jQuery(function($) {
 	var inp = 'input[name="bilnea_settings';
 	$('.lateral h3').click(function() {
