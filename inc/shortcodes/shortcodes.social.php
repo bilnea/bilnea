@@ -18,20 +18,36 @@ if (!function_exists('b_s_rrss')) {
 			'style' => 'normal',
 		), $atts);
 
-		// Variables locales
-		$var_color = b_f_option('b_opt_social-'.esc_attr($a['type']).'-color');
-		switch (esc_attr($a['style'])) {
-			case 'normal':
-				$var_style = 'background-color: '.$var_color.'; color: white;';
-				break;
-			case 'stacked':
-				$var_style = 'color: '.$var_color.'; border: 2px solid '.$var_color.';';
-				break;
+		// Ordenar
+		if ($a['type'] != null) {
+			$var_socials = array(esc_attr($a['type']));
+		} else {
+			$var_socials = array();
+			foreach (explode(',', b_f_option('b_opt_social-order')) as $var_social) {
+				if (b_f_option('b_opt_social-'.$var_social) != '') {
+					array_push($var_socials, $var_social);
+				}
+			}
 		}
 
-		// Determinar la red social
-		if ($a['type'] != null) {
-			switch (esc_attr($a['type'])) {
+		$out = '';
+
+		// Determinar red social
+		foreach ($var_socials as $var_social) {
+
+			// Variables locales
+			$var_color = b_f_option('b_opt_social-'.$var_social.'-color');
+			
+			switch (esc_attr($a['style'])) {
+				case 'normal':
+					$var_style = 'background-color: '.$var_color.'; color: white;';
+					break;
+				case 'stacked':
+					$var_style = 'color: '.$var_color.'; border: 2px solid '.$var_color.';';
+					break;
+			}
+
+			switch ($var_social) {
 
 				// Facebook
 				case 'facebook':
@@ -40,7 +56,7 @@ if (!function_exists('b_s_rrss')) {
 						$var_link = 'http://facebook.com/'.$var_link;
 					}
 					$var_link = 'https://'.preg_replace('#^https?://#', '', $var_link);
-					return '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-facebook"></a>';
+					$out .= '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-facebook" style="'.$var_style.'"></a>';
 					break;
 
 				// Instagram
@@ -51,7 +67,7 @@ if (!function_exists('b_s_rrss')) {
 						$var_link = 'http://instagram.com/'.$var_link;
 					}
 					$var_link = 'https://'.preg_replace('#^https?://#', '', $var_link);
-					return '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-instagram"></a>';
+					$out .= '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-instagram" style="'.$var_style.'"></a>';
 					break;
 
 				// Twitter
@@ -62,28 +78,28 @@ if (!function_exists('b_s_rrss')) {
 						$var_link = 'http://twitter.com/'.$var_link;
 					}
 					$var_link = 'https://'.preg_replace('#^https?://#', '', $var_link);
-					return '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-twitter"></a>';
+					$out .= '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-twitter" style="'.$var_style.'"></a>';
 					break;
 
 				// Google +
 				case 'google-plus':
 					$var_link = b_f_option('b_opt_social-google-plus');
 					$var_link = 'https://'.preg_replace('#^https?://#', '', $var_link);
-					return '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-google-plus"></a>';
+					$out .= '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-google-plus" style="'.$var_style.'"></a>';
 					break;
 
 				// Youtube
 				case 'youtube':
 					$var_link = b_f_option('b_opt_social-youtube');
 					$var_link = 'https://'.preg_replace('#^https?://#', '', $var_link);
-					return '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-youtube"></a>';
+					$out .= '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-youtube" style="'.$var_style.'"></a>';
 					break;
 
 				// Linkedin
 				case 'linkedin':
 					$var_link = b_f_option('b_opt_social-linkedin');
 					$var_link = 'https://'.preg_replace('#^https?://#', '', $var_link);
-					return '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-linkedin"></a>';
+					$out .= '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-linkedin" style="'.$var_style.'"></a>';
 					break;
 
 				// Pinterest
@@ -93,7 +109,7 @@ if (!function_exists('b_s_rrss')) {
 						$var_link = 'http://pinterest.com/'.$var_link;
 					}
 					$var_link = 'https://'.preg_replace('#^https?://#', '', $var_link);
-					return '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-pinterest"></a>';
+					$out .= '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-pinterest" style="'.$var_style.'"></a>';
 					break;
 
 				// Snapchat
@@ -103,7 +119,7 @@ if (!function_exists('b_s_rrss')) {
 						$var_link = 'http://snapchat.com/'.$var_link;
 					}
 					$var_link = 'https://'.preg_replace('#^https?://#', '', $var_link);
-					return '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-snapchat-ghost"></a>';
+					$out .= '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-snapchat-ghost" style="'.$var_style.'"></a>';
 					break;
 
 				// Flickr
@@ -113,7 +129,7 @@ if (!function_exists('b_s_rrss')) {
 						$var_link = 'http://flickr.com/'.$var_link;
 					}
 					$var_link = 'https://'.preg_replace('#^https?://#', '', $var_link);
-					return '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-flickr"></a>';
+					$out .= '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-flickr" style="'.$var_style.'"></a>';
 					break;
 
 				// Foursquare
@@ -123,11 +139,14 @@ if (!function_exists('b_s_rrss')) {
 						$var_link = 'http://foursquare.com/'.$var_link;
 					}
 					$var_link = 'https://'.preg_replace('#^https?://#', '', $var_link);
-					return '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-foursquare"></a>';
+					$out .= '<a data-color="'.$var_color.'" href="'.$var_link.'" target="_blank" class="fa fa-foursquare" style="'.$var_style.'"></a>';
 					break;
 
 			}
 		}
+
+		return $out;
+
 	}
 
 	add_shortcode('b_rrss', 'b_s_rrss');

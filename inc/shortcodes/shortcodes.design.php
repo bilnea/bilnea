@@ -15,21 +15,22 @@ if (!function_exists('b_s_row')) {
 		global $b_g_version;
 
 		// Scripts
-		wp_enqueue_script('functions-design', get_template_directory_uri().'/js/internal/shortcodes.design.js', array('jquery'), $b_g_version, true);
+		wp_enqueue_script('functions-design', get_template_directory_uri().'/js/internal/functions.design.js', array('jquery'), $b_g_version, true);
 
 		// Atributos
 		$atts = array_change_key_case((array)$atts, CASE_LOWER);
 
 		$a = shortcode_atts(array(
-			'width'=> 0,
+			'width'=> 'full',
 			'class' => null,
 			'id' => null,
 			'bgcolor' => null,
 			'wrap' => 'false',
+			'space' => b_f_size('b_opt_column_separator'),
 		), $atts);
 
 		// Variables locales
-		(esc_attr($a['width']) != 1) ? $var_class = 'container' : $var_class = '';
+		(esc_attr($a['width']) != 'full') ? $var_class = 'container' : $var_class = '';
 		(esc_attr($a['id']) != null) ? $var_id = ' id="'.esc_attr($a['id']).'"' : $var_id = '';
 		(esc_attr($a['bgcolor']) != null) ? $var_style = ' style="background-color: '.esc_attr($a['bgcolor']).';"' : $var_style = '';
 
@@ -37,10 +38,10 @@ if (!function_exists('b_s_row')) {
 			$var_class .= ' '.esc_attr($a['class']);
 		}
 
-		if (esc_attr($a['wrap']) == 'true' && esc_attr($a['width']) == 1) {
-			return '<div class="'.$var_class.'"'.$var_id.$var_style.'><div class="container">'.do_shortcode($content).'</div></div>';
+		if (esc_attr($a['wrap']) == 'true' && esc_attr($a['width']) == 'full') {
+			return '<div class="'.$var_class.'"'.$var_id.$var_style.'><div class="container" data-space="'.b_f_size_unit(esc_attr($a['space'])).'">'.do_shortcode($content).'</div></div>';
 		} else {
-			return '<div class="'.$var_class.'"'.$var_id.$var_style.'>'.do_shortcode($content).'</div>';
+			return '<div class="'.$var_class.'"'.$var_id.$var_style.' data-space="'.b_f_size_unit(esc_attr($a['space'])).'">'.do_shortcode($content).'</div>';
 		}
 
 	}

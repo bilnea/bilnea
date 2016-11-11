@@ -127,4 +127,37 @@ if (!function_exists('b_f_smtp_server')) {
 
 }
 
+
+if (!function_exists('b_f_create_page')) {
+	
+	function b_f_create_page($var_page, $var_title, $var_language = 'es', $var_noindex = true) {
+
+		include_once('inc/'.$var_language.'/'.$var_page.'.php');
+
+		$var_create_page = array(
+			'post_title'    => $var_title,
+			'post_content'  => $txt,
+			'post_status'   => 'publish',
+			'post_author'   => 1,
+			'post_type'     => 'page',
+			'post_name'     => $var_page,
+			'post_parent'	=> 0,
+			'page_template'	=> 'blank-page.php'
+		);
+
+		$var_id = wp_insert_post($var_create_page);
+
+		$var_options = get_option('bilnea_settings');
+
+		$var_options['b_opt_'.$var_page.'-'.$var_language] = $var_id;
+
+		update_option('bilnea_settings', $var_options);
+
+		if ($var_noindex  == true) {
+			add_post_meta($var_id, '_yoast_wpseo_meta-robots-noindex', '1');
+		}
+	}
+
+}
+
 ?>

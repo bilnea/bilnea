@@ -37,94 +37,94 @@ function b_f_options_page() {
 
 			<!-- Bloque lateral -->
 			<div class="lateral">
-				<h3 <?php if (b_f_option('tab') === null || b_f_option('tab') == 1) { echo 'class="active"'; }?>>Opciones Generales</h3>
-				<h3 <?php if (b_f_option('tab') == 2) { echo 'class="active"'; }?>>Desarrollo</h3>
-				<h3 <?php if (b_f_option('tab') == 3) { echo 'class="active"'; }?>>Estilos tipográficos</h3>
-				<h3 <?php if (b_f_option('tab') == 4) { echo 'class="active"'; }?>>Adaptación responsive</h3>
-				<h3 <?php if (b_f_option('tab') == 5) { echo 'class="active"'; }?>>Logotipo e iconos</h3>
-				<h3 <?php if (b_f_option('tab') == 6) { echo 'class="active"'; }?>>Cabecera</h3>
-				<h3 <?php if (b_f_option('tab') == 7) { echo 'class="active"'; }?>>Pie de página</h3>
-				<h3 <?php if (b_f_option('tab') == 8) { echo 'class="active"'; }?>>Blog</h3>
+				<h3 <?php if (b_f_option('tab') === null || b_f_option('tab') == 1) { echo 'class="activo"'; }?>>Opciones Generales</h3>
+				<h3 <?php if (b_f_option('tab') == 2) { echo 'class="activo"'; }?>>Desarrollo</h3>
+				<h3 <?php if (b_f_option('tab') == 3) { echo 'class="activo"'; }?>>Estilos tipográficos</h3>
+				<h3 <?php if (b_f_option('tab') == 4) { echo 'class="activo"'; }?>>Adaptación responsive</h3>
+				<h3 <?php if (b_f_option('tab') == 5) { echo 'class="activo"'; }?>>Logotipo e iconos</h3>
+				<h3 <?php if (b_f_option('tab') == 6) { echo 'class="activo"'; }?>>Cabecera</h3>
+				<h3 <?php if (b_f_option('tab') == 7) { echo 'class="activo"'; }?>>Pie de página</h3>
+				<h3 <?php if (b_f_option('tab') == 8) { echo 'class="activo"'; }?>>Blog</h3>
 				<?php
 				if (function_exists('icl_object_id')) {
 				?>
-				<h3 <?php if (b_f_option('tab') == 9) { echo 'class="active"'; }?>>Multidioma</h3>
+				<h3 <?php if (b_f_option('tab') == 9) { echo 'class="activo"'; }?>>Multidioma</h3>
 				<?php
 				}
 				?>
-				<h3 <?php if (b_f_option('tab') == 10) { echo 'class="active"'; }?>>Textos legales</h3>
-				<h3 <?php if (b_f_option('tab') == 11) { echo 'class="active"'; }?>>Redirecciones y SEO</h3>
-				<h3 <?php if (b_f_option('tab') == 12) { echo 'class="active"'; }?>>Ayuda</h3>
-				<h3 <?php if (b_f_option('tab') == 13) { echo 'class="active"'; }?>>Créditos</h3>
+				<h3 <?php if (b_f_option('tab') == 10) { echo 'class="activo"'; }?>>Textos legales</h3>
+				<h3 <?php if (b_f_option('tab') == 11) { echo 'class="activo"'; }?>>Redirecciones y SEO</h3>
+				<h3 <?php if (b_f_option('tab') == 12) { echo 'class="activo"'; }?>>Ayuda</h3>
+				<h3 <?php if (b_f_option('tab') == 13) { echo 'class="activo"'; }?>>Créditos</h3>
 			</div>
 
 			<!-- Bloque central -->
 			<div class="central">
 
 				<!-- Opciones Generales -->
-				<div <?php if (!isset($opt['tab']) || $opt['tab'] == 1) { echo 'class="active"'; }?> id="tab1">
+				<div <?php if (b_f_option('tab') === null || b_f_option('tab') == 1) { echo 'class="activo"'; }?> id="tab1">
 					<?php include('panel/panel.general.php'); ?>
 				</div>
 
 				<!-- Opciones Generales -->
-				<div <?php if ($opt['tab'] == 2) { echo 'class="active"'; }?> id="tab2">
+				<div <?php if (b_f_option('tab') == 2) { echo 'class="activo"'; }?> id="tab2">
 					<?php include('panel/panel.development.php'); ?>
 				</div>
 
 				<!-- Estilos tipográficos -->
-				<div <?php if ($opt['tab'] == 3) { echo 'class="activo"'; }?> id="tab3">
+				<div <?php if (b_f_option('tab') == 3) { echo 'class="activo"'; }?> id="tab3">
 					<?php include('panel/panel.fonts.php'); ?>
 				</div>
 
 				<!-- Adaptación responsive -->
-				<div <?php if ($opt['tab'] == 4) { echo 'class="activo"'; }?> id="tab4">
+				<div <?php if (b_f_option('tab') == 4) { echo 'class="activo"'; }?> id="tab4">
 					<?php include('panel/panel.responsive.php'); ?>
 				</div>
 
 				<!-- Logotipo e iconos -->
-				<div <?php if ($opt['tab'] == 5) { echo 'class="activo"'; }?> id="tab5">
+				<div <?php if (b_f_option('tab') == 5) { echo 'class="activo"'; }?> id="tab5">
 					<?php include('panel/panel.images.php'); ?>
 				</div>
 
 				<!-- Cabecera -->
-				<div <?php if ($opt['tab'] == 6) { echo 'class="activo"'; }?> id="tab6">
+				<div <?php if (b_f_option('tab') == 6) { echo 'class="activo"'; }?> id="tab6">
 					<?php include('panel/panel.header.php'); ?>
 				</div>
 
 				<!-- Pie de página -->
-				<div <?php if ($opt['tab'] == 7) { echo 'class="activo"'; }?> id="tab7">
+				<div <?php if (b_f_option('tab') == 7) { echo 'class="activo"'; }?> id="tab7">
 					<?php include('panel/panel.footer.php'); ?>
 				</div>
 
 				<!-- Blog -->
-				<div <?php if ($opt['tab'] == 8) { echo 'class="activo"'; }?> id="tab8">
+				<div <?php if (b_f_option('tab') == 8) { echo 'class="activo"'; }?> id="tab8">
 					<?php include('panel/panel.blog.php'); ?>
 				</div>
 
 				<!-- Multidioma -->
 				<?php if (function_exists('icl_object_id')) { ?>
-					<div <?php if ($opt['tab'] == 9) { echo 'class="activo"'; }?> id="tab9">
+					<div <?php if (b_f_option('tab') == 9) { echo 'class="activo"'; }?> id="tab9">
 						<?php include('panel/panel.language.php'); ?>
 					</div>
 				<?php } ?>
 
 				<!-- Textos legales -->
-				<div <?php if ($opt['tab'] == 10) { echo 'class="activo"'; } ?> id="tab10">
+				<div <?php if (b_f_option('tab') == 10) { echo 'class="activo"'; } ?> id="tab10">
 					<?php include('panel/panel.legal.php'); ?>
 				</div>
 
 				<!-- Redirecciones y SEO -->
-				<div <?php if ($opt['tab'] == 11) { echo 'class="activo"'; } ?> id="tab11">
+				<div <?php if (b_f_option('tab') == 11) { echo 'class="activo"'; } ?> id="tab11">
 					<?php include('panel/panel.seo.php'); ?>
 				</div>
 
 				<!-- Ayuda -->
-				<div <?php if ($opt['tab'] == 11) { echo 'class="activo"'; } ?> id="tab11">
+				<div <?php if (b_f_option('tab') == 12) { echo 'class="activo"'; } ?> id="tab12">
 					<?php include('panel/panel.help.php'); ?>
 				</div>
 
 				<!-- Créditos -->
-				<div <?php if ($opt['tab'] == 11) { echo 'class="activo"'; } ?> id="tab11">
+				<div <?php if (b_f_option('tab') == 13) { echo 'class="activo"'; } ?> id="tab13">
 					<?php include('panel/panel.credits.php'); ?>
 				</div>
 
@@ -198,7 +198,7 @@ function bilnea_subscribers_page() {
 					global $wpdb;
 					$table = $wpdb->prefix.'subscribers';
 					if (isset($_GET['post_id']) && isset($_GET['visibility'])) {
-						$wpdb->update($table, array('active' => $_GET['visibility']), array('id' => $_GET['post_id']));
+						$wpdb->update($table, array('activo' => $_GET['visibility']), array('id' => $_GET['post_id']));
 					}
 					$subs = $wpdb->get_results('SELECT * FROM '.$table, ARRAY_A);
 					foreach ($subs as $subscriber) {
@@ -218,7 +218,7 @@ function bilnea_subscribers_page() {
 									$gets[$args[0]] = $args[1];
 								}
 								$gets['post_id'] = $subscriber['id'];
-								if ($subscriber['active'] == 1) {
+								if ($subscriber['activo'] == 1) {
 									$gets['visibility'] = 0;
 								?>
 									<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$b_s_url}" ?>?<?= http_build_query($gets) ?>"><span class="dashicons dashicons-visibility"></span></a>

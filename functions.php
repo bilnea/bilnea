@@ -78,6 +78,11 @@ if (!function_exists('b_f_versions')) {
 				return '1.1.2';
 				break;
 
+			// Super Simple Slider
+			case 'supersimpleslider':
+				return '2004';
+				break;
+
 		}
 
 	}
@@ -204,6 +209,9 @@ if (!function_exists('b_f_load_scripts')) {
 		// Spectrum
 		wp_register_script('functions.functionality.spectrum', get_template_directory_uri().'/js/external/functions.functionality.spectrum.js', array('jquery'), b_f_versions('spectrum'), true);
 
+		// Super Simple Slider
+		wp_register_script('functions.slider', get_template_directory_uri().'/js/internal/functions.slider.js', array('jquery'), b_f_versions('supersimpleslider'), false);
+
 	}
 
 }
@@ -238,13 +246,13 @@ if (!function_exists('b_f_frontend_scripts')) {
 		$var_log .= 'Fitvids '.b_f_versions('fitvids').'\n';
 
 		wp_enqueue_script('functions.core.jquery.queryobject');
-		$var_log .= 'Query Object '.b_f_versions('queryobject').'\n';
+		$var_log .= 'Query Object '.b_f_versions('query-object').'\n';
 
 		wp_enqueue_script('functions.design.wow');
 		$var_log .= 'Wow '.b_f_versions('wow').'\n';
 
 		wp_enqueue_script('functions.design.animatecolors');
-		$var_log .= 'Animated Colors '.b_f_versions('animatecolors').'\n';
+		$var_log .= 'Animated Colors '.b_f_versions('animate-colors').'\n';
 
 		if (b_f_option('b_opt_anticopy') == 1) {
 			wp_enqueue_script('functions.anticopy');
@@ -253,7 +261,7 @@ if (!function_exists('b_f_frontend_scripts')) {
 		if (b_f_option('b_opt_lightbox') == 1) {
 			wp_enqueue_script('functions.design.magnificpopup');
 			wp_enqueue_script('functions.design.magnificpopup.internal');
-			$var_log .= 'Magnific Popup '.b_f_versions('magnificpopup').'\n';
+			$var_log .= 'Magnific Popup '.b_f_versions('magnific-popup').'\n';
 		}
 
 		if (b_f_option('b_opt_sticky-menu-animated') == 1) {
@@ -286,6 +294,11 @@ if (!function_exists('b_f_frontend_scripts')) {
 		if (b_f_option('b_opt_jquery-mobile') == 1) {
 			wp_enqueue_script('functions.core.jquery.mobile');
 			$var_log .= 'jQuery UI Mobile '.b_f_versions('jquery-ui-mobile').'\n';
+		}
+
+		if (has_shortcode($post->post_content, 'b_slider')) {
+			wp_enqueue_script('functions.slider');
+			$var_log .= 'Super Simple Slider '.b_f_versions('supersimpleslider').'\n';
 		}
 
 		// Scripts específicos de la página
@@ -443,7 +456,7 @@ if (!function_exists('b_f_frontend_styles')) {
 		wp_enqueue_style('styles.main');
 		wp_enqueue_style('styles.child.main');
 
-		wp_enqueue_style('styles.design.font.awesome');
+		wp_enqueue_style('styles.design.fonts.awesome');
 		$var_log .= 'Font Awesome '.b_f_versions('font-awesome').'\n';
 
 		wp_enqueue_style('styles.design.animate');
@@ -797,6 +810,14 @@ function b_f_size($arg='', $ovf=0) {
 	return $num;
 }
 
+function b_f_size_unit($var_size) {
+	$var_number = str_replace('px', '', preg_replace('/\s+/', '', $var_size));
+	if (is_numeric($var_number)) {
+		$var_number .= 'px';
+	}
+	return $var_number;
+}
+
 
 // Función que devuelve un color
 
@@ -957,81 +978,6 @@ function b_f_mobile_class($classes = '') {
 }
 
 add_filter('body_class','b_f_mobile_class');
-
-
-// Añadir redes sociales al menú superior
-
-if (b_f_option('b_opt_topbar-rss') == 1) {
-	function b_f_topbar_rss($items, $args) {
-		if($args->theme_location == 'menu_top')
-			return $items.b_f_rrss('b_opt_topbar-rss',b_f_option('b_opt_header-rrss-icons'));
-
-		return $items;
-	}
-
-	add_filter('wp_nav_menu_items','b_f_topbar_rss', 10, 2);
-}
-
-
-// Añadir selector de idioma al menú superior
-
-if (function_exists('icl_object_id') && b_f_option('b_opt_language-header') == 1 && b_f_option('b_opt_language') == 1 && b_f_option('b_opt_topbar') == 1) {
-	function b_f_topbar_language($items, $args) {
-		if ($args->theme_location == 'menu_top') {
-			$iny = '';
-			$inz = '';
-			$tot = 0;
-			$idi = icl_get_languages('skip_missing=0&orderby=code');
-			if (!empty($idi)) {
-				if (b_f_option('b_opt_wpm-selector-top') == 2) { $cl = ' inline'; } else { $cl = ' dropdown'; }
-				$iny .= '<ul class="language-selector top'.$cl.'">';
-				foreach ($idi as $i) {
-					if (!$i['active']) {
-						$inz .= '<li><a href="'.$i['url'].'">';
-						if (b_f_option('bandera_pais_head') == 1) {
-							$inz .= '<img src="'.$i['country_flag_url'].'" height="12" alt="'.$i['language_code'].'" width="18" class="flag" />';
-						}
-						if (b_f_option('b_opt_language') == 1 && b_f_option('b_opt_wpm-language') == 1) {
-							$inz .= $i['translated_name'];
-						}
-						if (b_f_option('b_opt_language') == 1 && b_f_option('b_opt_wpm-language') == 2) {
-							$inz .= $i['native_name'];
-						}
-						$inz .= '</a></li>';
-						$tot++;
-					}
-				}
-				foreach ($idi as $i) {
-					if ($i['active'] == 1) {
-						$iny .= '<li><a href="'.$i['url'].'">';
-						if (b_f_option('bandera_pais_head') == 1) {
-							$iny .= '<img src="'.$i['country_flag_url'].'" height="12" alt="'.$i['language_code'].'" width="18" class="flag" />';
-						}
-						if (b_f_option('b_opt_language') == 1 && b_f_option('b_opt_wpm-language') == 1) {
-							$iny .= $i['translated_name'];
-						}
-						if (b_f_option('b_opt_language') == 1 && b_f_option('b_opt_wpm-language') == 2) {
-							$iny .= $i['native_name'];
-						}
-						$iny .= '<div class="selector"></div></a>';
-						if ($tot > 0) {
-							if (b_f_option('b_opt_wpm-selector-top') == 2) {
-								$iny .= $inz;
-							} else {
-								$iny .= '<ul>'.$inz.'</ul>';
-							}
-						}
-						$iny .= '</li>';
-					}
-				}
-			}
-			return $items.$iny;
-		}
-		return $items;
-	}
-
-	add_filter('wp_nav_menu_items','b_f_topbar_language', 10, 2);
-}
 
 
 // Redes sociales. $arg = clase del elemento padre. $opt = opciones (1: iconos normales, 2: iconos cuadrados)
@@ -1292,41 +1238,6 @@ function is_blog () {
 	return ( ((is_archive()) || (is_author()) || (is_category()) || (is_home()) || (!is_single()) || (is_tag())) && ( $posttype == 'post')  ) ? true : false ;
 }
 
-
-// Añadimos uns verificación de seguridad en el formulario de comentarios del blog
-/*
-function b_f_visitor_ip() {
-	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-		$vip = $_SERVER['HTTP_CLIENT_IP'];
-	} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-		$vip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-	} else {
-		$vip = $_SERVER['REMOTE_ADDR'];
-	}
-	return apply_filters('dm_get_ip', $vip);
-}
-
-function b_f_blog_spam($commentdata) {
-	$ukey = md5(b_f_visitor_ip().date('Y-m-d', time()));
-	if(isset($_POST['bilnea_grant']) && trim($_POST['bilnea_grant']) == $ukey) {
-		return $commentdata;
-	} else {
-		die('No SPAM allowed');
-	}
-}
-
-if(function_exists('add_action')) {
-	$ukey = md5(b_f_visitor_ip().date('Y-m-d', time()));
-	add_action('preprocess_comment', 'b_f_blog_spam');
-	wp_register_script('blog-spam', get_template_directory_uri().'/js/blog-spam.js', array('jquery'), $b_g_version, true);
-	$var_array = array(
-		'key' => $ukey
-	);
-	wp_localize_script('blog-spam', 'blogspam', $var_array);
-	wp_enqueue_script('blog-spam');
-}
-*/
-
 // Creamos el archivo robots.txt
 
 remove_action('do_robots','do_robots');
@@ -1354,10 +1265,23 @@ add_action('do_robots', 'b_robots');
 // Aviso legal
 
 if (function_exists('icl_object_id')) {
-	$lng = icl_get_languages('skip_missing=0&orderby=code');
+	$var_languages = icl_get_languages('skip_missing=0&orderby=code');
 	if (!empty($lng)) {
-		foreach ($lng as $l) {
-			
+		foreach ($var_languages as $var_language) {
+			switch ($var_language['language_code']) {
+				case 'es' :
+					b_f_create_page('aviso-legal', 'Aviso legal', $var_language['language_code']);
+					break;
+				case 'fr' :
+					b_f_create_page('mentions-legales', 'Mentions légales', $var_language['language_code']);
+					break;
+				case 'en' :
+					b_f_create_page('legal-advice', 'Legal advice', $var_language['language_code']);
+					break;
+				case 'pt-pt' :
+					b_f_create_page('avisos-legais', 'Avisos legais', $var_language['language_code']);
+					break;
+			}
 		}
 	}
 } else {
@@ -1401,27 +1325,7 @@ if (function_exists('icl_object_id')) {
 	}
 }
 
-function b_f_create_page($pgn, $title, $lng='es', $noindex=true) {
-	$pgn = $pgn;
-	include_once('inc/'.$lng.'/'.$pgn.'.php');
-	$page = array(
-		'post_title'    => $title,
-		'post_content'  => $txt,
-		'post_status'   => 'publish',
-		'post_author'   => 1,
-		'post_type'     => 'page',
-		'post_name'     => $pgn,
-		'post_parent'	=> 0,
-		'page_template'	=> 'blank-page.php'
-	);
-	$nid = wp_insert_post($page);
-	$options = get_option('bilnea_settings');
-	$options['b_opt_'.$pgn.'-'.$lng] = $nid;
-	update_option('bilnea_settings', $options);
-	if ($noindex == true) {
-		add_post_meta($nid, '_yoast_wpseo_meta-robots-noindex', '1');
-	}
-}
+
 
 
 // Eliminar pingbacks del conteo de comentarios

@@ -85,13 +85,6 @@ jQuery(function($) {
 	new WOW().init();
 });
 
-jQuery(window).on('load scroll', function() {
-	var responsive_width = <?= preg_replace('/[^0-9]/', '', b_f_option('b_opt_responsive')) ?>;
-	if (jQuery(window).outerWidth() < responsive_width) {
-		jQuery('#socket').html(jQuery('#socket').html().replace(' | Desarrollo web', '<br />Desarrollo web'));
-	};
-});
-
 jQuery(window).on('resize', function() {
 	b_js_center_logo();
 });

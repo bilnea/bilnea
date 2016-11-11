@@ -16,8 +16,8 @@ para bilnea (bilnea.com)
 
 /* Estilos generales */
 
-input[type="text"],
-input[type="email"] {
+#bilset input[type="text"],
+#bilset input[type="email"] {
 	text-overflow: ellipsis;
 }
 
@@ -122,7 +122,7 @@ hr {
 	margin: 4px 0;
 }
 
-input:not([type="submit"]) {
+#bilset input:not([type="submit"]) {
 	border-color: #ddd !important;
 	outline: 0 !important;
 	box-shadow: none !important;
@@ -188,7 +188,7 @@ img.bilneador {
 	letter-spacing: 1px;
 }
 
-#bilnea .lateral h3.active {
+#bilnea .lateral h3.activo {
 	background-color: white;
 	border-right: 1px solid white;
 	font-weight: bold;
@@ -206,7 +206,7 @@ img.bilneador {
 	display: none;
 }
 
-#bilset .central > .active {
+#bilset .central > .activo {
 	display: block;
 }
 
@@ -402,7 +402,7 @@ img.bilneador {
 	margin: 2px 0;
 }
 
-input:disabled {
+#bilset input:disabled {
 	background-color: #fafafa !important;
 	opacity: 0.4 !important;
 	cursor: default !important;
@@ -619,6 +619,10 @@ body > .sp-container .sp-clear {
 	margin-bottom: 0 !important;
 }
 
+.sp-input-container.sp-cf .sp-input {
+	margin: -2px 0 0 0 !important;
+}
+
 .color-wrapper {
 	display: block;
 	margin: 0 0 6px 0;
@@ -636,7 +640,7 @@ body > .sp-container .sp-clear {
 	border-radius: 0 5px 5px 0;
 	position: absolute;
 	right: 0;
-	top: 0;
+	top: 1px;
 }
 
 .colora.text + .sp-replacer {
@@ -753,7 +757,7 @@ body > .sp-container .sp-clear {
 }
 
 #back_color .sp-clear-enabled .sp-clear {
-	bottom: -30px !important;
+	bottom: -32px !important;
 	height: 22px !important;
 }
 
@@ -780,4 +784,33 @@ select[name="bilnea_settings[header_menu]"] + .select2 {
 .select2-selection.select2-selection--single[aria-labelledby*="select2-bilnea_settingsb_opt_privacy-policy"] .select2-selection__arrow,
 .select2-selection.select2-selection--single[aria-labelledby*="select2-bilnea_settingsb_opt_cookies-policy"] .select2-selection__arrow {
 	top: -3px !important;
+}
+
+textarea[name*="b_opt_blog-content-"]:not(.current),
+textarea[name*="b_opt_header-top-content-"]:not(.current),
+textarea[name*="b_opt_header-main-content-"]:not(.current) {
+	display: none;
+}
+
+.lang-switcher {
+	cursor: pointer;
+}
+
+.lang-switcher.current {
+	color: #484848;
+	font-weight: bold;
+}
+
+.draggable-element {
+	display: inline-block;
+	background-color: #e1e1e1;
+	font-size: 10px;
+	border: 1px solid #aaa;
+	border-radius: 2px;
+	padding: 0 4px;
+	line-height: 14px;
+	cursor: move;
+	cursor: -webkit-grab;+
+	margin: 0 4px 4px 0;
+	white-space: nowrap;
 }

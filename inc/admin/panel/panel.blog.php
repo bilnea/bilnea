@@ -18,19 +18,145 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 	<option value="author" <?php selected(b_f_option('b_opt_blog-order'), 'author'); ?>>Ordenar por autor</option>
 </select>
 <input type="checkbox" name="bilnea_settings[b_opt_blog-order-desc]" <?php checked(b_f_option('b_opt_blog-order-desc'), 1 ); ?> value="1"> <span>Invertir orden</span>
-<hr />
-<h4>Maquetación de la página de entradas</h4>
+<h4 style="margin-top: 10px;">Maquetación de la página de entradas</h4>
 El shortcode <strong>{{b_blog}}</strong> inserta el contenido del blog. Se permite marcado HTML, PHP y shortcodes.
-<textarea name="bilnea_settings[b_opt_blog-content-page]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;"><?= b_f_option('b_opt_blog-content-page') ?></textarea>
+<br />
+<?php
+
+if (function_exists('icl_object_id')) {
+
+	// Variables globakles
+	global $sitepress;
+
+	// Variables locales
+	$var_language = $sitepress->get_current_language();
+	$sitepress->switch_lang('es');
+	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	if (!empty($var_languages)) {
+		$int = 0;
+		$out = '<div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= ($int != 0) ? ' | ' : '';
+			$out .= '<a class="lang-switcher" data-lang="'.$var_lang['language_code'].'">'.ucfirst($var_lang['translated_name']).'</a>';
+			$int++;
+		}
+		$out .= '</div><div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= '<textarea data-lang="'.$var_lang['language_code'].'" name="bilnea_settings[b_opt_blog-content-page-'.$var_lang['language_code'].']" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-page-'.$var_lang['language_code']).'</textarea>';
+		}
+		$out .= '</div>';
+		echo $out;
+	}
+} else {
+	$out = '<textarea name="bilnea_settings[b_opt_blog-content-page-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-page-es').'</textarea>';
+	echo $out;
+}
+
+?>
+
 <em class="notice" style="font-size: 11px; line-height: 15px; margin-bottom: 10px;">Shortcodes permitidos: {{b_blog}}, {{b_pagination}}.</em>
 <h4>Maquetación de entrada</h4>
 <strong>Entrada par</strong>
-<textarea name="bilnea_settings[b_opt_blog-content-even]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 0 0 10px 0;"><?= b_f_option('b_opt_blog-content-even') ?></textarea>
+<br />
+<?php
+
+if (function_exists('icl_object_id')) {
+
+	// Variables globakles
+	global $sitepress;
+
+	// Variables locales
+	$var_language = $sitepress->get_current_language();
+	$sitepress->switch_lang('es');
+	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	if (!empty($var_languages)) {
+		$int = 0;
+		$out = '<div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= ($int != 0) ? ' | ' : '';
+			$out .= '<a class="lang-switcher" data-lang="'.$var_lang['language_code'].'">'.ucfirst($var_lang['translated_name']).'</a>';
+			$int++;
+		}
+		$out .= '</div><div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= '<textarea data-lang="'.$var_lang['language_code'].'" name="bilnea_settings[b_opt_blog-content-even-'.$var_lang['language_code'].']" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-even-'.$var_lang['language_code']).'</textarea>';
+		}
+		$out .= '</div>';
+		echo $out;
+	}
+} else {
+	$out = '<textarea name="bilnea_settings[b_opt_blog-content-even-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-even-es').'</textarea>';
+	echo $out;
+}
+
+?>
 <strong>Entrada impar</strong>
-<textarea name="bilnea_settings[b_opt_blog-content-odd]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 0 0 0 0;"><?= b_f_option('b_opt_blog-content-odd') ?></textarea>
+<?php
+
+if (function_exists('icl_object_id')) {
+
+	// Variables globakles
+	global $sitepress;
+
+	// Variables locales
+	$var_language = $sitepress->get_current_language();
+	$sitepress->switch_lang('es');
+	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	if (!empty($var_languages)) {
+		$int = 0;
+		$out = '<div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= ($int != 0) ? ' | ' : '';
+			$out .= '<a class="lang-switcher" data-lang="'.$var_lang['language_code'].'">'.ucfirst($var_lang['translated_name']).'</a>';
+			$int++;
+		}
+		$out .= '</div><div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= '<textarea data-lang="'.$var_lang['language_code'].'" name="bilnea_settings[b_opt_blog-content-odd-'.$var_lang['language_code'].']" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-odd-'.$var_lang['language_code']).'</textarea>';
+		}
+		$out .= '</div>';
+		echo $out;
+	}
+} else {
+	$out = '<textarea name="bilnea_settings[b_opt_blog-content-odd-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-odd-es').'</textarea>';
+	echo $out;
+}
+
+?>
 <em class="notice" style="font-size: 11px; line-height: 15px; margin-bottom: 10px;">Shortcodes permitidos: {{b_title}}, {{b_permalink}}, {{b_excerpt}}, {{b_content}}, {{b_date}}, {{b_categories}}, {{b_author}}, {{b_tags}}, {{b_image-500x500}} (los valores definen la dimensión de la imagen destacada), {{b_comments-number}}, {{b_share}}.</em>
 <h4>Maquetación de la página individual</h4>
-<textarea name="bilnea_settings[b_opt_blog-content-single]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;"><?= b_f_option('b_opt_blog-content-single') ?></textarea>
+<?php
+
+if (function_exists('icl_object_id')) {
+
+	// Variables globakles
+	global $sitepress;
+
+	// Variables locales
+	$var_language = $sitepress->get_current_language();
+	$sitepress->switch_lang('es');
+	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	if (!empty($var_languages)) {
+		$int = 0;
+		$out = '<div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= ($int != 0) ? ' | ' : '';
+			$out .= '<a class="lang-switcher" data-lang="'.$var_lang['language_code'].'">'.ucfirst($var_lang['translated_name']).'</a>';
+			$int++;
+		}
+		$out .= '</div><div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= '<textarea data-lang="'.$var_lang['language_code'].'" name="bilnea_settings[b_opt_blog-content-single-'.$var_lang['language_code'].']" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-single-'.$var_lang['language_code']).'</textarea>';
+		}
+		$out .= '</div>';
+		echo $out;
+	}
+} else {
+	$out = '<textarea name="bilnea_settings[b_opt_blog-content-single-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-single-es').'</textarea>';
+	echo $out;
+}
+
+?>
 <em class="notice" style="font-size: 11px; line-height: 15px; margin-bottom: 10px;">Shortcodes permitidos: {{b_title}}, {{b_permalink}}, {{b_excerpt}}, {{b_content}}, {{b_date}}, {{b_categories}}, {{b_author}}, {{b_tags}}, {{b_image-500x500}} (los valores definen la dimensión de la imagen destacada), {{b_comments-number}}, {{b_share}}.</em>
 <h4>Opciones de visualización</h4>
 <div style="display: block; vertical-align: top;">

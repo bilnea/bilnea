@@ -252,52 +252,10 @@ function b_f_default($var_data) {
 		case 'user_email'		:
 			return get_option('admin_email');
 			break;
-		case 'b_opt_legal-url-_es':
-			return 'aviso-legal';
-			break;
-		case 'b_opt_privacy-url-_es':
-			return 'politica-privacidad';
-			break;
-		case 'b_opt_cookies-url-_es':
-			return 'politica-cookies';
-			break;
-		case 'name_legal_es'		:
-			return 'Aviso legal';
-			break;
-		case 'name_privacy_es'	:
-			return 'Política de privacidad';
-			break;
-		case 'name_cookies_es'	:
-			return 'Política de cookies';
-			break;
-		case 'b_opt_legal-url-_en':
-			return 'legal-notice';
-			break;
-		case 'b_opt_privacy-url-_en':
-			return 'privacy-policy';
-			break;
-		case 'b_opt_cookies-url-_en':
-			return 'cookies-policy';
-			break;
-		case 'name_legal_en'		:
-			return 'Legal notice';
-			break;
-		case 'name_privacy_en'	:
-			return 'Privacy policy';
-			break;
-		case 'name_cookies_en'	:
-			return 'Cookies policy';
-			break;
-		case 'b_opt_active-color':
-			return 'transparent';
-			break;
 		case 'b_opt_cookies-warning':
 			return 1;
 			break;
 		case 'b_opt_show-cookies':
-			return 1;
-			break;
-		case 'b_opt_header-logo-align':
 			return 1;
 			break;
 		case 'b_opt_main-logo'	:

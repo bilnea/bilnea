@@ -33,50 +33,109 @@ Dirección postal
 <em class="notice" style="font-size: 12px;">
 	Información que se mostrará en las páginas de textos legales, en caso de crearlas de manera automática.
 </em>
-<h4 style="margin-top: 10px;">Páginas</h4>
+
 <?php
+
 if (function_exists('icl_object_id')) {
+
+	// Variables globales
 	global $sitepress;
-	$clg = $sitepress->get_current_language();
-	$sitepress->switch_lang('es');
-	$lng = icl_get_languages('skip_missing=0&orderby=code');
-	if (!empty($lng)) {
-		$int = 0;
-		foreach ($lng as $l) {
-			if ($int > 0) { echo '<hr />'; }
+
+
+	// Variables locales
+	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+
+	if (!empty($var_languages)) {
+
+		$i = 0;
+
+		foreach ($var_languages as $var_language) {
+
+			$sitepress->switch_lang($var_language['language_code']);
+
 			?>
+
+			<h4 style="margin-top: 10px;">Páginas en <?= strtolower($var_language['translated_name']); ?> </h4>
+
+			<!-- Aviso legal -->
 			<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-				Aviso legal en <?= strtolower($l['translated_name']); ?> 
+				Aviso legal
 			</div>
 			<div style="width: calc(50% - 10px); display: inline-block;">
-				CIF / NIF
-				<br />
-				<input type="text" id="user_cif" class="gran" name="bilnea_settings[user_cif]" style="width: 100%;" value="<?php echo $opt['user_cif']; ?>">
+				<select name="bilnea_settings[b_opt_legal-advice-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
+					<option value="none" selected>Seleccionar opción</option>
+					<option value="new">Crear página</option>
+					<?php
+					foreach (get_pages() as $page) {
+						$var_id = icl_object_id($page->ID, 'category', true, $var_language['language_code']);
+						echo '<option value="'.$var_id.'" '.selected(b_f_option('b_opt_legal-advice-'.$var_language['language_code']), $var_id).'>'.$page->post_title.'</option>';
+					}
+					?>
+				</select>
+			</div>
+			<hr />
+
+			<!-- Política de privacidad -->
+			<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
+				Política de privacidad
+			</div>
+			<div style="width: calc(50% - 10px); display: inline-block;">
+				<select name="bilnea_settings[b_opt_privacy-policy-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
+					<option value="none" selected>Seleccionar opción</option>
+					<option value="new">Crear página</option>
+					<?php
+					foreach (get_pages() as $page) {
+						$var_id = icl_object_id($page->ID, 'category', true, $var_language['language_code']);
+						echo '<option value="'.$var_id.'" '.selected(b_f_option('b_opt_privacy-policy-'.$var_language['language_code']), $var_id).'>'.$page->post_title.'</option>';
+					}
+					?>
+				</select>
+			</div>
+			<hr />
+
+			<!-- Aviso legal -->
+			<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
+				Política de cookies
+			</div>
+			<div style="width: calc(50% - 10px); display: inline-block;">
+				<select name="bilnea_settings[b_opt_cookies-policy-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
+					<option value="none" selected>Seleccionar opción</option>
+					<option value="new">Crear página</option>
+					<?php
+					foreach (get_pages() as $page) {
+						$var_id = icl_object_id($page->ID, 'category', true, $var_language['language_code']);
+						echo '<option value="'.$var_id.'" '.selected(b_f_option('b_opt_cookies-policy-'.$var_language['language_code']), $var_id).'>'.$page->post_title.'</option>';
+					}
+					?>
+				</select>
 			</div>
 			
-			<br />
-			<label for="bilnea_settings[b_opt_legal-url-_<?= $l['language_code']?>]"><?php echo $sitepress->language_url($l['language_code']); ?></label>
-			<input style="font-size: 12px; -webkit-transform: translate(-5px, 1px); -moz-transform: translate(-5px, 1px); -ms-transform: translate(-5px, 1px); -o-transform: translate(-5px, 1px); transform: translate(-5px, 1px);" type="text" class="aurl" name="bilnea_settings[b_opt_legal-url-_<?= $l['language_code']?>]" value="<?= b_f_option('b_opt_legal-url-_'.$l['language_code']) ?>">
 			<?php
-			$int++;
+
+			$i++;
 		}
-		?>
-	<?php
+
 	}
-	$sitepress->switch_lang($clg);
+
+	$sitepress->switch_lang('es');
+
 } else {
+
 	?>
+
+	<h4>Páginas</h4>
+
 	<!-- Aviso legal -->
 	<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
 		Aviso legal
 	</div>
 	<div style="width: calc(50% - 10px); display: inline-block;">
 		<select name="bilnea_settings[b_opt_legal-advice-es]" class="gran" style="margin-top: -2px; width: 100% !important;">
-			<option disabled="disabled" selected>Seleccionar opción</option>
+			<option value="none" selected>Seleccionar opción</option>
 			<option value="new">Crear página</option>
 			<?php
 			foreach (get_pages() as $page) {
-				echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_legal-advice-es'], $page->ID).'">'.$page->post_title.'</option>';
+				echo '<option value="'.$page->ID.'" '.selected(b_f_option('b_opt_legal-advice-es'), $page->ID).'>'.$page->post_title.'</option>';
 			}
 			?>
 		</select>
@@ -89,11 +148,11 @@ if (function_exists('icl_object_id')) {
 	</div>
 	<div style="width: calc(50% - 10px); display: inline-block;">
 		<select name="bilnea_settings[b_opt_privacy-policy-es]" class="gran" style="margin-top: -2px; width: 100% !important;">
-			<option disabled="disabled" selected>Seleccionar opción</option>
+			<option value="none" selected>Seleccionar opción</option>
 			<option value="new">Crear página</option>
 			<?php
 			foreach (get_pages() as $page) {
-				echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_privacy-policy-es'], $page->ID).'">'.$page->post_title.'</option>';
+				echo '<option value="'.$page->ID.'" '.selected(b_f_option('b_opt_privacy-policy-es'), $page->ID).'>'.$page->post_title.'</option>';
 			}
 			?>
 		</select>
@@ -106,11 +165,11 @@ if (function_exists('icl_object_id')) {
 	</div>
 	<div style="width: calc(50% - 10px); display: inline-block;">
 		<select name="bilnea_settings[b_opt_cookies-policy-es]" class="gran" style="margin-top: -2px; width: 100% !important;">
-			<option disabled="disabled" selected>Seleccionar opción</option>
+			<option value="none" selected>Seleccionar opción</option>
 			<option value="new">Crear página</option>
 			<?php
 			foreach (get_pages() as $page) {
-				echo '<option value="'.$page->ID.'" '.selected($opt['b_opt_cookies-policy-es'], $page->ID).'">'.$page->post_title.'</option>';
+				echo '<option value="'.$page->ID.'" '.selected(b_f_option('b_opt_cookies-policy-es'), $page->ID).'>'.$page->post_title.'</option>';
 			}
 			?>
 		</select>

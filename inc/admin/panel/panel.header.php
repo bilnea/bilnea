@@ -28,30 +28,6 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 <em class="notice header_notice" style="font-size: 11px; line-height: 15px; margin-bottom: 10px;">
 	Con contenido encajonado definido como opción general, estas opciones están deshabilitadas. Para activarlas, desactiva el contenido encajonado de toda la página.
 </em>
-<div style="width: 50%; display: inline-block;">
-	Alineación del menú
-</div>
-<div style="width: 49%; display: inline-block;">
-	Alineación del logotipo
-</div>
-<div style="width: 48%; margin-right: 2%; border-right: 1px solid #e1e1e1; display: inline-block;">
-	<input type="radio" name="bilnea_settings[b_opt_menu-align]" <?php checked(b_f_option('b_opt_menu-align'), 1); ?> value="1"><span>Menú alineado a la izquierda</span>
-	<br />
-	<input type="radio" name="bilnea_settings[b_opt_menu-align]" <?php checked(b_f_option('b_opt_menu-align'), 2); ?> value="2"><span>Menú alineado al centro</span>
-	<br />
-	<input type="radio" name="bilnea_settings[b_opt_menu-align]" <?php checked(b_f_option('b_opt_menu-align'), 3); ?> value="3"><span>Menú alineado a la derecha</span>
-</div>
-<div style="width: 49%; display: inline-block;">
-	<input type="radio" name="bilnea_settings[b_opt_header-logo-align]" <?php checked(b_f_option('b_opt_header-logo-align'), 1); ?> value="1"><span>Logotipo alineado a la izquierda</span>
-	<br />
-	<input type="radio" name="bilnea_settings[b_opt_header-logo-align]" <?php checked(b_f_option('b_opt_header-logo-align'), 2); ?> value="2"><span>Logotipo alineado al centro</span>
-	<br />
-	<input type="radio" name="bilnea_settings[b_opt_header-logo-align]" <?php checked(b_f_option('b_opt_header-logo-align'), 3); ?> value="3"><span>Logotipo alineado a la derecha</span>
-</div>
-<select name="bilnea_settings[header_menu]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
-	<option value="1" <?php selected(b_f_option('header_menu'), 1); ?>>Logotipo encima del menú</option>
-	<option value="2" <?php selected(b_f_option('header_menu'), 2); ?>>Logotipo en línea con el menú</option>
-</select>
 <div style="width: 100%; display: inline-block;">
 	<input type="checkbox" name="bilnea_settings[b_opt_sticky-menu]" <?php checked(b_f_option('b_opt_sticky-menu'), 1); ?> value="1" />
 	<label for="bilnea_settings[b_opt_sticky-menu]">Cabecera fija en pantalla</label>
@@ -60,22 +36,81 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 	<input type="checkbox" name="bilnea_settings[b_opt_sticky-menu-animated]" <?php checked(b_f_option('b_opt_sticky-menu-animated'), 1); ?> value="1" />
 	<label for="bilnea_settings[b_opt_sticky-menu-animated]">Ocultar automáticamente</label>
 </div>
-<br />
+
 <h4 style="margin-top: 10px;">Barra superior</h4>
 <input type="checkbox" name="bilnea_settings[b_opt_top-bar]" <?php checked(b_f_option('b_opt_top-bar'), 1); ?> value="1"> Mostrar barra superior
-<br />
-<input type="checkbox" name="bilnea_settings[b_opt_menu-top-bar]" <?php checked(b_f_option('b_opt_menu-top-bar'), 1); ?> value="1"> <span>Incluir menú en barra superior</span>
-<br />
-<input type="checkbox" name="bilnea_settings[b_opt_topbar-rss]" <?php checked(b_f_option('b_opt_topbar-rss'), 1); ?> value="1"> <span>Incluir iconos redes sociales</span>
-<br />
-<input type="checkbox" name="bilnea_settings[_opt_header-search]" <?php checked(b_f_option('_opt_header-search'), 1); ?> value="1"> <span>Incluir buscador</span>
 <hr />
-Estilo de los iconos de las redes sociales para la cabecera
-<br />
-<input type="radio" name="bilnea_settings[b_opt_header-rrss-icons]" <?php checked(b_f_option('b_opt_header-rrss-icons'), 1); ?> value="1">Iconos normales, sin fondo.
-<br />
-<input type="radio" name="bilnea_settings[b_opt_header-rrss-icons]" <?php checked(b_f_option('b_opt_header-rrss-icons'), 2); ?> value="2">Iconos sobre fondo cuadrado.
-<br />
+Maquetación y contenido
+<?php
+
+if (function_exists('icl_object_id')) {
+
+	// Variables globakles
+	global $sitepress;
+
+	// Variables locales
+	$var_language = $sitepress->get_current_language();
+	$sitepress->switch_lang('es');
+	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	if (!empty($var_languages)) {
+		$int = 0;
+		$out = '<div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= ($int != 0) ? ' | ' : '';
+			$out .= '<a class="lang-switcher" data-lang="'.$var_lang['language_code'].'">'.ucfirst($var_lang['translated_name']).'</a>';
+			$int++;
+		}
+		$out .= '</div><div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= '<textarea data-lang="'.$var_lang['language_code'].'" name="bilnea_settings[b_opt_header-top-content-'.$var_lang['language_code'].']" rows="5" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_header-top-content-'.$var_lang['language_code']).'</textarea>';
+		}
+		$out .= '</div>';
+		echo $out;
+	}
+} else {
+	$out = '<textarea name="bilnea_settings[b_opt_header-top-content-es]" rows="5" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_header-top-content-es').'</textarea>';
+	echo $out;
+}
+
+?>
+<em class="notice" style="font-size: 11px; line-height: 15px; margin-bottom: 10px;">Shortcodes permitidos: {{b_menu}}, {{b_logo}}, {{b_search}}, {{b_rrss}}, {{b_language_selector}}.</em>
+
+<h4 style="margin-top: 10px;">Barra principal</h4>
+Maquetación y contenido
+<?php
+
+if (function_exists('icl_object_id')) {
+
+	// Variables globakles
+	global $sitepress;
+
+	// Variables locales
+	$var_language = $sitepress->get_current_language();
+	$sitepress->switch_lang('es');
+	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	if (!empty($var_languages)) {
+		$int = 0;
+		$out = '<div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= ($int != 0) ? ' | ' : '';
+			$out .= '<a class="lang-switcher" data-lang="'.$var_lang['language_code'].'">'.ucfirst($var_lang['translated_name']).'</a>';
+			$int++;
+		}
+		$out .= '</div><div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= '<textarea data-lang="'.$var_lang['language_code'].'" name="bilnea_settings[b_opt_header-main-content-'.$var_lang['language_code'].']" rows="5" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_header-main-content-'.$var_lang['language_code']).'</textarea>';
+		}
+		$out .= '</div>';
+		echo $out;
+	}
+} else {
+	$out = '<textarea name="bilnea_settings[b_opt_header-main-content-es]" rows="5" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_header-main-content-es').'</textarea>';
+	echo $out;
+}
+
+?>
+<em class="notice" style="font-size: 11px; line-height: 15px; margin-bottom: 10px;">Shortcodes permitidos: {{b_menu}}, {{b_logo}}, {{b_search}}, {{b_rrss}}, {{b_language_selector}}.</em>
+
 <h4 style="margin-top: 10px;">Estilos tipográficos</h4>
 <div class="text-container">
 	<strong>Barra superior</strong>

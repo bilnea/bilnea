@@ -12,11 +12,10 @@ if (!function_exists('b_s_slider')) {
 	function b_s_slider($atts, $content = null) {
 		
 		// Variables globales
-		global $b_g_version;
 		global $b_g_sliders;
 
 		// Scripts
-		wp_enqueue_script('functions-slider', get_template_directory_uri().'/js/internal/functions.slider.js', array('jquery'), $b_g_version, true);
+		wp_enqueue_script('functions.slider');
 
 		// Shortcodes dependientes
 		add_shortcode('b_show', 'b_s_slideshow');
@@ -31,16 +30,17 @@ if (!function_exists('b_s_slider')) {
 			'width' => 1,
 			'height' => '400px',
 			'id' => null,
+			'class' => null,
 		), $atts);
 
 		// Variables locales
 		$var_style = ''; 
-		$var_class = '';
 
 		(esc_attr($a['id']) != null) ? $var_id = ' id="'.esc_attr($a['id']).'"' : $var_id = '';
+		(esc_attr($a['class']) != null) ? $var_class = ' '.esc_attr($a['class']) : $var_class = '';
 
 		if (esc_attr($a['width']) == 0) {
-			$var_class = ' container';
+			$var_class .= ' container';
 		} elseif (esc_attr($a['width']) > 0 && esc_attr($a['width']) <= 1) {
 			$var_style .= 'width: '.(esc_attr($a['width'])*100).'%;';
 		} elseif (is_numeric(esc_attr($a['width']))) {
@@ -90,10 +90,10 @@ if (!function_exists('b_s_slideshow')) {
 
 		// Atributos
 		$a = shortcode_atts(array(
-			'url' => null,
+			'image' => null,
 			'position' => 'cc',
 			'class' => null,
-			'link' => null,
+			'url' => null,
 			'target' => null,
 			'rel' => 'follow',
 		), $atts);
@@ -121,9 +121,9 @@ if (!function_exists('b_s_slideshow')) {
 		}
 
 		// Variables locales
-		if (esc_attr($a['url']) != null) {
-			if (is_numeric(esc_attr($a['url']))) {
-				$var_style = ' style="background-image: url('.wp_get_attachment_url(esc_attr($a['url'])).'); background-position: '.$var_position.';"';
+		if (esc_attr($a['image']) != null) {
+			if (is_numeric(esc_attr($a['image']))) {
+				$var_style = ' style="background-image: url('.wp_get_attachment_url(esc_attr($a['image'])).'); background-position: '.$var_position.';"';
 			} else {
 				$var_style = ' style="background-image: url('.str_replace('b_root', preg_replace('(^https?://)', '', get_site_url()), esc_url(esc_attr($a['url']))).'); background-position: '.$var_position.';"'; 
 			}
@@ -131,8 +131,8 @@ if (!function_exists('b_s_slideshow')) {
 
 		(esc_attr($a['class']) != null) ? $var_class = ' data-class="'.esc_attr($a['class']).'"' : $var_class = '';
 
-		if (esc_attr($a['link']) != null) {
-			(is_numeric(esc_attr($a['link']))) ? $var_link = get_permalink(esc_attr($a['link'])) : $var_link = esc_attr($a['link']);
+		if (esc_attr($a['url']) != null) {
+			(is_numeric(esc_attr($a['url']))) ? $var_link = get_permalink(esc_attr($a['url'])) : $var_link = esc_attr($a['url']);
 			(esc_attr($a['target']) != null) ? $var_atts = ' target="_blank"' : $var_atts = '';
 
 			if (esc_attr($a['rel']) == 'nofollow') {

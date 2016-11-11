@@ -1,4 +1,4 @@
-jQuery(function($)) {
+jQuery(function($) {
 
 	// Clases de los contenedores
 	$('.x11, .x12, .x13, .x14, .x15, .x16, .x17, .x18, .x19, .x10, .x23, .x25, .x34, .x35, .x45, .x27, .x29, .x56, .x37, .x38, .x30, .x47, .x49, .x40, .x57, .x58, .x59, .x67, .x78, .x79, .x70, .x89, .x90').each(function() {
@@ -7,7 +7,8 @@ jQuery(function($)) {
 
 	// Designat primer y último elemento de la fila
 	$('.row').each(function() {
-		var t = 0;
+		var t = 0,
+			s = $(this).attr('data-space');
 		$(this).children().each(function() {
 			if (t == 0 || t >= 1) {
 				$(this).addClass('first');
@@ -85,8 +86,10 @@ jQuery(function($)) {
 		$(this).children().each(function() {
 			if ($(this).hasClass('first')) {
 				$(this).prev().addClass('last');
+			} else {
+				$(this).css('margin-left', s);
 			};
 		});
 		$(this).children().last().addClass('last');
 	});
-};
+});

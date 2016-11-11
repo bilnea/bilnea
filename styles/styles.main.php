@@ -91,7 +91,7 @@ foreach ($fnt as $key => $value) {
 
 /* Encabezados */
 
-h1, h1 * {
+.main_container h1, .main_container h1 * {
 	font-size: <?= b_f_size('b_opt_h1_ttf-size') ?>;
 	font-family: <?= b_f_option('b_opt_h1_ttf-font') ?>;
 	<?php if (strpos(b_f_option('b_opt_h1_ttf-style'), 'italic')) { ?>
@@ -107,7 +107,7 @@ h1, h1 * {
 	<?php endif; ?>
 }
 
-h2, h2 * {
+.main_container h2, .main_container h2 * {
 	font-size: <?= b_f_size('b_opt_h2_ttf-size') ?>;
 	font-family: <?= b_f_option('b_opt_h2_ttf-font') ?>;
 	<?php if (strpos(b_f_option('b_opt_h2_ttf-style'), 'italic')) { ?>
@@ -123,7 +123,7 @@ h2, h2 * {
 	<?php endif; ?>
 }
 
-h3, h3 * {
+.main_container h3, .main_container h3 * {
 	font-size: <?= b_f_size('b_opt_h3_ttf-size') ?>;
 	font-family: <?= b_f_option('b_opt_h3_ttf-font') ?>;
 	<?php if (strpos(b_f_option('b_opt_h3_ttf-style'), 'italic')) { ?>
@@ -139,7 +139,7 @@ h3, h3 * {
 	<?php endif; ?>
 }
 
-h4, h4 * {
+.main_container h4, .main_container h4 * {
 	font-size: <?= b_f_size('b_opt_h4_ttf-size') ?>;
 	font-family: <?= b_f_option('b_opt_h4_ttf-font') ?>;
 	<?php if (strpos(b_f_option('b_opt_h4_ttf-style'), 'italic')) { ?>
@@ -155,7 +155,7 @@ h4, h4 * {
 	<?php endif; ?>
 }
 
-h5, h5 * {
+.main_container h5, .main_container h5 * {
 	font-size: <?= b_f_size('b_opt_h5_ttf-size') ?>;
 	font-family: <?= b_f_option('b_opt_h5_ttf-font') ?>;
 	<?php if (strpos(b_f_option('b_opt_h5_ttf-style'), 'italic')) { ?>
@@ -171,7 +171,7 @@ h5, h5 * {
 	<?php endif; ?>
 }
 
-h6, h6 * {
+.main_container h6, .main_container h6 * {
 	font-size: <?= b_f_size('b_opt_h6_ttf-size') ?>;
 	font-family: <?= b_f_option('b_opt_h6_ttf-font') ?>;
 	<?php if (strpos(b_f_option('b_opt_h6_ttf-style'), 'italic')) { ?>
@@ -202,7 +202,7 @@ h6, h6 * {
 
 .main_container.container,
 .header-top .container,
-.header-mid .container,
+.header .container,
 .header-bot .container {
 	max-width: <?= b_f_size('b_opt_exterior-width') ?>;
 }
@@ -357,22 +357,22 @@ header a.logo {
 	display: inline-block;
 }
 
-header#header nav li a {
+#main_menu {
 	line-height: <?= b_f_size('b_opt_menu-height') ?>;
 }
 
-header#header nav .menu > li > a {
+#main_menu > li > a {
 	height. <?= b_f_size('b_opt_menu-height') ?>;
 	display: inline-block;
 }
 
-header#header ul.menu li:hover:after,
-header#header ul.menu li[class*="current"]::after {
+#main_menu li:hover:after,
+#main_menu li[class*="current"]::after {
 	background-color: <?= b_f_color('b_opt_active-color') ?>;
 }
 
-header#header nav li,
-header#header nav li * {
+#main_menu li,
+#main_menu li * {
 	font-size: <?= b_f_size('b_opt_main-menu_ttf-size') ?>;
 	font-family: <?= b_f_option('b_opt_main-menu_ttf-font') ?>;
 	<?php if (strpos(b_f_option('b_opt_main-menu_ttf-style'), 'italic')) { ?>
