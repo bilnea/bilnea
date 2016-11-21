@@ -118,7 +118,7 @@ if (count($var_fonts) > 0) {
 		?>
 
 		<fieldset class="text-container">
-			<strong><?php echo str_replace('+', ' ', $b_g_google_fonts[$key]['name']); ?></strong>
+			<strong><?php echo str_replace('+', ' ', $key); ?></strong>
 			<div class="font_styles" style="position: relative;">
 				<div>Regular<br />Cursiva</div>
 
@@ -158,8 +158,8 @@ if (count($var_fonts) > 0) {
 			?>
 
 			<div class="notice font"><span style="font-family: 'Roboto'; font-weight: 100;">a</span> ... <span style="font-family: 'Roboto'; font-weight: 900;">a</span><br /><span style="font-family: 'Roboto'; font-weight: 100; font-style: italic;">a</span> ... <span style="font-family: 'Roboto'; font-weight: 900; font-style: italic;">a</span></div>
-			<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=<?php echo $b_g_google_fonts[$key]['name']; ?>">
-			<div style="vertical-align: top; font-size: 30px; display: inline-block; line-height: 52px; width: 160px; font-family: '<?php echo str_replace('+', ' ', $b_g_google_fonts[$key]['name']); ?>';">AaBbCc</div>
+			<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=<?php echo $key; ?>">
+			<div style="vertical-align: top; font-size: 30px; display: inline-block; line-height: 52px; width: 160px; font-family: '<?php echo str_replace('+', ' ', $key); ?>';">AaBbCc</div>
 		</div>
 	</fieldset>
 

@@ -234,7 +234,8 @@ if (!function_exists('b_f_frontend_scripts')) {
 		b_f_load_scripts();
 
 		$var_temp = array(
-			'version' => $b_g_version
+			'version' => $b_g_version,
+			'root_url' => site_url()
 		);
 		wp_localize_script('functions.main', 'bilnea', $var_temp);
 		wp_enqueue_script('functions.main');
@@ -861,6 +862,7 @@ if (b_f_option('b_opt_header-links') == 1) {
 register_nav_menus(array('menu_main' 	=> 'Menú principal'));
 register_nav_menus(array('menu_footer'	=> 'Barra inferior'));
 register_nav_menus(array('menu_top' 	=> 'Barra superior'));
+register_nav_menus(array('menu_mobile' 	=> 'Menú móvil'));
 register_nav_menus(array('menu_widget' 	=> 'Menú widget'));
 
 
@@ -1451,6 +1453,10 @@ function b_f_p_id($content) {
 }
 
 add_filter('the_content','b_f_p_id');
+
+function b_f_i_menu($arg) {
+	return wp_nav_menu(array('menu' => $arg, 'container_id' => 'menu-'.$arg, 'echo' => false));
+}
 
 
 // Función para crear extracto desde el contenido

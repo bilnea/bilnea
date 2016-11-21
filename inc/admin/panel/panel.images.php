@@ -111,7 +111,7 @@ endif;
 		<i class="fa fa-trash" id="borra_logo3"></i>Icono iPhone Retina
 		<br />
 		<?php
-		if ($opt['b_opt_favicon-iphone-retina']) {
+		if (b_f_option('b_opt_favicon-iphone-retina')) {
 		?>
 		<script type="text/javascript">
 			jQuery('#iphoneret_div').attr('style', 'background-image: url(<?= b_f_option('b_opt_favicon-iphone-retina') ?>)');
@@ -133,16 +133,16 @@ endif;
 		<i class="fa fa-trash" id="borra_logo4"></i>Icono iPad
 		<br />
 		<?php
-		if ($opt['b_opt_favicon-ipad']) {
+		if (b_f_option('b_opt_favicon-ipad')) {
 		?>
 		<script type="text/javascript">
-			jQuery('#ipad_div').attr('style', 'background-image: url(<?php echo $opt['b_opt_favicon-ipad']; ?>)');
+			jQuery('#ipad_div').attr('style', 'background-image: url(<?php echo b_f_option('b_opt_favicon-ipad'); ?>)');
 			jQuery('#borra_logo4').show();
 		</script>
 		<?php
 		}
 		?>
-		<input type="text" id="ipa_fav_url" class="gran" name="bilnea_settings[b_opt_favicon-ipad]" style="width: calc(100% - 32px);" value='<?php echo $opt['b_opt_favicon-ipad']; ?>'>
+		<input type="text" id="ipa_fav_url" class="gran" name="bilnea_settings[b_opt_favicon-ipad]" style="width: calc(100% - 32px);" value='<?php echo b_f_option('b_opt_favicon-ipad'); ?>'>
 		<button type="submit" id="subir_ipa_fav" value="Seleccionar imagen"  class="button-secondary subir-imagen">
 			<i class="fa fa-search" style="font-size: 12px;"></i>
 		</button>
@@ -155,16 +155,16 @@ endif;
 		<i class="fa fa-trash" id="borra_logo5"></i>Icono iPad Retina
 		<br />
 		<?php
-		if ($opt['b_opt_favicon-ipad-retina']) {
+		if (b_f_option('b_opt_favicon-ipad-retina')) {
 		?>
 		<script type="text/javascript">
-			jQuery('#ipadret_div').attr('style', 'background-image: url(<?php echo $opt['b_opt_favicon-ipad-retina']; ?>)');
+			jQuery('#ipadret_div').attr('style', 'background-image: url(<?php echo b_f_option('b_opt_favicon-ipad-retina'); ?>)');
 			jQuery('#borra_logo5').show();
 		</script>
 		<?php
 		}
 		?>
-		<input type="text" id="ipa_ret_url" class="gran" name="bilnea_settings[b_opt_favicon-ipad-retina]" style="width: calc(100% - 32px);" value='<?php echo $opt['b_opt_favicon-ipad-retina']; ?>'>
+		<input type="text" id="ipa_ret_url" class="gran" name="bilnea_settings[b_opt_favicon-ipad-retina]" style="width: calc(100% - 32px);" value='<?php echo b_f_option('b_opt_favicon-ipad-retina'); ?>'>
 		<button type="submit" id="subir_ipa_ret" value="Seleccionar imagen"  class="button-secondary subir-imagen">
 			<i class="fa fa-search" style="font-size: 12px;"></i>
 		</button>
@@ -177,16 +177,16 @@ endif;
 		<i class="fa fa-trash" id="borra_logo6"></i>Positivo
 		<br />
 		<?php
-		if ($opt['b_opt_positive-logo']) {
+		if (b_f_option('b_opt_positive-logo')) {
 		?>
 		<script type="text/javascript">
-			jQuery('#positive_div').attr('style', 'background-image: url(<?php echo $opt['b_opt_positive-logo']; ?>)');
+			jQuery('#positive_div').attr('style', 'background-image: url(<?php echo b_f_option('b_opt_positive-logo'); ?>)');
 			jQuery('#borra_logo6').show();
 		</script>
 		<?php
 		}
 		?>
-		<input type="text" id="pos_logo_url" class="gran" name="bilnea_settings[b_opt_positive-logo]" style="width: calc(100% - 32px);" value='<?php echo $opt['b_opt_positive-logo']; ?>'>
+		<input type="text" id="pos_logo_url" class="gran" name="bilnea_settings[b_opt_positive-logo]" style="width: calc(100% - 32px);" value='<?php echo b_f_option('b_opt_positive-logo'); ?>'>
 		<button type="submit" id="subir_pos_log" value="Seleccionar imagen"  class="button-secondary subir-imagen">
 			<i class="fa fa-search" style="font-size: 12px;"></i>
 		</button>
@@ -199,16 +199,16 @@ endif;
 		<i class="fa fa-trash" id="borra_logo7"></i>Negativo
 		<br />
 		<?php
-		if ($opt['b_opt_negative-logo']) {
+		if (b_f_option('b_opt_negative-logo')) {
 		?>
 		<script type="text/javascript">
-			jQuery('#negative_div').attr('style', 'background-image: url(<?php echo $opt['b_opt_negative-logo']; ?>)');
+			jQuery('#negative_div').attr('style', 'background-image: url(<?php echo b_f_option('b_opt_negative-logo'); ?>)');
 			jQuery('#borra_logo7').show();
 		</script>
 		<?php
 		}
 		?>
-		<input type="text" id="neg_logo_url" class="gran" name="bilnea_settings[b_opt_negative-logo]" style="width: calc(100% - 32px);" value='<?php echo $opt['b_opt_negative-logo']; ?>'>
+		<input type="text" id="neg_logo_url" class="gran" name="bilnea_settings[b_opt_negative-logo]" style="width: calc(100% - 32px);" value='<?php echo b_f_option('b_opt_negative-logo'); ?>'>
 		<button type="submit" id="subir_neg_log" value="Seleccionar imagen"  class="button-secondary subir-imagen">
 			<i class="fa fa-search" style="font-size: 12px;"></i>
 		</button>

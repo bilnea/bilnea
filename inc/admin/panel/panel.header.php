@@ -68,7 +68,7 @@ if (function_exists('icl_object_id')) {
 		echo $out;
 	}
 } else {
-	$out = '<textarea name="bilnea_settings[b_opt_header-top-content-es]" rows="5" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_header-top-content-es').'</textarea>';
+	$out = '<textarea class="current" name="bilnea_settings[b_opt_header-top-content-es]" rows="5" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_header-top-content-es').'</textarea>';
 	echo $out;
 }
 
@@ -104,7 +104,7 @@ if (function_exists('icl_object_id')) {
 		echo $out;
 	}
 } else {
-	$out = '<textarea name="bilnea_settings[b_opt_header-main-content-es]" rows="5" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_header-main-content-es').'</textarea>';
+	$out = '<textarea class="current" name="bilnea_settings[b_opt_header-main-content-es]" rows="5" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_header-main-content-es').'</textarea>';
 	echo $out;
 }
 

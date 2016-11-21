@@ -95,17 +95,7 @@ if (!function_exists('b_p_forms')) {
 										$var_data = unserialize($var_user['data']);
 
 										foreach ($var_data as $key => $value) {
-											switch ($key) {
-												case 'name':
-													$key = 'Nombre';
-													break;
-												case 'last name':
-													$key = 'Apellidos';
-													break;
-												default:
-													$key = ucfirst($key);
-													break;
-											}
+											$key = ucfirst($key);
 											echo '<strong style="display: block; vertical-align: top;">'.$key.'</strong><div style="display: block; vertical-align: top; margin-bottom: 16px;">'.$value.'</div>';
 										}
 
@@ -216,7 +206,7 @@ if (!function_exists('b_p_forms')) {
 											</div>
 											<div id="major-publishing-actions">
 												<div id="delete-action">
-													<a class="submitdelete deletion" href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&delete=<?= $var_user['id'] ?>">Eliminar mensaje</a>
+													<a class="submitdelete deletion" href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&delete=<?= $var_user['id'] ?>">Eliminar mensaje</a>
 												</div>
 												<div class="clear"></div>
 											</div>
@@ -279,25 +269,25 @@ if (!function_exists('b_p_forms')) {
 								<input id="cb-select-all-1" type="checkbox">
 							</td>
 							<th scope="col" id="data" class="manage-column column-title <?= $var_sorts['data'] ?>">
-								<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=data&order=<?= $var_order ?>">
+								<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=data&order=<?= $var_order ?>">
 									<span>Nombre</span>
 									<span class="sorting-indicator"></span>
 								</a>
 							</th>
 							<th scope="col" id="email" class="manage-column column-title <?= $var_sorts['email'] ?>">
-								<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=email&order=<?= $var_order ?>">
+								<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=email&order=<?= $var_order ?>">
 									<span>Correo electrónico</span>
 									<span class="sorting-indicator"></span>
 								</a>
 							</th>
 							<th scope="col" id="date" class="manage-column column-title <?= $var_sorts['date'] ?>">
-								<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=date&order=<?= $var_order ?>">
+								<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=date&order=<?= $var_order ?>">
 									<span>Fecha</span>
 									<span class="sorting-indicator"></span>
 								</a>
 							</th>
 							<th scope="col" id="form" class="manage-column column-title <?= $var_sorts['formname'] ?>">
-								<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=formname&order=<?= $var_order ?>">
+								<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=formname&order=<?= $var_order ?>">
 									<span>Formulario</span>
 									<span class="sorting-indicator"></span>
 								</a>
@@ -321,19 +311,19 @@ if (!function_exists('b_p_forms')) {
 									<div class="locked-indicator"></div>
 								</th>
 								<td class="date column-name" data-colname="Nombre">
-									<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&contact=<?= $var_user['id'] ?>">
+									<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&contact=<?= $var_user['id'] ?>">
 										<?php
 
 										$var_data = unserialize($var_user['data']);
 
 										if ($var_user['read'] == 'no') {
-											$out = '<strong>'.$var_data['name'];
+											$out = '<strong>'.$var_data['Nombre'];
 										} else {
-											$out = $var_data['name'];
+											$out = $var_data['Nombre'];
 										}
 										
-										if ($var_data['last name'] != '') {
-											$out .= ' '.$var_data['last name'];
+										if ($var_data['Apellidos'] != '') {
+											$out .= ' '.$var_data['Apellidos'];
 										}
 
 										if ($var_user['read'] == 'no') {
@@ -365,7 +355,7 @@ if (!function_exists('b_p_forms')) {
 									<a href="<?= get_permalink($var_user['page']) ?>"><?= $var_user['formname'] ?></a>
 								</td>
 								<td>
-									<a href="<?= 'http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&delete=<?= $var_user['id'] ?>"><span class="dashicons dashicons-trash"></span></a>
+									<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&delete=<?= $var_user['id'] ?>"><span class="dashicons dashicons-trash"></span></a>
 								</td>
 							</tr>
 

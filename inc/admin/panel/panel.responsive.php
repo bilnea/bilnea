@@ -34,9 +34,72 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 <hr style="margin-bottom: 0;" />
 <input type="checkbox" name="bilnea_settings[b_opt_mobile-sidebar]" <?php checked(b_f_option('b_opt_mobile-sidebar'), 1); ?> value="1">
 <label for="bilnea_settings[b_opt_mobile-sidebar]">Ocultar la barra lateral</label>
-<hr style="margin: 0;" />
-<input type="checkbox" name="bilnea_settings[b_opt_mobile-search]" <?php checked(b_f_option('b_opt_mobile-search'), 1); ?> value="1">
-<label for="bilnea_settings[b_opt_mobile-search]">Mostrar buscador en menú móvil</label>
-<br />
-<input type="checkbox" name="bilnea_settings[b_opt_tablet-search]" <?php checked(b_f_option('b_opt_tablet-search'), 1); ?> value="1">
-<label for="bilnea_settings[b_opt_tablet-search]">Mostrar buscador en cabecera para tablets</label>
+<h4 style="margin-top: 10px;">Barra superior</h4>
+<?php
+
+if (function_exists('icl_object_id')) {
+
+	// Variables globakles
+	global $sitepress;
+
+	// Variables locales
+	$var_language = $sitepress->get_current_language();
+	$sitepress->switch_lang('es');
+	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	if (!empty($var_languages)) {
+		$int = 0;
+		$out = '<div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= ($int != 0) ? ' | ' : '';
+			$out .= '<a class="lang-switcher" data-lang="'.$var_lang['language_code'].'">'.ucfirst($var_lang['translated_name']).'</a>';
+			$int++;
+		}
+		$out .= '</div><div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= '<textarea data-lang="'.$var_lang['language_code'].'" name="bilnea_settings[b_opt_mobile-header-'.$var_lang['language_code'].']" rows="5" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_mobile-header-'.$var_lang['language_code']).'</textarea>';
+		}
+		$out .= '</div>';
+		echo $out;
+	}
+} else {
+	$out = '<textarea class="current" name="bilnea_settings[b_opt_mobile-header-es]" rows="5" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_mobile-header-es').'</textarea>';
+	echo $out;
+}
+
+?>
+<em class="notice" style="font-size: 11px; line-height: 15px; margin-bottom: 10px;">Shortcodes permitidos: {{b_menu}}, {{b_logo}}, {{b_search}}, {{b_search-icon}}, {{b_rrss}}, {{b_language_selector}}, {{b_switcher}}.</em>
+
+<h4 style="margin-top: 10px;">Menú movil</h4>
+<?php
+
+if (function_exists('icl_object_id')) {
+
+	// Variables globakles
+	global $sitepress;
+
+	// Variables locales
+	$var_language = $sitepress->get_current_language();
+	$sitepress->switch_lang('es');
+	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	if (!empty($var_languages)) {
+		$int = 0;
+		$out = '<div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= ($int != 0) ? ' | ' : '';
+			$out .= '<a class="lang-switcher" data-lang="'.$var_lang['language_code'].'">'.ucfirst($var_lang['translated_name']).'</a>';
+			$int++;
+		}
+		$out .= '</div><div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= '<textarea data-lang="'.$var_lang['language_code'].'" name="bilnea_settings[b_opt_mobile-menu-'.$var_lang['language_code'].']" rows="5" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_mobile-menu-'.$var_lang['language_code']).'</textarea>';
+		}
+		$out .= '</div>';
+		echo $out;
+	}
+} else {
+	$out = '<textarea class="current" name="bilnea_settings[b_opt_mobile-menu-es]" rows="5" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_mobile-menu-es').'</textarea>';
+	echo $out;
+}
+
+?>
+<em class="notice" style="font-size: 11px; line-height: 15px; margin-bottom: 10px;">Shortcodes permitidos: {{b_menu}}, {{b_logo}}, {{b_search}}, {{b_search-icon}}, {{b_rrss}}, {{b_language_selector}}, {{b_switcher}}.</em>

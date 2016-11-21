@@ -20,7 +20,7 @@ if (!function_exists('b_s_form')) {
 		$a = shortcode_atts(array(
 			'id' => null,
 			'class' => null,
-			'email' => true,
+			'response' => true,
 			'to' => b_f_option('b_opt_form-email'),
 			'message' => __('Your message has been sent sucesfully. Your request will delay. A copy has been sent to your email.', 'bilnea'),
 			'send' => __('Send', 'bilnea'),
@@ -33,8 +33,14 @@ if (!function_exists('b_s_form')) {
 		$var_random = rand(0, 99999999);
 
 		// Dirección IP del visitante
-		preg_match('/Current IP Address: \[?([:.0-9a-fA-F]+)\]?/', file_get_contents('http://checkip.dyndns.com/'), $match);
-		$var_ip = $match[1];
+		$var_ip = '';
+		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+			$var_ip=' '.$_SERVER['HTTP_CLIENT_IP'];
+		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+			$var_ip=' '.$_SERVER['HTTP_X_FORWARDED_FOR'];
+		} else {
+			$var_ip=' '.$_SERVER['REMOTE_ADDR'];
+		}
 		
 		// Variables específicas
 		(esc_attr($a['class']) != null) ? $var_class = ' '.esc_attr($a['class']) : $var_class = '';
@@ -52,6 +58,10 @@ if (!function_exists('b_s_form')) {
 		$out .= '<input type="hidden" value="'.base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), esc_attr($a['name']), MCRYPT_MODE_CBC, md5(md5($b_g_hash)))).'" name="b_i_formname" />';
 		$out .= '<input type="hidden" value="'.base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), get_the_ID(), MCRYPT_MODE_CBC, md5(md5($b_g_hash)))).'" name="b_i_page" />';
 		$out .= '<input type="hidden" value="'.$var_ip.'" name="b_i_ip" />';
+		$out .= '<input type="hidden" value="" name="b_i_names" />';
+		if (esc_attr($a['response']) == true) {
+			$out .= '<input type="hidden" value="true" name="b_i_response" />';
+		}
 
 		// Redirección del formulario
 		if (esc_attr($a['redirect']) == 'true' && is_numeric(b_f_option('b_opt_form-thanks'))) {
@@ -62,7 +72,7 @@ if (!function_exists('b_s_form')) {
 		}
 
 		$out .= '</form>';
-		$out .= '<div id="form-send" data-send="'.esc_attr($a['send']).'" data-sending="'.__('Sending', 'bilnea').'" data-id="'.$var_random.'">'.esc_attr($a['send']).'</div>';
+		$out .= '<div class="form-send" data-send="'.esc_attr($a['send']).'" data-sending="'.__('Sending', 'bilnea').'" data-id="'.$var_random.'">'.esc_attr($a['send']).'</div>';
 		$out .= '<div class="response"></div>';
 
 		$b_g_forms++;
@@ -73,7 +83,7 @@ if (!function_exists('b_s_form')) {
 	add_shortcode('b_form', 'b_s_form');
 
 }
-
+print_r(b_f_option('b_opt_privacy-policy-'.$b_g_lang));
 
 // Campo del formulario
 
@@ -98,6 +108,7 @@ if (!function_exists('b_s_input')) {
 			'size' => '5MB',
 			'label' => null,
 			'url' => b_f_option('b_opt_privacy-policy-'.$b_g_lang),
+			'name' => null,
 		), $atts);
 
 		// Número aleatorio para identificar el campo
@@ -105,6 +116,7 @@ if (!function_exists('b_s_input')) {
 		
 		// Variables específicas
 		(esc_attr($a['class']) != null) ? $var_class = ' '.esc_attr($a['class']) : $var_class = '';
+		(esc_attr($a['name']) != null) ? $var_name = esc_attr($a['name']) : $var_name = '';
 		if (esc_attr($a['required']) == 'true') {
 			$var_class .= ' required';
 			$var_required = '* ';
@@ -119,21 +131,23 @@ if (!function_exists('b_s_input')) {
 
 			// Correo electrónico
 			case 'email':
+				if ($var_name == '') { $var_name = 'Correo electrónico'; }
 				if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Email', 'bilnea'); }
 				if (esc_attr($a['label']) == 'true') {
-					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_email" /></label>';
+					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_email" data-name="'.$var_name.'" /></label>';
 				} else {
-					return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_email" placeholder="'.$var_required.$var_placeholder.'" />';
+					return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_email" placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'" />';
 				}
 				break;
 
 			// Mensaje
 			case 'message':
+				if ($var_name == '') { $var_name = 'Mensaje'; }
 				if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Message', 'bilnea'); }
 				if (esc_attr($a['label']) == 'true') {
-					return '<label>'.$var_required.$var_placeholder.'<textarea name="b_i_message" class="input'.$var_class.'"'.$var_id.'></textarea></label>';
+					return '<label>'.$var_required.$var_placeholder.'<textarea name="b_i_message" class="input'.$var_class.'"'.$var_id.' data-name="'.$var_name.'"></textarea></label>';
 				} else {
-					return '<textarea name="b_i_message" class="input'.$var_class.'"'.$var_id.' placeholder="'.$var_required.$var_placeholder.'"></textarea>';
+					return '<textarea name="b_i_message" class="input'.$var_class.'"'.$var_id.' placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'"></textarea>';
 				}
 				break;
 
@@ -143,11 +157,12 @@ if (!function_exists('b_s_input')) {
 				// Datos externos
 				include('data/states.php');
 
+				if ($var_name == '') { $var_name = 'Provincia'; }
 				if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('State', 'bilnea'); }
 				if (esc_attr($a['label']) == 'true') {
-					$out = '<label>'.$var_required.$var_placeholder.'<select name="b_i_custom_state" class="input'.$var_class.'"'.$var_id.'>';
+					$out = '<label>'.$var_required.$var_placeholder.'<select name="b_i_custom_state" class="input'.$var_class.'"'.$var_id.' data-name="'.$var_name.'">';
 				} else {
-					$out = '<select name="b_i_state" class="input'.$var_class.'"'.$var_id.'><option selected disabled>'.$var_required.$var_placeholder.'</option>';
+					$out = '<select name="b_i_state" class="input'.$var_class.'"'.$var_id.' data-name="'.$var_name.'"><option selected disabled>'.$var_required.$var_placeholder.'</option>';
 				}
 				if (esc_attr($a['data']) == null) {
 					foreach ($b_d_state as $key => $value) {
@@ -161,7 +176,18 @@ if (!function_exists('b_s_input')) {
 
 			// Aviso legal
 			case 'legal':
-				if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Privacy policy', 'bilnea'); }
+				if (esc_attr($a['placeholder']) == '') {
+					if (is_numeric(esc_attr($a['url']))) {
+						$var_placeholder = get_the_title(esc_attr($a['url']));
+					} else {
+						$var_placeholder = __('Privacy policy', 'bilnea');
+					}
+				}
+				if (is_numeric(esc_attr($a['url']))) {
+					$var_url = get_permalink(esc_attr($a['url']));
+				} else {
+					$var_url = esc_attr($a['url']);
+				}
 				switch (substr(explode(' ', $var_placeholder)[0], -1)) {
 					case 'a':
 						$var_gendre = _x('the', 'female', 'bilnea');
@@ -171,7 +197,7 @@ if (!function_exists('b_s_input')) {
 						break;
 				}
 				$out  = '<input class="b_input_checkbox'.$var_class.'" id="legal-'.$var_random.'" type="checkbox" name="b_i_legal">';
-				$out .= '<label for="legal-'.$var_random.'" class="'.esc_attr($a['class']).'">'.$var_required.__('I have read, understood and accept', 'bilnea').' '.$var_gendre.' <a href="'.esc_attr($a['url']).'" title="'.$var_placeholder.'" target="_blank">'.strtolower($var_placeholder).'</a>.</label>';
+				$out .= '<label for="legal-'.$var_random.'" class="'.esc_attr($a['class']).'">'.$var_required.__('I have read, understood and accept', 'bilnea').' '.$var_gendre.' <a href="'.$var_url.'" title="'.$var_placeholder.'" target="_blank">'.mb_strtolower($var_placeholder).'</a>.</label>';
 				return $out;
 				break;
 
@@ -218,10 +244,11 @@ if (!function_exists('b_s_input')) {
 
 				// Construcción del selector
 				if (esc_attr($a['label']) == 'true') {
-					$out = '<label>'.$var_required.$var_placeholder.'<input class="weekpicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_week" /></label>'."\n";
+					$out = '<label>'.$var_required.$var_placeholder.'<input class="weekpicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_week" data-name="'.$var_name.'" /></label>'."\n";
 				} else {
-					$out = '<input class="weekpicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_week" placeholder="'.$var_required.$var_placeholder.'" />'."\n";
+					$out = '<input class="weekpicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_week" placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'" />'."\n";
 				}
+				if ($var_name == '') { $var_name = $var_placeholder; }
 
 				// Script específico
 				$out .= '<script type="text/javascript">'."\n";
@@ -275,10 +302,11 @@ if (!function_exists('b_s_input')) {
 
 				// Construcción del selector
 				if (esc_attr($a['label']) == 'true') {
-					$out = '<label>'.$var_required.$var_placeholder.'<input class="datepicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_day" /></label>'."\n";
+					$out = '<label>'.$var_required.$var_placeholder.'<input class="datepicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_day" data-name="'.$var_name.'" /></label>'."\n";
 				} else {
-					$out = '<input class="datepicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_day" placeholder="'.$var_required.$var_placeholder.'" />'."\n";
+					$out = '<input class="datepicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_day" placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'" />'."\n";
 				}
+				if ($var_name == '') { $var_name = $var_placeholder; }
 				
 				// Script específico
 				$out .= '<script type="text/javascript">'."\n";
@@ -305,12 +333,13 @@ if (!function_exists('b_s_input')) {
 
 			// Selector
 			case 'select':
+				if ($var_name == '') { $var_name = $var_placeholder; }
 				$var_key = rand(0, 99999999);
 				if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Select an option', 'bilnea'); }
 				if (esc_attr($a['label']) == 'true') {
-					$out = '<label><select class="input'.$var_class.'"'.$var_id.' name="b_i_custom_select-'.$var_key.'">'."\n";
+					$out = '<label><select class="input'.$var_class.'"'.$var_id.' name="b_i_custom_select-'.$var_key.'" data-name="'.$var_name.'">'."\n";
 				} else {
-					$out = '<select class="input'.$var_class.'"'.$var_id.' name="b_i_custom_select-'.$var_key.'">'."\n";
+					$out = '<select class="input'.$var_class.'"'.$var_id.' name="b_i_custom_select-'.$var_key.'" data-name="'.$var_name.'">'."\n";
 					$out .= '  <option disabled selected>'.$var_placeholder.'</option>'."\n";
 				}
 				$var_options = explode('|', esc_attr($a['options']));
@@ -330,6 +359,7 @@ if (!function_exists('b_s_input')) {
 			// Radio
 			case 'radio':
 				$var_key = rand(0, 99999999);
+				if ($var_name == '') { $var_name = 'Opción'; }
 				$var_options = explode('|', esc_attr($a['options']));
 				if (esc_attr($a['label']) == 'true') {
 					$out = '<fieldset><legend>'.$var_required.$var_placeholder.'</legend>';
@@ -340,9 +370,9 @@ if (!function_exists('b_s_input')) {
 					$var_random = rand(0, 999);
 					if (count(explode(':', $option)) > 1) {
 						$option = explode(':', $option);
-						$out .= '  <input class="b_input_radio'.$var_class.'"type="radio" value="'.$option[0].'" name="b_i_custom_radio-'.$var_key.'" id="radio-'.$var_random.'"><label for="radio-'.$var_random.'">'.$option[1].'</label>'."\n";
+						$out .= '  <input data-name="'.$var_name.'" class="b_input_radio'.$var_class.'"type="radio" value="'.$option[0].'" name="b_i_custom_radio-'.$var_key.'" id="radio-'.$var_random.'"><label for="radio-'.$var_random.'">'.$option[1].'</label>'."\n";
 					} else {
-						$out .= '  <input class="b_input_radio'.$var_class.'"type="radio" value="'.$option.'" name="b_i_custom_radio-'.$var_key.'" id="radio-'.$var_random.'"><label for="radio-'.$var_random.'">'.$option.'</label>'."\n";
+						$out .= '  <input data-name="'.$var_name.'" class="b_input_radio'.$var_class.'"type="radio" value="'.$option.'" name="b_i_custom_radio-'.$var_key.'" id="radio-'.$var_random.'"><label for="radio-'.$var_random.'">'.$option.'</label>'."\n";
 					}
 				}
 				if (esc_attr($a['label']) == 'true') { $out .= '</fieldset>'; }
@@ -351,34 +381,37 @@ if (!function_exists('b_s_input')) {
 
 			// Nombre (Aparecerá como remitente del mensaje)
 			case 'name':
+				if ($var_name == '') { $var_name = 'Nombre'; }
 				if ($var_placeholder == '' || $var_placeholder = 'null') {
 					$var_placeholder = __('Name', 'bilnea');
 				}
 				if (esc_attr($a['label']) == 'true') {
-					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_'.esc_attr($a['type']).'" /></label>';
+					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_'.esc_attr($a['type']).'" data-name="'.$var_name.'" /></label>';
 				} else {
-					return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_'.esc_attr($a['type']).'" placeholder="'.$var_required.$var_placeholder.'" />';
+					return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_'.esc_attr($a['type']).'" placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'" />';
 				}
 				break;
 
 			// Apellidos (Aparecerá como remitente del mensaje)
 			case 'last-name':
+			if ($var_name == '') { $var_name = 'Apellidos'; }
 			if ($var_placeholder == '' || $var_placeholder = 'null') {
 					$var_placeholder = __('Last name', 'bilnea');
 				}
 				if (esc_attr($a['label']) == 'true') {
-					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_'.esc_attr($a['type']).'" /></label>';
+					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_'.esc_attr($a['type']).'" data-name="'.$var_name.'" /></label>';
 				} else {
-					return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_'.esc_attr($a['type']).'" placeholder="'.$var_required.$var_placeholder.'" />';
+					return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_'.esc_attr($a['type']).'" placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'" />';
 				}
 				break;
 
 			// Otros campos
 			default:
+				if ($var_name == '') { $var_name = $var_placeholder; }
 				if (esc_attr($a['label']) == 'true') {
-					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.esc_attr($a['type']).'" /></label>';
+					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.esc_attr($a['type']).'" data-name="'.$var_name.'" /></label>';
 				} else {
-					return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.esc_attr($a['type']).'" placeholder="'.$var_required.$var_placeholder.'" />';
+					return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.esc_attr($a['type']).'" placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'" />';
 				}
 				break;
 		}

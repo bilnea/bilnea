@@ -36,22 +36,27 @@ if (!function_exists('b_a_send_form')) {
 			$var_headers .= 'Content-Type: text/html; charset=UTF-8';
 
 			// Preparación de datos
+			$var_names = json_decode(str_replace('\"', '"', $_POST['b_i_names']), true);
 			$var_table = $wpdb->prefix.'form_users';
 			$var_temp = array();
 			if (isset($_POST['b_i_name']) && $_POST['b_i_name'] != '') {
-				$var_temp['name'] = $_POST['b_i_name'];
+				$var_temp[$var_names['b_i_name']] = $_POST['b_i_name'];
 			}
 			if (isset($_POST['b_i_last-name']) && $_POST['b_i_last-name'] != '') {
-				$var_temp['last name'] = $_POST['b_i_last-name'];
+				$var_temp[$var_names['b_i_last-name']] = $_POST['b_i_last-name'];
+			}
+			if (isset($_POST['b_i_email']) && $_POST['b_i_email'] != '') {
+				$var_temp[$var_names['b_i_email']] = $_POST['b_i_email'];
 			}
 			foreach ($_POST as $key => $value) {
 				if (substr($key, 0, 10) == 'b_i_custom') {
-					$var_temp[str_replace('b_i_custom_', '', $key)] = $value;
+					$var_temp[$var_names[$key]] = $value;
 				}
 			}
 			if (isset($_POST['b_i_message']) && $_POST['b_i_message'] != '') {
-				$var_temp['message'] = $_POST['b_i_message'];
+				$var_temp[$var_names['b_i_message']] = $_POST['b_i_message'];
 			}
+
 			$var_data = array(
 				'data' => serialize($var_temp),
 				'date' => date('Y-m-d H:i:s'),
@@ -67,7 +72,7 @@ if (!function_exists('b_a_send_form')) {
 			$var_message = '<div style="font-family: Arial, Helvetica;"><a href="'.get_home_url().'"><h3>'.get_bloginfo('name').'</h3></a><hr />';
 			$var_message .= 'Se ha enviado un mensaje a través del formulario web '.$var_form_name.'de '.get_bloginfo('name').'.<hr />';
 			foreach ($var_temp as $key => $value) {
-				$var_message .= '<strong>'.ucfirst($key).'</strong>: '.$value.'<br />';
+				$var_message .= '<strong>'.$key.'</strong>: '.$value.'<br />';
 			}
 			$var_message .= '<hr />Mensaje enviado el '.date('j/n/Y').' a las '.date('G:i').' desde la dirección IP '.$_POST['b_i_ip'].'.</div>';
 			$var_subject = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_subject']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0");
@@ -85,14 +90,29 @@ if (!function_exists('b_a_send_form')) {
 			if (wp_mail($var_to, $var_subject, $var_message, $var_headers)) {
 				$wpdb->insert($var_table, $var_data);
 				setlocale(LC_ALL, $var_locale);
-				echo rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_sucess']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0");
-				echo '<script>window.location.href = "'.get_permalink(rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_redirect']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0")).'";</script>';
 
+				// Correo de respuesta
+				if ((isset($_POST['b_i_response']) && $_POST['b_i_response'] == 'true') && (isset($_POST['b_i_email']) && $_POST['b_i_email'] != '')) {
+					$var_message = __('Your message has been sent sucesfully sent.<br /><br />Here is a copy of your message.', 'bilnea').'<hr />';
+					foreach ($var_temp as $key => $value) {
+						$var_message .= '<strong>'.$key.'</strong>: '.$value.'<br />';
+					}
+					$var_message .= '<hr />'.__('Please do not respond directly to this e-mail. The inbox of this account is disabled.', 'bilnea');
+					$var_headers = 'From: '.get_bloginfo('name').' <noreply@'.$_SERVER['SERVER_NAME'].'>'."\r\n";
+					$var_headers .= 'Content-Type: text/html; charset=UTF-8';
+					wp_mail($_POST['b_i_email'], __('Your message have been sent sucesfully.', 'bilnea'), $var_message, $var_headers);
+				}
+				
+				if (isset($_POST['b_i_redirect'])) {
+					echo '<script>jQuery(\'form[data-id="'.$_POST['eid'].'"]\')[0].reset(); window.location.href = "'.get_permalink(rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_redirect']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0")).'";</script>';
+				} else {
+					echo '<script>jQuery(\'form[data-id="'.$_POST['eid'].'"]\')[0].reset();</script><p>'.rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_sucess']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0").'</p>';
+				}
 			} else {
 				$var_data['status'] = 'error';
 				$wpdb->insert($var_table, $var_data);
 				setlocale(LC_ALL, $var_locale);
-				echo __('Sorry, an error has ocurred sending your message. Please try again later.', 'bilnea');
+				echo '<p>'.__('Sorry, an error has ocurred sending your message. Please try again later.', 'bilnea').'</p>';
 			}
 	        wp_die();
 		} else {

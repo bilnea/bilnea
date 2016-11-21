@@ -2,6 +2,13 @@ jQuery(function($) {
 	$('form[data-id]').each(function() {
 		var ran = $(this).attr('data-id');
 
+		var x = {};
+		$(this).find($('[data-name]')).each(function() {
+			var t = $(this);
+			x[t.attr('name')] = t.attr('data-name');
+		});
+		$(this).find($('[name="b_i_names"]')).val(JSON.stringify(x));
+
 		$('body').on('keyup', 'input.captcha', function() {
 			var key = event.keyCode || event.charCode;
 			var inputs = $('input.captcha');
@@ -64,7 +71,8 @@ jQuery(function($) {
 				}
 			}
 		});
-		$('#form-send').click(function() {
+		$(this).next('.form-send').click(function() {
+			console.log($(this));
 			var f = $(this).prev(),
 				g = 0,
 				x = '';
@@ -119,9 +127,19 @@ jQuery(function($) {
 			});
 			if (g == 0) {
 				var a = f.next().data('send'),
-					b = f.next().data('sending');
+					b = f.next().data('sending'),
+					data = new FormData(f);
+				console.log(data);
+				if (f.find($('[type="file"]')).length) {
+					$.each(f.find($('[type="file"]'))[0].files, function(i, file) {
+						data.append('file[]', file);
+					});
+				};
+				data.append('cid', f.find($('div.captcha')).data('id'));
+				data.append('eid', f.data('id'));
+				data.append('action', 'b_send_form');
 				$.ajax({
-					url: bilnea.main_uri+'/wp-admin/admin-ajax.php',
+					url: bilnea.root_url+'/wp-admin/admin-ajax.php',
 					type: 'POST',
 					data: f.serialize()+'&cid='+f.find($('div.captcha')).data('id')+'&eid='+f.data('id')+'&redirect='+f.data('redirect')+'&action=b_send_form',
 					beforeSend: function() {

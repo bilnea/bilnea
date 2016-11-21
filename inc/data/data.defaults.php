@@ -58,7 +58,7 @@ function b_f_default($var_data) {
 			return '10px';
 			break;
 		case 'top_bar_font':
-			return '"Open Sans", sans-serif';
+			return 'Open+Sans';
 			break;
 		case 'b_opt_main-menu_ttf-color':
 			return 'black';
@@ -70,13 +70,13 @@ function b_f_default($var_data) {
 			return 1;
 			break;
 		case 'b_opt_main-menu_ttf-font':
-			return '"Montserrat", sans-serif';
+			return 'Montserrat';
 			break;
 		case 'b_opt_main-color':
 			return 'white';
 			break;
 		case 'b_opt_h1_ttf-font':
-			return '"Montserrat", sans-serif';
+			return 'Montserrat';
 			break;
 		case 'b_opt_h1_ttf-size'	:
 			return '28px';
@@ -85,7 +85,7 @@ function b_f_default($var_data) {
 			return 'black';
 			break;
 		case 'b_opt_h2_ttf-font'	:
-			return '"Montserrat", sans-serif';
+			return 'Montserrat';
 			break;
 		case 'b_opt_h2_ttf-size'	:
 			return '24px';
@@ -94,7 +94,7 @@ function b_f_default($var_data) {
 			return 'black';
 			break;
 		case 'b_opt_h3_ttf-font'	:
-			return '"Montserrat", sans-serif';
+			return 'Montserrat';
 			break;
 		case 'b_opt_h3_ttf-size'	:
 			return '20px';
@@ -103,7 +103,7 @@ function b_f_default($var_data) {
 			return 'black';
 			break;
 		case 'b_opt_h4_ttf-font'	:
-			return '"Montserrat", sans-serif';
+			return 'Montserrat';
 			break;
 		case 'b_opt_h4_ttf-size'	:
 			return '18px';
@@ -112,7 +112,7 @@ function b_f_default($var_data) {
 			return 'black';
 			break;
 		case 'b_opt_h5_ttf-font'	:
-			return '"Montserrat", sans-serif';
+			return 'Montserrat';
 			break;
 		case 'b_opt_h5_ttf-size'	:
 			return '16px';
@@ -121,7 +121,7 @@ function b_f_default($var_data) {
 			return 'black';
 			break;
 		case 'b_opt_h6_ttf-font'	:
-			return '"Montserrat", sans-serif';
+			return 'Montserrat';
 			break;
 		case 'b_opt_h6_ttf-size'	:
 			return '14px';
@@ -133,7 +133,7 @@ function b_f_default($var_data) {
 			return '14px';
 			break;
 		case 'b_opt_text_ttf-font':
-			return '"Open Sans", sans-serif';
+			return 'Open+Sans';
 			break;
 		case 'b_opt_text_ttf-color':
 			return 'black';
@@ -142,7 +142,7 @@ function b_f_default($var_data) {
 			return '14px';
 			break;
 		case 'b_opt_bold_ttf-font':
-			return '"Open Sans", sans-serif';
+			return 'Open+Sans';
 			break;
 		case 'b_opt_bold_ttf-color':
 			return 'black';
@@ -151,7 +151,7 @@ function b_f_default($var_data) {
 			return '14px';
 			break;
 		case 'b_opt_link_ttf-font':
-			return '"Open Sans", sans-serif';
+			return 'Open+Sans';
 			break;
 		case 'b_opt_link_ttf-color':
 			return 'black';
@@ -160,7 +160,7 @@ function b_f_default($var_data) {
 			return '14px';
 			break;
 		case 'b_opt_hover_ttf-font':
-			return '"Open Sans", sans-serif';
+			return 'Open+Sans';
 			break;
 		case 'b_opt_hover_ttf-color':
 			return 'rgba(40, 157, 204, 0.8)';
@@ -184,7 +184,7 @@ function b_f_default($var_data) {
 			return '18px';
 			break;
 		case 'footer_title_font'	:
-			return '"Montserrat", sans-serif';
+			return 'Montserrat';
 			break;
 		case 'footer_text_color'	:
 			return '#222222';
@@ -193,7 +193,7 @@ function b_f_default($var_data) {
 			return '18px';
 			break;
 		case 'footer_text_font'	:
-			return '"Open Sans", sans-serif';
+			return 'Open+Sans';
 			break;
 		case 'b_opt_submenu-color':
 			return 'rgba(255,255,255,0.8)';

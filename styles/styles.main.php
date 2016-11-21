@@ -41,7 +41,7 @@ foreach ($fnt as $key => $value) {
 
 .main_container  * {
 	font-size: <?= b_f_size('b_opt_text_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_text_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_text_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_text_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -59,7 +59,7 @@ foreach ($fnt as $key => $value) {
 .main_container  strong,
 .main_container  strong * {
 	font-size: <?= b_f_size('b_opt_bold_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_bold_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_bold_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_bold_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -75,7 +75,7 @@ foreach ($fnt as $key => $value) {
 
 .main_container a, .main_container a * {
 	font-size: <?= b_f_size('b_opt_link_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_link_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_link_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_link_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -93,7 +93,7 @@ foreach ($fnt as $key => $value) {
 
 .main_container h1, .main_container h1 * {
 	font-size: <?= b_f_size('b_opt_h1_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_h1_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_h1_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_h1_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -109,7 +109,7 @@ foreach ($fnt as $key => $value) {
 
 .main_container h2, .main_container h2 * {
 	font-size: <?= b_f_size('b_opt_h2_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_h2_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_h2_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_h2_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -125,7 +125,7 @@ foreach ($fnt as $key => $value) {
 
 .main_container h3, .main_container h3 * {
 	font-size: <?= b_f_size('b_opt_h3_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_h3_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_h3_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_h3_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -141,7 +141,7 @@ foreach ($fnt as $key => $value) {
 
 .main_container h4, .main_container h4 * {
 	font-size: <?= b_f_size('b_opt_h4_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_h4_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_h4_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_h4_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -157,7 +157,7 @@ foreach ($fnt as $key => $value) {
 
 .main_container h5, .main_container h5 * {
 	font-size: <?= b_f_size('b_opt_h5_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_h5_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_h5_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_h5_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -173,7 +173,7 @@ foreach ($fnt as $key => $value) {
 
 .main_container h6, .main_container h6 * {
 	font-size: <?= b_f_size('b_opt_h6_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_h6_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_h6_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_h6_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -326,7 +326,7 @@ html[lang="ar"] .row > * {
 
 .header-top, .header-top * {
 	font-size: <?= b_f_size('b_opt_top-bar_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_top-bar_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_top-bar_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_top-bar_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -374,7 +374,7 @@ header a.logo {
 #main_menu li,
 #main_menu li * {
 	font-size: <?= b_f_size('b_opt_main-menu_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_main-menu_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_main-menu_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_main-menu_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -390,7 +390,7 @@ header a.logo {
 
 #mobile-menu #main_menu > ul > li > a {
 	font-size: <?= b_f_size('b_opt_main-menu_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_main-menu_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_main-menu_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_main-menu_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -442,7 +442,7 @@ header a.logo {
 
 #footer * {
 	font-size: <?= b_f_size('b_opt_footer_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_footer_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_footer_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_footer_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -458,7 +458,7 @@ header a.logo {
 
 #footer .footer-title {
 	font-size: <?= b_f_size('b_opt_footer-title_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_footer-title_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_footer-title_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_footer-title_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -474,7 +474,7 @@ header a.logo {
 
 #footer a {
 	font-size: <?= b_f_size('b_opt_footer-link_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_footer-link_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_footer-link_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_footer-link_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -490,7 +490,7 @@ header a.logo {
 
 #footer a:hover {
 	font-size: <?= b_f_size('b_opt_footer-hover_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_footer-hover_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_footer-hover_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_footer-hover_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -510,7 +510,7 @@ header a.logo {
 
 #socket * {
 	font-size: <?= b_f_size('b_opt_socket_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_socket_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_socket_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_socket_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -527,7 +527,7 @@ header a.logo {
 
 #socket a {
 	font-size: <?= b_f_size('b_opt_socket-link_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_socket-link_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_socket-link_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_socket-link_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>
@@ -543,7 +543,7 @@ header a.logo {
 
 #socket a:hover {
 	font-size: <?= b_f_size('b_opt_socket-hover_ttf-size') ?>;
-	font-family: <?= b_f_option('b_opt_socket-hover_ttf-font') ?>;
+	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_socket-hover_ttf-font')]['name'] ?>;
 	<?php if (strpos(b_f_option('b_opt_socket-hover_ttf-style'), 'italic')) { ?>
 	font-style: 'italic';
 	<?php } ?>

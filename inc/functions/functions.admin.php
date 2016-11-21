@@ -36,8 +36,8 @@ if (!function_exists('b_f_fonts')) {
 				<?php
 				
 				foreach ($b_g_google_fonts as $key => $value) {
-					$var_current_font = b_f_option('b_opt_'.$var_font.'_ttf-font');
-					echo '<option value="'.$key.'" '.selected($var_current_font, $key).' data="'.implode(',', $value['sizes']).'">'.str_replace('+', ' ', $value['name']).'</option>';
+					$var_current_font = b_f_option('b_opt_'.$var_font.'_ttf-font', true);
+					echo '<option value="'.$value['name'].'" '.selected($var_current_font, $value['name']).' data="'.implode(',', $value['sizes']).'">'.str_replace('+', ' ', $value['name']).'</option>';
 				}
 
 				?>
@@ -114,14 +114,14 @@ if (!function_exists('b_f_smtp_server')) {
 		}
 
 		if (b_f_option('b_opt_smtp-secure') == 1 && b_f_option('b_opt_smtp-protocol') == 'ssl') {
-			$phpmailer->SMTPSecure = 'ssl';
+			$var_smtp->SMTPSecure = 'ssl';
 		}
 
 		if (b_f_option('b_opt_smtp-secure') == 1 && b_f_option('b_opt_smtp-protocol') == 'tls') {
-			$phpmailer->SMTPSecure = 'tls';
+			$var_smtp->SMTPSecure = 'tls';
 		}
 		
-	    $phpmailer->IsSMTP();
+	    $var_smtp->IsSMTP();
 
 	}
 

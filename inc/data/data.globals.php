@@ -41,8 +41,8 @@ foreach ($var_fonts->items as $font) {
 		if ($temp == 'regular') { $temp = '400'; }
 		if ($temp == 'italic') { $temp = '400italic'; }
 	}
-	$b_g_google_fonts['"'.$font->family.'", '.$font->category] = array(
-		'name' => str_replace(' ', '+', $font->family),
+	$b_g_google_fonts[str_replace(' ', '+', $font->family)] = array(
+		'name' => '"'.$font->family.'", '.$font->category,
 		'sizes' => $var_sizes
 	);
 }

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bilnea Wordpress theme\n"
-"POT-Creation-Date: 2016-09-30 12:50+0200\n"
-"PO-Revision-Date: 2016-09-30 12:52+0200\n"
+"POT-Creation-Date: 2016-11-20 16:10+0100\n"
+"PO-Revision-Date: 2016-11-20 16:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: Samuel E. Cerezo <samuelcerezo@bilnea.com>\n"
 "Language: es\n"
@@ -10,57 +10,45 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.6\n"
-"X-Poedit-Basepath: bilnea\n"
+"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: footer.php:65 footer.php:82
-msgid "Legal Advice"
-msgstr "Aviso legal"
-
-#: footer.php:68 footer.php:85
-msgid "Privacy Policy"
-msgstr "Política de privacidad"
-
-#: footer.php:71 footer.php:88
-msgid "Cookies Policy"
-msgstr "Política de cookies"
-
-#: footer.php:93
+#: footer.php:73
 msgid "Made with <i class=\"fa fa-heart-o\"></i> by"
 msgstr "Hecho con <i class=\"fa fa-heart-o\"></i> por"
 
-#: footer.php:93
+#: footer.php:73
 msgid "bilnea. Communication & Digital Marketing Agency"
 msgstr "bilnea. Agencia de Comunicación y Marketing Digital"
 
-#: functions.php:238
+#: functions.php:725
 msgid "author"
 msgstr "autor"
 
-#: functions.php:239
+#: functions.php:726
 msgid "search"
 msgstr "buscar"
 
-#: functions.php:240
+#: functions.php:727
 msgid "comments"
 msgstr "comentarios"
 
-#: functions.php:241
+#: functions.php:728
 msgid "page"
 msgstr "pagina"
 
-#: functions.php:1302
+#: functions.php:1365
 msgid "* I have read, understood and accept the "
 msgstr "* He leído, entiendo y acepto la"
 
-#: functions.php:1302
+#: functions.php:1365
 msgid "privacy policy"
 msgstr "política de privacidad"
 
-#: header.php:170
+#: header.php:83
 #, php-format
 msgid ""
 "We use our own and third-part <em>cookies</em> to analyse the use and "
@@ -75,57 +63,165 @@ msgstr ""
 "configuración u obtener más información <a href=\"%1$s\" target=\"_blank\" "
 "title=\"Política de cookies de %2$s\">aquí</a>."
 
-#: header.php:172
+#: header.php:87
 msgid "Ok"
 msgstr "Aceptar"
 
-#: inc/shortcodes.php:275
-msgid "Email"
-msgstr "Correo electrónico"
+#: inc/admin/admin.forms.php:132
+#, php-format
+msgid "Response to the message sent from &quot;%s&quot; website "
+msgstr "Respuesta al mensaje enviado desde la página web &quot;%s&quot; "
 
-#: inc/shortcodes.php:279
-msgid "Message"
-msgstr "Mensaje"
+#: inc/ajax/ajax.form.php:96
+msgid ""
+"Your message has been sent sucesfully sent.<br /><br />Here is a copy of "
+"your message."
+msgstr ""
+"Tu mensaje se ha enviado correctamente.<br /><br />A continuación se adjunta "
+"una copia de tu mensaje."
 
-#: inc/shortcodes.php:285
-msgid "State"
-msgstr "Provincia"
+#: inc/ajax/ajax.form.php:100
+msgid ""
+"Please do not respond directly to this e-mail. The inbox of this account is "
+"disabled."
+msgstr ""
+"Por favor, no respondas a este mensaje. La recepción de mensajes para esta "
+"cuenta está deshabilitada."
 
-#: inc/shortcodes.php:298 inc/shortcodes.php:1590
+#: inc/ajax/ajax.form.php:103
+msgid "Your message have been sent sucesfully."
+msgstr "Tu mensaje se ha enviado correctamente."
+
+#: inc/ajax/ajax.form.php:115
+msgid ""
+"Sorry, an error has ocurred sending your message. Please try again later."
+msgstr ""
+"Lo sentimos, ha ocurrido un error al enviar el mensaje. Por favor, vuelva a "
+"intentarlo más tarde."
+
+#: inc/data/data.globals.php:20
+msgid "January"
+msgstr "Enero"
+
+#: inc/data/data.globals.php:21
+msgid "February"
+msgstr "Febrero"
+
+#: inc/data/data.globals.php:22
+msgid "March"
+msgstr "Marzo"
+
+#: inc/data/data.globals.php:23
+msgid "April"
+msgstr "Abril"
+
+#: inc/data/data.globals.php:24
+msgid "May"
+msgstr "Mayo"
+
+#: inc/data/data.globals.php:25
+msgid "June"
+msgstr "Junio"
+
+#: inc/data/data.globals.php:26
+msgid "July"
+msgstr "Julio"
+
+#: inc/data/data.globals.php:27
+msgid "August"
+msgstr "Agosto"
+
+#: inc/data/data.globals.php:28
+msgid "September"
+msgstr "Septiembre"
+
+#: inc/data/data.globals.php:29
+msgid "October"
+msgstr "Octubre"
+
+#: inc/data/data.globals.php:30
+msgid "November"
+msgstr "Noviembre"
+
+#: inc/data/data.globals.php:31
+msgid "December"
+msgstr "Diciembre"
+
+#: inc/shortcodes.php:356
+msgid "No posts found"
+msgstr "Sin resultados"
+
+#: inc/shortcodes.php:361
+#, php-format
+msgid "Page %1$s of %2$s"
+msgstr "Página %1$s de %2$s"
+
+#: inc/shortcodes.php:535
+msgid "It's not possible to get latest tweets. No username configured"
+msgstr ""
+"No ha sido posible obtener los últimos tuits. No se ha definido usuario"
+
+#: inc/shortcodes.php:538
+msgid "No tweets"
+msgstr "Sin tuits"
+
+#: inc/shortcodes.php:563
+msgid "* Name"
+msgstr "* Nombre"
+
+#: inc/shortcodes.php:565
+msgid "* Last name"
+msgstr "* Apellidos"
+
+#: inc/shortcodes.php:567
+msgid "* Email"
+msgstr "* Correo electrónico"
+
+#: inc/shortcodes.php:569 inc/shortcodes/shortcodes.form.php:179
 msgid "Privacy policy"
 msgstr "política de privacidad"
 
-#: inc/shortcodes.php:301 inc/shortcodes.php:1593
+#: inc/shortcodes.php:572 inc/shortcodes/shortcodes.form.php:182
 msgctxt "female"
 msgid "the"
 msgstr "la"
 
-#: inc/shortcodes.php:304 inc/shortcodes.php:1596
+#: inc/shortcodes.php:575 inc/shortcodes/shortcodes.form.php:185
 msgctxt "male"
 msgid "the"
 msgstr "el"
 
-#: inc/shortcodes.php:308 inc/shortcodes.php:1599
+#: inc/shortcodes.php:578 inc/shortcodes/shortcodes.form.php:189
 msgid "I have read, understood and accept"
 msgstr "He leído, entiendo y acepto"
 
-#: inc/shortcodes.php:321
-msgid "Fill in the following fields."
-msgstr "Complete los siguientes campos."
+#: inc/shortcodes.php:579
+msgid "Suscribe"
+msgstr "Suscríbete"
 
-#: inc/shortcodes.php:333
-msgid "No selected file"
-msgstr "Ningún archivo seleccionado"
+#: inc/shortcodes/shortcodes.blog.php:71 inc/shortcodes/shortcodes.blog.php:126
+msgid "Published by "
+msgstr "Publicado por"
 
-#: inc/shortcodes.php:333
-msgid "Maximum size exceeded"
-msgstr "Sobrepasado tamaño máximo"
+#: inc/shortcodes/shortcodes.blog.php:74 inc/shortcodes/shortcodes.blog.php:129
+msgid "the"
+msgstr "el"
 
-#: inc/shortcodes.php:410
-msgid "Select an option"
-msgstr "Selecciona una opción"
+#: inc/shortcodes/shortcodes.blog.php:93 inc/shortcodes/shortcodes.blog.php:148
+msgid "Read more"
+msgstr "Leer más"
 
-#: inc/shortcodes.php:465
+#: inc/shortcodes/shortcodes.blog.php:183
+msgid "All"
+msgstr "Todo"
+
+#: inc/shortcodes/shortcodes.blog.php:246
+#: inc/shortcodes/shortcodes.blog.php:259
+#: inc/shortcodes/shortcodes.blog.php:261
+msgid "Tweet this"
+msgstr "Tuitéalo"
+
+#: inc/shortcodes/shortcodes.form.php:25
 msgid ""
 "Your message has been sent sucesfully. Your request will delay. A copy has "
 "been sent to your email."
@@ -133,71 +229,83 @@ msgstr ""
 "Mensaje enviado correctamente. Atenderemos su solicitud a la mayor brevedad. "
 "Se ha enviado una copia a su dirección de correo electrónico."
 
-#: inc/shortcodes.php:468
+#: inc/shortcodes/shortcodes.form.php:26
 msgid "Send"
 msgstr "Enviar"
 
-#: inc/shortcodes.php:506
+#: inc/shortcodes/shortcodes.form.php:75
 msgid "Sending"
 msgstr "Enviando"
 
-#: inc/shortcodes.php:575 inc/shortcodes.php:617
-msgid "Published by "
-msgstr "Publicado por"
+#: inc/shortcodes/shortcodes.form.php:135
+msgid "Email"
+msgstr "Correo electrónico"
 
-#: inc/shortcodes.php:578 inc/shortcodes.php:620
-msgid "the"
-msgstr "el"
+#: inc/shortcodes/shortcodes.form.php:146
+msgid "Message"
+msgstr "Mensaje"
 
-#: inc/shortcodes.php:595 inc/shortcodes.php:637
-msgid "Read more"
-msgstr "Leer más"
+#: inc/shortcodes/shortcodes.form.php:161
+msgid "State"
+msgstr "Provincia"
 
-#: inc/shortcodes.php:681
+#: inc/shortcodes/shortcodes.form.php:205
+#, php-format
+msgid "Fill in the following field with <strong>\"%s\"</strong>"
+msgstr "Rellena el siguiente campo con <strong>\"%s\"</strong>"
+
+#: inc/shortcodes/shortcodes.form.php:208
+msgid "Fill in the following fields."
+msgstr "Complete los siguientes campos."
+
+#: inc/shortcodes/shortcodes.form.php:223
+msgid "No selected file"
+msgstr "Ningún archivo seleccionado"
+
+#: inc/shortcodes/shortcodes.form.php:223
+msgid "Maximum size exceeded"
+msgstr "Sobrepasado tamaño máximo"
+
+#: inc/shortcodes/shortcodes.form.php:327
+msgid "Select an option"
+msgstr "Selecciona una opción"
+
+#: inc/shortcodes/shortcodes.form.php:375
+msgid "Name"
+msgstr "Nombre"
+
+#: inc/shortcodes/shortcodes.form.php:388
+msgid "Last name"
+msgstr "Apellidos"
+
+#: inc/shortcodes/shortcodes.general.php:153
 msgid "Home"
 msgstr "Inicio"
 
-#: inc/shortcodes.php:1111
-msgid "No posts found"
+#: inc/shortcodes/shortcodes.general.php:198
+msgid "Categories"
+msgstr "Categorías"
+
+#: inc/shortcodes/shortcodes.general.php:200
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: inc/shortcodes/shortcodes.general.php:209
+#, php-format
+msgid "Search results for \"%1$s\""
+msgstr "Resultados de búsqueda para \"%1$s\""
+
+#: inc/shortcodes/shortcodes.general.php:227
+msgid "Publications of"
+msgstr "Publicaciones de"
+
+#: inc/shortcodes/shortcodes.general.php:229
+msgid "Not found"
 msgstr "Sin resultados"
 
-#: inc/shortcodes.php:1116
-#, php-format
-msgid "Page %1$s of %2$s"
-msgstr "Página %1$s de %2$s"
-
-#: inc/shortcodes.php:1373
-msgid "All"
-msgstr "Todo"
-
-#: inc/shortcodes.php:1395 inc/shortcodes.php:1397
-msgid "Tweet this"
-msgstr "Tuitéalo"
-
-#: inc/shortcodes.php:1557
-msgid "It's not possible to get latest tweets. No username configured"
-msgstr ""
-"No ha sido posible obtener los últimos tuits. No se ha definido usuario"
-
-#: inc/shortcodes.php:1560
-msgid "No tweets"
-msgstr "Sin tuits"
-
-#: inc/shortcodes.php:1584
-msgid "* Name"
-msgstr "* Nombre"
-
-#: inc/shortcodes.php:1586
-msgid "* Last name"
-msgstr "* Apellidos"
-
-#: inc/shortcodes.php:1588
-msgid "* Email"
-msgstr "* Correo electrónico"
-
-#: inc/shortcodes.php:1600
-msgid "Suscribe"
-msgstr "Suscríbete"
+#: inc/shortcodes/shortcodes.social.php:178
+msgid "No Twitter API key set"
+msgstr "No se ha establecido una clave API de Twitter"
 
 #: index.php:29
 msgid "Comment"
@@ -244,6 +352,15 @@ msgid "Try to redefine your search using another term, or visit the homepage."
 msgstr ""
 "Pruebe a redefinir su búsqueda utilizando otro término o visite la página "
 "principal."
+
+#~ msgid "Legal Advice"
+#~ msgstr "Aviso legal"
+
+#~ msgid "Privacy Policy"
+#~ msgstr "Política de privacidad"
+
+#~ msgid "Cookies Policy"
+#~ msgstr "Política de cookies"
 
 #~ msgid "Made with <i class=\"fa fa-heart\"></i> by"
 #~ msgstr "Hecho con <i class=“fa fa-heart”"
