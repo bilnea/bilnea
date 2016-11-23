@@ -41,7 +41,6 @@ if (function_exists('icl_object_id')) {
 	// Variables globales
 	global $sitepress;
 
-
 	// Variables locales
 	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
 

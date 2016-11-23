@@ -170,10 +170,11 @@ if (!function_exists('b_f_load_scripts')) {
 		wp_register_script('functions.accordion', get_template_directory_uri().'/js/internal/functions.accordion.js', array('jquery'), $b_g_version, true);
 		wp_register_script('functions.design.parallax', get_template_directory_uri().'/js/internal/functions.design.parallax.js', array('jquery'), $b_g_version, true);
 		wp_register_script('functions.design.menu', get_template_directory_uri().'/js/internal/functions.design.menu.js', array('jquery'), $b_g_version, true);
-		wp_register_script('functions.admin', get_template_directory_uri().'/js/internal/functions.admin.js', array('jquery', 'functions.functionality.spectrum', 'wp-color-picker'), $b_g_version, true);
+		wp_register_script('functions.admin', get_template_directory_uri().'/js/internal/functions.admin.js', array(), $b_g_version, true);
 			
 		// Scripts del tema hijo
-		wp_register_script('functions.child.main', get_stylesheet_directory_uri().'/js/main.js', array('jquery', 'functions.admin'), $b_g_version, true);
+		wp_register_script('functions.child.main', get_stylesheet_directory_uri().'/js/main.js', array('jquery'), $b_g_version, true);
+		wp_register_script('functions.child.admin', get_stylesheet_directory_uri().'/js/admin.js', array('jquery', 'functions.admin'), $b_g_version, true);
 
 		// jQuery UI
 		wp_register_script('functions.core.jquery.ui', get_template_directory_uri().'/js/external/functions.core.jquery.ui.js', array('jquery'), b_f_versions('jquery-ui'), true);
@@ -351,6 +352,7 @@ if (!function_exists('b_f_backend_scripts')) {
 		wp_localize_script('functions.admin', 'bilnea', $var_temp);
 		wp_enqueue_script('functions.admin');
 		wp_enqueue_script('functions.accordion');
+		wp_enqueue_script('functions.child.admin');
 
 		wp_enqueue_script('functions.core.jquery.ui');
 		$var_log .= 'jQuery UI '.b_f_versions('jquery-ui').'\n';

@@ -6,27 +6,32 @@ define('WP_USE_THEMES', false);
 
 $url = explode('wp-content', $_SERVER['SCRIPT_FILENAME']);
 
-require_once('../inc/fonts.php');
-
+require_once('../inc/functions/functions.admin.php');
 require_once($url[0].'wp-load.php' );
 
-$fnt = [];
-$opt = get_option('bilnea_settings')['b_opt_custom-font'];
-foreach ($opt as $val) {
-	$ttf = explode('|', $val)[0];
-	$siz = explode('|', $val)[1];
-	if (!isset($fnt[$ttf])) {
-		$fnt[$ttf] = array($siz);
-	} else {
-		if (!in_array($siz, $fnt[$ttf])) {
-			array_push($fnt[$ttf], $siz);
+$var_fonts = [];
+
+foreach (get_option('bilnea_settings') as $key => $value) {
+	if (strpos($key, 'ttf-font') !== false) {
+		if ($value == '') {
+			$value = b_f_default($key);
+		}
+		$var_current_font = str_replace('b_opt_', '', explode('ttf-', $key)[0]);
+		$var_size = b_f_option('b_opt_'.$var_current_font.'ttf-style');
+		if (!isset($var_fonts[$value]) && $value != '') {
+			$var_fonts[$value] = array($var_size);
+		} else {
+			if (!in_array($var_size, $var_fonts[$value]) && $value != '') {
+				array_push($var_fonts[$value], $var_size);
+			}
 		}
 	}
 }
 
-$fin = [];
-foreach ($fnt as $key => $value) {
-	array_push($fin, $key.':'.join($value, ','));
+$var_temp = [];
+
+foreach ($var_fonts as $key => $value) {
+	array_push($var_temp, $key.':'.join($value, ','));
 }
 
 ?>
@@ -35,7 +40,7 @@ foreach ($fnt as $key => $value) {
 
 /* Definición de tipografías */
 
-@import url(http://fonts.googleapis.com/css?family=<?= implode('|', $fin) ?>);
+@import url(http://fonts.googleapis.com/css?family=<?= implode('|', $var_temp) ?>);
 
 /* Estilos generales */
 

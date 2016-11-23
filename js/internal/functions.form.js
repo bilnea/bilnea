@@ -1,7 +1,7 @@
 jQuery(function($) {
 	$('form[data-id]').each(function() {
-		var ran = $(this).attr('data-id');
-
+		var ran = $(this).attr('data-id'),
+			errors = [form_errors.text];
 		var x = {};
 		$(this).find($('[data-name]')).each(function() {
 			var t = $(this);
@@ -71,9 +71,9 @@ jQuery(function($) {
 				}
 			}
 		});
-		$(this).next('.form-send').click(function() {
-			console.log($(this));
-			var f = $(this).prev(),
+		$(this).find($('.form-send')).click(function() {
+			var m = $(this);
+			var f = $(this).closest('form'),
 				g = 0,
 				x = '';
 			$(f.find($('input.required, textarea.required'))).each(function() {
@@ -83,12 +83,14 @@ jQuery(function($) {
 					t.addClass('invalid');
 					g++;
 					t = '1';
+					errors.push(form_errors.empty);
 				};
 			});
 			if (f.find($('input[name$="email"]')).val() != '' && !b_js_check_email(f.find($('input[name$="email"]')).val())) {
 				f.find($('input[name$="email"]')).addClass('invalid');
 				g++;
 				t = '2';
+				errors.push(form_errors.email);
 			};
 			$(f.find($('input.captcha'))).each(function() {
 				var t = $(this);
@@ -96,6 +98,7 @@ jQuery(function($) {
 					t.addClass('invalid');
 					g++;
 					t = '3';
+					errors.push(form_errors.captcha);
 				};
 			});
 			$(f.find($('select.required'))).each(function() {
@@ -104,6 +107,7 @@ jQuery(function($) {
 					t.addClass('invalid');
 					g++;
 					t = '4';
+					errors.push(form_errors.empty);
 				};
 			});
 			$(f.find($('input.required[type="checkbox"]'))).each(function() {
@@ -112,6 +116,7 @@ jQuery(function($) {
 					t.addClass('invalid');
 					g++;
 					t = '5';
+					errors.push(form_errors.empty);
 				};
 			});
 			$(f.find($('input.required[type="checkbox"]'))).next().click(function() {
@@ -121,15 +126,15 @@ jQuery(function($) {
 			$(f.find($('input[type="file"].invalid'))).each(function() {
 				g++;
 				t = '6';
+				errors.push(form_errors.empty);
 			});
 			$('.required.invalid').on('click focus', function() {
 				$(this).removeClass('invalid');
 			});
 			if (g == 0) {
-				var a = f.next().data('send'),
-					b = f.next().data('sending'),
+				var a = m.data('send'),
+					b = m.data('sending'),
 					data = new FormData(f);
-				console.log(data);
 				if (f.find($('[type="file"]')).length) {
 					$.each(f.find($('[type="file"]'))[0].files, function(i, file) {
 						data.append('file[]', file);
@@ -143,14 +148,17 @@ jQuery(function($) {
 					type: 'POST',
 					data: f.serialize()+'&cid='+f.find($('div.captcha')).data('id')+'&eid='+f.data('id')+'&redirect='+f.data('redirect')+'&action=b_send_form',
 					beforeSend: function() {
-						f.next().text(b).addClass('sending');
+						m.text(b).addClass('sending');
 					},
 					success: function (data) {
-						f.next().text(a).removeClass('sending');
-						f.next().next().html(data);
+						m.text(a).removeClass('sending');
+						m.closest('form').next().html(data);
 					}
 				});
-			};
+			} else {
+				$.unique(errors);
+				f.next('.response').html('<div>'+errors.join('. ')+'.</div>');
+			}
 		})
 	});
 });

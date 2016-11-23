@@ -229,7 +229,7 @@ if (function_exists('icl_object_id')) {
 		<div class="main_container <?php if (b_f_option('b_opt_body-width') == 1) { echo ' container'; } ?>" data-role="page">
 
 			<!-- Cabecera de página escritorio -->
-			<header id="header" class="site-header<?php echo ((b_f_option('b_opt_sticky-menu-animated') == 2) ? ' sticky' : ''); ?>" role="banner">
+			<header id="header" class="site-header<?php echo ((b_f_option('b_opt_sticky-menu') == 1) ? ' sticky' : ''); echo ((b_f_option('b_opt_sticky-menu-animated') == 1) ? ' animated' : ''); ?>" role="banner">
 
 				<!-- Barra superior -->
 				<?php

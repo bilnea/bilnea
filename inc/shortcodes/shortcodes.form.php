@@ -15,6 +15,7 @@ if (!function_exists('b_s_form')) {
 		global $b_g_version;
 		global $b_g_hash;
 		global $b_g_forms;
+		global $b_g_lang;
 
 		// Atributos
 		$a = shortcode_atts(array(
@@ -24,7 +25,7 @@ if (!function_exists('b_s_form')) {
 			'to' => b_f_option('b_opt_form-email'),
 			'message' => __('Your message has been sent sucesfully. Your request will delay. A copy has been sent to your email.', 'bilnea'),
 			'send' => __('Send', 'bilnea'),
-			'redirect' => b_f_option('b_opt_form-thanks'),
+			'redirect' => b_f_option('b_opt_form-thanks-'.$b_g_lang),
 			'subject' => sprintf(esc_html__('Message sent from %s website form', 'bilnea'), get_option('blogname')),
 			'name' => 'Página "'.get_the_title(get_the_ID()).'". Formulario '.$b_g_forms,
 		), $atts);
@@ -47,7 +48,16 @@ if (!function_exists('b_s_form')) {
 		(esc_attr($a['id']) != null) ? $var_id = ' id="'.esc_attr($a['id']).'"' : $var_id = '';
 
 		// Javascript del formulario
-		wp_enqueue_script('functions-form', get_template_directory_uri().'/js/internal/functions.form.js', array(), $b_g_version, true);
+		wp_register_script('functions.form', get_template_directory_uri().'/js/internal/functions.form.js', array(), $b_g_version, true);
+		$var_temp = array(
+			'text' => __('There are errors on the form. Please fix them before continuing', 'bilnea'),
+			'empty' => __('Fill in all the required fields', 'bilnea'),
+			'email' => __('Enter a valid email address', 'bilnea'),
+			'captcha' => __('Enter a correct captcha value', 'bilnea'),
+			'legal' => __('You must accept the legal advice', 'bilnea')
+		);
+		wp_localize_script('functions.form', 'form_errors', $var_temp);
+		wp_enqueue_script('functions.form');
 
 		// Construcción del formulario
 		$out = '<form class="form'.$var_class.'"'.$var_id.' method="post" data-id="'.$var_random.'" data-name="'.$b_g_forms.'">';
@@ -72,7 +82,6 @@ if (!function_exists('b_s_form')) {
 		}
 
 		$out .= '</form>';
-		$out .= '<div class="form-send" data-send="'.esc_attr($a['send']).'" data-sending="'.__('Sending', 'bilnea').'" data-id="'.$var_random.'">'.esc_attr($a['send']).'</div>';
 		$out .= '<div class="response"></div>';
 
 		$b_g_forms++;
@@ -145,9 +154,9 @@ if (!function_exists('b_s_input')) {
 				if ($var_name == '') { $var_name = 'Mensaje'; }
 				if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Message', 'bilnea'); }
 				if (esc_attr($a['label']) == 'true') {
-					return '<label>'.$var_required.$var_placeholder.'<textarea name="b_i_message" class="input'.$var_class.'"'.$var_id.' data-name="'.$var_name.'"></textarea></label>';
+					return '<label>'.$var_required.$var_placeholder.'<textarea name="b_i_message" class="input'.$var_class.'"'.$var_id.' data-name="'.$var_name.'" rows="'.esc_attr($a['length']).'"></textarea></label>';
 				} else {
-					return '<textarea name="b_i_message" class="input'.$var_class.'"'.$var_id.' placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'"></textarea>';
+					return '<textarea name="b_i_message" class="input'.$var_class.'"'.$var_id.' placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'" rows="'.esc_attr($a['length']).'"></textarea>';
 				}
 				break;
 
@@ -336,8 +345,11 @@ if (!function_exists('b_s_input')) {
 				if ($var_name == '') { $var_name = $var_placeholder; }
 				$var_key = rand(0, 99999999);
 				if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Select an option', 'bilnea'); }
+				if (esc_attr($a['required']) == 'true') {
+					$var_placeholder = '* '.$var_placeholder;
+				}
 				if (esc_attr($a['label']) == 'true') {
-					$out = '<label><select class="input'.$var_class.'"'.$var_id.' name="b_i_custom_select-'.$var_key.'" data-name="'.$var_name.'">'."\n";
+					$out = '<label>'.$var_placeholder.'<select class="input'.$var_class.'"'.$var_id.' name="b_i_custom_select-'.$var_key.'" data-name="'.$var_name.'">'."\n";
 				} else {
 					$out = '<select class="input'.$var_class.'"'.$var_id.' name="b_i_custom_select-'.$var_key.'" data-name="'.$var_name.'">'."\n";
 					$out .= '  <option disabled selected>'.$var_placeholder.'</option>'."\n";
@@ -394,8 +406,8 @@ if (!function_exists('b_s_input')) {
 
 			// Apellidos (Aparecerá como remitente del mensaje)
 			case 'last-name':
-			if ($var_name == '') { $var_name = 'Apellidos'; }
-			if ($var_placeholder == '' || $var_placeholder = 'null') {
+				if ($var_name == '') { $var_name = 'Apellidos'; }
+				if ($var_placeholder == '' || $var_placeholder = 'null') {
 					$var_placeholder = __('Last name', 'bilnea');
 				}
 				if (esc_attr($a['label']) == 'true') {
@@ -405,13 +417,60 @@ if (!function_exists('b_s_input')) {
 				}
 				break;
 
+			// Boton de envío
+			case 'send':
+				if ($var_placeholder == '' || $var_placeholder = 'null') {
+					$var_placeholder = __('Send', 'bilnea');
+				}
+				if (esc_attr($a['sending']) == '') {
+					$var_sending = $var_placeholder;
+				} else {
+					$var_sending = esc_attr($a['sending']);
+				}
+				return '<div class="form-send" data-send="'.$var_placeholder.'" data-sending="'.$var_sending.'">'.$var_placeholder.'</div>';
+				break;
+
 			// Otros campos
 			default:
 				if ($var_name == '') { $var_name = $var_placeholder; }
-				if (esc_attr($a['label']) == 'true') {
-					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.esc_attr($a['type']).'" data-name="'.$var_name.'" /></label>';
+				if (substr(esc_attr($a['type']), 0, 9) === 'textarea_') {
+					$var_type = str_replace('textarea_', '', esc_attr($a['type']));
+					if (esc_attr($a['label']) == 'true') {
+						return '<label>'.$var_required.$var_placeholder.'<textarea rows="'.esc_attr($a['length']).'" class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.$var_type.'" data-name="'.$var_name.'"></textarea></label>';
+					} else {
+						return '<textarea rows="'.esc_attr($a['length']).'" class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.$var_type.'" placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'"></textarea>';
+					}
+				} else if (substr(esc_attr($a['type']), 0, 7) === 'select_') {
+					if ($var_name == '') { $var_name = $var_placeholder; }
+					$var_key = str_replace('select_', '', esc_attr($a['type']));
+					if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Select an option', 'bilnea'); }
+					if (esc_attr($a['required']) == 'true') {
+						$var_placeholder = '* '.$var_placeholder;
+					}
+					if (esc_attr($a['label']) == 'true') {
+						$out = '<label>'.$var_placeholder.'<select class="input'.$var_class.'"'.$var_id.' name="b_i_custom_select-'.$var_key.'" data-name="'.$var_name.'">'."\n";
+					} else {
+						$out = '<select class="input'.$var_class.'"'.$var_id.' name="b_i_custom_select-'.$var_key.'" data-name="'.$var_name.'">'."\n";
+						$out .= '  <option disabled selected>'.$var_placeholder.'</option>'."\n";
+					}
+					$var_options = explode('|', esc_attr($a['options']));
+					foreach ($var_options as $option) {
+						if (count(explode(':', $option)) > 1) {
+							$option = explode(':', $option);
+							$out .= '  <option value="'.$option[0].'">'.$option[1].'</option>'."\n";
+						} else {
+							$out .= '  <option value="'.$option.'">'.$option.'</option>'."\n";
+						}
+					}
+					$out .= '</select>'."\n";
+					if (esc_attr($a['placeholder']) == '') { $out .= '</label>'; }
+					return $out;
 				} else {
-					return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.esc_attr($a['type']).'" placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'" />';
+					if (esc_attr($a['label']) == 'true') {
+						return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.esc_attr($a['type']).'" data-name="'.$var_name.'" /></label>';
+					} else {
+						return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.esc_attr($a['type']).'" placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'" />';
+					}
 				}
 				break;
 		}
