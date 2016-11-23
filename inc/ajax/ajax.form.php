@@ -104,15 +104,15 @@ if (!function_exists('b_a_send_form')) {
 				}
 				
 				if (isset($_POST['b_i_redirect'])) {
-					echo '<script>jQuery(\'form[data-id="'.$_POST['eid'].'"]\')[0].reset(); window.location.href = "'.get_permalink(rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_redirect']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0")).'";</script>';
+					echo '<script>jQuery(\'form[data-id="'.$_POST['eid'].'"]\')[0].reset(); window.location.href = "'.get_permalink(rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_redirect']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0")).'";</script><div class="sent-ok redirecting">'.__('Message sent sucesfully. Please wait a moment.', 'bilnea').'</div>';
 				} else {
-					echo '<script>jQuery(\'form[data-id="'.$_POST['eid'].'"]\')[0].reset();</script><p>'.rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_sucess']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0").'</p>';
+					echo '<script>jQuery(\'form[data-id="'.$_POST['eid'].'"]\')[0].reset();</script><div class="sent-ok">'.rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_sucess']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0").'</div>';
 				}
 			} else {
 				$var_data['status'] = 'error';
 				$wpdb->insert($var_table, $var_data);
 				setlocale(LC_ALL, $var_locale);
-				echo '<p>'.__('Sorry, an error has ocurred sending your message. Please try again later.', 'bilnea').'</p>';
+				echo '<div class="sent-error">'.__('Sorry, an error has ocurred sending your message. Please try again later.', 'bilnea').'</div>';
 			}
 	        wp_die();
 		} else {

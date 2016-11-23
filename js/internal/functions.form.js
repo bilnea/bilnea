@@ -166,7 +166,7 @@ jQuery(function($) {
 				});
 			} else {
 				$.unique(errors);
-				f.next('.response').html('<div>'+errors.join('. ')+'.</div>');
+				f.next('.response').html('<div class="errors">'+errors.join('. ')+'.</div>');
 			}
 		})
 	});
