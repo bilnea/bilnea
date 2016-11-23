@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bilnea Wordpress theme\n"
-"POT-Creation-Date: 2016-11-20 16:10+0100\n"
-"PO-Revision-Date: 2016-11-20 16:13+0100\n"
+"POT-Creation-Date: 2016-11-23 13:01+0100\n"
+"PO-Revision-Date: 2016-11-23 13:03+0100\n"
 "Last-Translator: \n"
 "Language-Team: Samuel E. Cerezo <samuelcerezo@bilnea.com>\n"
 "Language: es\n"
@@ -24,27 +24,27 @@ msgstr "Hecho con <i class=\"fa fa-heart-o\"></i> por"
 msgid "bilnea. Communication & Digital Marketing Agency"
 msgstr "bilnea. Agencia de Comunicación y Marketing Digital"
 
-#: functions.php:725
+#: functions.php:727
 msgid "author"
 msgstr "autor"
 
-#: functions.php:726
+#: functions.php:728
 msgid "search"
 msgstr "buscar"
 
-#: functions.php:727
+#: functions.php:729
 msgid "comments"
 msgstr "comentarios"
 
-#: functions.php:728
+#: functions.php:730
 msgid "page"
 msgstr "pagina"
 
-#: functions.php:1365
+#: functions.php:1367
 msgid "* I have read, understood and accept the "
 msgstr "* He leído, entiendo y acepto la"
 
-#: functions.php:1365
+#: functions.php:1367
 msgid "privacy policy"
 msgstr "política de privacidad"
 
@@ -165,40 +165,6 @@ msgstr ""
 msgid "No tweets"
 msgstr "Sin tuits"
 
-#: inc/shortcodes.php:563
-msgid "* Name"
-msgstr "* Nombre"
-
-#: inc/shortcodes.php:565
-msgid "* Last name"
-msgstr "* Apellidos"
-
-#: inc/shortcodes.php:567
-msgid "* Email"
-msgstr "* Correo electrónico"
-
-#: inc/shortcodes.php:569 inc/shortcodes/shortcodes.form.php:179
-msgid "Privacy policy"
-msgstr "política de privacidad"
-
-#: inc/shortcodes.php:572 inc/shortcodes/shortcodes.form.php:182
-msgctxt "female"
-msgid "the"
-msgstr "la"
-
-#: inc/shortcodes.php:575 inc/shortcodes/shortcodes.form.php:185
-msgctxt "male"
-msgid "the"
-msgstr "el"
-
-#: inc/shortcodes.php:578 inc/shortcodes/shortcodes.form.php:189
-msgid "I have read, understood and accept"
-msgstr "He leído, entiendo y acepto"
-
-#: inc/shortcodes.php:579
-msgid "Suscribe"
-msgstr "Suscríbete"
-
 #: inc/shortcodes/shortcodes.blog.php:71 inc/shortcodes/shortcodes.blog.php:126
 msgid "Published by "
 msgstr "Publicado por"
@@ -221,7 +187,7 @@ msgstr "Todo"
 msgid "Tweet this"
 msgstr "Tuitéalo"
 
-#: inc/shortcodes/shortcodes.form.php:25
+#: inc/shortcodes/shortcodes.form.php:26
 msgid ""
 "Your message has been sent sucesfully. Your request will delay. A copy has "
 "been sent to your email."
@@ -229,52 +195,92 @@ msgstr ""
 "Mensaje enviado correctamente. Atenderemos su solicitud a la mayor brevedad. "
 "Se ha enviado una copia a su dirección de correo electrónico."
 
-#: inc/shortcodes/shortcodes.form.php:26
+#: inc/shortcodes/shortcodes.form.php:27 inc/shortcodes/shortcodes.form.php:423
 msgid "Send"
 msgstr "Enviar"
 
-#: inc/shortcodes/shortcodes.form.php:75
-msgid "Sending"
-msgstr "Enviando"
+#: inc/shortcodes/shortcodes.form.php:53
+msgid "There are errors on the form. Please fix them before continuing"
+msgstr ""
+"Existen errores en el formulario. Por favor, revísalos antes de continuar"
 
-#: inc/shortcodes/shortcodes.form.php:135
+#: inc/shortcodes/shortcodes.form.php:54
+msgid "Fill in all the required fields"
+msgstr "Completa los campos requeridos"
+
+#: inc/shortcodes/shortcodes.form.php:55
+msgid "Enter a valid email address"
+msgstr "Introduce una dirección de correo electrónico válida"
+
+#: inc/shortcodes/shortcodes.form.php:56
+msgid "Enter a correct captcha value"
+msgstr "Introduce el código de verificación correcto"
+
+#: inc/shortcodes/shortcodes.form.php:57
+msgid "You must accept the legal advice"
+msgstr "Debe aceptar el aviso legal"
+
+#: inc/shortcodes/shortcodes.form.php:144
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: inc/shortcodes/shortcodes.form.php:146
+#: inc/shortcodes/shortcodes.form.php:155
 msgid "Message"
 msgstr "Mensaje"
 
-#: inc/shortcodes/shortcodes.form.php:161
+#: inc/shortcodes/shortcodes.form.php:170
 msgid "State"
 msgstr "Provincia"
 
+#: inc/shortcodes/shortcodes.form.php:192
+#: inc/shortcodes/shortcodes.newsletter.php:34
+msgid "Privacy policy"
+msgstr "política de privacidad"
+
+#: inc/shortcodes/shortcodes.form.php:202
+#: inc/shortcodes/shortcodes.newsletter.php:38
+msgctxt "female"
+msgid "the"
+msgstr "la"
+
 #: inc/shortcodes/shortcodes.form.php:205
+#: inc/shortcodes/shortcodes.newsletter.php:41
+msgctxt "male"
+msgid "the"
+msgstr "el"
+
+#: inc/shortcodes/shortcodes.form.php:209
+#: inc/shortcodes/shortcodes.newsletter.php:45
+msgid "I have read, understood and accept"
+msgstr "He leído, entiendo y acepto"
+
+#: inc/shortcodes/shortcodes.form.php:225
 #, php-format
 msgid "Fill in the following field with <strong>\"%s\"</strong>"
 msgstr "Rellena el siguiente campo con <strong>\"%s\"</strong>"
 
-#: inc/shortcodes/shortcodes.form.php:208
+#: inc/shortcodes/shortcodes.form.php:228
 msgid "Fill in the following fields."
 msgstr "Complete los siguientes campos."
 
-#: inc/shortcodes/shortcodes.form.php:223
+#: inc/shortcodes/shortcodes.form.php:243
 msgid "No selected file"
 msgstr "Ningún archivo seleccionado"
 
-#: inc/shortcodes/shortcodes.form.php:223
+#: inc/shortcodes/shortcodes.form.php:243
 msgid "Maximum size exceeded"
 msgstr "Sobrepasado tamaño máximo"
 
-#: inc/shortcodes/shortcodes.form.php:327
+#: inc/shortcodes/shortcodes.form.php:347
+#: inc/shortcodes/shortcodes.form.php:446
 msgid "Select an option"
 msgstr "Selecciona una opción"
 
-#: inc/shortcodes/shortcodes.form.php:375
+#: inc/shortcodes/shortcodes.form.php:398
 msgid "Name"
 msgstr "Nombre"
 
-#: inc/shortcodes/shortcodes.form.php:388
+#: inc/shortcodes/shortcodes.form.php:411
 msgid "Last name"
 msgstr "Apellidos"
 
@@ -302,6 +308,22 @@ msgstr "Publicaciones de"
 #: inc/shortcodes/shortcodes.general.php:229
 msgid "Not found"
 msgstr "Sin resultados"
+
+#: inc/shortcodes/shortcodes.newsletter.php:27
+msgid "* Name"
+msgstr "* Nombre"
+
+#: inc/shortcodes/shortcodes.newsletter.php:29
+msgid "* Last name"
+msgstr "* Apellidos"
+
+#: inc/shortcodes/shortcodes.newsletter.php:31
+msgid "* Email"
+msgstr "* Correo electrónico"
+
+#: inc/shortcodes/shortcodes.newsletter.php:46
+msgid "Suscribe"
+msgstr "Suscríbete"
 
 #: inc/shortcodes/shortcodes.social.php:178
 msgid "No Twitter API key set"
@@ -352,6 +374,9 @@ msgid "Try to redefine your search using another term, or visit the homepage."
 msgstr ""
 "Pruebe a redefinir su búsqueda utilizando otro término o visite la página "
 "principal."
+
+#~ msgid "Sending"
+#~ msgstr "Enviando"
 
 #~ msgid "Legal Advice"
 #~ msgstr "Aviso legal"
