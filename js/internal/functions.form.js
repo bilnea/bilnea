@@ -110,7 +110,16 @@ jQuery(function($) {
 					errors.push(form_errors.empty);
 				};
 			});
-			$(f.find($('input.required[type="checkbox"]'))).each(function() {
+			$(f.find($('input.required[type="checkbox"][id^="legal-"]'))).each(function() {
+				var t = $(this);
+				if (t[0].checked == false) {
+					t.addClass('invalid');
+					g++;
+					t = '5';
+					errors.push(form_errors.legal);
+				};
+			});
+			$(f.find($('input.required[type="checkbox"]:not(.invalid)'))).each(function() {
 				var t = $(this);
 				if (t[0].checked == false) {
 					t.addClass('invalid');
