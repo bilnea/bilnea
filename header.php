@@ -169,7 +169,7 @@ if (function_exists('icl_object_id')) {
 						}
 							
 						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_switcher}}');
-						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(), $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>');
+						$var_replace = array($var_menu, $var_logo, get_search_form(false), '[b_rrss]', $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>');
 
 						echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_mobile-header-'.$b_g_language))));
 
@@ -204,7 +204,7 @@ if (function_exists('icl_object_id')) {
 						}
 								
 						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_switcher}}');
-						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(), $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>');
+						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>');
 
 						echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_mobile-menu-'.$b_g_language))));
 
@@ -257,7 +257,7 @@ if (function_exists('icl_object_id')) {
 						}
 							
 						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}');
-						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(), $var_language_selector);
+						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector);
 
 						echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_header-top-content-'.$b_g_language)));
 
@@ -292,7 +292,7 @@ if (function_exists('icl_object_id')) {
 						}
 	
 						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}');
-						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(), $var_language_selector);
+						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector);
 
 						echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_header-main-content-'.$b_g_language)));
 
@@ -327,7 +327,7 @@ if (function_exists('icl_object_id')) {
 					}
 						
 					$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_switcher}}');
-					$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(), $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>');
+					$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>');
 
 					echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_mobile-header-'.$b_g_language))));
 

@@ -6,8 +6,145 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 ?>
 
+<!-- Páginas especiales -->
+<h4>Páginas especiales</h4>
+
+<?php
+
+if (function_exists('icl_object_id')) {
+
+	// Variables globales
+	global $sitepress;
+
+	// Variables locales
+	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	$var_count = 0;
+
+	if (!empty($var_languages)) {
+		foreach ($var_languages as $var_language) {
+			$sitepress->switch_lang($var_language['language_code']);
+			echo ($var_count != 0) ? '<br /><hr style="margin: 8px 0;" />' : '';
+
+			?>
+
+			<strong style="display: block;"><?= $var_language['translated_name'] ?></strong>
+			<div style="width: calc(50% - 7px); display: inline-block; float: left; margin-right: 14px;">
+				Página error 404
+				<select name="bilnea_settings[b_opt_page-404-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
+					<option value="none" selected disabled>Selecciona una página</option>
+
+					<?php 
+
+					$args = array(
+						'sort_order' => 'asc',
+						'sort_column' => 'post_title',
+						'post_type' => 'page',
+						'post_status' => 'publish'
+					);
+
+					$pages = get_pages($args);
+
+					foreach ($pages as $page) {
+						echo '<option value="'.$page->ID.'" '.selected(b_f_option('b_opt_page-404-'.$var_language['language_code']), $page->ID).'>'.$page->post_title.'</option>';
+					}
+
+					?>
+
+				</select>
+			</div>
+			<div style="width: calc(50% - 7px); display: inline-block;">
+				Página resultados de búsqueda
+				<select name="bilnea_settings[b_opt_page-search-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
+					<option value="none" selected disabled>Selecciona una página</option>
+
+					<?php 
+
+					$args = array(
+						'sort_order' => 'asc',
+						'sort_column' => 'post_title',
+						'post_type' => 'page',
+						'post_status' => 'publish'
+					);
+
+					$pages = get_pages($args);
+
+					foreach ($pages as $page) {
+						echo '<option value="'.$page->ID.'" '.selected(b_f_option('b_opt_page-search-'.$var_language['language_code']), $page->ID).'>'.$page->post_title.'</option>';
+					}
+
+					?>
+
+				</select>
+			</div>
+
+			<?php
+
+			$var_count++;
+		}
+	}
+
+} else {
+
+	?>
+
+	<div style="width: calc(50% - 7px); display: inline-block; float: left; margin-right: 14px;">
+		Página error 404
+		<select name="bilnea_settings[b_opt_page-404-es]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
+			<option value="none" selected disabled>Selecciona una página</option>
+
+			<?php 
+
+			$args = array(
+				'sort_order' => 'asc',
+				'sort_column' => 'post_title',
+				'post_type' => 'page',
+				'post_status' => 'publish'
+			);
+
+			$pages = get_pages($args);
+
+			foreach ($pages as $page) {
+				echo '<option value="'.$page->ID.'" '.selected(b_f_option('b_opt_page-404-es'), $page->ID).'>'.$page->post_title.'</option>';
+			}
+
+			?>
+
+		</select>
+	</div>
+	<div style="width: calc(50% - 7px); display: inline-block;">
+		Página resultados de búsqueda
+		<select name="bilnea_settings[b_opt_page-search-es]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
+			<option value="none" selected disabled>Selecciona una página</option>
+
+			<?php 
+
+			$args = array(
+				'sort_order' => 'asc',
+				'sort_column' => 'post_title',
+				'post_type' => 'page',
+				'post_status' => 'publish'
+			);
+
+			$pages = get_pages($args);
+
+			foreach ($pages as $page) {
+				echo '<option value="'.$page->ID.'" '.selected(b_f_option('b_opt_page-search-es'), $page->ID).'>'.$page->post_title.'</option>';
+			}
+
+			?>
+
+		</select>
+	</div>
+
+	<?php
+
+}
+
+?>
+<br />
+
 <!-- Buscador -->
-<h4>Buscador</h4>
+<h4 style="margin-top: 16px;">Buscador</h4>
 Limitar la búsqueda a los tipos de objetos
 <div style="display: block; clear: both;"></div>
 

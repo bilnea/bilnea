@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bilnea Wordpress theme\n"
-"POT-Creation-Date: 2016-11-23 13:15+0100\n"
-"PO-Revision-Date: 2016-11-23 13:16+0100\n"
+"POT-Creation-Date: 2016-11-29 09:23+0100\n"
+"PO-Revision-Date: 2016-11-29 09:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: Samuel E. Cerezo <samuelcerezo@bilnea.com>\n"
 "Language: es\n"
@@ -36,7 +36,7 @@ msgstr "buscar"
 msgid "comments"
 msgstr "comentarios"
 
-#: functions.php:730
+#: functions.php:730 index.php:97
 msgid "page"
 msgstr "pagina"
 
@@ -89,8 +89,8 @@ msgstr ""
 "cuenta está deshabilitada."
 
 #: inc/ajax/ajax.form.php:103
-msgid "Your message have been sent sucesfully."
-msgstr "Tu mensaje se ha enviado correctamente."
+msgid "Here is a copy of your message to"
+msgstr "Aquí tienes una copia de tu mensaje enviado a"
 
 #: inc/ajax/ajax.form.php:107
 msgid "Message sent sucesfully. Please wait a moment."
@@ -199,7 +199,7 @@ msgstr ""
 "Mensaje enviado correctamente. Atenderemos su solicitud a la mayor brevedad. "
 "Se ha enviado una copia a su dirección de correo electrónico."
 
-#: inc/shortcodes/shortcodes.form.php:27 inc/shortcodes/shortcodes.form.php:423
+#: inc/shortcodes/shortcodes.form.php:27 inc/shortcodes/shortcodes.form.php:422
 msgid "Send"
 msgstr "Enviar"
 
@@ -224,67 +224,67 @@ msgstr "Introduce el código de verificación correcto"
 msgid "You must accept the legal advice"
 msgstr "Debe aceptar el aviso legal"
 
-#: inc/shortcodes/shortcodes.form.php:144
+#: inc/shortcodes/shortcodes.form.php:143
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: inc/shortcodes/shortcodes.form.php:155
+#: inc/shortcodes/shortcodes.form.php:154
 msgid "Message"
 msgstr "Mensaje"
 
-#: inc/shortcodes/shortcodes.form.php:170
+#: inc/shortcodes/shortcodes.form.php:169
 msgid "State"
 msgstr "Provincia"
 
-#: inc/shortcodes/shortcodes.form.php:192
+#: inc/shortcodes/shortcodes.form.php:191
 #: inc/shortcodes/shortcodes.newsletter.php:34
 msgid "Privacy policy"
 msgstr "política de privacidad"
 
-#: inc/shortcodes/shortcodes.form.php:202
+#: inc/shortcodes/shortcodes.form.php:201
 #: inc/shortcodes/shortcodes.newsletter.php:38
 msgctxt "female"
 msgid "the"
 msgstr "la"
 
-#: inc/shortcodes/shortcodes.form.php:205
+#: inc/shortcodes/shortcodes.form.php:204
 #: inc/shortcodes/shortcodes.newsletter.php:41
 msgctxt "male"
 msgid "the"
 msgstr "el"
 
-#: inc/shortcodes/shortcodes.form.php:209
+#: inc/shortcodes/shortcodes.form.php:208
 #: inc/shortcodes/shortcodes.newsletter.php:45
 msgid "I have read, understood and accept"
 msgstr "He leído, entiendo y acepto"
 
-#: inc/shortcodes/shortcodes.form.php:225
+#: inc/shortcodes/shortcodes.form.php:224
 #, php-format
 msgid "Fill in the following field with <strong>\"%s\"</strong>"
 msgstr "Rellena el siguiente campo con <strong>\"%s\"</strong>"
 
-#: inc/shortcodes/shortcodes.form.php:228
+#: inc/shortcodes/shortcodes.form.php:227
 msgid "Fill in the following fields."
 msgstr "Complete los siguientes campos."
 
-#: inc/shortcodes/shortcodes.form.php:243
+#: inc/shortcodes/shortcodes.form.php:242
 msgid "No selected file"
 msgstr "Ningún archivo seleccionado"
 
-#: inc/shortcodes/shortcodes.form.php:243
+#: inc/shortcodes/shortcodes.form.php:242
 msgid "Maximum size exceeded"
 msgstr "Sobrepasado tamaño máximo"
 
-#: inc/shortcodes/shortcodes.form.php:347
-#: inc/shortcodes/shortcodes.form.php:446
+#: inc/shortcodes/shortcodes.form.php:346
+#: inc/shortcodes/shortcodes.form.php:445
 msgid "Select an option"
 msgstr "Selecciona una opción"
 
-#: inc/shortcodes/shortcodes.form.php:398
+#: inc/shortcodes/shortcodes.form.php:397
 msgid "Name"
 msgstr "Nombre"
 
-#: inc/shortcodes/shortcodes.form.php:411
+#: inc/shortcodes/shortcodes.form.php:410
 msgid "Last name"
 msgstr "Apellidos"
 
@@ -333,17 +333,29 @@ msgstr "Suscríbete"
 msgid "No Twitter API key set"
 msgstr "No se ha establecido una clave API de Twitter"
 
-#: index.php:29
-msgid "Comment"
-msgstr "Comentario"
+#: index.php:58 single.php:49 single.php:97
+msgid "No comments"
+msgstr "Sin comentarios"
 
-#: index.php:29
-msgid "1 Comment"
+#: index.php:60 single.php:51 single.php:99
+msgid " comments"
+msgstr " comentarios"
+
+#: index.php:62 single.php:53 single.php:101
+msgid "1 comment"
 msgstr "1 comentario"
 
-#: index.php:29
-msgid "% Comments"
-msgstr "% comentarios"
+#: index.php:66 single.php:57 single.php:105
+msgid "Comments are disabled"
+msgstr "Comentarios deshabilitados"
+
+#: index.php:100
+msgid "Previous"
+msgstr "Anterior"
+
+#: index.php:101
+msgid "Next"
+msgstr "Siguiente"
 
 #: php/subscriber.php:37
 msgid "Please confirm your newsletter subscription by visiting the link below:"
@@ -378,6 +390,18 @@ msgid "Try to redefine your search using another term, or visit the homepage."
 msgstr ""
 "Pruebe a redefinir su búsqueda utilizando otro término o visite la página "
 "principal."
+
+#~ msgid "Your message have been sent sucesfully."
+#~ msgstr "Tu mensaje se ha enviado correctamente."
+
+#~ msgid "Comment"
+#~ msgstr "Comentario"
+
+#~ msgid "1 Comment"
+#~ msgstr "1 comentario"
+
+#~ msgid "% Comments"
+#~ msgstr "% comentarios"
 
 #~ msgid "Sending"
 #~ msgstr "Enviando"

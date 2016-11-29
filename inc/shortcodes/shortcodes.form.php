@@ -15,17 +15,17 @@ if (!function_exists('b_s_form')) {
 		global $b_g_version;
 		global $b_g_hash;
 		global $b_g_forms;
-		global $b_g_lang;
+		global $b_g_language;
 
 		// Atributos
 		$a = shortcode_atts(array(
 			'id' => null,
 			'class' => null,
 			'response' => true,
-			'to' => b_f_option('b_opt_form-email'),
+			'to' => b_f_option('b_opt_form-email-'.$b_g_language),
 			'message' => __('Your message has been sent sucesfully. Your request will delay. A copy has been sent to your email.', 'bilnea'),
 			'send' => __('Send', 'bilnea'),
-			'redirect' => b_f_option('b_opt_form-thanks-'.$b_g_lang),
+			'redirect' => b_f_option('b_opt_form-thanks-'.$b_g_language),
 			'subject' => sprintf(esc_html__('Message sent from %s website form', 'bilnea'), get_option('blogname')),
 			'name' => 'Página "'.get_the_title(get_the_ID()).'". Formulario '.$b_g_forms,
 		), $atts);
@@ -92,7 +92,6 @@ if (!function_exists('b_s_form')) {
 	add_shortcode('b_form', 'b_s_form');
 
 }
-print_r(b_f_option('b_opt_privacy-policy-'.$b_g_lang));
 
 // Campo del formulario
 
@@ -101,7 +100,7 @@ if (!function_exists('b_s_input')) {
 	function b_s_input($atts) {
 
 		// Variables globales
-		global $b_g_lang;
+		global $b_g_language;
 
 		// Atributos
 		$a = shortcode_atts(array(
@@ -116,7 +115,7 @@ if (!function_exists('b_s_input')) {
 			'data' => null,
 			'size' => '5MB',
 			'label' => null,
-			'url' => b_f_option('b_opt_privacy-policy-'.$b_g_lang),
+			'url' => b_f_option('b_opt_privacy-policy-'.$b_g_language),
 			'name' => null,
 		), $atts);
 
@@ -143,7 +142,7 @@ if (!function_exists('b_s_input')) {
 				if ($var_name == '') { $var_name = 'Correo electrónico'; }
 				if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Email', 'bilnea'); }
 				if (esc_attr($a['label']) == 'true') {
-					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_email" data-name="'.$var_name.'" /></label>';
+					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_email" data-name="Correo electrónico" /></label>';
 				} else {
 					return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_email" placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'" />';
 				}

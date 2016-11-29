@@ -1,71 +1,141 @@
 <?php
+
 /**
- * The template for displaying the home/index page.
- * This template will also be called in any case where the Wordpress engine 
- * doesn't know which template to use (e.g. 404 error)
+ * Plantilla de la página de entradas
+ *
  */
 
+$var_paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-if ( have_posts() ) :
+$args = array(
+	'posts_per_page' => b_f_option('b_opt_blog-number', true),
+	'paged' => $var_paged
+);
 
-get_header();
-?>
+$query = new WP_Query( $args ); 
+
+if ($query->have_posts()) {
+
+	get_header();
+
+	?>
+
 	<div id="primary" class="main-row">
 		<div id="content" role="main" class="span8 offset2">
+			<article class="post">
+				<div class="the-content">
 
-				<?php while ( have_posts() ) : the_post(); ?>
+				<?php
 
-					<article class="post">
-					
-						<h2 class="title">
-							<a href="<?php the_permalink(); // Get the link to this post ?>" title="<?php the_title(); ?>">
-								<?php the_title(); // Show the title of the posts as a link ?>
-							</a>
-						</h2>
-						<div class="post-meta">
-							<?php the_time('m/d/Y'); // Display the time published ?> | 
-							<?php if( comments_open() ) : // If we have comments open on this post, display a link and count of them ?>
-								<span class="comments-link">
-									<?php comments_popup_link( __( 'Comment', 'break' ), __( '1 Comment', 'break' ), __( '% Comments', 'break' ) ); 
-									// Display the comment count with the applicable pluralization
-									?>
-								</span>
-							<?php endif; ?>
-						
-						</div><!--/post-meta -->
-						
-						<div class="the-content">
-							<?php the_content( 'Continue...' ); 
-							// This call the main content of the post, the stuff in the main text box while composing.
-							// This will wrap everything in p tags and show a link as 'Continue...' where/if the
-							// author inserted a <!-- more --> link in the post body
-							?>
-							
-							<?php wp_link_pages(); // This will display pagination links, if applicable to the post ?>
-						</div><!-- the-content -->
+				// Variables globales
+				global $b_g_language;
+
+				//locales
+				$var_blog = '<div class="blog-wrapper">';
+				$var_id = 1;
+
+				$var_categories = array();
+				$var_tags = array();
+
+				while ($query->have_posts()) {
+
+					$query->the_post();
+
+					if (!empty(get_the_category())) {
+						foreach (get_the_category() as $var_category) {
+							array_push($var_categories, '<a href="'.esc_url(get_category_link($var_category->term_id)).'">'.esc_html($var_category->name).'</a>');
+						}
+					}
+
+					if (!empty(get_the_tags())) {
+						foreach (get_the_tags() as $var_tag) {
+							array_push($var_tags, '<a href="'.esc_url(get_tag_link($var_tag->term_id)).'">'.esc_html($var_tag->name ).'</a>');
+						}
+					}
+
+					if (comments_open()) {
+						if (get_comments_number() == 0) {
+							$var_comments = __('No comments', 'bilnea');
+						} elseif (get_comments_number() > 1) {
+							$var_comments = get_comments_number().__(' comments', 'bilnea');
+						} else {
+							$var_comments = __('1 comment', 'bilnea');
+						}
+						$var_comments = '<a href="'.get_comments_link().'">'.$var_comments.'</a>';
+					} else {
+						$var_comments =  __('Comments are disabled', 'bilnea');
+					}
+
+					if (!function_exists('b_f_i_image')) {
+						function b_f_i_image($arg = array('', 'thumbnail')) {
+							return wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), $arg[1])[0];
+						}
+					}
+
+					$var_categories = '<div class="entry-categories">'.implode(', ', $var_categories).'</div>';
+					$var_tags = '<div class="entry_tags">'.implode(', ', $var_tags).'</div>';
+
+					$var_shortcodes = array('{{b_title}}', '{{b_permalink}}', '{{b_excerpt}}', '{{b_content}}', '{{b_date}}', '{{b_categories}}', '{{b_author}}', '{{b_tags}}', '{{b_comments-number}}', '{{b_share}}');
+					$var_replace = array(get_the_title(), get_permalink(), get_the_excerpt(), get_the_content(), get_the_date(b_f_option('b_opt_blog-date-'.$b_g_language)), $var_categories, get_the_author_link(), $var_tags, $var_comments, '');
+
+					switch ($var_id%2) {
+						case 0:
+							$var_blog .= '<div data-id="'.get_the_ID().'" class="entry-even auto-height">'.do_shortcode(preg_replace_callback("/{{b_image-([0-9a-zA-Z]+)}}/", "b_f_i_image", str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_blog-content-even-'.$b_g_language)))).'</div>';
+							break;
+						default:
+							$var_blog .= '<div data-id="'.get_the_ID().'" class="entry-odd auto-height">'.do_shortcode(preg_replace_callback("/{{b_image-([0-9a-zA-Z]+)}}/", "b_f_i_image", str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_blog-content-odd-'.$b_g_language)))).'</div>';
+							break;
+					}
+
+					$var_id++;
+
+				}
+
+				$var_blog .= '</div>';
+
+				$var_pagination = paginate_links( array(
+					'format' => __('page', 'bilnea').'/%#%',
+					'current' => max(1, get_query_var('paged')),
+					'total' => $query->max_num_pages,
+					'prev_text' => '« <span>'.__('Previous', 'bilnea').'</span>',
+					'next_text' => '<span>'.__('Next', 'bilnea').'</span> »'
+				));
+
+				$var_shortcodes = array('{{b_blog}}','{{b_pagination}}');
+				$var_replace = array($var_blog, '<div class="b_pagination">'.$var_pagination.'</div>');
+
+				echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_blog-content-page-'.$b_g_language)));
+
+				?>
+
+				</div>
+			</article>
+		</div>
+	</div>
+
+	<?php
+
+	get_footer();
+
+} else {
+
+	// Variables globales
+	global $b_g_language;
+
+	if (b_f_option('b_opt_page-404-'.$b_g_language) != 'none') {
 		
-						<div class="meta clearfix">
-							<div class="category"><?php echo get_the_category_list(); // Display the categories this post belongs to, as links ?></div>
-							<div class="tags"><?php echo get_the_tag_list( '| &nbsp;', '&nbsp;' ); // Display the tags this post has, as links separated by spaces and pipes ?></div>
-						</div><!-- Meta -->
-						
-					</article>
+		$var_post = get_post(b_f_option('b_opt_page-404-'.$b_g_language));
 
-				<?php endwhile; // OK, let's stop the posts loop once we've exhausted our query/number of posts ?>
-				
-				<!-- pagintation -->
-				<div id="pagination" class="clearfix">
-					<div class="past-page"><?php previous_posts_link( 'newer' ); // Display a link to  newer posts, if there are any, with the text 'newer' ?></div>
-					<div class="next-page"><?php next_posts_link( 'older' ); // Display a link to  older posts, if there are any, with the text 'older' ?></div>
-				</div><!-- pagination -->
+		echo apply_filters('the_content', $var_post->post_content);
 
+	} else {
 
+		include_once(get_stylesheet_directory().'/404.php');
 
-		</div><!-- #content .site-content -->
-	</div><!-- #primary .content-area -->
-<?php get_footer(); // This fxn gets the footer.php file and renders it ?>
-			<?php else :
-				
-				include_once(get_stylesheet_directory().'/404.php');
+	}
 
-			endif; // OK, I think that takes care of both scenarios (having posts or not having any posts) ?>
+}
+
+wp_reset_postdata();
+
+?>

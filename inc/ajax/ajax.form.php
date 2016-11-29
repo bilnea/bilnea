@@ -100,7 +100,7 @@ if (!function_exists('b_a_send_form')) {
 					$var_message .= '<hr />'.__('Please do not respond directly to this e-mail. The inbox of this account is disabled.', 'bilnea');
 					$var_headers = 'From: '.get_bloginfo('name').' <noreply@'.$_SERVER['SERVER_NAME'].'>'."\r\n";
 					$var_headers .= 'Content-Type: text/html; charset=UTF-8';
-					wp_mail($_POST['b_i_email'], __('Your message have been sent sucesfully.', 'bilnea'), $var_message, $var_headers);
+					wp_mail($_POST['b_i_email'], __('Here is a copy of your message to', 'bilnea').' '.get_bloginfo('name'), $var_message, $var_headers);
 				}
 				
 				if (isset($_POST['b_i_redirect'])) {

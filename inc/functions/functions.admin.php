@@ -32,6 +32,7 @@ if (!function_exists('b_f_fonts')) {
 		<div class="font-selector">
 			<select name="bilnea_settings[b_opt_<?= $var_font ?>_ttf-font]" class="gran font-selector">
 				<option disabled="disabled">Selecciona una tipografía</option>
+				<option value="inherit" <?= selected($var_current_font, 'inherit') ?> data="">Heredada</option>
 
 				<?php
 				

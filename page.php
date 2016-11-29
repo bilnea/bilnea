@@ -1,6 +1,7 @@
 <?php
+
 /**
- * The template for displaying any single page.
+ * Plantilla para una página individual.
  *
  */
 

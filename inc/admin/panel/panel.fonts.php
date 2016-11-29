@@ -105,10 +105,13 @@ foreach (get_option('bilnea_settings') as $key => $value) {
 }
 
 $var_index = 0;
+
+unset($var_fonts['inherit']);
+
 if (count($var_fonts) > 0) {
 
 	foreach ($var_fonts as $key => $value) {
-
+			
 		if ($var_index > 0) {
 			echo '<hr />';
 		}
@@ -130,28 +133,28 @@ if (count($var_fonts) > 0) {
 
 				for ($i = 1; $i < 10; $i++) {
 					$j = $i*100;
-					
+						
 					(!in_array($j, $var_sizes)) ? $var_disabled = ' disabled' : $var_disabled = '';
 					(in_array($j, $value)) ? $var_checked = ' checked' : $var_checked = '';
 
 				?>
 
 				<div>
-				<input type="checkbox" value="<?= $b_g_google_fonts[$key]['name'].'|'.$j ?>"<?php echo $var_disabled.$var_checked; checked(in_array($b_g_google_fonts[$key]['name'].'|'.$j, $var_container)); ?> name="bilnea_settings[b_opt_custom-font][]">
-				
-				<?php
+					<input type="checkbox" value="<?= $b_g_google_fonts[$key]['name'].'|'.$j ?>"<?php echo $var_disabled.$var_checked; checked(in_array($b_g_google_fonts[$key]['name'].'|'.$j, $var_container)); ?> name="bilnea_settings[b_opt_custom-font][]">
+						
+					<?php
 
-					$j = $j.'italic';
+						$j = $j.'italic';
 
-					(!in_array($j, $var_sizes)) ? $var_disabled = ' disabled' : $var_disabled = '';
-					(in_array($j, $value)) ? $var_checked = ' checked' : $var_checked = '';
+						(!in_array($j, $var_sizes)) ? $var_disabled = ' disabled' : $var_disabled = '';
+						(in_array($j, $value)) ? $var_checked = ' checked' : $var_checked = '';
 
-				?>
+					?>
 
-				<input type="checkbox" value="<?= $b_g_google_fonts[$key]['name'].'|'.$j ?>"<?php echo $var_disabled.$var_checked; checked(in_array($b_g_google_fonts[$key]['name'].'|'.$j, $var_container)); ?> name="bilnea_settings[b_opt_custom-font][]">
+					<input type="checkbox" value="<?= $b_g_google_fonts[$key]['name'].'|'.$j ?>"<?php echo $var_disabled.$var_checked; checked(in_array($b_g_google_fonts[$key]['name'].'|'.$j, $var_container)); ?> name="bilnea_settings[b_opt_custom-font][]">
 				</div>
 
-			<?php
+				<?php
 
 			}
 
@@ -160,12 +163,15 @@ if (count($var_fonts) > 0) {
 			<div class="notice font"><span style="font-family: 'Roboto'; font-weight: 100;">a</span> ... <span style="font-family: 'Roboto'; font-weight: 900;">a</span><br /><span style="font-family: 'Roboto'; font-weight: 100; font-style: italic;">a</span> ... <span style="font-family: 'Roboto'; font-weight: 900; font-style: italic;">a</span></div>
 			<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=<?php echo $key; ?>">
 			<div style="vertical-align: top; font-size: 30px; display: inline-block; line-height: 52px; width: 160px; font-family: '<?php echo str_replace('+', ' ', $key); ?>';">AaBbCc</div>
-		</div>
-	</fieldset>
+			</div>
+		</fieldset>
 
-	<?php
+		<?php
 
 	}
+
+} else {
+	echo 'No existen estilos tipográficos definidos.';
 }
 
 ?>

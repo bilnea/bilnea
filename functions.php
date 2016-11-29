@@ -1580,7 +1580,7 @@ function b_f_thumbnail_columns($var_columns) {
 	$var_new_columns = array();
 	foreach ($var_columns as $key => $value) {
 		if ($key == 'title') {
-			$new_columns['admin_thumb'] = '';
+			$var_new_columns['admin_thumb'] = '';
 		}
 		$var_new_columns[$key] = $value;
 	}
@@ -1597,8 +1597,8 @@ function b_f_thumbnail_columns_data($var_column, $var_post_id) {
 
 foreach (get_post_types() as $post_type) {
 	if (post_type_supports($post_type, 'thumbnail')) {
-		add_filter('manage_posts_columns', 'b_thumbnail_columns');
-		add_action('manage_posts_custom_column', 'b_thumbnail_columns_data', 10, 2);
+		add_filter('manage_posts_columns', 'b_f_thumbnail_columns');
+		add_action('manage_posts_custom_column', 'b_f_thumbnail_columns_data', 10, 2);
 	}
 }
 

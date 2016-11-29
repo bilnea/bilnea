@@ -45,17 +45,10 @@ function b_f_options_page() {
 				<h3 <?php if (b_f_option('tab') == 6) { echo 'class="activo"'; }?>>Cabecera</h3>
 				<h3 <?php if (b_f_option('tab') == 7) { echo 'class="activo"'; }?>>Pie de página</h3>
 				<h3 <?php if (b_f_option('tab') == 8) { echo 'class="activo"'; }?>>Blog</h3>
-				<?php
-				if (function_exists('icl_object_id')) {
-				?>
-				<h3 <?php if (b_f_option('tab') == 9) { echo 'class="activo"'; }?>>Multidioma</h3>
-				<?php
-				}
-				?>
-				<h3 <?php if (b_f_option('tab') == 10) { echo 'class="activo"'; }?>>Textos legales</h3>
-				<h3 <?php if (b_f_option('tab') == 11) { echo 'class="activo"'; }?>>Redirecciones y SEO</h3>
-				<h3 <?php if (b_f_option('tab') == 12) { echo 'class="activo"'; }?>>Ayuda</h3>
-				<h3 <?php if (b_f_option('tab') == 13) { echo 'class="activo"'; }?>>Créditos</h3>
+				<h3 <?php if (b_f_option('tab') == 9) { echo 'class="activo"'; }?>>Textos legales</h3>
+				<h3 <?php if (b_f_option('tab') == 10) { echo 'class="activo"'; }?>>Redirecciones y SEO</h3>
+				<h3 <?php if (b_f_option('tab') == 11) { echo 'class="activo"'; }?>>Ayuda</h3>
+				<h3 <?php if (b_f_option('tab') == 12) { echo 'class="activo"'; }?>>Créditos</h3>
 			</div>
 
 			<!-- Bloque central -->
@@ -101,30 +94,23 @@ function b_f_options_page() {
 					<?php include('panel/panel.blog.php'); ?>
 				</div>
 
-				<!-- Multidioma -->
-				<?php if (function_exists('icl_object_id')) { ?>
-					<div <?php if (b_f_option('tab') == 9) { echo 'class="activo"'; }?> id="tab9">
-						<?php include('panel/panel.language.php'); ?>
-					</div>
-				<?php } ?>
-
 				<!-- Textos legales -->
-				<div <?php if (b_f_option('tab') == 10) { echo 'class="activo"'; } ?> id="tab10">
+				<div <?php if (b_f_option('tab') == 9) { echo 'class="activo"'; } ?> id="tab10">
 					<?php include('panel/panel.legal.php'); ?>
 				</div>
 
 				<!-- Redirecciones y SEO -->
-				<div <?php if (b_f_option('tab') == 11) { echo 'class="activo"'; } ?> id="tab11">
+				<div <?php if (b_f_option('tab') == 10) { echo 'class="activo"'; } ?> id="tab11">
 					<?php include('panel/panel.seo.php'); ?>
 				</div>
 
 				<!-- Ayuda -->
-				<div <?php if (b_f_option('tab') == 12) { echo 'class="activo"'; } ?> id="tab12">
+				<div <?php if (b_f_option('tab') == 11) { echo 'class="activo"'; } ?> id="tab12">
 					<?php include('panel/panel.help.php'); ?>
 				</div>
 
 				<!-- Créditos -->
-				<div <?php if (b_f_option('tab') == 13) { echo 'class="activo"'; } ?> id="tab13">
+				<div <?php if (b_f_option('tab') == 12) { echo 'class="activo"'; } ?> id="tab13">
 					<?php include('panel/panel.credits.php'); ?>
 				</div>
 

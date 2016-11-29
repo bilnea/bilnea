@@ -31,16 +31,30 @@ foreach (get_option('bilnea_settings') as $key => $value) {
 $var_temp = [];
 
 foreach ($var_fonts as $key => $value) {
-	array_push($var_temp, $key.':'.join($value, ','));
+	if ($key != 'inherit') {
+		array_push($var_temp, $key.':'.join($value, ','));
+	}
 }
 
 ?>
 
 @charset "UTF-8";
 
-/* Definición de tipografías */
+<?php
 
-@import url(http://fonts.googleapis.com/css?family=<?= implode('|', $var_temp) ?>);
+if (count($var_temp) > 0) {
+	
+	?>
+
+	/* Definición de tipografías */
+	
+	@import url(http://fonts.googleapis.com/css?family=<?= implode('|', $var_temp) ?>);
+
+	<?php
+
+}
+
+?>
 
 /* Estilos generales */
 

@@ -1,7 +1,6 @@
 jQuery(function($) {
 	$('form[data-id]').each(function() {
-		var ran = $(this).attr('data-id'),
-			errors = [form_errors.text];
+		var ran = $(this).attr('data-id');
 		var x = {};
 		$(this).find($('[data-name]')).each(function() {
 			var t = $(this);
@@ -75,7 +74,9 @@ jQuery(function($) {
 			var m = $(this);
 			var f = $(this).closest('form'),
 				g = 0,
-				x = '';
+				x = '',
+				errors = [form_errors.text];
+			f.next('.response').html('');
 			$(f.find($('input.required, textarea.required'))).each(function() {
 				var t = $(this);
 				t.removeClass('invalid');

@@ -8,7 +8,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 <h4>Blog</h4>
 <div style="width: 314px; display: inline-block;">Número de entradas a mostrar por página</div>
-<input style="text-align: right; width: 200px;" type="text" class="peq" name="bilnea_settings[b_opt_blog-number]" value="<?php b_f_option('b_opt_blog-number') ?>" placeholder="<?= b_f_default('b_opt_blog-number') ?>">
+<input style="text-align: right; width: 200px;" type="text" class="peq" name="bilnea_settings[b_opt_blog-number]" value="<?= b_f_option('b_opt_blog-number') ?>" placeholder="<?= b_f_default('b_opt_blog-number') ?>">
 <br />
 <div style="width: 314px; display: inline-block;">Ordenar entradas</div>
 <select name="bilnea_settings[b_opt_blog-order]" class="gran" style="margin-top: -2px; width: 200px;">
@@ -19,7 +19,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 </select>
 <input type="checkbox" name="bilnea_settings[b_opt_blog-order-desc]" <?php checked(b_f_option('b_opt_blog-order-desc'), 1 ); ?> value="1"> <span>Invertir orden</span>
 <h4 style="margin-top: 10px;">Maquetación de la página de entradas</h4>
-El shortcode <strong>{{b_blog}}</strong> inserta el contenido del blog. Se permite marcado HTML, PHP y shortcodes.
+Maquetación de la página de entradas.
 <br />
 <?php
 
