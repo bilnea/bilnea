@@ -12,13 +12,15 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 <br />
 <div style="width: 314px; display: inline-block;">Ordenar entradas</div>
 <select name="bilnea_settings[b_opt_blog-order]" class="gran" style="margin-top: -2px; width: 200px;">
-	<option value="random" <?php selected(b_f_option('b_opt_blog-order'), 'random'); ?>>Orden aleatorio</option>
+	<option value="manual" <?php selected(b_f_option('b_opt_blog-order'), 'manual'); ?>>Orden manual</option>
+	<option value="rand" <?php selected(b_f_option('b_opt_blog-order'), 'rand'); ?>>Orden aleatorio</option>
 	<option value="title" <?php selected(b_f_option('b_opt_blog-order'), 'title'); ?>>Ordenar por título</option>
 	<option selected value="date" <?php selected(b_f_option('b_opt_blog-order'), 'date'); ?>>Ordenar por fecha</option>
 	<option value="author" <?php selected(b_f_option('b_opt_blog-order'), 'author'); ?>>Ordenar por autor</option>
+	<option value="name" <?php selected(b_f_option('b_opt_blog-order'), 'name'); ?>>Ordenar por slug</option>
 </select>
 <input type="checkbox" name="bilnea_settings[b_opt_blog-order-desc]" <?php checked(b_f_option('b_opt_blog-order-desc'), 1 ); ?> value="1"> <span>Invertir orden</span>
-<h4 style="margin-top: 10px;">Maquetación de la página de entradas</h4>
+<h4 style="margin-top: 10px;">Páginas del blog</h4>
 Maquetación de la página de entradas.
 <br />
 <?php
@@ -53,10 +55,45 @@ if (function_exists('icl_object_id')) {
 }
 
 ?>
+Maquetación de la página de archivos.
+<br />
+<?php
+
+if (function_exists('icl_object_id')) {
+
+	// Variables globakles
+	global $sitepress;
+
+	// Variables locales
+	$var_language = $sitepress->get_current_language();
+	$sitepress->switch_lang('es');
+	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	if (!empty($var_languages)) {
+		$int = 0;
+		$out = '<div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= ($int != 0) ? ' | ' : '';
+			$out .= '<a class="lang-switcher" data-lang="'.$var_lang['language_code'].'">'.ucfirst($var_lang['translated_name']).'</a>';
+			$int++;
+		}
+		$out .= '</div><div class="lang-wrapper">';
+		foreach ($var_languages as $var_lang) {
+			$out .= '<textarea data-lang="'.$var_lang['language_code'].'" name="bilnea_settings[b_opt_blog-archive-page-'.$var_lang['language_code'].']" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-archive-page-'.$var_lang['language_code']).'</textarea>';
+		}
+		$out .= '</div>';
+		echo $out;
+	}
+} else {
+	$out = '<textarea name="bilnea_settings[b_opt_blog-archive-page-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-archive-page-es').'</textarea>';
+	echo $out;
+}
+
+?>
 
 <em class="notice" style="font-size: 11px; line-height: 15px; margin-bottom: 10px;">Shortcodes permitidos: {{b_blog}}, {{b_pagination}}.</em>
+
 <h4>Maquetación de entrada</h4>
-<strong>Entrada par</strong>
+Entrada par
 <br />
 <?php
 
@@ -90,7 +127,7 @@ if (function_exists('icl_object_id')) {
 }
 
 ?>
-<strong>Entrada impar</strong>
+Entrada impar
 <?php
 
 if (function_exists('icl_object_id')) {

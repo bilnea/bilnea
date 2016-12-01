@@ -6,8 +6,8 @@ define('WP_USE_THEMES', false);
 
 $url = explode('wp-content', $_SERVER['SCRIPT_FILENAME']);
 
-require_once('../inc/functions/functions.admin.php');
 require_once($url[0].'wp-load.php' );
+require_once('../inc/functions/functions.admin.php');
 
 $var_fonts = [];
 
@@ -124,6 +124,7 @@ if (count($var_temp) > 0) {
 	<?php if (b_f_option('b_opt_h1_ttf-underline') == 1) : ?>
 	text-decoration: underline;
 	<?php endif; ?>
+	display: inline-block;
 }
 
 .main_container h2, .main_container h2 * {
@@ -140,6 +141,7 @@ if (count($var_temp) > 0) {
 	<?php if (b_f_option('b_opt_h2_ttf-underline') == 1) : ?>
 	text-decoration: underline;
 	<?php endif; ?>
+	display: inline-block;
 }
 
 .main_container h3, .main_container h3 * {
@@ -156,6 +158,7 @@ if (count($var_temp) > 0) {
 	<?php if (b_f_option('b_opt_h3_ttf-underline') == 1) : ?>
 	text-decoration: underline;
 	<?php endif; ?>
+	display: inline-block;
 }
 
 .main_container h4, .main_container h4 * {
@@ -172,6 +175,7 @@ if (count($var_temp) > 0) {
 	<?php if (b_f_option('b_opt_h4_ttf-underline') == 1) : ?>
 	text-decoration: underline;
 	<?php endif; ?>
+	display: inline-block;
 }
 
 .main_container h5, .main_container h5 * {
@@ -188,6 +192,7 @@ if (count($var_temp) > 0) {
 	<?php if (b_f_option('b_opt_h5_ttf-underline') == 1) : ?>
 	text-decoration: underline;
 	<?php endif; ?>
+	display: inline-block;
 }
 
 .main_container h6, .main_container h6 * {
@@ -204,6 +209,7 @@ if (count($var_temp) > 0) {
 	<?php if (b_f_option('b_opt_h6_ttf-underline') == 1) : ?>
 	text-decoration: underline;
 	<?php endif; ?>
+	display: inline-block;
 }
 
 .container {
@@ -598,77 +604,77 @@ aside#sidebar {
 	}
 	* {
 		<?php
-		$un = preg_replace('/[0-9]+/', '', b_f_option('b_opt_text_ttf-size'));
-		$un .= ($un == '') ? 'px' : '';
-		$nu = preg_replace('/[^0-9]/', '', b_f_size('b_opt_text_ttf-size'));
+		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_text_ttf-size'));
+		$var_unit .= ($var_unit == '') ? 'px' : '';
+		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_text_ttf-size'));
 		?>
-		font-size: <?php echo ($nu*(b_f_option('b_opt_mobile-text')/100)).$un; ?>;
+		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-text')/100)).$var_unit; ?>;
 	}
 	b, b *,
 	strong,
 	strong * {
 		<?php
-		$un = preg_replace('/[0-9]+/', '', b_f_option('b_opt_bold_ttf-size'));
-		$un .= ($un == '') ? 'px' : '';
-		$nu = preg_replace('/[^0-9]/', '', b_f_size('b_opt_bold_ttf-size'));
+		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_bold_ttf-size'));
+		$var_unit .= ($var_unit == '') ? 'px' : '';
+		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_bold_ttf-size'));
 		?>
-		font-size: <?php echo ($nu*(b_f_option('b_opt_mobile-text')/100)).$un; ?>;
+		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-text')/100)).$var_unit; ?>;
 	}
 	a, a * {
 		<?php
-		$un = preg_replace('/[0-9]+/', '', b_f_option('b_opt_link_ttf-size'));
-		$un .= ($un == '') ? 'px' : '';
-		$nu = preg_replace('/[^0-9]/', '', b_f_size('b_opt_link_ttf-size'));
+		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_link_ttf-size'));
+		$var_unit .= ($var_unit == '') ? 'px' : '';
+		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_link_ttf-size'));
 		?>
-		font-size: <?php echo ($nu*(b_f_option('b_opt_mobile-text')/100)).$un; ?>;
+		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-text')/100)).$var_unit; ?>;
 	}
 	h1 {
 		<?php
-		$un = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h1_ttf-size'));
-		$un .= ($un == '') ? 'px' : '';
-		$nu = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h1_ttf-size'));
+		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h1_ttf-size'));
+		$var_unit .= ($var_unit == '') ? 'px' : '';
+		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h1_ttf-size'));
 		?>
-		font-size: <?php echo ($nu*(b_f_option('b_opt_mobile-htext')/100)).$un; ?>;
+		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
 	}
 	h2 {
 		<?php
-		$un = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h2_ttf-size'));
-		$un .= ($un == '') ? 'px' : '';
-		$nu = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h2_ttf-size'));
+		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h2_ttf-size'));
+		$var_unit .= ($var_unit == '') ? 'px' : '';
+		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h2_ttf-size'));
 		?>
-		font-size: <?php echo ($nu*(b_f_option('b_opt_mobile-htext')/100)).$un; ?>;
+		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
 	}
 	h3 {
 		<?php
-		$un = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h3_ttf-size'));
-		$un .= ($un == '') ? 'px' : '';
-		$nu = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h3_ttf-size'));
+		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h3_ttf-size'));
+		$var_unit .= ($var_unit == '') ? 'px' : '';
+		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h3_ttf-size'));
 		?>
-		font-size: <?php echo ($nu*(b_f_option('b_opt_mobile-htext')/100)).$un; ?>;
+		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
 	}
 	h4 {
 		<?php
-		$un = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h4_ttf-size'));
-		$un .= ($un == '') ? 'px' : '';
-		$nu = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h4_ttf-size'));
+		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h4_ttf-size'));
+		$var_unit .= ($var_unit == '') ? 'px' : '';
+		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h4_ttf-size'));
 		?>
-		font-size: <?php echo ($nu*(b_f_option('b_opt_mobile-htext')/100)).$un; ?>;
+		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
 	}
 	h5 {
 		<?php
-		$un = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h5_ttf-size'));
-		$un .= ($un == '') ? 'px' : '';
-		$nu = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h5_ttf-size'));
+		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h5_ttf-size'));
+		$var_unit .= ($var_unit == '') ? 'px' : '';
+		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h5_ttf-size'));
 		?>
-		font-size: <?php echo ($nu*(b_f_option('b_opt_mobile-htext')/100)).$un; ?>;
+		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
 	}
 	h6 {
 		<?php
-		$un = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h6_ttf-size'));
-		$un .= ($un == '') ? 'px' : '';
-		$nu = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h6_ttf-size'));
+		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h6_ttf-size'));
+		$var_unit .= ($var_unit == '') ? 'px' : '';
+		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h6_ttf-size'));
 		?>
-		font-size: <?php echo ($nu*(b_f_option('b_opt_mobile-htext')/100)).$un; ?>;
+		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
 	}
 	<?php if (b_f_option('b_opt_mobile-sidebar') == 1) : ?>
 	aside#sidebar {

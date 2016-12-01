@@ -1502,45 +1502,7 @@ function b_f_get_excerpt($a, $z = null, $y = 0, $x = true) {
 
 // Soporte para Mailchimp
 
-function b_mailchimp_subscribe(){
-	$list_id = b_f_option('b_opt_newsl_list');
-	$api_key = b_f_option('b_opt_newsl_api');
-	$result = json_decode( b_mailchimp_member_status($_POST['email'], 'subscribed', $list_id, $api_key, 'PUT', array('FNAME' => $_POST['name'],'LNAME' => $_POST['last']) ) );
-	if( $result->status == 400 ){
-		foreach( $result->errors as $error ) {
-			echo '<p>Error: ' . $error->message . '</p>';
-		}
-	} elseif( $result->status == 'subscribed' ){
-		echo '<script>window.location.href = "'.get_permalink($_POST['redirect']).'";</script>';
-	}
-	die;
-}
- 
-add_action('wp_ajax_b_mailchimpsubscribe','b_mailchimp_subscribe');
-add_action('wp_ajax_nopriv_b_mailchimpsubscribe','b_mailchimp_subscribe');
 
-function b_mailchimp_member_status( $email, $status, $list_id, $api_key, $request = 'PUT', $merge_fields = null ){
-	$data = array(
-		'apikey'        => $api_key,
-		'email_address' => $email,
-		'status'        => $status,
-		'merge_fields'  => $merge_fields
-	);
-	$mch_api = curl_init();
- 
-	curl_setopt($mch_api, CURLOPT_URL, 'https://' . substr($api_key,strpos($api_key,'-')+1) . '.api.mailchimp.com/3.0/lists/' . $list_id . '/members/' . md5(strtolower($data['email_address'])));
-	curl_setopt($mch_api, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Authorization: Basic '.base64_encode( 'user:'.$api_key )));
-	curl_setopt($mch_api, CURLOPT_USERAGENT, 'PHP-MCAPI/2.0');
-	curl_setopt($mch_api, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($mch_api, CURLOPT_CUSTOMREQUEST, $request);
-	curl_setopt($mch_api, CURLOPT_TIMEOUT, 10);
-	curl_setopt($mch_api, CURLOPT_POST, true);
-	curl_setopt($mch_api, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($mch_api, CURLOPT_POSTFIELDS, json_encode($data) );
- 
-	$result = curl_exec($mch_api);
-	return $result;
-}
 
 
 

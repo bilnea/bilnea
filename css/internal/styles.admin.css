@@ -693,11 +693,13 @@ body > .sp-container .sp-clear {
 	background-color: rgba(255, 255, 255, 0.6) !important;
 }
 
-#admin_thumb {
+#admin_thumb,
+#term-featured-image {
 	width: 90px;
 }
 
-.admin_thumb > a:not([style="background-image: url();"]) {
+.admin_thumb > a:not([style="background-image: url();"]),
+.term-featured-image > a:not([style="background-image: url();"]) {
 	display: inline-block;
 	background-size: cover;
 	width: 80px;
@@ -787,6 +789,7 @@ select[name="bilnea_settings[header_menu]"] + .select2 {
 }
 
 textarea[name*="b_opt_blog-content-"]:not(.current),
+textarea[name*="b_opt_blog-archive-"]:not(.current),
 textarea[name*="b_opt_header-top-content-"]:not(.current),
 textarea[name*="b_opt_header-main-content-"]:not(.current) {
 	display: none;
@@ -810,7 +813,27 @@ textarea[name*="b_opt_header-main-content-"]:not(.current) {
 	padding: 0 4px;
 	line-height: 14px;
 	cursor: move;
-	cursor: -webkit-grab;+
+	cursor: -webkit-grab;
 	margin: 0 4px 4px 0;
 	white-space: nowrap;
+}
+
+tbody > .ui-sortable-helper {
+	background-color: rgba(255, 255, 255, 0.8);
+	border: 1px solid #e5e5e5;
+	opacity: 0.6;
+}
+
+tbody > .bilnea-sortable-placeholder {
+	background-color: #f1f1f1;
+	border-top: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e5e5e5;
+	padding: 20px 0;
+	text-align: center;
+	display: table-row;
+	font-style: italic;
+	color: #e0e0e0;
+	font-size: 0.8em;
+	opacity: 1;
+	position: relative;
 }

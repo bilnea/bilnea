@@ -80,6 +80,7 @@ if (function_exists('icl_object_id')) {
 			<?php
 
 			$var_count++;
+			$sitepress->switch_lang('es');
 		}
 	}
 
@@ -230,6 +231,7 @@ Mostrar los resultados en este orden
 				<?php
 
 				$var_count++;
+				$sitepress->switch_lang('es');
 			}
 		}
 
@@ -298,60 +300,6 @@ Mostrar los resultados en este orden
 		<input type="radio" name="bilnea_settings[b_opt_lightbox-smtp-protocol]" <?php checked(b_f_option('b_opt_lightbox-smtp-protocol'), 'tls' ); ?> value="tls">Protocolo TLS
 	</div>
 </div>
-
-<!-- Suscriptores -->
-<h4>Boletín de noticias</h4>
-<input type="checkbox" name="bilnea_settings[b_opt_subscribers]" <?php checked(b_f_option('b_opt_subscribers'), 1 ); ?> value="1" class="disabler" data-connect="subscribers">Activar módulo de boletín de noticias<br />
-<hr />
-<div style="overflow: hidden;" data-connect="subscribers">
-	<div style="width: calc(50% - 7px); display: inline-block; margin-right: 14px; float: left;">
-		Servicio de boletines
-		<select name="bilnea_settings[b_opt_newsl_service]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
-			<option selected disabled>Selecciona un servicio</option>
-			<option value="wordpress" <?php selected(b_f_option('b_opt_newsl_service'), 'wordpress') ?>>Wordpress</option>
-			<option value="mailchimp" <?php selected(b_f_option('b_opt_newsl_service'), 'mailchimp') ?>>Mailchimp</option>
-			<option value="benchmark" <?php selected(b_f_option('b_opt_newsl_service'), 'benchmark') ?>>Benchmark</option>
-		</select>
-	</div>
-	<div style="width: calc(50% - 7px); display: inline-block;">
-		Página de redirección al enviar
-		<select name="bilnea_settings[b_opt_newsl_redirect]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
-			<option selected disabled>Selecciona una página</option>
-			<option value="none" <?php selected(b_f_option('b_opt_newsl_redirect'), 'none') ?>>Sin redirección</option>
-			<option disabled>----------</option>
-			<?php $args = array(
-				'sort_order' => 'asc',
-				'sort_column' => 'post_title',
-				'post_type' => 'page',
-				'post_status' => 'publish'
-			); 
-			$var_page = get_pages($args);
-			foreach ($var_page as $page) {
-				echo '<option value="'.$page->ID.'" '.selected(b_f_option('b_opt_newsl_redirect'), $page->ID).'>'.$page->post_title.'</option>';
-			}
-			?>
-		</select>
-	</div>
-	<div style="width: 100%; display: inline-block; float: left; margin-right: 14px; margin-top: 7px;">
-		<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_newsl_api]" value="<?= b_f_option('b_opt_newsl_api') ?>" placeholder="API Key" />
-	</div>
-
-</div>
-<div class="notice" style="font-size: 11px; line-height: 15px; display: block !important;">Crea un listado de suscriptores que se recolecten desde los formularios presentes en la web. Activa los shortcodes relacionados con esta funcionalidad.</div>
-<br />
-
-<h4>API Keys</h4>
-<div>Google Maps</div>
-<div>
-	<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_apis_gmaps]" value="<?= b_f_option('b_opt_apis_gmaps') ?>" placeholder="API Key" />
-</div>
-<hr style="margin-bottom: 0;" />
-<div>Twitter</div>
-<div>
-	<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_apis_twitter_api-key]" value="<?= b_f_option('b_opt_apis_twitter_api-key') ?>" placeholder="API Key" />
-	<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_apis_twitter_api-secret]" value="<?= b_f_option('b_opt_apis_twitter_api-secret') ?>" placeholder="API Secret" />
-</div>
-<br />
 
 <!-- Precarga -->
 <h4>Precarga</h4>

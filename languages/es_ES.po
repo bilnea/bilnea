@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bilnea Wordpress theme\n"
-"POT-Creation-Date: 2016-11-29 09:23+0100\n"
-"PO-Revision-Date: 2016-11-29 09:24+0100\n"
+"POT-Creation-Date: 2016-12-01 18:21+0100\n"
+"PO-Revision-Date: 2016-12-01 18:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: Samuel E. Cerezo <samuelcerezo@bilnea.com>\n"
 "Language: es\n"
@@ -15,6 +15,10 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
+
+#: archive.php:57
+msgid "Nothing found."
+msgstr "Sin resultados."
 
 #: footer.php:73
 msgid "Made with <i class=\"fa fa-heart-o\"></i> by"
@@ -36,7 +40,8 @@ msgstr "buscar"
 msgid "comments"
 msgstr "comentarios"
 
-#: functions.php:730 index.php:97
+#: functions.php:730 inc/data/data.pagination.php:10
+#: inc/data/data.pagination.php:26
 msgid "page"
 msgstr "pagina"
 
@@ -103,6 +108,22 @@ msgstr ""
 "Lo sentimos, ha ocurrido un error al enviar el mensaje. Por favor, vuelva a "
 "intentarlo más tarde."
 
+#: inc/data/data.blog.php:27 single.php:57
+msgid "No comments"
+msgstr "Sin comentarios"
+
+#: inc/data/data.blog.php:29 single.php:59
+msgid " comments"
+msgstr " comentarios"
+
+#: inc/data/data.blog.php:31 single.php:61
+msgid "1 comment"
+msgstr "1 comentario"
+
+#: inc/data/data.blog.php:35 single.php:65
+msgid "Comments are disabled"
+msgstr "Comentarios deshabilitados"
+
 #: inc/data/data.globals.php:20
 msgid "January"
 msgstr "Enero"
@@ -151,14 +172,30 @@ msgstr "Noviembre"
 msgid "December"
 msgstr "Diciembre"
 
-#: inc/shortcodes.php:356
-msgid "No posts found"
-msgstr "Sin resultados"
+#: inc/data/data.pagination.php:13
+msgid "Previous"
+msgstr "Anterior"
 
-#: inc/shortcodes.php:361
+#: inc/data/data.pagination.php:14
+msgid "Next"
+msgstr "Siguiente"
+
+#: inc/data/data.pagination.php:17 inc/shortcodes.php:361
 #, php-format
 msgid "Page %1$s of %2$s"
 msgstr "Página %1$s de %2$s"
+
+#: inc/data/data.pagination.php:20
+msgid "First"
+msgstr "Primero"
+
+#: inc/data/data.pagination.php:26
+msgid "Last"
+msgstr "Último"
+
+#: inc/shortcodes.php:356
+msgid "No posts found"
+msgstr "Sin resultados"
 
 #: inc/shortcodes.php:535
 msgid "It's not possible to get latest tweets. No username configured"
@@ -169,25 +206,25 @@ msgstr ""
 msgid "No tweets"
 msgstr "Sin tuits"
 
-#: inc/shortcodes/shortcodes.blog.php:71 inc/shortcodes/shortcodes.blog.php:126
+#: inc/shortcodes/shortcodes.blog.php:73 inc/shortcodes/shortcodes.blog.php:128
 msgid "Published by "
 msgstr "Publicado por"
 
-#: inc/shortcodes/shortcodes.blog.php:74 inc/shortcodes/shortcodes.blog.php:129
+#: inc/shortcodes/shortcodes.blog.php:76 inc/shortcodes/shortcodes.blog.php:131
 msgid "the"
 msgstr "el"
 
-#: inc/shortcodes/shortcodes.blog.php:93 inc/shortcodes/shortcodes.blog.php:148
+#: inc/shortcodes/shortcodes.blog.php:95 inc/shortcodes/shortcodes.blog.php:150
 msgid "Read more"
 msgstr "Leer más"
 
-#: inc/shortcodes/shortcodes.blog.php:183
+#: inc/shortcodes/shortcodes.blog.php:185
 msgid "All"
 msgstr "Todo"
 
-#: inc/shortcodes/shortcodes.blog.php:246
-#: inc/shortcodes/shortcodes.blog.php:259
+#: inc/shortcodes/shortcodes.blog.php:248
 #: inc/shortcodes/shortcodes.blog.php:261
+#: inc/shortcodes/shortcodes.blog.php:263
 msgid "Tweet this"
 msgstr "Tuitéalo"
 
@@ -204,15 +241,18 @@ msgid "Send"
 msgstr "Enviar"
 
 #: inc/shortcodes/shortcodes.form.php:53
+#: inc/shortcodes/shortcodes.newsletter.php:31 single.php:19
 msgid "There are errors on the form. Please fix them before continuing"
 msgstr ""
 "Existen errores en el formulario. Por favor, revísalos antes de continuar"
 
 #: inc/shortcodes/shortcodes.form.php:54
+#: inc/shortcodes/shortcodes.newsletter.php:32 single.php:20
 msgid "Fill in all the required fields"
 msgstr "Completa los campos requeridos"
 
 #: inc/shortcodes/shortcodes.form.php:55
+#: inc/shortcodes/shortcodes.newsletter.php:33 single.php:21
 msgid "Enter a valid email address"
 msgstr "Introduce una dirección de correo electrónico válida"
 
@@ -221,6 +261,7 @@ msgid "Enter a correct captcha value"
 msgstr "Introduce el código de verificación correcto"
 
 #: inc/shortcodes/shortcodes.form.php:57
+#: inc/shortcodes/shortcodes.newsletter.php:34 single.php:22
 msgid "You must accept the legal advice"
 msgstr "Debe aceptar el aviso legal"
 
@@ -237,24 +278,28 @@ msgid "State"
 msgstr "Provincia"
 
 #: inc/shortcodes/shortcodes.form.php:191
-#: inc/shortcodes/shortcodes.newsletter.php:34
+#: inc/shortcodes/shortcodes.newsletter.php:54
+#: inc/shortcodes/shortcodes.newsletter.php:77
 msgid "Privacy policy"
 msgstr "política de privacidad"
 
 #: inc/shortcodes/shortcodes.form.php:201
-#: inc/shortcodes/shortcodes.newsletter.php:38
+#: inc/shortcodes/shortcodes.newsletter.php:58
+#: inc/shortcodes/shortcodes.newsletter.php:81
 msgctxt "female"
 msgid "the"
 msgstr "la"
 
 #: inc/shortcodes/shortcodes.form.php:204
-#: inc/shortcodes/shortcodes.newsletter.php:41
+#: inc/shortcodes/shortcodes.newsletter.php:61
+#: inc/shortcodes/shortcodes.newsletter.php:84
 msgctxt "male"
 msgid "the"
 msgstr "el"
 
 #: inc/shortcodes/shortcodes.form.php:208
-#: inc/shortcodes/shortcodes.newsletter.php:45
+#: inc/shortcodes/shortcodes.newsletter.php:65
+#: inc/shortcodes/shortcodes.newsletter.php:88
 msgid "I have read, understood and accept"
 msgstr "He leído, entiendo y acepto"
 
@@ -313,49 +358,36 @@ msgstr "Publicaciones de"
 msgid "Not found"
 msgstr "Sin resultados"
 
-#: inc/shortcodes/shortcodes.newsletter.php:27
+#: inc/shortcodes/shortcodes.newsletter.php:47
+#: inc/shortcodes/shortcodes.newsletter.php:93 single.php:142
 msgid "* Name"
 msgstr "* Nombre"
 
-#: inc/shortcodes/shortcodes.newsletter.php:29
+#: inc/shortcodes/shortcodes.newsletter.php:49
+#: inc/shortcodes/shortcodes.newsletter.php:94
 msgid "* Last name"
 msgstr "* Apellidos"
 
-#: inc/shortcodes/shortcodes.newsletter.php:31
+#: inc/shortcodes/shortcodes.newsletter.php:51
+#: inc/shortcodes/shortcodes.newsletter.php:95 single.php:143
 msgid "* Email"
 msgstr "* Correo electrónico"
 
-#: inc/shortcodes/shortcodes.newsletter.php:46
+#: inc/shortcodes/shortcodes.newsletter.php:66
 msgid "Suscribe"
 msgstr "Suscríbete"
+
+#: inc/shortcodes/shortcodes.newsletter.php:97
+msgid "Subscribe"
+msgstr "Suscríbete"
+
+#: inc/shortcodes/shortcodes.newsletter.php:97
+msgid "Subscribing"
+msgstr "Suscribiendo"
 
 #: inc/shortcodes/shortcodes.social.php:178
 msgid "No Twitter API key set"
 msgstr "No se ha establecido una clave API de Twitter"
-
-#: index.php:58 single.php:49 single.php:97
-msgid "No comments"
-msgstr "Sin comentarios"
-
-#: index.php:60 single.php:51 single.php:99
-msgid " comments"
-msgstr " comentarios"
-
-#: index.php:62 single.php:53 single.php:101
-msgid "1 comment"
-msgstr "1 comentario"
-
-#: index.php:66 single.php:57 single.php:105
-msgid "Comments are disabled"
-msgstr "Comentarios deshabilitados"
-
-#: index.php:100
-msgid "Previous"
-msgstr "Anterior"
-
-#: index.php:101
-msgid "Next"
-msgstr "Siguiente"
 
 #: php/subscriber.php:37
 msgid "Please confirm your newsletter subscription by visiting the link below:"
@@ -390,6 +422,34 @@ msgid "Try to redefine your search using another term, or visit the homepage."
 msgstr ""
 "Pruebe a redefinir su búsqueda utilizando otro término o visite la página "
 "principal."
+
+#: single.php:85 single.php:112
+msgid "Share in Twitter"
+msgstr "Compartir en Twitter"
+
+#: single.php:88 single.php:113
+msgid "Share in Facebook"
+msgstr "Compartir en Facebook"
+
+#: single.php:91 single.php:114
+msgid "Share in Linkedin"
+msgstr "Compartir en Linkedin"
+
+#: single.php:94 single.php:115
+msgid "Share in Google +"
+msgstr "Compartir en Google +"
+
+#: single.php:98 single.php:117
+msgid "Share in Whatsapp"
+msgstr "Compartir en Whatsapp"
+
+#: single.php:102 single.php:119
+msgid "Share by email"
+msgstr "Compartir por correo electrónico"
+
+#: single.php:145
+msgid "* Comment"
+msgstr "* Comentario"
 
 #~ msgid "Your message have been sent sucesfully."
 #~ msgstr "Tu mensaje se ha enviado correctamente."

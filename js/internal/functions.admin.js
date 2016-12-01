@@ -416,4 +416,37 @@ jQuery(function($) {
 	$('.lang-wrapper > *:first-child').each(function() {
 		$(this).addClass('current');
 	});
+	$('.wp-list-table tbody').sortable({
+		revert: true,
+		placeholder: {
+			element: function(currentItem) {
+				var tds = $('.wp-list-table tbody > tr:first-child > td:visible').length+1;
+				return $('<tr class="bilnea-sortable-placeholder"><td colspan="'+tds+'">Mover aquí</td></tr>')[0];
+			},
+			update: function(container, p) {
+				opts = {
+					url: ajaxurl,
+					type: 'POST',
+					async: true,
+					cache: false,
+					dataType: 'json',
+					data:{
+						action: 'b_order_admin',
+						order: $('.wp-list-table tbody').sortable('toArray').toString().replace(',,', ',')
+					},
+					success: function(response) {
+						console.log('Elementos ordenados correctamente.');
+						return; 
+					},
+					error: function(xhr,textStatus,e) {
+						alert('Ha ocurrido un error al actualizar el orden de los elementos.');
+						return; 
+					}
+				};
+				$.ajax(opts);
+				return;
+			}
+		}
+	});
+	$('.wp-list-table tbody ul, .wp-list-table tbody li').disableSelection();
 })

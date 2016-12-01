@@ -122,7 +122,7 @@ if (!function_exists('b_f_smtp_server')) {
 			$var_smtp->SMTPSecure = 'tls';
 		}
 		
-	    $var_smtp->IsSMTP();
+		$var_smtp->IsSMTP();
 
 	}
 
@@ -158,6 +158,229 @@ if (!function_exists('b_f_create_page')) {
 			add_post_meta($var_id, '_yoast_wpseo_meta-robots-noindex', '1');
 		}
 	}
+
+}
+
+
+function b_f_i_register_term_metabox() {
+
+	register_meta('term', '_term-featured-image', 'b_f_i_sanitize_text_field');
+
+	foreach (get_taxonomies() as $term) {
+		if (!in_array($term, array('post_tag', 'nav_menu', 'link_category', 'post_format'))) {
+			add_action($term.'_add_form_fields', 'b_f_i_term_add_meta_field');
+			add_action($term.'_edit_form_fields', 'b_f_i_term_edit_featured_image');
+			add_action('edit_'.$term,   'b_f_i_term_save_featured_image');
+			add_action('create_'.$term, 'b_f_i_term_save_featured_image');
+			add_filter('manage_edit-'.$term.'_columns', 'b_f_i_edit_term_columns');
+			add_filter('manage_'.$term.'_custom_column', 'b_f_i_manage_term_columns', 10, 3);
+		}
+	}
+
+}
+
+
+function b_f_i_sanitize_text_field ($value) {
+
+	return sanitize_text_field ($value);
+
+}
+
+
+function b_f_i_get_term_meta($term_id) {
+
+	$var_value = get_term_meta($term_id, '_term-featured-image', true);
+	$var_value = b_f_i_sanitize_text_field($var_value);
+
+	return $var_value;
+
+}
+
+
+function b_f_i_term_add_meta_field() {
+
+	wp_nonce_field(basename(__FILE__), 'term_featured_image_nonce');
+	wp_enqueue_media();
+
+	?>
+
+	<div class="form-field term-meta-featured-image-wrap">
+		<label for="term-meta-featured-image">Imagen destacada</label>
+		<div data-columns="8">
+			<ul id="term_images" style="overflow: hidden;">
+				<li class="attachment" style="width: 100px; padding: 0;">
+					<div class="attachment-preview">
+						<div class="thumbnail" style="background-size: cover; box-shadow: 0 0 10px rgba(0, 0, 0, 0.6) inset; border: 1px solid #eceded; overflow: hidden;"></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<input type="hidden" name="term_featured_image" id="term-meta-featured-image" value="" class="term-meta-featured-image-field" />
+		<input type="button" id="term_meta-image-button" class="button" value="Seleccionar imagen" />
+		<script>
+			jQuery(function($) {
+				var mediaUploader;
+				$('#term_meta-image-button, #term_images li').click(function(e) {
+					e.preventDefault();
+					if (mediaUploader) {
+						mediaUploader.open();
+						return;
+					}
+					mediaUploader = wp.media.frames.file_frame = wp.media({
+						title: 'Seleccionar imagen',
+						button: {
+							text: 'Seleccionar'
+						}, multiple: false
+					});
+					mediaUploader.on('select', function() {
+						attachment = mediaUploader.state().get('selection').first().toJSON();
+						$('#term-meta-featured-image').val(attachment.id);
+						$('#term_images li .thumbnail').css('background-image', 'url('+attachment.sizes.thumbnail.url+')');
+					});
+					mediaUploader.open();
+				})
+			})
+		</script>
+	</div>
+
+	<?php
+
+}
+
+
+function b_f_i_term_edit_featured_image($term) {
+
+	wp_enqueue_media();
+	$var_value  = b_f_i_get_term_meta($term->term_id);
+
+	if (!$var_value) {
+		$var_value = '';
+	}
+		
+	?>
+
+	<tr class="form-field term-meta-featured-image-wrap">
+		<th scope="row">
+			Imagen destacada
+		</th>
+		<td>
+
+			<?php
+
+			wp_nonce_field(basename(__FILE__), 'term_featured_image_nonce');
+
+			?>
+
+			<div data-columns="8">
+				<ul id="term_images" style="overflow: hidden;">
+					<li class="attachment" style="width: 100px; padding: 0;">
+						<div class="attachment-preview">
+							<div class="thumbnail" style="background-image: url(<?= wp_get_attachment_image_src($var_value, 'thumbnail')[0] ?>); background-size: cover; box-shadow: 0 0 10px rgba(0, 0, 0, 0.6) inset; border: 1px solid #eceded; overflow: hidden;"></div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<input type="hidden" name="term_featured_image" id="term-meta-featured-image" value="<?= $var_value ?>" class="term-meta-featured-image-field" />
+			<input type="button" id="term_meta-image-button" class="button" value="Seleccionar imagen" />
+			<script>
+				jQuery(function($) {
+					var mediaUploader;
+					$('#term_meta-image-button, #term_images li').click(function(e) {
+						e.preventDefault();
+						if (mediaUploader) {
+							mediaUploader.open();
+							return;
+						}
+						mediaUploader = wp.media.frames.file_frame = wp.media({
+							title: 'Seleccionar imagen',
+							button: {
+								text: 'Seleccionar'
+							}, multiple: false
+						});
+						mediaUploader.on('select', function() {
+							attachment = mediaUploader.state().get('selection').first().toJSON();
+							$('#term-meta-featured-image').val(attachment.id);
+							$('#term_images li .thumbnail').css('background-image', 'url('+attachment.sizes.thumbnail.url+')');
+						});
+						mediaUploader.open();
+					})
+				})
+			</script>
+		</td>
+	</tr>
+
+<?php
+
+}
+
+
+function b_f_i_term_save_featured_image($term_id) {
+	
+	if (! isset($_POST['term_featured_image_nonce']) || ! wp_verify_nonce($_POST['term_featured_image_nonce'], basename(__FILE__)))
+		return;
+
+	$old_value  = b_f_i_get_term_meta($term_id);
+	$new_value = isset($_POST['term_featured_image']) ? b_f_i_sanitize_text_field ($_POST['term_featured_image']) : '';
+
+
+	if ($old_value && '' === $new_value)
+		delete_term_meta($term_id, '_term-featured-image');
+
+	else if ($old_value !== $new_value)
+		update_term_meta($term_id, '_term-featured-image', $new_value);
+}
+
+
+function b_f_i_edit_term_columns($var_columns) {
+
+	$var_new_columns = array();
+
+	foreach ($var_columns as $key => $value) {
+		if ($key == 'name') {
+			$var_new_columns['term-featured-image'] = '';
+		}
+		$var_new_columns[$key] = $value;
+	}
+
+	return $var_new_columns;
+}
+
+
+function b_f_i_manage_term_columns($out, $column, $term_id) {
+
+	if ('term-featured-image' === $column) {
+
+		$var_value  = b_f_i_get_term_meta($term_id);
+
+		if (! $var_value) {
+			$var_value = '';
+		}
+
+		$out = sprintf('<span class="term-meta-featured-image-block" style="" >%s</div>', esc_attr($value));
+	}
+
+	return '<a style="background-image: url('.wp_get_attachment_image_src($var_value, 'thumbnail')[0].');"></a>';
+
+}
+
+add_action('init', 'b_f_i_register_term_metabox', 50);
+
+
+if (!function_exists('b_f_i_terms_orderby')) {
+
+	function b_f_i_terms_orderby($args, $taxonomies) {
+
+		if (!isset($_GET['orderby'])) {
+			$args['orderby'] = 'meta_value_num';
+			$args['order'] = 'ASC';
+			$args['meta_key'] = 'custom-order';
+		}
+
+		return $args;
+
+	}
+
+	add_filter('get_terms_args', 'b_f_i_terms_orderby', 10, 2);
 
 }
 

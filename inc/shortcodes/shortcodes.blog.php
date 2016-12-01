@@ -34,16 +34,18 @@ if (!function_exists('b_s_recent_posts')) {
 
 		array_walk($var_categories, 'f_t_alter');
 
-		// Búsqueda
-		$query = new WP_Query(
-			array(
-				'post_type' => esc_attr($a['type']),
-				'orderby' => esc_attr($a['order']),
-				'posts_per_page' => esc_attr($a['method']),
-				'showposts' => esc_attr($a['posts']),
-				'cat' => implode(',', $var_categories),
-			)
+		// Opciones
+		$args = array(
+			'post_type' => esc_attr($a['type']),
+			'orderby' => esc_attr($a['order']),
+			'posts_per_page' => esc_attr($a['method']),
+			'showposts' => esc_attr($a['posts']),
+			'cat' => implode(',', $var_categories),
+			'post__not_in' => array(get_the_ID())
 		);
+
+		// Búsqueda
+		$query = new WP_Query($args);
 
 		$var_class = 'x1'.esc_attr($a['columns']);
 
