@@ -151,9 +151,12 @@ Limitar la búsqueda a los tipos de objetos
 
 <?php
 
+$var_exclude = array('attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset');
+
 foreach (get_post_types() as $var_type) {
-	if (!in_array($var_type, array('attachment', 'revision', 'nav_menu_item'))) {
-		echo '<div style="width: 30%; display: inline-block;"><input type="checkbox" name="bilnea_settings[b_opt_search-include][]" value="'.$var_type.'" /> '.__(ucfirst($var_type), 'bilnea').'</div>';
+	if (!in_array($var_type, $var_exclude)) {
+		(in_array($var_type, b_f_option('b_opt_search-include'))) ? $var_selected = ' checked' : $var_selected = '';
+		echo '<div style="width: 30%; display: inline-block;"><input type="checkbox" name="bilnea_settings[b_opt_search-include][]"'.$var_selected.' value="'.$var_type.'" /> '.get_post_type_object($var_type)->labels->name.'</div>';
 	}
 }
 
@@ -161,19 +164,21 @@ foreach (get_post_types() as $var_type) {
 
 <div style="display: block; clear: both;"></div>
 Mostrar los resultados en este orden
-<select multiple name="bilnea_settings[b_opt_search-order]" style="display: block; width: 100%;">
+<select multiple name="bilnea_settings[b_opt_search-order][]" style="display: block; width: 100%;">
 	
 	<?php
 
 	foreach (get_post_types() as $var_type) {
-		if (!in_array($var_type, array('attachment', 'revision', 'nav_menu_item'))) {
-			echo '<option value="'.$var_type.'" '.selected(b_f_option('b_opt_search-order'), $var_type).'> '.__(ucfirst($var_type), 'bilnea').'</option>';
+		if (!in_array($var_type, $var_exclude)) {
+			(in_array($var_type, b_f_option('b_opt_search-include'))) ? $var_selected = ' selected' : $var_selected = '';
+			echo '<option value="'.$var_type.'" '.selected(b_f_option('b_opt_search-order'), $var_type).$var_selected.'> '.get_post_type_object($var_type)->labels->name.'</option>';
 		}
 	}
 
 	?>
 
 </select>
+<br /><br />
 
 <!-- Formulario de contacto -->
 <h4>Formulario de contacto y envío de correo</h4>

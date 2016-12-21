@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bilnea Wordpress theme\n"
-"POT-Creation-Date: 2016-12-01 18:21+0100\n"
-"PO-Revision-Date: 2016-12-01 18:22+0100\n"
+"POT-Creation-Date: 2016-12-15 18:31+0100\n"
+"PO-Revision-Date: 2016-12-15 18:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: Samuel E. Cerezo <samuelcerezo@bilnea.com>\n"
 "Language: es\n"
@@ -28,32 +28,36 @@ msgstr "Hecho con <i class=\"fa fa-heart-o\"></i> por"
 msgid "bilnea. Communication & Digital Marketing Agency"
 msgstr "bilnea. Agencia de Comunicación y Marketing Digital"
 
-#: functions.php:727
+#: functions.php:198
+msgid "of"
+msgstr "de"
+
+#: functions.php:732
 msgid "author"
 msgstr "autor"
 
-#: functions.php:728
+#: functions.php:733
 msgid "search"
 msgstr "buscar"
 
-#: functions.php:729
+#: functions.php:734
 msgid "comments"
 msgstr "comentarios"
 
-#: functions.php:730 inc/data/data.pagination.php:10
-#: inc/data/data.pagination.php:26
+#: functions.php:735 inc/data/data.pagination.php:10
+#: inc/data/data.pagination.php:26 search.php:71 search.php:87
 msgid "page"
 msgstr "pagina"
 
-#: functions.php:1367
+#: functions.php:1373
 msgid "* I have read, understood and accept the "
 msgstr "* He leído, entiendo y acepto la"
 
-#: functions.php:1367
+#: functions.php:1373
 msgid "privacy policy"
 msgstr "política de privacidad"
 
-#: header.php:83
+#: header.php:90
 #, php-format
 msgid ""
 "We use our own and third-part <em>cookies</em> to analyse the use and "
@@ -68,7 +72,7 @@ msgstr ""
 "configuración u obtener más información <a href=\"%1$s\" target=\"_blank\" "
 "title=\"Política de cookies de %2$s\">aquí</a>."
 
-#: header.php:87
+#: header.php:94
 msgid "Ok"
 msgstr "Aceptar"
 
@@ -79,11 +83,11 @@ msgstr "Respuesta al mensaje enviado desde la página web &quot;%s&quot; "
 
 #: inc/ajax/ajax.form.php:96
 msgid ""
-"Your message has been sent sucesfully sent.<br /><br />Here is a copy of "
-"your message."
+"Your message has been sucesfully sent.<br /><br />Here is a copy of your "
+"message."
 msgstr ""
-"Tu mensaje se ha enviado correctamente.<br /><br />A continuación se adjunta "
-"una copia de tu mensaje."
+"Tu mensaje se ha enviado correctamente.<br /><br />Aquí tienes una copia del "
+"mismo."
 
 #: inc/ajax/ajax.form.php:100
 msgid ""
@@ -172,24 +176,24 @@ msgstr "Noviembre"
 msgid "December"
 msgstr "Diciembre"
 
-#: inc/data/data.pagination.php:13
+#: inc/data/data.pagination.php:13 search.php:74
 msgid "Previous"
 msgstr "Anterior"
 
-#: inc/data/data.pagination.php:14
+#: inc/data/data.pagination.php:14 search.php:75
 msgid "Next"
 msgstr "Siguiente"
 
-#: inc/data/data.pagination.php:17 inc/shortcodes.php:361
+#: inc/data/data.pagination.php:17 inc/shortcodes.php:361 search.php:78
 #, php-format
 msgid "Page %1$s of %2$s"
 msgstr "Página %1$s de %2$s"
 
-#: inc/data/data.pagination.php:20
+#: inc/data/data.pagination.php:20 search.php:81
 msgid "First"
 msgstr "Primero"
 
-#: inc/data/data.pagination.php:26
+#: inc/data/data.pagination.php:26 search.php:87
 msgid "Last"
 msgstr "Último"
 
@@ -241,18 +245,18 @@ msgid "Send"
 msgstr "Enviar"
 
 #: inc/shortcodes/shortcodes.form.php:53
-#: inc/shortcodes/shortcodes.newsletter.php:31 single.php:19
+#: inc/shortcodes/shortcodes.newsletter.php:32 single.php:19
 msgid "There are errors on the form. Please fix them before continuing"
 msgstr ""
 "Existen errores en el formulario. Por favor, revísalos antes de continuar"
 
 #: inc/shortcodes/shortcodes.form.php:54
-#: inc/shortcodes/shortcodes.newsletter.php:32 single.php:20
+#: inc/shortcodes/shortcodes.newsletter.php:33 single.php:20
 msgid "Fill in all the required fields"
 msgstr "Completa los campos requeridos"
 
 #: inc/shortcodes/shortcodes.form.php:55
-#: inc/shortcodes/shortcodes.newsletter.php:33 single.php:21
+#: inc/shortcodes/shortcodes.newsletter.php:34 single.php:21
 msgid "Enter a valid email address"
 msgstr "Introduce una dirección de correo electrónico válida"
 
@@ -261,11 +265,13 @@ msgid "Enter a correct captcha value"
 msgstr "Introduce el código de verificación correcto"
 
 #: inc/shortcodes/shortcodes.form.php:57
-#: inc/shortcodes/shortcodes.newsletter.php:34 single.php:22
+#: inc/shortcodes/shortcodes.newsletter.php:35 single.php:22
 msgid "You must accept the legal advice"
 msgstr "Debe aceptar el aviso legal"
 
 #: inc/shortcodes/shortcodes.form.php:143
+#: inc/shortcodes/shortcodes.newsletter.php:52
+#: inc/shortcodes/shortcodes.newsletter.php:96 single.php:143
 msgid "Email"
 msgstr "Correo electrónico"
 
@@ -278,28 +284,28 @@ msgid "State"
 msgstr "Provincia"
 
 #: inc/shortcodes/shortcodes.form.php:191
-#: inc/shortcodes/shortcodes.newsletter.php:54
-#: inc/shortcodes/shortcodes.newsletter.php:77
+#: inc/shortcodes/shortcodes.newsletter.php:55
+#: inc/shortcodes/shortcodes.newsletter.php:78
 msgid "Privacy policy"
 msgstr "política de privacidad"
 
 #: inc/shortcodes/shortcodes.form.php:201
-#: inc/shortcodes/shortcodes.newsletter.php:58
-#: inc/shortcodes/shortcodes.newsletter.php:81
+#: inc/shortcodes/shortcodes.newsletter.php:59
+#: inc/shortcodes/shortcodes.newsletter.php:82
 msgctxt "female"
 msgid "the"
 msgstr "la"
 
 #: inc/shortcodes/shortcodes.form.php:204
-#: inc/shortcodes/shortcodes.newsletter.php:61
-#: inc/shortcodes/shortcodes.newsletter.php:84
+#: inc/shortcodes/shortcodes.newsletter.php:62
+#: inc/shortcodes/shortcodes.newsletter.php:85
 msgctxt "male"
 msgid "the"
 msgstr "el"
 
 #: inc/shortcodes/shortcodes.form.php:208
-#: inc/shortcodes/shortcodes.newsletter.php:65
-#: inc/shortcodes/shortcodes.newsletter.php:88
+#: inc/shortcodes/shortcodes.newsletter.php:66
+#: inc/shortcodes/shortcodes.newsletter.php:89
 msgid "I have read, understood and accept"
 msgstr "He leído, entiendo y acepto"
 
@@ -326,10 +332,14 @@ msgid "Select an option"
 msgstr "Selecciona una opción"
 
 #: inc/shortcodes/shortcodes.form.php:397
+#: inc/shortcodes/shortcodes.newsletter.php:48
+#: inc/shortcodes/shortcodes.newsletter.php:94 single.php:142
 msgid "Name"
 msgstr "Nombre"
 
 #: inc/shortcodes/shortcodes.form.php:410
+#: inc/shortcodes/shortcodes.newsletter.php:50
+#: inc/shortcodes/shortcodes.newsletter.php:95
 msgid "Last name"
 msgstr "Apellidos"
 
@@ -358,36 +368,22 @@ msgstr "Publicaciones de"
 msgid "Not found"
 msgstr "Sin resultados"
 
-#: inc/shortcodes/shortcodes.newsletter.php:47
-#: inc/shortcodes/shortcodes.newsletter.php:93 single.php:142
-msgid "* Name"
-msgstr "* Nombre"
-
-#: inc/shortcodes/shortcodes.newsletter.php:49
-#: inc/shortcodes/shortcodes.newsletter.php:94
-msgid "* Last name"
-msgstr "* Apellidos"
-
-#: inc/shortcodes/shortcodes.newsletter.php:51
-#: inc/shortcodes/shortcodes.newsletter.php:95 single.php:143
-msgid "* Email"
-msgstr "* Correo electrónico"
-
-#: inc/shortcodes/shortcodes.newsletter.php:66
-msgid "Suscribe"
-msgstr "Suscríbete"
-
-#: inc/shortcodes/shortcodes.newsletter.php:97
+#: inc/shortcodes/shortcodes.newsletter.php:67
+#: inc/shortcodes/shortcodes.newsletter.php:98
 msgid "Subscribe"
 msgstr "Suscríbete"
 
-#: inc/shortcodes/shortcodes.newsletter.php:97
+#: inc/shortcodes/shortcodes.newsletter.php:98
 msgid "Subscribing"
 msgstr "Suscribiendo"
 
 #: inc/shortcodes/shortcodes.social.php:178
 msgid "No Twitter API key set"
 msgstr "No se ha establecido una clave API de Twitter"
+
+#: index.php:62
+msgid "Nothing found"
+msgstr "Sin resultados"
 
 #: php/subscriber.php:37
 msgid "Please confirm your newsletter subscription by visiting the link below:"
@@ -407,21 +403,25 @@ msgstr ""
 msgid "Thanks for subscribing"
 msgstr "Gracias por suscribirte"
 
-#: search.php:29
+#: search.php:40
 #, php-format
 msgid "%1$s search results for \"%2$s\""
 msgstr "%1$s resultados para \"%2$s\""
 
-#: search.php:31
+#: search.php:42
 #, php-format
 msgid "No results for \"%1$s\""
 msgstr "Sin resultados para \"%1$s\""
 
-#: search.php:99
+#: search.php:110
 msgid "Try to redefine your search using another term, or visit the homepage."
 msgstr ""
 "Pruebe a redefinir su búsqueda utilizando otro término o visite la página "
 "principal."
+
+#: searchform.php:3
+msgid "Search"
+msgstr "Buscar"
 
 #: single.php:85 single.php:112
 msgid "Share in Twitter"
@@ -448,14 +448,33 @@ msgid "Share by email"
 msgstr "Compartir por correo electrónico"
 
 #: single.php:145
-msgid "* Comment"
-msgstr "* Comentario"
+msgid "Comment"
+msgstr "Comentario"
+
+#~ msgid ""
+#~ "Your message has been sent sucesfully sent.<br /><br />Here is a copy of "
+#~ "your message."
+#~ msgstr ""
+#~ "Tu mensaje se ha enviado correctamente.<br /><br />A continuación se "
+#~ "adjunta una copia de tu mensaje."
+
+#~ msgid "* Name"
+#~ msgstr "* Nombre"
+
+#~ msgid "* Last name"
+#~ msgstr "* Apellidos"
+
+#~ msgid "* Email"
+#~ msgstr "* Correo electrónico"
+
+#~ msgid "Suscribe"
+#~ msgstr "Suscríbete"
+
+#~ msgid "* Comment"
+#~ msgstr "* Comentario"
 
 #~ msgid "Your message have been sent sucesfully."
 #~ msgstr "Tu mensaje se ha enviado correctamente."
-
-#~ msgid "Comment"
-#~ msgstr "Comentario"
 
 #~ msgid "1 Comment"
 #~ msgstr "1 comentario"

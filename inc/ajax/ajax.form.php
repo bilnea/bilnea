@@ -93,7 +93,7 @@ if (!function_exists('b_a_send_form')) {
 
 				// Correo de respuesta
 				if ((isset($_POST['b_i_response']) && $_POST['b_i_response'] == 'true') && (isset($_POST['b_i_email']) && $_POST['b_i_email'] != '')) {
-					$var_message = __('Your message has been sent sucesfully sent.<br /><br />Here is a copy of your message.', 'bilnea').'<hr />';
+					$var_message = __('Your message has been sucesfully sent.<br /><br />Here is a copy of your message.', 'bilnea').'<hr />';
 					foreach ($var_temp as $key => $value) {
 						$var_message .= '<strong>'.$key.'</strong>: '.$value.'<br />';
 					}

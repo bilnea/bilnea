@@ -170,7 +170,7 @@ function b_f_i_register_term_metabox() {
 		if (!in_array($term, array('post_tag', 'nav_menu', 'link_category', 'post_format'))) {
 			add_action($term.'_add_form_fields', 'b_f_i_term_add_meta_field');
 			add_action($term.'_edit_form_fields', 'b_f_i_term_edit_featured_image');
-			add_action('edit_'.$term,   'b_f_i_term_save_featured_image');
+			add_action('edit_'.$term, 'b_f_i_term_save_featured_image');
 			add_action('create_'.$term, 'b_f_i_term_save_featured_image');
 			add_filter('manage_edit-'.$term.'_columns', 'b_f_i_edit_term_columns');
 			add_filter('manage_'.$term.'_custom_column', 'b_f_i_manage_term_columns', 10, 3);
@@ -328,6 +328,10 @@ function b_f_i_term_save_featured_image($term_id) {
 
 	else if ($old_value !== $new_value)
 		update_term_meta($term_id, '_term-featured-image', $new_value);
+
+	if (!get_term_meta($term_id, 'custom-order', true)) {
+		update_term_meta($term_id, 'custom-order', 0);
+	}
 }
 
 
@@ -366,14 +370,28 @@ function b_f_i_manage_term_columns($out, $column, $term_id) {
 add_action('init', 'b_f_i_register_term_metabox', 50);
 
 
+if (!function_exists('b_f_i_order_elements')) {
+	
+	function b_f_i_order_elements($query) {
+		if (!isset($query->query['orderby']) || $query->query['orderby'] == '' && ($query->get('post_type') != 'attachment' && $query->get('post_type') != 'nav_menu_item')) {
+			$query->set('orderby', 'menu_order');
+			$query->set('order', 'ASC');
+		}
+	}
+
+	add_filter('pre_get_posts', 'b_f_i_order_elements' );
+
+}
+
+
 if (!function_exists('b_f_i_terms_orderby')) {
 
 	function b_f_i_terms_orderby($args, $taxonomies) {
 
-		if (!isset($_GET['orderby'])) {
-			$args['orderby'] = 'meta_value_num';
-			$args['order'] = 'ASC';
+		if (!isset($_GET['orderby']) && 'nav_menu' != $taxonomies[0]) {
 			$args['meta_key'] = 'custom-order';
+			$args['orderby'] = 'meta_value';
+			$args['order'] = 'DESC';
 		}
 
 		return $args;

@@ -54,7 +54,8 @@ get_header();
 
 			} else {
 
-				echo __('Nothing found.', 'bilnea');
+				$var_shortcodes = array('{{b_blog}}', '{{b_pagination}}', '{{b_cat-title}}');
+				$var_replace = array(__('Nothing found', 'bilnea'), '', get_queried_object()->name);
 
 			}
 

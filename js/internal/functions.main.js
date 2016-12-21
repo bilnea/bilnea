@@ -9,9 +9,13 @@ jQuery(function($) {
 		if ($(this).text().replace(/\s+/g, '') == '' && $(this).find($('img')).length) {
 			$(this).addClass('image-link');
 		};
+	});
+	$('.main-search-button').click(function() {
+		$('body > .main-search').fadeIn();
+	});
+	$('body > .main-search span.close').click(function() {
+		$('body > .main-search').fadeOut();
 	})
-	
-	
 	$('form.form input:radio:first').attr('checked', true);
 	$('.b_input_radio').each(function() {
 		var n = $(this).attr('name');

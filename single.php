@@ -139,10 +139,10 @@ if (have_posts()) {
 
 					$args = array(
 						'fields' => array(
-							'author' => '<p class="comment-author"><input id="comment_author" name="author" type="text" value="'.esc_attr($commenter['comment_author']).'" size="30" placeholder="'.__('* Name', 'bilnea').'" /></p>',
-							'email' => '<p class="comment-email"><input id="comment_email" name="email" type="text" value="'.esc_attr(  $commenter['comment_author_email']).'" size="30" placeholder="'.__('* Email', 'bilnea').'" /></p>'
+							'author' => '<p class="comment-author"><input id="comment_author" name="author" type="text" value="'.esc_attr($commenter['comment_author']).'" size="30" placeholder="* '.__('Name', 'bilnea').'" /></p>',
+							'email' => '<p class="comment-email"><input id="comment_email" name="email" type="text" value="'.esc_attr(  $commenter['comment_author_email']).'" size="30" placeholder="* '.__('Email', 'bilnea').'" /></p>'
 						),
-						'comment_field' => '<p class="comment-comment"><textarea id="comment_message" name="comment" rows="4" placeholder="'.__('* Comment', 'bilnea').'"></textarea></p>',
+						'comment_field' => '<p class="comment-comment"><textarea id="comment_message" name="comment" rows="4" placeholder="* '.__('Comment', 'bilnea').'"></textarea></p>',
 						'comment_notes_before' => '',
 						'comment_notes_after' => '',
 						'title_reply' => '',

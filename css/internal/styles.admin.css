@@ -126,6 +126,7 @@ hr {
 	border-color: #ddd !important;
 	outline: 0 !important;
 	box-shadow: none !important;
+	background-image: none !important;
 }
 
 img.bilneador {
@@ -818,10 +819,15 @@ textarea[name*="b_opt_header-main-content-"]:not(.current) {
 	white-space: nowrap;
 }
 
+tbody > .ui-sortable-handle {
+	cursor: -webkit-grab;
+}
+
 tbody > .ui-sortable-helper {
 	background-color: rgba(255, 255, 255, 0.8);
 	border: 1px solid #e5e5e5;
 	opacity: 0.6;
+	cursor: -webkit-grabbing;
 }
 
 tbody > .bilnea-sortable-placeholder {

@@ -20,6 +20,7 @@ if (!function_exists('b_f_newsletter')) {
 			$a = shortcode_atts(array(
 				'type' => 'name,email',
 				'redirect' => b_f_option('b_opt_newsl-thanks-'.$b_g_language),
+				'url' => get_permalink(b_f_option('b_opt_privacy-policy-'.$b_g_language)),
 			), $atts);
 
 			// Variables locales
@@ -44,11 +45,11 @@ if (!function_exists('b_f_newsletter')) {
 			if ($content == null) {
 				
 				$out = '<div class="b_newsletters">';
-				$out .= '<input class="input" type="text" name="s_name" placeholder="'.__('* Name', 'bilnea').'" />';
+				$out .= '<input class="input" type="text" name="s_name" placeholder="* '.__('Name', 'bilnea').'" />';
 				if (in_array('last', $var_temp)) {
-					$out .= '<input type="text" name="s_last" placeholder="'.__('* Last name', 'bilnea').'" />';
+					$out .= '<input type="text" name="s_last" placeholder="* '.__('Last name', 'bilnea').'" />';
 				}
-				$out .= '<input class="input" type="email" name="s_email" placeholder="'.__('* Email', 'bilnea').'" />';
+				$out .= '<input class="input" type="email" name="s_email" placeholder="* '.__('Email', 'bilnea').'" />';
 				$out .= '<input class="b_input_checkbox" value="true" type="checkbox" id="s_legal-'.$var_random.'" name="s_legal-'.$var_random.'" />';
 
 				$var_placeholder = __('Privacy policy', 'bilnea');
@@ -63,7 +64,7 @@ if (!function_exists('b_f_newsletter')) {
 				}
 
 				$out .= '<label for="s_legal-'.$var_random.'">* '.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$var_placeholder.'" target="_blank">'.strtolower($var_placeholder).'</a>.</label>';
-				$out .= '<div class="s_submit">'.__('Suscribe', 'bilnea').'</div>';
+				$out .= '<div class="s_submit">'.__('Subscribe', 'bilnea').'</div>';
 				$out .= '<input type="hidden" class="redirect_to" name="s_redirect" value="'.esc_attr($a['redirect']).'" />';
 				$out .= '</div><div class="response"></div>';
 
@@ -90,9 +91,9 @@ if (!function_exists('b_f_newsletter')) {
 				// Pseudo shortcodes
 				$var_shortcodes = array('{{b_nw_name}}', '{{b_nw_last-name}}', '{{b_nw_email}}', '{{b_nw_legal}}', '{{b_nw_send}}');
 				$var_replace = array(
-					'<input class="input" type="text" name="s_name" placeholder="'.__('* Name', 'bilnea').'" />',
-					'<input type="text" name="s_last" placeholder="'.__('* Last name', 'bilnea').'" />',
-					'<input class="input" type="email" name="s_email" placeholder="'.__('* Email', 'bilnea').'" />',
+					'<input class="input" type="text" name="s_name" placeholder="* '.__('Name', 'bilnea').'" />',
+					'<input type="text" name="s_last" placeholder="* '.__('Last name', 'bilnea').'" />',
+					'<input class="input" type="email" name="s_email" placeholder="* '.__('Email', 'bilnea').'" />',
 					$var_legal,
 					'<div class="s_submit" data-send="'.__('Subscribe', 'bilnea').'" data-sending="'.__('Subscribing', 'bilnea').'">'.__('Subscribe', 'bilnea').'</div>'
 				);

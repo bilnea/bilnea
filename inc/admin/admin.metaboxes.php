@@ -12,6 +12,10 @@ if (!function_exists('b_f_page_get_metabox')) {
 		// Variables globales
 		global $post;
 
+		if (!is_page($post->ID)) {
+			return 1;
+		}
+
 		// Variables locales
 		$var_field = get_post_meta($post->ID, $value, true);
 		if (!empty($var_field)) {

@@ -177,6 +177,6 @@ if (function_exists('icl_object_id')) {
 }
 ?>
 <h4 style="margin-top: 10px;">Configuración</h4>
-<input type="checkbox" name="bilnea_settings[b_opt_create-cookies-table]" <?php checked($opt['b_opt_create-cookies-table'], 1); ?> value="1"> <span>Generar tabla de cookies de manera automática</span>
+<input type="checkbox" name="bilnea_settings[b_opt_create-cookies-table]" <?php checked(b_f_option('b_opt_create-cookies-table'), 1); ?> value="1"> <span>Generar tabla de cookies de manera automática</span>
 <hr />
-<input type="checkbox" name="bilnea_settings[b_opt_cookies-warning]" <?php checked($opt['b_opt_cookies-warning'], 1); ?> value="1"> <span>Mostrar el aviso legal de cookies</span>
+<input type="checkbox" name="bilnea_settings[b_opt_cookies-warning]" <?php checked(b_f_option('b_opt_cookies-warning'), 1); ?> value="1"> <span>Mostrar el aviso legal de cookies</span>

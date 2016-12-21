@@ -14,8 +14,19 @@ function extracto($string, $word_limit) {
 	}
 }
 
-$pag = (get_query_var('paged')) ? get_query_var('paged') : 1;
-query_posts($query_string.'&showposts=-1&posts_per_page=10&paged='.$pag);
+add_filter( 'posts_request' , 'modify_request' );
+function modify_request( $query) {
+    global $wpdb;
+    if(strstr($query,"post_type IN ('".implode("','", b_f_option('b_opt_search-include'))."')")){
+        $where = str_replace("ORDER BY {$wpdb->posts}.post_date","ORDER BY {$wpdb->posts}.post_type DESC",$query);
+    }
+    return $where;
+}
+
+$var_current = (get_query_var('paged')) ? get_query_var('paged') : 1;
+query_posts($query_string.'&showposts=-1&posts_per_page=10&paged='.$var_current);
+
+global $wp_query;
 
 get_header(); 
 ?>
@@ -56,33 +67,33 @@ get_header();
 					<?php
 					endwhile;
 
-					$get = '';
+					$var_pagination_block = paginate_links( array(
+						'format' => __('page', 'bilnea').'/%#%',
+						'current' => $var_current,
+						'total' => $wp_query->max_num_pages,
+						'prev_text' => '‹ <span>'.__('Previous', 'bilnea').'</span>',
+						'next_text' => '<span>'.__('Next', 'bilnea').'</span> ›'
+					));
 
-					foreach ($_GET as $key => $value) {
-						if ($key != 'paged') {
-							$get .= $key.'='.$value.'&';
-						}
+					$var_pagination = '<div class="b_pagination"><span class="total-pages">'.sprintf(__('Page %1$s of %2$s', 'bilnea'), $var_current, $query->max_num_pages).'</span>';
+
+					if ($var_current > 2) {
+						$var_pagination .= '<a class="first page-numbers" href="'.get_permalink().'">« <span>'.__('First', 'bilnea').'</span></a>';
 					}
 
-					if ($wp_query->max_num_pages > 1) {
-						$out = '<div class="pager">';
-						if ($pag != 1) {
-							$out .= '<a href="/?'.$get.'paged='.($pag-1).'"><</a>';
-						}
-						for ($i = 1; $i <= $wp_query->max_num_pages; $i++) {
-							if ($pag == $i) {
-								$out .= '<a class="active">'.$i.'</a>';
-							} else {
-								$out .= '<a href="/?'.$get.'paged='.$i.'">'.$i.'</a>';
-							}
-						}
-						if ($pag != $wp_query->max_num_pages) {
-							$out .= '<a href="/?'.$get.'paged='.($pag+1).'">></a>';
-						}
-						$out .= '</div>';
+					$var_pagination .= $var_pagination_block;
+
+					if ($var_current < ($wp_query->max_num_pages-2)) {
+						$var_pagination .= '<a class="last page-numbers" href="'.get_permalink().'/'.__('page', 'bilnea').'/'.($query->max_num_pages-2).'"><span>'.__('Last', 'bilnea').' »</span></a>';
 					}
 
-					echo $out;
+					$var_pagination .= '</div>';
+
+					if ($wp_query->max_num_pages == 1) {
+						$var_pagination = '';
+					}
+
+					echo $var_pagination;
 
 					?>
 

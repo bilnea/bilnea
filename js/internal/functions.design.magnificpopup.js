@@ -15,14 +15,15 @@ jQuery(function($) {
 			delegate: 'a',
 			type: 'image',
 			gallery: {
-				enabled: true
+				enabled: true,
+				tCounter: '<span class="mfp-counter">%curr% '+magnificpopup.labels.of+' %total%</span>'
 			}
 		});
 	});
 	$('*:not(.b_gallery) > a[href$=".jpg"], *:not(.b_gallery) > a[href$=".jpeg"], *:not(.b_gallery) > a[href$=".gif"], *:not(.b_gallery) > a[href$=".png"]').magnificPopup({
 		type: 'image'
 	});
-	$('a[href*="youtube.com"]:not([href*="/user/"]), a[href*="vimeo.com"]').magnificPopup({
+	$('a[href*="youtube.com"]:not([href*="/user/"]):not([href*="/channel/"]), a[href*="vimeo.com"]').magnificPopup({
 		type: 'iframe',
 		patterns: {
 			youtube: {

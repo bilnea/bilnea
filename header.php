@@ -10,6 +10,8 @@ if (function_exists('icl_object_id')) {
 	global $sitepress;
 }
 
+$var_search = '<i class="fa fa-search main-search-button"></i>';
+
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +39,11 @@ if (function_exists('icl_object_id')) {
 	</head>
 
 	<body <?php body_class(); echo (b_f_option('b_opt_anticopy') == 1) ? ' onkeypress="return anticopia(event);" onkeydown="return anticopia(event);" oncontextmenu="return false;"' : ''; ?>>
+
+		<div class="main-search" style="display: none;">
+			<span class="close">x</span>
+			<?= get_search_form(false) ?>
+		</div>
 
 		<script type="text/javascript">
 			jQuery(window).on('load scroll', function() {
@@ -142,10 +149,10 @@ if (function_exists('icl_object_id')) {
 
 			?>
 
-			<div id="mobile-menu type-<?= b_f_option('b_opt_sticky-menu-animated') ?>"<?= $var_menu_class ?>>
+			<div id="mobile-menu" data="type-<?= b_f_option('b_opt_mobile-menu') ?>"<?= $var_menu_class ?>>
 
 				<?php
-				
+				/*
 				if (b_f_page_get_metabox('b_o_page_mobile_bar') == 1) {
 
 					?>
@@ -168,8 +175,8 @@ if (function_exists('icl_object_id')) {
 							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
 						}
 							
-						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_switcher}}');
-						$var_replace = array($var_menu, $var_logo, get_search_form(false), '[b_rrss]', $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>');
+						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_switcher}}', '{{b_search_icon}}');
+						$var_replace = array($var_menu, $var_logo, get_search_form(false), '[b_rrss]', $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>', $var_search);
 
 						echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_mobile-header-'.$b_g_language))));
 
@@ -180,7 +187,7 @@ if (function_exists('icl_object_id')) {
 					<?php
 
 				}
-
+*/
 				if (b_f_page_get_metabox('b_o_page_mobile_menu') == 1) {
 					
 					?>
@@ -203,8 +210,8 @@ if (function_exists('icl_object_id')) {
 							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
 						}
 								
-						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_switcher}}');
-						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>');
+						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_switcher}}', '{{b_search_icon}}');
+						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>', $var_search);
 
 						echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_mobile-menu-'.$b_g_language))));
 
@@ -256,8 +263,8 @@ if (function_exists('icl_object_id')) {
 							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
 						}
 							
-						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}');
-						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector);
+						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_search_icon}}');
+						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, $var_search);
 
 						echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_header-top-content-'.$b_g_language)));
 
@@ -291,8 +298,8 @@ if (function_exists('icl_object_id')) {
 							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
 						}
 	
-						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}');
-						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector);
+						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_search_icon}}');
+						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, $var_search);
 
 						echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_header-main-content-'.$b_g_language)));
 
@@ -326,8 +333,8 @@ if (function_exists('icl_object_id')) {
 						$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
 					}
 						
-					$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_switcher}}');
-					$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>');
+					$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_switcher}}', '{{b_search_icon}}');
+					$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>', $var_search);
 
 					echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_mobile-header-'.$b_g_language))));
 

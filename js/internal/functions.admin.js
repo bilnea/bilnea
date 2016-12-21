@@ -424,6 +424,10 @@ jQuery(function($) {
 				return $('<tr class="bilnea-sortable-placeholder"><td colspan="'+tds+'">Mover aquí</td></tr>')[0];
 			},
 			update: function(container, p) {
+
+			}
+		},
+		stop: function(container, p) {
 				opts = {
 					url: ajaxurl,
 					type: 'POST',
@@ -432,7 +436,7 @@ jQuery(function($) {
 					dataType: 'json',
 					data:{
 						action: 'b_order_admin',
-						order: $('.wp-list-table tbody').sortable('toArray').toString().replace(',,', ',')
+						sorting: $('.wp-list-table tbody').sortable('toArray').toString().replace(',,', ',')
 					},
 					success: function(response) {
 						console.log('Elementos ordenados correctamente.');
@@ -446,7 +450,6 @@ jQuery(function($) {
 				$.ajax(opts);
 				return;
 			}
-		}
-	});
+		});
 	$('.wp-list-table tbody ul, .wp-list-table tbody li').disableSelection();
 })
