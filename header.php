@@ -152,42 +152,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 			<div id="mobile-menu" data="type-<?= b_f_option('b_opt_mobile-menu') ?>"<?= $var_menu_class ?>>
 
 				<?php
-				/*
-				if (b_f_page_get_metabox('b_o_page_mobile_bar') == 1) {
-
-					?>
-
-					<div class="mobile-header">
-
-						<?php
-
-						if (function_exists('icl_object_id')) {
-							$var_language_selector = $sitepress->get_language_selector();
-						} else {
-							$var_language_selector = '';
-						}
-
-						// Variables locales
-						$var_menu = wp_nav_menu(array('theme_location' => 'menu_mobile', 'container_id' => 'mobile_menu', 'echo' => false));
-						if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.file_get_contents(b_f_option('b_opt_main-logo')).'</a>';
-						} else {
-							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
-						}
-							
-						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_switcher}}', '{{b_search_icon}}');
-						$var_replace = array($var_menu, $var_logo, get_search_form(false), '[b_rrss]', $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>', $var_search);
-
-						echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_mobile-header-'.$b_g_language))));
-
-						?>
-						
-					</div>
-
-					<?php
-
-				}
-*/
+				
 				if (b_f_page_get_metabox('b_o_page_mobile_menu') == 1) {
 					
 					?>
@@ -205,7 +170,14 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 						// Variables locales
 						$var_menu = wp_nav_menu(array('theme_location' => 'menu_mobile', 'container_id' => 'mobile_menu', 'echo' => false));
 						if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.file_get_contents(b_f_option('b_opt_main-logo')).'</a>';
+							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">';
+							$var_curl = curl_init();
+							curl_setopt($var_curl, CURLOPT_URL, b_f_option('b_opt_main-logo'));
+							curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, 1);
+							curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+							$var_logo .= curl_exec($var_curl);
+							curl_close($var_curl);
+							$var_logo .= '</a>';
 						} else {
 							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
 						}
@@ -241,7 +213,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 				<!-- Barra superior -->
 				<?php
 
-				if (b_f_option('b_opt_top-bar') == 1) {
+				if (b_f_option('b_opt_top-bar') == 1 && get_post_meta(get_the_ID(), 'b_o_page_metabox_top_bar', true) == 1 || !is_page()) {
 
 					?>
 
@@ -258,7 +230,14 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 						// Variables locales
 						$var_menu = wp_nav_menu(array('theme_location' => 'menu_top', 'container_id' => 'top_menu', 'echo' => false));
 						if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.file_get_contents(b_f_option('b_opt_main-logo')).'</a>';
+							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">';
+							$var_curl = curl_init();
+							curl_setopt($var_curl, CURLOPT_URL, b_f_option('b_opt_main-logo'));
+							curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, 1);
+							curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+							$var_logo .= curl_exec($var_curl);
+							curl_close($var_curl);
+							$var_logo .= '</a>';
 						} else {
 							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
 						}
@@ -276,37 +255,53 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 
 				}
 
-				?>
+				if (get_post_meta(get_the_ID(), 'b_o_page_metabox_header', true) == 1 || !is_page()) {
+
+					?>
+			
+					<!-- Bloque menú de la cabecera -->
+					<div class="header<?= $var_logo_align; ?>">
+						<div <?php if (b_f_option('b_opt_menu-width') == 2) { echo 'class="container"'; } ?>>
+
+							<?php
+
+							if (function_exists('icl_object_id')) {
+								$var_language_selector = $sitepress->get_language_selector();
+							} else {
+								$var_language_selector = '';
+							}
+
+							// Variables locales
+							$var_menu = wp_nav_menu(array('theme_location' => 'menu_main', 'container_id' => 'main_menu', 'echo' => false));
+							if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
+								$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">';
+								$var_curl = curl_init();
+								curl_setopt($var_curl, CURLOPT_URL, b_f_option('b_opt_main-logo'));
+								curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, 1);
+								curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+								$var_logo .= curl_exec($var_curl);
+								curl_close($var_curl);
+								$var_logo .= '</a>';
+							} else {
+								$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
+							}
 		
-				<!-- Bloque menú de la cabecera -->
-				<div class="header<?= $var_logo_align; ?>">
-					<div <?php if (b_f_option('b_opt_menu-width') == 2) { echo 'class="container"'; } ?>>
+							$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_search_icon}}');
+							$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, $var_search);
 
-						<?php
+							echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_header-main-content-'.$b_g_language)));
 
-						if (function_exists('icl_object_id')) {
-							$var_language_selector = $sitepress->get_language_selector();
-						} else {
-							$var_language_selector = '';
-						}
+							?>
 
-						// Variables locales
-						$var_menu = wp_nav_menu(array('theme_location' => 'menu_main', 'container_id' => 'main_menu', 'echo' => false));
-						if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.file_get_contents(b_f_option('b_opt_main-logo')).'</a>';
-						} else {
-							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
-						}
-	
-						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_search_icon}}');
-						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, $var_search);
-
-						echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_header-main-content-'.$b_g_language)));
-
-						?>
-
+						</div>
 					</div>
-				</div>
+
+					<?php
+
+				}
+
+				?>
+				
 			</header>
 
 	<!-- Cabecera para dispositivos móviles -->
@@ -328,7 +323,14 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 					// Variables locales
 					$var_menu = wp_nav_menu(array('theme_location' => 'menu_mobile', 'container_id' => 'mobile_menu', 'echo' => false));
 					if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-						$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.file_get_contents(b_f_option('b_opt_main-logo')).'</a>';
+						$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">';
+						$var_curl = curl_init();
+						curl_setopt($var_curl, CURLOPT_URL, b_f_option('b_opt_main-logo'));
+						curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, 1);
+						curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+						$var_logo .= curl_exec($var_curl);
+						curl_close($var_curl);
+						$var_logo .= '</a>';
 					} else {
 						$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
 					}

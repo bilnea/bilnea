@@ -10,7 +10,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 			<?php
 
-			if (b_f_option('footer_show') == 1) {
+			if (b_f_option('footer_show') == 1 && get_post_meta(get_the_ID(), 'b_o_page_metabox_footer', true) == 1 || !is_page()) {
 
 				?>
 
@@ -20,7 +20,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 					<?php
 									
 					for ($i = 1; $i <= b_f_option('b_opt_footer-menu'); $i++) { 
-						echo '<div id="footer-'.$i.'" class="x1'.$i.'">';
+						echo '<div id="footer-'.$i.'" class="x1'.b_f_option('b_opt_footer-menu').'">';
 						dynamic_sidebar('footer_'.$i);
 						echo '</div>';
 					}
@@ -34,7 +34,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 			}
 
-			if (b_f_option('socket_show') == 1) {
+			if (b_f_option('socket_show') == 1 && get_post_meta(get_the_ID(), 'b_o_page_metabox_bottom_bar', true) == 1 || !is_page()) {
 
 				?>
 

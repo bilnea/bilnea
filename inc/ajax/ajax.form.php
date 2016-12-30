@@ -30,7 +30,7 @@ if (!function_exists('b_a_send_form')) {
 				$var_name .= ' '.ucfirst($_POST['b_i_last-name']);
 			}
 			(isset($_POST['b_i_form-name']) && $_POST['b_i_form-name'] != '') ? $var_form_name = $_POST['b_i_form-name'].' ' : $var_form_name = '';
-			$var_to = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_to']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0");
+			$var_to = rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_to']), "\0");
 			$var_headers = 'From: '.$var_name.' <noreply@'.$_SERVER['SERVER_NAME'].'>'."\r\n";
 			$var_headers .= 'Reply-to: '.$var_name.' <'.((isset($_POST['b_i_email']) && $_POST['b_i_email'] != '') ? $_POST['b_i_email'] : 'noreply@'.$_SERVER['SERVER_NAME']).'>'."\r\n";
 			$var_headers .= 'Content-Type: text/html; charset=UTF-8';
@@ -61,9 +61,9 @@ if (!function_exists('b_a_send_form')) {
 				'data' => serialize($var_temp),
 				'date' => date('Y-m-d H:i:s'),
 				'email' => ((isset($_POST['b_i_email']) && $_POST['b_i_email'] != '') ? $_POST['b_i_email'] : 'Sin correo electrónico'),
-				'formname' => rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_formname']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0"),
+				'formname' => rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_formname']), "\0"),
 				'ip' => $_POST['b_i_ip'],
-				'page' => rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_page']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0"),
+				'page' => rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_page']), "\0"),
 				'status' => 'sent',
 				'lang' => $b_g_language
 			);
@@ -75,7 +75,7 @@ if (!function_exists('b_a_send_form')) {
 				$var_message .= '<strong>'.$key.'</strong>: '.$value.'<br />';
 			}
 			$var_message .= '<hr />Mensaje enviado el '.date('j/n/Y').' a las '.date('G:i').' desde la dirección IP '.$_POST['b_i_ip'].'.</div>';
-			$var_subject = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_subject']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0");
+			$var_subject = rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_subject']), "\0");
 
 			// Cambio de idioma
 			$var_locale = setlocale(LC_ALL, 0);
@@ -104,9 +104,9 @@ if (!function_exists('b_a_send_form')) {
 				}
 				
 				if (isset($_POST['b_i_redirect'])) {
-					echo '<script>jQuery(\'form[data-id="'.$_POST['eid'].'"]\')[0].reset(); window.location.href = "'.get_permalink(rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_redirect']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0")).'";</script><div class="sent-ok redirecting">'.__('Message sent sucesfully. Please wait a moment.', 'bilnea').'</div>';
+					echo '<script>jQuery(\'form[data-id="'.$_POST['eid'].'"]\')[0].reset(); window.location.href = "'.get_permalink(rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_redirect']), "\0")).'";</script><div class="sent-ok redirecting">'.__('Message sent sucesfully. Please wait a moment.', 'bilnea').'</div>';
 				} else {
-					echo '<script>jQuery(\'form[data-id="'.$_POST['eid'].'"]\')[0].reset();</script><div class="sent-ok">'.rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), base64_decode($_POST['b_i_sucess']), MCRYPT_MODE_CBC, md5(md5($b_g_hash))), "\0").'</div>';
+					echo '<script>jQuery(\'form[data-id="'.$_POST['eid'].'"]\')[0].reset();</script><div class="sent-ok">'.rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_sucess']), "\0").'</div>';
 				}
 			} else {
 				$var_data['status'] = 'error';

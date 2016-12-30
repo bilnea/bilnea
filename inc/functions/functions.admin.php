@@ -402,4 +402,35 @@ if (!function_exists('b_f_i_terms_orderby')) {
 
 }
 
+if (!function_exists('b_f_i_encrypt_decrypt')) {
+	
+	function b_f_i_encrypt_decrypt($action, $string) {
+
+		// Variables globales
+		global $b_g_hash;
+
+		$output = false;
+
+		// Variables locales
+		$var_method = "AES-256-CBC";
+		$var_secret = 'f;)Le*BEDaJU|yy]z}YC,Atz<2_hV<.PX$})&,$&Z<va^BQ[ueF%{^:3]vf_LLD$';
+
+		$var_key = hash('sha256', $b_g_hash);
+	    
+		$var_vector = substr(hash('sha256', $var_secret), 0, 16);
+
+		if( $action == 'encrypt' ) {
+			$output = openssl_encrypt($string, $var_method, $var_key, 0, $var_vector);
+			$output = base64_encode($output);
+		}
+		else if( $action == 'decrypt' ){
+	   		$output = openssl_decrypt(base64_decode($string), $var_method, $var_key, 0, $var_vector);
+		}
+
+		return $output;
+
+	}
+
+}
+
 ?>

@@ -62,11 +62,11 @@ if (!function_exists('b_s_form')) {
 		// Construcción del formulario
 		$out = '<form class="form'.$var_class.'"'.$var_id.' method="post" data-id="'.$var_random.'" data-name="'.$b_g_forms.'">';
 		$out .= do_shortcode($content);
-		$out .= '<input type="hidden" value="'.base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), esc_attr($a['to']), MCRYPT_MODE_CBC, md5(md5($b_g_hash)))).'" name="b_i_to" />';
-		$out .= '<input type="hidden" value="'.base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), esc_attr($a['message']), MCRYPT_MODE_CBC, md5(md5($b_g_hash)))).'" name="b_i_sucess" />';
-		$out .= '<input type="hidden" value="'.base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), esc_attr($a['subject']), MCRYPT_MODE_CBC, md5(md5($b_g_hash)))).'" name="b_i_subject" />';
-		$out .= '<input type="hidden" value="'.base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), esc_attr($a['name']), MCRYPT_MODE_CBC, md5(md5($b_g_hash)))).'" name="b_i_formname" />';
-		$out .= '<input type="hidden" value="'.base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), get_the_ID(), MCRYPT_MODE_CBC, md5(md5($b_g_hash)))).'" name="b_i_page" />';
+		$out .= '<input type="hidden" value="'.b_f_i_encrypt_decrypt('encrypt', esc_attr($a['to'])).'" name="b_i_to" />';
+		$out .= '<input type="hidden" value="'.b_f_i_encrypt_decrypt('encrypt', esc_attr($a['message'])).'" name="b_i_sucess" />';
+		$out .= '<input type="hidden" value="'.b_f_i_encrypt_decrypt('encrypt', esc_attr($a['subject'])).'" name="b_i_subject" />';
+		$out .= '<input type="hidden" value="'.b_f_i_encrypt_decrypt('encrypt', esc_attr($a['name'])).'" name="b_i_formname" />';
+		$out .= '<input type="hidden" value="'.b_f_i_encrypt_decrypt('encrypt', get_the_ID()).'" name="b_i_page" />';
 		$out .= '<input type="hidden" value="'.$var_ip.'" name="b_i_ip" />';
 		$out .= '<input type="hidden" value="" name="b_i_names" />';
 		if (esc_attr($a['response']) == true) {
@@ -75,10 +75,10 @@ if (!function_exists('b_s_form')) {
 
 		// Redirección del formulario
 		if (esc_attr($a['redirect']) == 'true' && is_numeric(b_f_option('b_opt_form-thanks'))) {
-			$out .= '<input type="hidden" value="'.base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), b_f_option('b_opt_form-thanks'), MCRYPT_MODE_CBC, md5(md5($b_g_hash)))).'" name="b_i_redirect" />';
+			$out .= '<input type="hidden" value="'.b_f_i_encrypt_decrypt('encrypt', b_f_option('b_opt_form-thanks')).'" name="b_i_redirect" />';
 		}
 		if (is_numeric(esc_attr($a['redirect']))) {
-			$out .= '<input type="hidden" value="'.base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($b_g_hash), esc_attr($a['redirect']), MCRYPT_MODE_CBC, md5(md5($b_g_hash)))).'" name="b_i_redirect" />';
+			$out .= '<input type="hidden" value="'.b_f_i_encrypt_decrypt('encrypt', esc_attr($a['redirect'])).'" name="b_i_redirect" />';
 		}
 
 		$out .= '</form>';

@@ -4,9 +4,9 @@ header('Content-Type: text/css; charset=utf-8');
 
 define('WP_USE_THEMES', false);
 
-$url = explode('wp-content', $_SERVER['SCRIPT_FILENAME']);
+$var_root = explode('wp-content', $_SERVER['SCRIPT_FILENAME']);
 
-require_once($url[0].'wp-load.php' );
+require_once($var_root[0].'wp-load.php' );
 require_once('../inc/functions/functions.admin.php');
 
 $var_fonts = [];
@@ -54,162 +54,76 @@ if (count($var_temp) > 0) {
 
 }
 
+function b_i_s_fonts($var_font) {
+
+	// Variables globales
+	global $b_g_google_fonts;
+
+	$out = 'font-size: '.b_f_size('b_opt_'.$var_font.'_ttf-size').';'."\n";
+	if ($b_g_google_fonts[str_replace(' ', '+', b_f_option('b_opt_'.$var_font.'_ttf-font'))]['name'] != '') {
+		$out .= '	font-family: '.$b_g_google_fonts[str_replace(' ', '+', b_f_option('b_opt_'.$var_font.'_ttf-font'))]['name'].';'."\n";
+	} else {
+		$out .= '	font-family: inherit;'."\n";
+	}
+	if (strpos(b_f_option('b_opt_'.$var_font.'_ttf-style'), 'italic')) {
+		$out .= '	font-style: \'italic\';'."\n";
+	}
+	if (str_replace('italic','',b_f_option('b_opt_'.$var_font.'_ttf-style')) != '') {
+		$out .= '	font-weight: '.str_replace('italic','',b_f_option('b_opt_'.$var_font.'_ttf-style')).';'."\n";
+	}
+	$out .= '	color: '.b_f_color('b_opt_'.$var_font.'_ttf-color').';'."\n";
+	if (b_f_option('b_opt_'.$var_font.'_ttf-uppercase') == 1) {
+		$out .= '	text-transform: uppercase;'."\n";
+	}
+	if (b_f_option('b_opt_'.$var_font.'_ttf-underline') == 1) {
+		$out .= '	text-decoration: underline;'."\n";
+	}
+
+	return $out;
+}
+
 ?>
 
 /* Estilos generales */
 
 .main_container  * {
-	font-size: <?= b_f_size('b_opt_text_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_text_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_text_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_text_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_text_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_text_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_text_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
+	<?= b_i_s_fonts('text'); ?>
 }
 
 .main_container  b, .main_container  b *,
 .main_container  strong,
 .main_container  strong * {
-	font-size: <?= b_f_size('b_opt_bold_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_bold_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_bold_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_bold_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_bold_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_bold_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_bold_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
+	<?= b_i_s_fonts('bold'); ?>
 }
 
 .main_container a, .main_container a * {
-	font-size: <?= b_f_size('b_opt_link_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_link_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_link_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_link_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_link_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_link_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_link_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
+	<?= b_i_s_fonts('link'); ?>
 }
 
 /* Encabezados */
 
 .main_container h1, .main_container h1 * {
-	font-size: <?= b_f_size('b_opt_h1_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_h1_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_h1_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_h1_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_h1_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_h1_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_h1_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
-	display: inline-block;
+	<?= b_i_s_fonts('h1'); ?>
 }
 
 .main_container h2, .main_container h2 * {
-	font-size: <?= b_f_size('b_opt_h2_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_h2_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_h2_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_h2_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_h2_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_h2_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_h2_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
-	display: inline-block;
+	<?= b_i_s_fonts('h2'); ?>
 }
 
 .main_container h3, .main_container h3 * {
-	font-size: <?= b_f_size('b_opt_h3_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_h3_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_h3_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_h3_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_h3_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_h3_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_h3_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
-	display: inline-block;
+	<?= b_i_s_fonts('h3'); ?>
 }
 
 .main_container h4, .main_container h4 * {
-	font-size: <?= b_f_size('b_opt_h4_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_h4_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_h4_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_h4_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_h4_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_h4_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_h4_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
-	display: inline-block;
+	<?= b_i_s_fonts('h4'); ?>
 }
 
 .main_container h5, .main_container h5 * {
-	font-size: <?= b_f_size('b_opt_h5_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_h5_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_h5_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_h5_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_h5_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_h5_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_h5_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
-	display: inline-block;
+	<?= b_i_s_fonts('h5'); ?>
 }
 
 .main_container h6, .main_container h6 * {
-	font-size: <?= b_f_size('b_opt_h6_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_h6_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_h6_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_h6_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_h6_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_h6_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_h6_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
-	display: inline-block;
+	<?= b_i_s_fonts('h6'); ?>
 }
 
 .container {
@@ -350,19 +264,7 @@ html[lang="ar"] .row > * {
 }
 
 .header-top, .header-top * {
-	font-size: <?= b_f_size('b_opt_top-bar_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_top-bar_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_top-bar_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_top-bar_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_top-bar_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_top-bar_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_top-bar_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
+	<?= b_i_s_fonts('top-bar'); ?>
 }
 
 header#header {
@@ -398,35 +300,12 @@ header a.logo {
 
 #main_menu li,
 #main_menu li * {
-	font-size: <?= b_f_size('b_opt_main-menu_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_main-menu_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_main-menu_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_main-menu_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_main-menu_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_main-menu_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_main-menu_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
+	<?= b_i_s_fonts('main-menu'); ?>
 }
 
 #mobile-menu #main_menu > ul > li > a {
-	font-size: <?= b_f_size('b_opt_main-menu_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_main-menu_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_main-menu_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_main-menu_ttf-style')) ?>;
+	<?= b_i_s_fonts('main-menu'); ?>
 	color: <?= b_f_color('b_opt_header-color') ?>;
-	<?php if (b_f_option('b_opt_main-menu_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_main-menu_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
 }
 
 .mobile-button {
@@ -466,67 +345,19 @@ header a.logo {
 }
 
 #footer * {
-	font-size: <?= b_f_size('b_opt_footer_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_footer_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_footer_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_footer_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_footer_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_footer_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_footer_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
+	<?= b_i_s_fonts('footer'); ?>
 }
 
 #footer .footer-title {
-	font-size: <?= b_f_size('b_opt_footer-title_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_footer-title_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_footer-title_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_footer-title_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_footer-title_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_footer-title_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_footer-title_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
+	<?= b_i_s_fonts('footer-title'); ?>
 }
 
 #footer a {
-	font-size: <?= b_f_size('b_opt_footer-link_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_footer-link_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_footer-link_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_footer-link_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_footer-link_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_footer-link_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_footer-link_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
+	<?= b_i_s_fonts('footer-link'); ?>
 }
 
 #footer a:hover {
-	font-size: <?= b_f_size('b_opt_footer-hover_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_footer-hover_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_footer-hover_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_footer-hover_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_footer-hover_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_footer-hover_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_footer-hover_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
+	<?= b_i_s_fonts('footer-hover'); ?>
 }
 
 #socket {
@@ -534,52 +365,16 @@ header a.logo {
 }
 
 #socket * {
-	font-size: <?= b_f_size('b_opt_socket_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_socket_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_socket_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_socket_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_socket_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_socket_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_socket_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
+	<?= b_i_s_fonts('socket'); ?>
 }
 
 
 #socket a {
-	font-size: <?= b_f_size('b_opt_socket-link_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_socket-link_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_socket-link_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_socket-link_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_socket-link_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_socket-link_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_socket-link_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
+	<?= b_i_s_fonts('socket-link'); ?>
 }
 
 #socket a:hover {
-	font-size: <?= b_f_size('b_opt_socket-hover_ttf-size') ?>;
-	font-family: <?= $b_g_google_fonts[b_f_option('b_opt_socket-hover_ttf-font')]['name'] ?>;
-	<?php if (strpos(b_f_option('b_opt_socket-hover_ttf-style'), 'italic')) { ?>
-	font-style: 'italic';
-	<?php } ?>
-	font-weight: <?= str_replace('italic','',b_f_option('b_opt_socket-hover_ttf-style')) ?>;
-	color: <?= b_f_color('b_opt_socket-hover_ttf-color') ?>;
-	<?php if (b_f_option('b_opt_socket-hover_ttf-uppercase') == 1) : ?>
-	text-transform: uppercase;
-	<?php endif; ?>
-	<?php if (b_f_option('b_opt_socket-hover_ttf-underline') == 1) : ?>
-	text-decoration: underline;
-	<?php endif; ?>
+	<?= b_i_s_fonts('socket-hover'); ?>
 }
 
 /* Barra lateral */

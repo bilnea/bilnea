@@ -440,7 +440,7 @@ function bilnea_subscribers_page() {
 		$var_lists_ids = array();
 
 		if (function_exists('icl_object_id')) {
-			if (!empty(icl_get_languages('skip_missing=0&orderby=name'))) {
+			if (icl_get_languages('skip_missing=0&orderby=name')) {
 				foreach (icl_get_languages('skip_missing=0&orderby=name') as $var_language) {
 					array_push($var_lists_ids, b_f_option('b_opt_newsl_list-'.$var_language['language_code']));
 				}

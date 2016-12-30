@@ -50,7 +50,7 @@ if (function_exists('icl_object_id')) {
 		echo $out;
 	}
 } else {
-	$out = '<textarea name="bilnea_settings[b_opt_blog-content-page-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-page-es').'</textarea>';
+	$out = '<textarea class="current" name="bilnea_settings[b_opt_blog-content-page-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-page-es').'</textarea>';
 	echo $out;
 }
 
@@ -84,7 +84,7 @@ if (function_exists('icl_object_id')) {
 		echo $out;
 	}
 } else {
-	$out = '<textarea name="bilnea_settings[b_opt_blog-archive-page-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-archive-page-es').'</textarea>';
+	$out = '<textarea class="current" name="bilnea_settings[b_opt_blog-archive-page-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-archive-page-es').'</textarea>';
 	echo $out;
 }
 
@@ -122,7 +122,7 @@ if (function_exists('icl_object_id')) {
 		echo $out;
 	}
 } else {
-	$out = '<textarea name="bilnea_settings[b_opt_blog-content-even-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-even-es').'</textarea>';
+	$out = '<textarea class="current" name="bilnea_settings[b_opt_blog-content-even-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-even-es').'</textarea>';
 	echo $out;
 }
 
@@ -155,7 +155,7 @@ if (function_exists('icl_object_id')) {
 		echo $out;
 	}
 } else {
-	$out = '<textarea name="bilnea_settings[b_opt_blog-content-odd-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-odd-es').'</textarea>';
+	$out = '<textarea class="current" name="bilnea_settings[b_opt_blog-content-odd-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-odd-es').'</textarea>';
 	echo $out;
 }
 
@@ -189,7 +189,7 @@ if (function_exists('icl_object_id')) {
 		echo $out;
 	}
 } else {
-	$out = '<textarea name="bilnea_settings[b_opt_blog-content-single-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-single-es').'</textarea>';
+	$out = '<textarea class="current" name="bilnea_settings[b_opt_blog-content-single-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_blog-content-single-es').'</textarea>';
 	echo $out;
 }
 

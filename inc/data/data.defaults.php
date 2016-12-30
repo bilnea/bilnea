@@ -72,6 +72,15 @@ function b_f_default($var_data) {
 		case 'b_opt_main-menu_ttf-font':
 			return 'Montserrat';
 			break;
+		case 'b_opt_sub-menu_ttf-font':
+			return 'Montserrat';
+			break;
+		case 'b_opt_sub-menu_ttf-size':
+			return '18px';
+			break;
+		case 'b_opt_sub-menu_ttf-color':
+			return 'white';
+			break;
 		case 'b_opt_main-color':
 			return 'white';
 			break;

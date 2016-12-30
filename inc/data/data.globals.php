@@ -4,8 +4,6 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 	die();
 }
 
-global $wp_filesystem;
-
 (function_exists('icl_object_id')) ? $b_g_language = ICL_LANGUAGE_CODE : $b_g_language = 'es';
 
 $b_g_sliders = 0;
@@ -31,7 +29,31 @@ $b_g_months = array(
 	__('December', 'bilnea')
 );
 
-$var_fonts = json_decode(file_get_contents(('https://www.googleapis.com/webfonts/v1/webfonts?key='.$b_g_google_api)));
+$var_curl = curl_init();
+curl_setopt($var_curl, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($var_curl, CURLOPT_URL, 'https://www.googleapis.com/webfonts/v1/webfonts?key='.$b_g_google_api);
+curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+
+$var_temp_url = curl_exec($var_curl);
+
+curl_close($var_curl);
+
+$var_fonts = json_decode($var_temp_url);
+
+if ($var_fonts->error) {
+	$var_curl = curl_init();
+	curl_setopt($var_curl, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($var_curl, CURLOPT_URL, get_template_directory_uri().'/inc/data/data.google.fonts.json');
+	curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+
+	$var_temp_url = curl_exec($var_curl);
+	
+	curl_close($var_curl);
+}
+
+$var_fonts = json_decode($var_temp_url);
 
 $b_g_google_fonts = array();
 

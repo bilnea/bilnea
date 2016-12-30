@@ -12,9 +12,11 @@ jQuery(function($) {
 	});
 	$('.main-search-button').click(function() {
 		$('body > .main-search').fadeIn();
+		$('body').addClass('searching');
 	});
 	$('body > .main-search span.close').click(function() {
 		$('body > .main-search').fadeOut();
+		$('body').removeClass('searching');
 	})
 	$('form.form input:radio:first').attr('checked', true);
 	$('.b_input_radio').each(function() {

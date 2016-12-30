@@ -7,13 +7,13 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 $var_categories = array();
 $var_tags = array();
 
-if (!empty(get_the_category())) {
+if (get_the_category()) {
 	foreach (get_the_category() as $var_category) {
 		array_push($var_categories, '<a href="'.esc_url(get_category_link($var_category->term_id)).'">'.esc_html($var_category->name).'</a>');
 	}
 }
 
-if (!empty(get_the_tags())) {
+if (get_the_tags()) {
 	foreach (get_the_tags() as $var_tag) {
 		array_push($var_tags, '<a href="'.esc_url(get_tag_link($var_tag->term_id)).'">'.esc_html($var_tag->name ).'</a>');
 	}

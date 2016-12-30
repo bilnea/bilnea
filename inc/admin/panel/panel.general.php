@@ -7,7 +7,15 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 ?>
 
 <div class="main-info">
-	<img src="<?php echo $var_dir.'/img/bilneador.png'; ?>" class="bilneador" />
+	<?php
+	if (date('md') >= '1220' && date('md') <= '1231') {
+		include 'xtras/data.xmas.php';
+	} else {
+		?>
+		<img src="<?php echo $var_dir.'/img/bilneador.png'; ?>" class="bilneador" />
+		<?php
+	}
+	?>
 	<div>
 		<a target="_blank" rel="nofollow" href="http://bilnea.com" title="Web" class="fa-stack fa-lg" style="width: 1em; height: 1em; line-height: 1em; font-size: 1em; margin-right: 3px; text-decoration: none;">
 			<i class="fa fa-square fa-stack-2x" style="font-size: 16px; line-height: 4px; color: #444;"></i>
@@ -142,7 +150,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 	$i = 1;
 
-	$var_rrss = explode(',', b_f_option('b_opt_social-order'));
+	$var_rrss = explode(',', b_f_option('b_opt_social-order', true));
 	foreach ($var_rrss as $temp_rrss) {
 		($temp_rrss == 'snapchat') ? $icon = '-ghost' : $icon = '';
 		($temp_rrss == 'google-plus' || $temp_rrss == 'youtube' || $temp_rrss == 'linkedin') ? $var_placeholder = 'url' : $var_placeholder = 'url o usuario';
@@ -185,5 +193,5 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 Personalización de la url de acceso al panel
 <br />
 <label for="bilnea_settings[b_opt_wp-admin]"><?= get_site_url(); ?>/</label>
-<input type="text" class="aurl" name="bilnea_settings[b_opt_wp-admin]" value="<?php b_f_option('b_opt_wp-admin'); ?>" placeholder="wp-admin">
+<input type="text" class="aurl" name="bilnea_settings[b_opt_wp-admin]" value="<?= b_f_option('b_opt_wp-admin'); ?>" placeholder="wp-admin">
 <em class="notice" style="font-size: 11px; line-height: 15px;">¡IMPORTANTE! Recuerda guardar esta url. Será la nueva ruta de acceso al panel de administración de WordPress y el acceso wp-admin ya no funcionará.</em>

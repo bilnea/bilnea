@@ -809,7 +809,7 @@ add_filter( 'excerpt_more', 'custom_excerpt_more' );
 // Función que devuelve un valor en métrica
 
 function b_f_size($arg='', $ovf=0) {
-	$num = preg_replace('/\s+/', '', b_f_option($arg));
+	$num = preg_replace('/\s+/', '', b_f_option($arg, true));
 	$num = str_replace('px', '', $num);
 	if (ctype_digit($num)) {
 		$num = $num+$ovf;
