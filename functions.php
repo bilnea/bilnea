@@ -1603,4 +1603,5 @@ b_f_include(get_template_directory().'/inc/ajax');
 
 b_f_include(get_template_directory().'/inc/admin', false);
 
+
 ?>
