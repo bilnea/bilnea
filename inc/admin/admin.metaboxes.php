@@ -90,7 +90,7 @@ if (!function_exists('b_f_page_save_template_metabox')) {
 
 		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
-		if (!isset($_POST['page_template_metabox_nonce']) || ! wp_verify_nonce($_POST['page_template__metabox_nonce'], 'page_template_metabox')) return;
+		if (!isset($_POST['page_template_metabox_nonce']) || ! wp_verify_nonce($_POST['page_template_metabox_nonce'], 'page_template_metabox')) return;
 
 		if (!current_user_can('edit_post', $post_id)) return;
 

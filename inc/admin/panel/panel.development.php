@@ -144,6 +144,50 @@ Mostrar los resultados en este orden
 
 </div>
 <hr style="margin-bottom: 4px;" />
+
+<?php
+
+	if (function_exists('icl_object_id')) {
+
+		// Variables globales
+		global $sitepress;
+
+		// Variables locales
+		$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+		$var_count = 0;
+
+		if (!empty($var_languages)) {
+			foreach ($var_languages as $var_language) {
+
+				?>
+
+				<strong style="display: block;"><?= $var_language['translated_name'] ?></strong>
+				<div style="width: 100%; display: inline-block; float: left; margin-right: 14px;">
+					Mensaje en correo electrónico de respuesta
+					<input type="text" class="gran" style="width: 100%; margin-top: 5px !important;" name="bilnea_settings[b_opt_response-email-<?= $var_language['language_code'] ?>]" value="<?= b_f_option('b_opt_response-email-'.$var_language['language_code']); ?>" placeholder="<?= b_f_default('b_opt_response-email-'.$var_language['language_code']); ?>" />
+				</div>
+				<hr style="margin-bottom: 4px; width: 100%;" />
+
+				<?php
+
+			}
+		}
+	} else {
+
+		?>
+
+		<div style="width: 100%; display: inline-block; float: left; margin-right: 14px;">
+			Mensaje en correo electrónico de respuesta
+			<input type="text" class="gran" style="width: 100%; margin-top: 5px !important;" name="bilnea_settings[b_opt_response-email-es]" value="<?= b_f_option('b_opt_response-email-es'); ?>" placeholder="<?= b_f_default('b_opt_response-email-es'); ?>" />
+		</div>
+		<hr style="margin-bottom: 4px; width: 100%;" />
+
+		<?php
+
+	}
+
+?>
+
 <input type="checkbox" name="bilnea_settings[b_opt_smtp]" <?php checked(b_f_option('b_opt_smtp'), 1); ?> value="1" class="disabler" data-connect="smtp-sender">Envío de emails a través de SMTP
 <div data-connect="smtp-sender" style="margin-bottom: 10px;">
 	<hr style="margin-bottom: 4px;" />

@@ -22,6 +22,11 @@ $cookies_list = array(
 		'Google',
 		'https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage',
 		'Almacenan datos anónimos de navegación como tiempo de la sesión de navegación y páginas visitadas con el fin de realizar estadísticas globales sobre las visitas realizadas al sitio web.'
+	),
+	'_icl_current_language' => array(
+		'WPML',
+		'https://wpml.org/purchase/privacy-and-security-information/',
+		'Utilizado para mostrar el contenido en el idioma seleccionado por el usuario. Permite alternar entre los distintos idiomas disponibles.'
 	)
 );
 
@@ -72,6 +77,9 @@ if (b_f_option('b_opt_create-cookies-table') == 1) {
 			}
 			if ($name == '_ga') {
 				$name .= ', _gat';
+			}
+			if ($name == '_icl_current_language' && isset($_COOKIE['wpml_referer_url'])) {
+				$name .= ', wpml_referer_url';
 			}
 			if ($cookies_list[$cookie][1] != '') {
 				$url = '<strong>'.$name.'</strong> <a href="'.$cookies_list[$cookie][1].'" rel="nofollow,noindex" title="Política de cookies '.$name.'"><strong>[+]</strong></a>';
