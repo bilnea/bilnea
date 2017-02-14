@@ -24,10 +24,16 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 		API Key
 		<input type="text" class="gran" style="width: 100%;" name="bilnea_settings[b_opt_newsl_api]" value="<?= b_f_option('b_opt_newsl_api') ?>" />
 	</div>
+	<br />
+	<hr style="margin: 8px 0 4px 0;" />
+	<input type="checkbox" name="bilnea_settings[b_opt_double_opt_in]" <?php checked(b_f_option('b_opt_double_opt_in'), 1 ); ?> value="1" class="disabler" data-connect="subscribers">Activar la doble confirmación
 
 	<?php
 
-	$var_lists = json_decode(b_f_i_mailchimp('https://'.substr(b_f_option('b_opt_newsl_api'),strpos(b_f_option('b_opt_newsl_api'),'-')+1).'.api.mailchimp.com/3.0/lists/', 'GET', b_f_option('b_opt_newsl_api'), array('fields' => 'lists')))->lists;
+	if (b_f_option('b_opt_newsl_api') != '') {
+		$var_lists = json_decode(b_f_i_mailchimp('https://'.substr(b_f_option('b_opt_newsl_api'),strpos(b_f_option('b_opt_newsl_api'),'-')+1).'.api.mailchimp.com/3.0/lists/', 'GET', b_f_option('b_opt_newsl_api'), array('fields' => 'lists')))->lists;
+	}
+	
 
 	if (function_exists('icl_object_id')) {
 

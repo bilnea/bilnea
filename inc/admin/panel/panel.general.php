@@ -40,7 +40,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 			<i class="fa fa-pinterest-square" ></i>
 		</a>
 		<br />
-		&reg; 2017 bilnea. Versión <?= $b_g_version ?> (enero 2017).
+		&reg; 2017 bilnea. Versión <?= $b_g_version ?> (marzo 2017).
 		<br />
 		<br />
 		Todas las medidas se expresan en unidades css válidas de cada propiedad, definiendo la unidad empleada. En aquellos parámetros que no tengan definido un valor, se tomará el valor por defecto.

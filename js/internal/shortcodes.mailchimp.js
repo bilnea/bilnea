@@ -7,7 +7,7 @@ jQuery(function($) {
 			t.addClass('valid').removeClass('invalid');
 		}
 	});
-	$('.b_newsletters input[type="checkbox"]').change(function() {
+	$('.b_newsletters input[type="checkbox"][id^="s_legal-"]').change(function() {
 		var t = $(this);
 		if (t.is(':checked')) {
 			t.addClass('valid').removeClass('invalid');

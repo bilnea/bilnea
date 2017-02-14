@@ -4,7 +4,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 	die();
 }
 
-if (strpos($_SERVER['HTTP_REFERER'], 'page=bilnea') === false) {
+if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'page=bilnea') === false) {
 	$var_options = get_option('bilnea_settings');
 	$var_options['tab'] = 1;
 	update_option('bilnea_settings', $var_options);
@@ -48,8 +48,9 @@ function b_f_options_page() {
 				<h3 <?php if (b_f_option('tab') == 9) { echo 'class="activo"'; }?>>Blog</h3>
 				<h3 <?php if (b_f_option('tab') == 10) { echo 'class="activo"'; }?>>Textos legales</h3>
 				<h3 <?php if (b_f_option('tab') == 11) { echo 'class="activo"'; }?>>Redirecciones y SEO</h3>
-				<h3 <?php if (b_f_option('tab') == 12) { echo 'class="activo"'; }?>>Ayuda</h3>
-				<h3 <?php if (b_f_option('tab') == 13) { echo 'class="activo"'; }?>>Créditos</h3>
+				<h3 <?php if (b_f_option('tab') == 12) { echo 'class="activo"'; }?>>Copias de seguridad</h3>
+				<h3 <?php if (b_f_option('tab') == 13) { echo 'class="activo"'; }?>>Ayuda</h3>
+				<h3 <?php if (b_f_option('tab') == 14) { echo 'class="activo"'; }?>>Créditos</h3>
 			</div>
 
 			<!-- Bloque central -->
@@ -110,13 +111,18 @@ function b_f_options_page() {
 					<?php include('panel/panel.seo.php'); ?>
 				</div>
 
-				<!-- Ayuda -->
+				<!-- Copias de seguridad -->
 				<div <?php if (b_f_option('tab') == 12) { echo 'class="activo"'; } ?> id="tab12">
+					<?php include('panel/panel.backup.php'); ?>
+				</div>
+
+				<!-- Ayuda -->
+				<div <?php if (b_f_option('tab') == 13) { echo 'class="activo"'; } ?> id="tab13">
 					<?php include('panel/panel.help.php'); ?>
 				</div>
 
 				<!-- Créditos -->
-				<div <?php if (b_f_option('tab') == 13) { echo 'class="activo"'; } ?> id="tab13">
+				<div <?php if (b_f_option('tab') == 14) { echo 'class="activo"'; } ?> id="tab14">
 					<?php include('panel/panel.credits.php'); ?>
 				</div>
 

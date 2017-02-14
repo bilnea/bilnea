@@ -25,6 +25,7 @@ if (!function_exists('b_s_row')) {
 			'class' => null,
 			'id' => null,
 			'bgcolor' => null,
+			'bgimage' => null,
 			'wrap' => 'false',
 			'space' => b_f_size('b_opt_column_separator'),
 		), $atts);
@@ -32,7 +33,23 @@ if (!function_exists('b_s_row')) {
 		// Variables locales
 		(esc_attr($a['width']) != 'full') ? $var_class = 'container' : $var_class = '';
 		(esc_attr($a['id']) != null) ? $var_id = ' id="'.esc_attr($a['id']).'"' : $var_id = '';
-		(esc_attr($a['bgcolor']) != null) ? $var_style = ' style="background-color: '.esc_attr($a['bgcolor']).';"' : $var_style = '';
+		$var_style = array();
+		if (esc_attr($a['bgcolor']) != null) {
+			array_push($var_style, 'background-color: '.esc_attr($a['bgcolor']));
+		}
+		if (esc_attr($a['bgimage']) != null) {
+			if (is_numeric(esc_attr($a['bgimage']))) {
+				array_push($var_style, 'background-image: url('.wp_get_attachment_image_src(esc_attr($a['bgimage']), 'full')[0].')');
+			} else {
+				array_push($var_style, 'background-image: url('.esc_attr($a['bgimage']).')');
+			}
+		}
+
+		if (count($var_style) > 0) {
+			$var_style = 'style="'.implode(';', $var_style).'"';
+		} else {
+			$var_style = '';
+		}
 
 		if (esc_attr($a['class']) != null) {
 			$var_class .= ' '.esc_attr($a['class']);

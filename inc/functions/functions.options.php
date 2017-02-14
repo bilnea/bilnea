@@ -9,7 +9,11 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 function b_f_option($var_option, $var_default = false) {
 
-	$var_value = get_option('bilnea_settings')[$var_option];
+	if (isset(get_option('bilnea_settings')[$var_option])) {
+		$var_value = get_option('bilnea_settings')[$var_option];
+	} else {
+		$var_value = null;
+	}
 
 	if ($var_value == '' && $var_default == true) {
 		$var_value = b_f_default($var_option);

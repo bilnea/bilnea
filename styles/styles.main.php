@@ -28,6 +28,18 @@ foreach (get_option('bilnea_settings') as $key => $value) {
 	}
 }
 
+foreach (b_f_option('b_opt_custom-font') as $font) {
+	$value = explode('|', $font)[0];
+	$var_size = explode('|', $font)[1];
+	if (!isset($var_fonts[$value]) && $value != '') {
+		$var_fonts[$value] = array($var_size);
+	} else {
+		if (!in_array($var_size, $var_fonts[$value]) && $value != '') {
+			array_push($var_fonts[$value], $var_size);
+		}
+	}
+}
+
 $var_temp = [];
 
 foreach ($var_fonts as $key => $value) {
@@ -48,7 +60,7 @@ if (count($var_temp) > 0) {
 
 	/* Definición de tipografías */
 	
-	@import url(http://fonts.googleapis.com/css?family=<?= implode('|', $var_temp) ?>);
+	@import url(https://fonts.googleapis.com/css?family=<?= implode('|', $var_temp) ?>);
 
 	<?php
 
@@ -247,6 +259,11 @@ html[lang="ar"] .row > * {
 	width: calc((((100% - (<?= b_f_size('b_opt_column_separator') ?> * 4)) / 5) * 3) + 2 * <?= b_f_size('b_opt_column_separator') ?>);
 }
 
+.x38 {
+	width: 37.50000%;
+	width: calc((((100% - (<?= b_f_size('b_opt_column_separator') ?> * 7)) / 8) * 3) + 2 * <?= b_f_size('b_opt_column_separator') ?>);
+}
+
 .x45 {
 	width: 80.00000%;
 	width: calc((((100% - (<?= b_f_size('b_opt_column_separator') ?> * 4)) / 5) * 4) + 3 * <?= b_f_size('b_opt_column_separator') ?>);
@@ -255,6 +272,11 @@ html[lang="ar"] .row > * {
 .x56 {
 	width: 83.33333%;
 	width: calc((((100% - (<?= b_f_size('b_opt_column_separator') ?> * 5)) / 6) * 5) + 4 * <?= b_f_size('b_opt_column_separator') ?>);
+}
+
+.x58 {
+	width: 62.50000%;
+	width: calc((((100% - (<?= b_f_size('b_opt_column_separator') ?> * 7)) / 8) * 5) + 4 * <?= b_f_size('b_opt_column_separator') ?>);
 }
 
 /* Cabecera */

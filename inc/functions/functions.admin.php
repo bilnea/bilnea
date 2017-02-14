@@ -31,8 +31,7 @@ if (!function_exists('b_f_fonts')) {
 		<!-- Selector tipográfico -->
 		<div class="font-selector">
 			<select name="bilnea_settings[b_opt_<?= $var_font ?>_ttf-font]" class="gran font-selector">
-				<option disabled="disabled">Selecciona una tipografía</option>
-				<option value="inherit" <?= selected($var_current_font, 'inherit') ?> data="">Heredada</option>
+				<option value="inherit" selected data="">Heredada</option>
 
 				<?php
 				
@@ -402,6 +401,7 @@ if (!function_exists('b_f_i_terms_orderby')) {
 
 }
 
+
 if (!function_exists('b_f_i_encrypt_decrypt')) {
 	
 	function b_f_i_encrypt_decrypt($action, $string) {
@@ -432,5 +432,96 @@ if (!function_exists('b_f_i_encrypt_decrypt')) {
 	}
 
 }
+
+if (!function_exists('b_f_thumbnail_columns')) {
+
+	function b_f_thumbnail_columns($var_columns) {
+
+		// Variables locales
+		$var_new_columns = array();
+
+		foreach ($var_columns as $key => $value) {
+			if ($key == 'title') {
+				$var_new_columns['admin_thumb'] = '';
+			}
+			$var_new_columns[$key] = $value;
+		}
+
+		return $var_new_columns;
+
+	}
+
+}
+
+if (!function_exists('b_f_thumbnail_columns_data')) {
+
+	function b_f_thumbnail_columns_data($var_column, $var_post_id) {
+
+		switch ($var_column) {
+			case 'admin_thumb':
+				echo '<a style="background-image: url('.wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'thumbnail')[0].');" href="'.get_edit_post_link().'"></a>';
+				break;
+		}
+
+	}
+
+}
+
+foreach (get_post_types() as $post_type) {
+	if (post_type_supports($post_type, 'thumbnail')) {
+		add_filter('manage_posts_columns', 'b_f_thumbnail_columns');
+		add_action('manage_posts_custom_column', 'b_f_thumbnail_columns_data', 10, 2);
+	}
+}
+
+
+if (!function_exists('b_f_svg')) {
+
+	function b_f_svg($var_mime_types) {
+		$var_mime_types['svg'] = 'image/svg+xml';
+		return $var_mime_types;
+	}
+
+	add_filter('upload_mimes', 'b_f_svg');
+}
+
+
+if (!function_exists('b_f_rich_editor')) {
+
+	function b_f_rich_editor($content) {
+
+		// Variables globales
+		global $post_type;
+
+		if ('page' == $post_type) {
+			return false;
+		}
+
+		return $content;
+
+	}
+
+	add_filter('user_can_richedit', 'b_f_rich_editor');
+	
+}
+
+
+if (!function_exists('b_f_sanitize_upload')) {
+
+	function b_f_sanitize_upload($filename) {
+
+		// Variables locales
+		$var_ext = pathinfo($filename, PATHINFO_EXTENSION);
+		$sanitized = preg_replace('/[^a-zA-Z0-9-_.]/','', substr($filename, 0, -(strlen($var_ext)+1)));
+		$sanitized = str_replace('.','-', $sanitized);
+
+		return strtolower($sanitized.'.'.$var_ext);
+
+	}
+
+	add_filter('sanitize_file_name', 'b_f_sanitize_upload', 10);
+
+}
+
 
 ?>

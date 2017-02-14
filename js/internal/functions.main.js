@@ -14,7 +14,7 @@ jQuery(function($) {
 		$('body > .main-search').fadeIn();
 		$('body').addClass('searching');
 	});
-	$('body > .main-search span.close').click(function() {
+	$('body > .main-search span.close, body > .main-search').click(function() {
 		$('body > .main-search').fadeOut();
 		$('body').removeClass('searching');
 	})

@@ -28,7 +28,9 @@ if (!function_exists('b_f_i_mailchimp_member_status')) {
 		curl_setopt($var_init, CURLOPT_TIMEOUT, 10);
 		curl_setopt($var_init, CURLOPT_POST, true);
 		curl_setopt($var_init, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($var_init, CURLOPT_POSTFIELDS, json_encode($var_data));
+		if ($var_request == 'PUT') {
+			curl_setopt($var_init, CURLOPT_POSTFIELDS, json_encode($var_data));
+		}
 	 
 		return curl_exec($var_init);
 	}

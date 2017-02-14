@@ -54,7 +54,7 @@ Número de columnas del footer
 <hr />
 Ocultar el mensaje "Desarrollo web por bilnea".
 <br>
-<input type="password" class="gran" style="width: 100%;" placeholder="Introduce el código de desbloqueo" name="bilnea_settings[socket_no-development]" value="<?php echo $opt['socket_no-development']; ?>" />
+<input type="password" class="gran" style="width: 100%;" placeholder="Introduce el código de desbloqueo" name="bilnea_settings[socket_no-development]" value="<?php echo b_f_option('socket_no-development'); ?>" />
 <br />
 <h4 style="margin-top: 10px;">Estilos tipográficos</h4>
 <div class="text-container">

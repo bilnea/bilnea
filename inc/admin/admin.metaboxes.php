@@ -53,28 +53,28 @@ if (!function_exists('b_f_page_add_template_metabox')) {
 
 		<h4 style="margin-bottom: 0;">Cabecera de página</h4>
 		<p style="margin-top: 6px;">
-			<input type="checkbox" name="b_o_page_metabox_top_bar" value="1" <?php echo (get_post_meta($_GET['post'], 'b_o_page_metabox_top_bar', true) == 1) ? 'checked' : ''; ?>>
+			<input type="checkbox" name="b_o_page_metabox_top_bar" value="1" <?php echo (get_post_meta($_GET['post'], 'b_o_page_metabox_top_bar', true) == 1 || !isset($_GET['post'])) ? 'checked' : ''; ?>>
 			<label for="b_o_page_metabox_top_bar">Barra superior</label>
 			<br />
-			<input type="checkbox" name="b_o_page_metabox_header" value="1" <?php echo (get_post_meta($_GET['post'], 'b_o_page_metabox_header', true) == 1) ? 'checked' : ''; ?>>
+			<input type="checkbox" name="b_o_page_metabox_header" value="1" <?php echo (get_post_meta($_GET['post'], 'b_o_page_metabox_header', true) == 1 || !isset($_GET['post'])) ? 'checked' : ''; ?>>
 			<label for="b_o_page_metabox_header">Zona principal cabecera de página</label>
 		</p>
 		<hr />
 		<h4 style="margin-bottom: 0;">Pie de página</h4>
 		<p style="margin-top: 6px;">
-			<input type="checkbox" name="b_o_page_metabox_footer" value="1" <?php echo (get_post_meta($_GET['post'], 'b_o_page_metabox_footer', true) == 1) ? 'checked' : ''; ?>>
+			<input type="checkbox" name="b_o_page_metabox_footer" value="1" <?php echo (get_post_meta($_GET['post'], 'b_o_page_metabox_footer', true) == 1 || !isset($_GET['post'])) ? 'checked' : ''; ?>>
 			<label for="b_o_page_metabox_footer">Zona principal pie de página</label>
 			<br />
-			<input type="checkbox" name="b_o_page_metabox_bottom_bar" value="1" <?php echo (get_post_meta($_GET['post'], 'b_o_page_metabox_bottom_bar', true) == 1) ? 'checked' : ''; ?>>
+			<input type="checkbox" name="b_o_page_metabox_bottom_bar" value="1" <?php echo (get_post_meta($_GET['post'], 'b_o_page_metabox_bottom_bar', true) == 1 || !isset($_GET['post'])) ? 'checked' : ''; ?>>
 			<label for="b_o_page_metabox_bottom_bar">Barra inferior</label>
 		</p>
 		<hr />
 		<h4 style="margin-bottom: 0;">Menú móvil</h4>
 		<p style="margin-top: 6px;">
-			<input type="checkbox" name="b_o_page_mobile_menu" value="1" <?php echo (get_post_meta($_GET['post'], 'b_o_page_mobile_menu', true) == 1) ? 'checked' : ''; ?>>
+			<input type="checkbox" name="b_o_page_mobile_menu" value="1" <?php echo (get_post_meta($_GET['post'], 'b_o_page_mobile_menu', true) == 1 || !isset($_GET['post'])) ? 'checked' : ''; ?>>
 			<label for="b_o_page_mobile_menu">Menú móvil</label>
 			<br />
-			<input type="checkbox" name="b_o_page_mobile_bar" value="1" <?php echo (get_post_meta($_GET['post'], 'b_o_page_mobile_bar', true) == 1) ? 'checked' : ''; ?>>
+			<input type="checkbox" name="b_o_page_mobile_bar" value="1" <?php echo (get_post_meta($_GET['post'], 'b_o_page_mobile_bar', true) == 1 || !isset($_GET['post'])) ? 'checked' : ''; ?>>
 			<label for="b_o_page_mobile_bar">Barra superior</label>
 		</p>
 

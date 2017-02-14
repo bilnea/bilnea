@@ -104,6 +104,18 @@ foreach (get_option('bilnea_settings') as $key => $value) {
 	}
 }
 
+foreach (b_f_option('b_opt_custom-font') as $font) {
+	$value = explode('|', $font)[0];
+	$var_size = explode('|', $font)[1];
+	if (!isset($var_fonts[$value]) && $value != '') {
+		$var_fonts[$value] = array($var_size);
+	} else {
+		if (!in_array($var_size, $var_fonts[$value]) && $value != '') {
+			array_push($var_fonts[$value], $var_size);
+		}
+	}
+}
+
 $var_index = 0;
 
 unset($var_fonts['inherit']);
@@ -133,25 +145,57 @@ if (count($var_fonts) > 0) {
 
 				for ($i = 1; $i < 10; $i++) {
 					$j = $i*100;
-						
-					(!in_array($j, $var_sizes)) ? $var_disabled = ' disabled' : $var_disabled = '';
-					(in_array($j, $value)) ? $var_checked = ' checked' : $var_checked = '';
+
+					$var_disabled = 0;
+
+					foreach ($var_sizes as $size) {
+						if ($j == $size) {
+							$var_disabled++;
+						}
+					}
+
+					$var_checked = 0;
+
+					foreach ($value as $single) {
+						if ((string)$j == (string)$single) {
+							$var_checked++;
+						}
+					}
+
+					($var_disabled == 0) ? $var_disabled = ' disabled' : $var_disabled = '';
+					($var_checked == 0) ? $var_checked = '' : $var_checked = ' checked';
 
 				?>
 
 				<div>
-					<input type="checkbox" value="<?= $b_g_google_fonts[$key]['name'].'|'.$j ?>"<?php echo $var_disabled.$var_checked; checked(in_array($b_g_google_fonts[$key]['name'].'|'.$j, $var_container)); ?> name="bilnea_settings[b_opt_custom-font][]">
+					<input type="checkbox" value="<?= $key.'|'.$j ?>"<?php echo $var_disabled.$var_checked; ?> name="bilnea_settings[b_opt_custom-font][]">
 						
 					<?php
 
 						$j = $j.'italic';
 
-						(!in_array($j, $var_sizes)) ? $var_disabled = ' disabled' : $var_disabled = '';
-						(in_array($j, $value)) ? $var_checked = ' checked' : $var_checked = '';
+						$var_disabled = 0;
+
+						foreach ($var_sizes as $size) {
+							if ($j == $size) {
+								$var_disabled++;
+							}
+						}
+
+						$var_checked = 0;
+
+						foreach ($value as $single) {
+							if ($j == $single) {
+								$var_checked++;
+							}
+						}
+
+						($var_disabled == 0) ? $var_disabled = ' disabled' : $var_disabled = '';
+						($var_checked == 0) ? $var_checked = '' : $var_checked = ' checked';
 
 					?>
 
-					<input type="checkbox" value="<?= $b_g_google_fonts[$key]['name'].'|'.$j ?>"<?php echo $var_disabled.$var_checked; checked(in_array($b_g_google_fonts[$key]['name'].'|'.$j, $var_container)); ?> name="bilnea_settings[b_opt_custom-font][]">
+					<input type="checkbox" value="<?= $key.'|'.$j ?>"<?php echo $var_disabled.$var_checked; ?> name="bilnea_settings[b_opt_custom-font][]">
 				</div>
 
 				<?php

@@ -149,7 +149,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 
 			?>
 
-			<div id="mobile-menu" data="type-<?= b_f_option('b_opt_mobile-menu') ?>"<?= $var_menu_class ?>>
+			<div id="mobile-menu" data="type-<?= b_f_option('b_opt_mobile-menu') ?>">
 
 				<?php
 				
@@ -260,7 +260,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 					?>
 			
 					<!-- Bloque menú de la cabecera -->
-					<div class="header<?= $var_logo_align; ?>">
+					<div class="header">
 						<div <?php if (b_f_option('b_opt_menu-width') == 2) { echo 'class="container"'; } ?>>
 
 							<?php
@@ -309,7 +309,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 
 	if (b_f_option('b_opt_mobile-menu') == 3 && b_f_page_get_metabox('b_o_page_mobile_menu') == 1)  {
 		?>
-			<header id="mobile-header" class="<?= $var_menu_class ?>">
+			<header id="mobile-header">
 				<div class="container">
 					
 					<?php

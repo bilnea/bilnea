@@ -17,20 +17,24 @@ if (!function_exists('b_s_slider')) {
 		// Scripts
 		wp_enqueue_script('functions.slider');
 
+		// Estilos
+		wp_enqueue_style('styles.slider');
+
 		// Shortcodes dependientes
 		add_shortcode('b_show', 'b_s_slideshow');
 
 		// Atributos
 		$a = shortcode_atts(array(
 			'start' => true,
-			'on' => 1,
-			'fade' => 400,
 			'time' => 7,
-			'buttons' => true,
+			'buttons' => 'true',
 			'width' => 1,
 			'height' => '400px',
 			'id' => null,
 			'class' => null,
+			'animation' => 'slide',
+			'easing' => 'ease-in',
+			'arrows' => 'true',
 		), $atts);
 
 		// Variables locales
@@ -58,15 +62,26 @@ if (!function_exists('b_s_slider')) {
 		}
 
 		// Script específico
-		$out  = '<div class="slider-'.$b_g_sliders.$var_class.'" style="'.$var_style.'"'.$var_id.'>'.do_shortcode($content).'</div>'."\n";
+		$out  = '<div class="slider-'.$b_g_sliders.$var_class.' flexslider" style="'.$var_style.'"'.$var_id.'><ul class="slides">'.do_shortcode($content).'</ul></div>'."\n";
 		$out .= '<script type="text/javascript">'."\n";
-		$out .= 'jQuery(function() {'."\n";
-		$out .= '	jQuery(\'.slider-'.$b_g_sliders.'\').sss({'."\n";
-		$out .= '		slideShow: '.esc_attr($a['start']).','."\n";
-		$out .= '		startOn:  '.(esc_attr($a['on'])-1).','."\n";
-		$out .= '		transition:  '.esc_attr($a['fade']).','."\n";
-		$out .= '		speed:  '.(esc_attr($a['time'])*1000).','."\n";
-		$out .= '		showNav:  '.esc_attr($a['buttons'])."\n";
+		$out .= 'jQuery(function($) {'."\n";
+		$out .= '	$(\'.slider-'.$b_g_sliders.' .slides > li\').each(function() {'."\n";
+		$out .= '		var t = $(this);'."\n";
+		$out .= '		t.height(t.closest(\'div[class^="slider-"]\').height());'."\n";
+		$out .= '	})'."\n";
+		$out .= '	$(\'.slider-'.$b_g_sliders.'\').flexslider({'."\n";
+		$out .= '		animation: "'.esc_attr($a['animation']).'",'."\n";
+		$out .= '		animationLoop: true,'."\n";
+		$out .= '		easing: "'.esc_attr($a['easing']).'",'."\n";
+		if (esc_attr($a['buttons']) != 'true') {
+			$out .= '		controlNav: false,'."\n";
+		}
+		$out .= '		prevText:  "'.__('Previous', 'bilnea').'",'."\n";
+		$out .= '		nextText:  "'.__('Next', 'bilnea').'",'."\n";
+		if (esc_attr($a['arrows']) != 'true') {
+			$out .= '		directionNav: false,'."\n";
+		}
+		$out .= '		slideshowSpeed:  '.(esc_attr($a['time'])*1000)."\n";
 		$out .= '	})'."\n";
 		$out .= '})'."\n";
 		$out .= '</script>';
@@ -94,8 +109,7 @@ if (!function_exists('b_s_slideshow')) {
 			'position' => 'cc',
 			'class' => null,
 			'url' => null,
-			'target' => null,
-			'rel' => 'follow',
+			'target' => null
 		), $atts);
 
 		// Alineación
@@ -133,14 +147,11 @@ if (!function_exists('b_s_slideshow')) {
 
 		if (esc_attr($a['url']) != null) {
 			(is_numeric(esc_attr($a['url']))) ? $var_link = get_permalink(esc_attr($a['url'])) : $var_link = esc_attr($a['url']);
-			(esc_attr($a['target']) != null) ? $var_atts = ' target="_blank"' : $var_atts = '';
+			(esc_attr($a['target']) == 'blank') ? $var_atts = ' onclick="window.open('.$var_link.')"' : $var_atts = ' onclick="window.location = '.$var_link.'"';
 
-			if (esc_attr($a['rel']) == 'nofollow') {
-				$var_atts .= ' rel="nofollow"';
-			}
-			return '<a href="'.$var_link.'"'.$var_atts.$var_style.$var_class.'>'.do_shortcode($content).'</a>';
+			return '<li '.$var_atts.$var_style.$var_class.'>'.do_shortcode($content).'</li>';
 		} else { 
-			return '<div'.$var_style.$var_class.'>'.do_shortcode($content).'</div>';
+			return '<li'.$var_style.$var_class.'>'.do_shortcode($content).'</li>';
 		}
 
 	}

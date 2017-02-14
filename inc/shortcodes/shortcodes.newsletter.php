@@ -64,6 +64,8 @@ if (!function_exists('b_f_newsletter')) {
 				}
 
 				$out .= '<label for="s_legal-'.$var_random.'">* '.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$var_placeholder.'" target="_blank">'.strtolower($var_placeholder).'</a>.</label>';
+				$out .= '<input class="b_input_checkbox" value="1" type="checkbox" id="s_delete-'.$var_random.'" name="s_delete" />';
+				$out .= '<label for="s_delete-'.$var_random.'">'.__('I want to unsubscribe from newsletter', 'bilnea').'.</label>';
 				$out .= '<div class="s_submit">'.__('Subscribe', 'bilnea').'</div>';
 				$out .= '<input type="hidden" class="redirect_to" name="s_redirect" value="'.esc_attr($a['redirect']).'" />';
 				$out .= '</div><div class="response"></div>';
@@ -89,12 +91,13 @@ if (!function_exists('b_f_newsletter')) {
 				$var_legal .= '<label for="s_legal-'.$var_random.'">* '.__('I have read, understood and accept', 'bilnea').' '.$var_article.' <a href="'.esc_attr($a['url']).'" title="'.$var_placeholder.'" target="_blank">'.strtolower($var_placeholder).'</a>.</label>';
 
 				// Pseudo shortcodes
-				$var_shortcodes = array('{{b_nw_name}}', '{{b_nw_last-name}}', '{{b_nw_email}}', '{{b_nw_legal}}', '{{b_nw_send}}');
+				$var_shortcodes = array('{{b_nw_name}}', '{{b_nw_last-name}}', '{{b_nw_email}}', '{{b_nw_legal}}', '{{b_nw_unsubscribe}}', '{{b_nw_send}}');
 				$var_replace = array(
 					'<input class="input" type="text" name="s_name" placeholder="* '.__('Name', 'bilnea').'" />',
 					'<input type="text" name="s_last" placeholder="* '.__('Last name', 'bilnea').'" />',
 					'<input class="input" type="email" name="s_email" placeholder="* '.__('Email', 'bilnea').'" />',
 					$var_legal,
+					'<input class="b_input_checkbox" value="1" type="checkbox" id="s_delete-'.$var_random.'" name="s_delete" /><label for="s_delete-'.$var_random.'">'.__('I want to unsubscribe from newsletter', 'bilnea').'.</label>',
 					'<div class="s_submit" data-send="'.__('Subscribe', 'bilnea').'" data-sending="'.__('Subscribing', 'bilnea').'">'.__('Subscribe', 'bilnea').'</div>'
 				);
 

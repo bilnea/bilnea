@@ -708,6 +708,7 @@ input:-webkit-autofill:active {
 
 .row > .first {
 	margin-left: 0;
+	clear: left;
 }
 
 html[lang="ar"] .row > .first {
@@ -1367,6 +1368,11 @@ header#header #searchsubmit {
 	padding: 2px 0;
 }
 
+#footer div[id^="footer-"] {
+	display: inline-block;
+	vertical-align: top;
+}
+
 /* Barra lateral */
 
 aside#sidebar {
@@ -1390,21 +1396,8 @@ aside.sidebar-left {
 
 /* Animación */
 
-.sss, .ssslide {
-	width: 100%;
-	height: 100%;
-}
-
-.sss {
+div[class^="slider-"] {
 	position: relative;
-}
-
-.ssslide {
-	position: absolute;
-	top: 0;
-	left: 0;
-	background-size: cover;
-	display: none;
 }
 
 /* Botones */

@@ -173,7 +173,7 @@ if (!function_exists('b_s_breadcrumb')) {
 
 		if (!is_front_page()) {         
 			$out = '<div class="breadcrumb">';
-			if ($hom != 'none') {
+			if ($var_home != 'none') {
 				if ($var_home == '/') {
 					$out .= '<a href="'.get_option('home').'">/</a> ';
 				} else {
