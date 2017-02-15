@@ -36,7 +36,7 @@ if (!function_exists('b_s_rrss')) {
 		foreach ($var_socials as $var_social) {
 
 			// Variables locales
-			$var_color = b_f_option('b_opt_social-'.$var_social.'-color');
+			$var_color = b_f_option('b_opt_social-'.$var_social.'-color', true);
 			
 			switch (esc_attr($a['style'])) {
 				case 'normal':

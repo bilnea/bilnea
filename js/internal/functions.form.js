@@ -199,3 +199,13 @@ jQuery(function($) {
         }
     });
 })
+
+jQuery(function($) {
+	if ($('select[name^="b_i_custom_mailer"]').length) {
+		$('select[name^="b_i_custom_mailer"]').on('change', function(e) {
+			var t = $(this),
+				v = t.val();
+			t.closest('form').find(jQuery('[name="b_i_to"]')).val(v);
+		});
+	};
+});

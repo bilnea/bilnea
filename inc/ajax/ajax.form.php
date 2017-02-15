@@ -36,7 +36,7 @@ if (!function_exists('b_a_send_form')) {
 			$var_headers .= 'Content-Type: text/html; charset=UTF-8';
 
 			// Preparación de datos
-			$var_names = json_decode(str_replace('\"', '"', $_POST['b_i_names']), true);
+			$var_names = json_decode(str_replace('\"', '"', str_replace("'", "\'", $_POST['b_i_names'])), true);
 			$var_table = $wpdb->prefix.'form_users';
 			$var_temp = array();
 			if (isset($_POST['b_i_name']) && $_POST['b_i_name'] != '') {
@@ -49,8 +49,8 @@ if (!function_exists('b_a_send_form')) {
 				$var_temp[$var_names['b_i_email']] = $_POST['b_i_email'];
 			}
 			foreach ($_POST as $key => $value) {
-				if (substr($key, 0, 10) == 'b_i_custom') {
-					$var_temp[$var_names[$key]] = $value;
+				if (substr($key, 0, 10) == 'b_i_custom' && substr($key, 0, 17) != 'b_i_custom_mailer') {
+					$var_temp[str_replace("\'", "'", $var_names[$key])] = $value;
 				}
 			}
 			if (isset($_POST['b_i_message']) && $_POST['b_i_message'] != '') {

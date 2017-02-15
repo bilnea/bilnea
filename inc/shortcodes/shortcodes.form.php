@@ -355,9 +355,37 @@ if (!function_exists('b_s_input')) {
 				}
 				$var_options = explode('|', esc_attr($a['options']));
 				foreach ($var_options as $option) {
-					if (count(explode(':', $option)) > 1) {
-						$option = explode(':', $option);
+					if (count(explode('::', $option)) > 1) {
+						$option = explode('::', $option);
 						$out .= '  <option value="'.$option[0].'">'.$option[1].'</option>'."\n";
+					} else {
+						$out .= '  <option value="'.$option.'">'.$option.'</option>'."\n";
+					}
+				}
+				$out .= '</select>'."\n";
+				if (esc_attr($a['placeholder']) == '') { $out .= '</label>'; }
+				return $out;
+				break;
+
+			// Selector
+			case 'mailer':
+				if ($var_name == '') { $var_name = $var_placeholder; }
+				$var_key = rand(0, 99999999);
+				if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('Select an option', 'bilnea'); }
+				if (esc_attr($a['required']) == 'true') {
+					$var_placeholder = '* '.$var_placeholder;
+				}
+				if (esc_attr($a['label']) == 'true') {
+					$out = '<label>'.$var_placeholder.'<select class="input'.$var_class.'"'.$var_id.' name="b_i_custom_select-'.$var_key.'" data-name="'.$var_name.'">'."\n";
+				} else {
+					$out = '<select class="input'.$var_class.'"'.$var_id.' name="b_i_custom_mailer-'.$var_key.'" data-name="'.$var_name.'">'."\n";
+					$out .= '  <option disabled selected>'.$var_placeholder.'</option>'."\n";
+				}
+				$var_options = explode('|', esc_attr($a['options']));
+				foreach ($var_options as $option) {
+					if (count(explode('::', $option)) > 1) {
+						$option = explode('::', $option);
+						$out .= '  <option value="'.b_f_i_encrypt_decrypt('encrypt', $option[0]).'">'.$option[1].'</option>'."\n";
 					} else {
 						$out .= '  <option value="'.$option.'">'.$option.'</option>'."\n";
 					}

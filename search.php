@@ -48,7 +48,7 @@ get_header();
 			<?php 
 			if (have_posts()) :
 			?>
-				<div class="container" style="margin: 20px auto 40px auto">
+				<div class="container">
 					<?php
 					while (have_posts()) : the_post();
 					?>
