@@ -10,7 +10,7 @@ jQuery(function($) {
 		var t = 0,
 			s = $(this).attr('data-space');
 		$(this).children().each(function() {
-			if (t == 0 || t >= 1) {
+			if (t == 0 || t >= 0.99995) {
 				$(this).addClass('first');
 				t = 0;
 			};

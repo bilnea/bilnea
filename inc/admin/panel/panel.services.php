@@ -26,7 +26,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 	</div>
 	<br />
 	<hr style="margin: 8px 0 4px 0;" />
-	<input type="checkbox" name="bilnea_settings[b_opt_double_opt_in]" <?php checked(b_f_option('b_opt_double_opt_in'), 1 ); ?> value="1" class="disabler" data-connect="subscribers">Activar la doble confirmación
+	<input type="checkbox" name="bilnea_settings[b_opt_double_opt_in]" <?php checked(b_f_option('b_opt_double_opt_in'), 1 ); ?> value="1">Activar la doble confirmación
 
 	<?php
 

@@ -1,34 +1,9 @@
 <?php
-/**
- * The template for displaying any single page.
- *
- */
-
-function extracto($string, $word_limit) {
-	$words = explode(' ', $string, ($word_limit + 1));
-	if(count($words) > $word_limit) {
-		array_pop($words);
-		return implode(' ', $words).'...';
-	} else {
-		return implode(' ', $words);
-	}
-}
-
-add_filter( 'posts_request' , 'modify_request' );
-function modify_request( $query) {
-    global $wpdb;
-    if(strstr($query,"post_type IN ('".implode("','", b_f_option('b_opt_search-include'))."')")){
-        $where = str_replace("ORDER BY {$wpdb->posts}.post_date","ORDER BY {$wpdb->posts}.post_type DESC",$query);
-    }
-    return $where;
-}
-
-$var_current = (get_query_var('paged')) ? get_query_var('paged') : 1;
-query_posts($query_string.'&showposts=-1&posts_per_page=10&paged='.$var_current);
 
 global $wp_query;
 
-get_header(); 
+get_header();
+
 ?>
 	<div id="primary" class="row-fluid">
 		<div id="content" role="main" class="span8 offset2">
@@ -51,21 +26,34 @@ get_header();
 				<div class="container">
 					<?php
 					while (have_posts()) : the_post();
-					?>
-					<article class="resultado" style="margin-top: 20px;">
-						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-							<h2 class="question">
-								<?php the_title(); ?>
-							</h2>
-						</a>
-						<div class="the-content">
-							<?php
-							echo extracto(preg_replace('~\[([a-z]|[A-Z]|[0-9]|\/|_|=|"| |<|>|-|#|\(|\)|.|,)+?\]~s', '', strip_tags(get_the_content())), 60);
-							?>
-						</div>	
-					</article>
-					<?php
+
+						$var_title = get_the_title();
+						$var_excerpt = b_f_get_excerpt(preg_replace('~\[([a-z]|[A-Z]|[0-9]|\/|_|=|"| |<|>|-|#|\(|\)|.|,)+?\]~s', '', strip_tags(get_the_content())), 60);
+						$var_content = preg_replace('~\[([a-z]|[A-Z]|[0-9]|\/|_|=|"| |<|>|-|#|\(|\)|.|,)+?\]~s', '', strip_tags(get_the_content()));
+
+						$var_keys = explode(' ', $s);
+
+						$var_title = preg_replace('/('.implode('|', $var_keys) .')/iu', '<strong class="title-highlight">\0</strong>', $var_title);
+						$var_excerpt = preg_replace('/('.implode('|', $var_keys) .')/iu', '<strong class="excerpt-highlight">\0</strong>', $var_excerpt);
+
+						$var_total = count(explode(' ', get_the_title()))+count(explode(' ', $var_content));
+						$var_ocurrances = substr_count(strtolower(get_the_title().' '.$var_content), strtolower($s));
+
+						?>
+						<article class="resultado" style="margin-top: 20px;">
+							<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+								<h2 class="question">
+									<?= $var_title ?>
+								</h2>
+							</a>
+							<div class="the-content">
+								<span class="search-ocurrances"><?= number_format((float)$var_ocurrances/$var_total, 3, "'", '').'%' ?></span><?= $var_excerpt ?>
+							</div>	
+						</article>
+						<?php
 					endwhile;
+
+					$var_current = max(1, get_query_var('paged'));
 
 					$var_pagination_block = paginate_links( array(
 						'format' => __('page', 'bilnea').'/%#%',
@@ -75,7 +63,7 @@ get_header();
 						'next_text' => '<span>'.__('Next', 'bilnea').'</span> ›'
 					));
 
-					$var_pagination = '<div class="b_pagination"><span class="total-pages">'.sprintf(__('Page %1$s of %2$s', 'bilnea'), $var_current, $query->max_num_pages).'</span>';
+					$var_pagination = '<div class="b_pagination"><span class="total-pages">'.sprintf(__('Page %1$s of %2$s', 'bilnea'), $var_current, $wp_query->max_num_pages).'</span>';
 
 					if ($var_current > 2) {
 						$var_pagination .= '<a class="first page-numbers" href="'.get_permalink().'">« <span>'.__('First', 'bilnea').'</span></a>';
@@ -84,7 +72,7 @@ get_header();
 					$var_pagination .= $var_pagination_block;
 
 					if ($var_current < ($wp_query->max_num_pages-2)) {
-						$var_pagination .= '<a class="last page-numbers" href="'.get_permalink().'/'.__('page', 'bilnea').'/'.($query->max_num_pages-2).'"><span>'.__('Last', 'bilnea').' »</span></a>';
+						$var_pagination .= '<a class="last page-numbers" href="'.get_permalink().'/'.__('page', 'bilnea').'/'.($wp_query->max_num_pages-2).'"><span>'.__('Last', 'bilnea').' »</span></a>';
 					}
 
 					$var_pagination .= '</div>';

@@ -40,14 +40,12 @@ jQuery(function($) {
 			if (t.val() == '') {
 				t.addClass('invalid');
 				g++;
-				t = '1';
 				errors.push(nws_errors.empty);
 			};
 		});
 		if (f.find($('input[name$="email"]')).val() != '' && !b_js_check_email(f.find($('input[name$="email"]')).val())) {
 			f.find($('input[name$="email"]')).addClass('invalid');
 			g++;
-			t = '2';
 			errors.push(nws_errors.email);
 		};
 		$(f.find($('input[type="checkbox"][id^="s_legal-"]'))).each(function() {
@@ -55,7 +53,6 @@ jQuery(function($) {
 			if (t[0].checked == false) {
 				t.addClass('invalid');
 				g++;
-				t = '5';
 				errors.push(nws_errors.legal);
 			};
 		});
@@ -79,4 +76,37 @@ jQuery(function($) {
 			f.next('.response').html('<div class="errors">'+errors.join('. ')+'.</div>');
 		}
 	});
+	$('.s_delete').click(function() {
+		var t = $(this);
+			f = t.closest('.b_newsletters'),
+			g = 0,
+			errors = [nws_errors.text];
+		f.next('.response').html('');
+		if (f.find($('input[name$="email"]')).val() == '') {
+			f.find($('input[name$="email"]')).addClass('invalid');
+			g++;
+			errors.push(nws_errors.empty);
+		};
+		if (f.find($('input[name$="email"]')).val() != '' && !b_js_check_email(f.find($('input[name$="email"]')).val())) {
+			f.find($('input[name$="email"]')).addClass('invalid');
+			g++;
+			errors.push(nws_errors.email);
+		};
+		if (g == 0) {
+			$.ajax({
+				url: bilnea.root_url+'/wp-admin/admin-ajax.php',
+				type: 'POST',
+				data: f.find($(':input')).serialize()+'&s_delete=1&action=b_mailchimpsubscribe',
+				beforeSend: function() {
+					f.next().html('<div class="errors">'+nws_errors.unsubscribing+'</div>');
+				},
+				success: function (data) {
+					f.next().html(data);
+				}
+			});
+		} else {
+			$.unique(errors);
+			f.next('.response').html('<div class="errors">'+errors.join('. ')+'.</div>');
+		}
+	})
 })

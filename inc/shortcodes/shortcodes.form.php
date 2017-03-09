@@ -117,6 +117,8 @@ if (!function_exists('b_s_input')) {
 			'label' => null,
 			'url' => b_f_option('b_opt_privacy-policy-'.$b_g_language),
 			'name' => null,
+			'prefix' => null,
+			'sending' => __('Sending', 'bilnea')
 		), $atts);
 
 		// Número aleatorio para identificar el campo
@@ -441,6 +443,18 @@ if (!function_exists('b_s_input')) {
 					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_'.esc_attr($a['type']).'" data-name="'.$var_name.'" /></label>';
 				} else {
 					return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_'.esc_attr($a['type']).'" placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'" />';
+				}
+				break;
+
+			// Asunto
+			case 'subject':
+				if ($var_placeholder == '' || $var_placeholder = 'null') {
+					$var_placeholder = __('Subject', 'bilnea');
+				}
+				if (esc_attr($a['label']) == 'true') {
+					return '<label>'.$var_required.$var_placeholder.'<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.esc_attr($a['type']).'"'.((esc_attr($a['prefix']) != null) ? ' data-prefix="'.esc_attr($a['prefix']).'"' : '').' /></label>';
+				} else {
+					return '<input class="input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_'.esc_attr($a['type']).'" placeholder="'.$var_required.$var_placeholder.'"'.((esc_attr($a['prefix']) != null) ? ' data-prefix="'.esc_attr($a['prefix']).'"' : '').' />';
 				}
 				break;
 

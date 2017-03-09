@@ -40,15 +40,19 @@ function initMap() {
 						map: window[marker['map']]
 					});
 				} else {
-					var size = parseInt(marker['icon']['size']);
+					if (marker['icon']['size'].split(',').length > 1) {
+						var size = [parseInt(marker['icon']['size'].split(',')[0]), parseInt(marker['icon']['size'].split(',')[1])];
+					} else {
+						var size = [parseInt(marker['icon']['size']), parseInt(marker['icon']['size'])];
+					}
 					window['marker_'+a] = new google.maps.Marker({
 						position: {lat: marker['position']['lat'], lng: marker['position']['lng']},
 						map: window[marker['map']],
 						icon: {
 							url: marker['icon']['url'],
-							scaledSize: new google.maps.Size(size, size),
+							scaledSize: new google.maps.Size(size[0], size[1]),
 							origin: new google.maps.Point(0,0),
-							anchor: new google.maps.Point((size/2), size)
+							anchor: new google.maps.Point((size[0]/2), size[1])
 						}
 					});
 					if (marker['info'] != undefined) {

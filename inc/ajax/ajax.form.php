@@ -49,7 +49,7 @@ if (!function_exists('b_a_send_form')) {
 				$var_temp[$var_names['b_i_email']] = $_POST['b_i_email'];
 			}
 			foreach ($_POST as $key => $value) {
-				if (substr($key, 0, 10) == 'b_i_custom' && substr($key, 0, 17) != 'b_i_custom_mailer') {
+				if (substr($key, 0, 10) == 'b_i_custom' && substr($key, 0, 17) != 'b_i_custom_mailer' && substr($key, 0, 18) != 'b_i_custom_subject') {
 					$var_temp[str_replace("\'", "'", $var_names[$key])] = $value;
 				}
 			}
@@ -75,7 +75,11 @@ if (!function_exists('b_a_send_form')) {
 				$var_message .= '<strong>'.$key.'</strong>: '.$value.'<br />';
 			}
 			$var_message .= '<hr />Mensaje enviado el '.date('j/n/Y').' a las '.date('G:i').' desde la dirección IP '.$_POST['b_i_ip'].'.</div>';
-			$var_subject = rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_subject']), "\0");
+			if (isset($_POST['b_i_custom_subject']) && $_POST['b_i_custom_subject'] != '') {
+				$var_subject = $_POST['b_i_custom_subject'];
+			} else {
+				$var_subject = rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_subject']), "\0");
+			}
 
 			// Cambio de idioma
 			$var_locale = setlocale(LC_ALL, 0);

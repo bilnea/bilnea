@@ -182,6 +182,7 @@ body {
 	display: inline-block;
 	float: left;
 	margin-left: <?= b_f_size('b_opt_column_separator') ?>;
+	width: 100%;
 }
 
 html[lang="ar"] .row > * {
@@ -330,10 +331,6 @@ header a.logo {
 	color: <?= b_f_color('b_opt_header-color') ?>;
 }
 
-.mobile-button {
-	background-color: <?= b_f_color('b_opt_active-color') ?>;
-}
-
 #mobile-header {
 	display: none;
 }
@@ -426,6 +423,12 @@ aside#sidebar {
 		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_text_ttf-size'));
 		?>
 		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-text')/100)).$var_unit; ?>;
+	}
+	header#header {
+		display: none
+	}
+	header#mobile-header {
+		display: block;
 	}
 	b, b *,
 	strong,

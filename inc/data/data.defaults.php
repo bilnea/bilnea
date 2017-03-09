@@ -301,7 +301,7 @@ function b_f_default($var_data) {
 			return get_option('admin_email');
 			break;
 		case 'b_opt_social-order':
-			return 'facebook,twitter,instagram,snapchat,google-plus,youtube,linkedin,pinterest,flickr,foursquare';
+			return 'facebook,twitter,instagram,snapchat,google-plus,youtube,linkedin,pinterest,flickr,foursquare,rss';
 			break;
 		case 'b_opt_social-facebook-color':
 			return '#3b5998';
@@ -332,6 +332,12 @@ function b_f_default($var_data) {
 			break;
 		case 'b_opt_social-foursquare-color':
 			return '#f94877';
+			break;
+		case 'b_opt_social-rss-color':
+			return '#f8991d';
+			break;
+		case 'b_opt_search-include':
+			return array('page', 'post');
 			break;
 	}
 }

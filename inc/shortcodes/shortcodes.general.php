@@ -272,6 +272,8 @@ if (!function_exists('b_s_file')) {
 		(esc_attr($a['class']) != null) ? $var_class = esc_attr($a['class']) : $var_class = '';
 		(esc_attr($a['target']) != null) ? $var_target = ' target="blank"': $var_target = '';
 
+		$out = '';
+
 		if (esc_attr($a['id']) != null) {
 			$var_id = esc_attr($a['id']);
 			$var_url = wp_get_attachment_url($var_id);
@@ -280,6 +282,7 @@ if (!function_exists('b_s_file')) {
 			if ($content == null) {
 				$content = $var_filename;
 			}
+			$var_class .= ' '.$var_extension;
 			if (($var_extension == 'png') || ($var_extension == 'gif') || ($var_extension == 'tiff') || ($var_extension == 'jpg') || ($var_extension == 'jpeg')) {
 				$out = '<img src="'.$var_url.'" class="'.$var_class.'" />';
 			} else {

@@ -30,7 +30,11 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 		<?php wp_head(); ?>
 		<script type="text/javascript">
 			var bilnea = {
-				post_id: '<?= $post->ID ?>',
+<?php
+	if (isset($post)) {
+		echo '				post_id: '.$post->ID.','."\n";
+	};
+?>
 				main_theme_uri: '<?= get_template_directory_uri() ?>',
 				child_theme_uri: '<?= get_stylesheet_directory_uri() ?>',
 				main_uri: '<?= get_site_url() ?>'

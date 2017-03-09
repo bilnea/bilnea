@@ -14,6 +14,9 @@ if (!function_exists('b_s_map')) {
 		// Variables globales
 		global $b_g_version;
 
+		// Shortcodes dependientes
+		add_shortcode('b_marker', 'b_s_marker');
+
 		// Atributos
 		$a = shortcode_atts(array(
 			'center' => '37.992900,-1.114391',
@@ -35,7 +38,7 @@ if (!function_exists('b_s_map')) {
 
 		// Scripts
 		wp_enqueue_script('functions-map', get_template_directory_uri().'/js/internal/functions.map.js', array('jquery'), $b_g_version, true);
-		wp_enqueue_script('functions-google-map', 'https://maps.googleapis.com/maps/api/js?signed_in=false&callback=initMap'.$var_api_key, array('functions-map'), $b_g_version, false);
+		wp_enqueue_script('functions-google-map', 'https://maps.googleapis.com/maps/api/js?callback=initMap'.$var_api_key, array('functions-map'), '', false);
 
 		// Variables locales
 		switch (esc_attr($a['width'])) {
@@ -99,15 +102,12 @@ if (!function_exists('b_s_map')) {
 			$var_class .= ' '.esc_attr($a['class']);
 		}
 
-		// Shortcodes dependientes
-		add_shortcode('b_marker', 'b_s_marker');
-
 		// Mejora en dispositivos móviles
 		wp_is_mobile() ? $var_drag = 'false' : $var_drag = 'true';
 
 		$var_center = esc_attr($a['center']);
 		$var_random = rand(100000, 999999);
-		$out = '<div id="map-'.$var_random.'" style="width: '.esc_attr($a['width']).'; height: '.esc_attr($a['height']).';" class="'.$fw.'"></div>'."\n";
+		$out = '<div id="map-'.$var_random.'" style="width: '.esc_attr($a['width']).'; height: '.esc_attr($a['height']).';" class="'.$var_class.'"></div>'."\n";
 		$out .= '<script type="text/javascript">'."\n";
 		$out .= '	var map_'.$var_random.';'."\n";
 		$out .= '	var map_'.$var_random.';'."\n";
@@ -142,8 +142,8 @@ if (!function_exists('b_s_marker')) {
 
 
 		$out = '<script type="text/javascript" id="b_map_script">'."\n";
-		$out .= 'jQuery(function() {'."\n";
-		$out .= '	var a = jQuery(\'#b_map_script\').remove(\'attr\', \'id\').closest(\'.map-options\').attr(\'data-id\');'."\n";
+		$out .= '	var a = jQuery(\'#b_map_script\').closest(\'.map-options\').attr(\'data-id\');'."\n";
+		$out .= '	jQuery(\'#b_map_script\').remove(\'attr\', \'id\');'."\n";
 		$out .= '		var marker = {'."\n";
 		$out .= '			position: {lat: '.explode(',', str_replace(' ', '', esc_attr($a['position'])))[0].', lng: '.explode(',', str_replace(' ', '', esc_attr($a['position'])))[1].'},'."\n";
 		$out .= '			map: \'map_\'+a,'."\n";
@@ -155,7 +155,7 @@ if (!function_exists('b_s_marker')) {
 			} else {
 				$out .= '				url: \''.esc_attr($a['icon']).'\','."\n";
 			}
-			$out .= '				size: \''.esc_attr($a['size']).'\''."\n";
+			$out .= '				size: \''.trim(esc_attr($a['size'])).'\''."\n";
 			$out .= '			},'."\n";
 			if ($content != null) {
 				$out .= '		info: \''.$content.'\''."\n";
@@ -164,7 +164,6 @@ if (!function_exists('b_s_marker')) {
 		$out .= '		};'."\n";
 		$out .= '		var b = window[\'markers_\'+a];'."\n";
 		$out .= '		b.push(marker);'."\n";
-		$out .= '	});'."\n";
 		$out .= '</script>'."\n";
 
 		return $out;

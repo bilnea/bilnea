@@ -10,8 +10,8 @@ $args = array(
 	'orderby' => b_f_option('b_opt_blog-order')
 );
 
-if ($var_archive == true) {
-	$args['cat'] == get_queried_object()->term_id;
+if (isset($var_archive) && $var_archive == true) {
+	$args['cat'] = get_queried_object()->term_id;
 }
 
 if (b_f_option('b_opt_blog-order-desc') == 1) {

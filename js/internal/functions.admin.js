@@ -404,6 +404,15 @@ jQuery(function($) {
 	$('.sp-input').on('keyup change', function() {
 		$(this).next().spectrum('set', $(this).val());
 	});
+	$('#search-order').select2().on('select2:select', function(e){
+		var s = $(e.params.data.element);
+		var p = s.parent();
+		if (p.length > 0) {
+			s.data('select2-originaloptgroup', p);
+		}
+		s.detach().appendTo($(e.target));
+		$(e.target).trigger('change');
+	})
 	$('#bilset select').select2();
 	$('.lang-switcher:not(.current)').click(function() {
 		var t = $(this),

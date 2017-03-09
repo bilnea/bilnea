@@ -81,4 +81,17 @@ add_filter('the_content','b_f_p_id');
 add_filter('the_content','b_f_p_root');
 add_filter('the_content','b_f_p_upload');
 
+
+if (!function_exists('b_f_shortcode')) {
+	
+	function b_f_shortcode($var_content = null, $var_shortcode = true) {
+
+		$content = (($var_shortcode == true) ? do_shortcode($var_content) : $var_content);
+
+		return b_f_p_id(b_f_p_root(b_f_p_upload($content)));
+
+	}
+
+}
+
 ?>

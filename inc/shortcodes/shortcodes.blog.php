@@ -23,6 +23,7 @@ if (!function_exists('b_s_recent_posts')) {
 			'order' => 'date',
 			'featured' => 'false',
 			'type' => 'post',
+			'method' => 3,
 		), $atts);
 
 		// Variables locales

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bilnea Wordpress theme\n"
-"POT-Creation-Date: 2017-02-13 18:15+0100\n"
-"PO-Revision-Date: 2017-02-13 18:16+0100\n"
+"POT-Creation-Date: 2017-02-22 11:46+0100\n"
+"PO-Revision-Date: 2017-02-22 11:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: Samuel E. Cerezo <samuelcerezo@bilnea.com>\n"
 "Language: es\n"
@@ -28,32 +28,11 @@ msgstr "Hecho con <i class=\"fa fa-heart-o\"></i> por"
 msgid "bilnea. Communication & Digital Marketing Agency"
 msgstr "bilnea. Agencia de Comunicación y Marketing Digital"
 
-#: functions.php:198
-msgid "of"
-msgstr "de"
-
-#: functions.php:735
-msgid "author"
-msgstr "autor"
-
-#: functions.php:736
-msgid "search"
-msgstr "buscar"
-
-#: functions.php:737
-msgid "comments"
-msgstr "comentarios"
-
-#: functions.php:738 inc/data/data.pagination.php:10
-#: inc/data/data.pagination.php:26 search.php:71 search.php:87
-msgid "page"
-msgstr "pagina"
-
-#: functions.php:1380
+#: functions.php:568
 msgid "* I have read, understood and accept the "
 msgstr "* He leído, entiendo y acepto la"
 
-#: functions.php:1380
+#: functions.php:568
 msgid "privacy policy"
 msgstr "política de privacidad"
 
@@ -81,7 +60,7 @@ msgstr "Aceptar"
 msgid "Response to the message sent from &quot;%s&quot; website "
 msgstr "Respuesta al mensaje enviado desde la página web &quot;%s&quot; "
 
-#: inc/ajax/ajax.backup.php:99 inc/ajax/ajax.form.php:99
+#: inc/ajax/ajax.backup.php:99 inc/ajax/ajax.form.php:103
 msgid ""
 "Your message has been sucesfully sent.<br /><br />Here is a copy of your "
 "message."
@@ -89,7 +68,7 @@ msgstr ""
 "Tu mensaje se ha enviado correctamente.<br /><br />Aquí tienes una copia del "
 "mismo."
 
-#: inc/ajax/ajax.backup.php:105 inc/ajax/ajax.form.php:105
+#: inc/ajax/ajax.backup.php:105 inc/ajax/ajax.form.php:109
 msgid ""
 "Please do not respond directly to this e-mail. The inbox of this account is "
 "disabled."
@@ -97,26 +76,34 @@ msgstr ""
 "Por favor, no respondas a este mensaje. La recepción de mensajes para esta "
 "cuenta está deshabilitada."
 
-#: inc/ajax/ajax.backup.php:108 inc/ajax/ajax.form.php:108
+#: inc/ajax/ajax.backup.php:108 inc/ajax/ajax.form.php:112
 msgid "Here is a copy of your message to"
 msgstr "Aquí tienes una copia de tu mensaje enviado a"
 
-#: inc/ajax/ajax.backup.php:112 inc/ajax/ajax.form.php:112
+#: inc/ajax/ajax.backup.php:112 inc/ajax/ajax.form.php:116
 msgid "Message sent sucesfully. Please wait a moment."
 msgstr "Mensaje enviado correctamente. Por favor, espera un momento."
 
-#: inc/ajax/ajax.backup.php:120 inc/ajax/ajax.form.php:120
+#: inc/ajax/ajax.backup.php:120 inc/ajax/ajax.form.php:124
 msgid ""
 "Sorry, an error has ocurred sending your message. Please try again later."
 msgstr ""
 "Lo sentimos, ha ocurrido un error al enviar el mensaje. Por favor, vuelva a "
 "intentarlo más tarde."
 
-#: inc/ajax/ajax.mailchimp.php:23
+#: inc/ajax/ajax.mailchimp.php:40
 msgid "You are already subscribed to our newsletter"
 msgstr "Ya estás suscrito a nuestro boletín de noticias"
 
-#: inc/ajax/ajax.mailchimp.php:48
+#: inc/ajax/ajax.mailchimp.php:66 inc/ajax/ajax.mailchimp.php:72
+msgid "You're subscribed. Please, wait a moment."
+msgstr "Te has suscrito correctamente. Un momento."
+
+#: inc/ajax/ajax.mailchimp.php:68
+msgid "You've been subscribed to our newsletter succesfully."
+msgstr "Te has suscrito a nuestro boletín de noticias correctamente."
+
+#: inc/ajax/ajax.mailchimp.php:74
 msgid ""
 "You're subscribed. Shortly, you will be e-mailed with a request to confirm "
 "your membership. Please make sure to click the link in that message to "
@@ -126,7 +113,7 @@ msgstr ""
 "Pulsa en el enlace que te mandaremos en este correo para confirmar tu "
 "suscripción."
 
-#: inc/ajax/ajax.mailchimp.php:50
+#: inc/ajax/ajax.mailchimp.php:77
 msgid ""
 "You've been unsubscribed from our newsletter sucesfully. We're sorry to see "
 "you go."
@@ -198,6 +185,11 @@ msgstr "Noviembre"
 msgid "December"
 msgstr "Diciembre"
 
+#: inc/data/data.pagination.php:10 inc/data/data.pagination.php:26
+#: inc/functions/functions.init.php:66 search.php:71 search.php:87
+msgid "page"
+msgstr "pagina"
+
 #: inc/data/data.pagination.php:13 inc/shortcodes/shortcodes.slider.php:79
 #: search.php:74
 msgid "Previous"
@@ -220,6 +212,22 @@ msgstr "Primero"
 #: inc/data/data.pagination.php:26 search.php:87
 msgid "Last"
 msgstr "Último"
+
+#: inc/functions/functions.init.php:63
+msgid "author"
+msgstr "autor"
+
+#: inc/functions/functions.init.php:64
+msgid "search"
+msgstr "buscar"
+
+#: inc/functions/functions.init.php:65
+msgid "comments"
+msgstr "comentarios"
+
+#: inc/functions/functions.load.php:48
+msgid "of"
+msgstr "de"
 
 #: inc/shortcodes.php:356
 msgid "No posts found"
@@ -264,7 +272,7 @@ msgstr ""
 "Mensaje enviado correctamente. Atenderemos su solicitud a la mayor brevedad. "
 "Se ha enviado una copia a su dirección de correo electrónico."
 
-#: inc/shortcodes/shortcodes.form.php:27 inc/shortcodes/shortcodes.form.php:422
+#: inc/shortcodes/shortcodes.form.php:27 inc/shortcodes/shortcodes.form.php:464
 msgid "Send"
 msgstr "Enviar"
 
@@ -293,79 +301,88 @@ msgstr "Introduce el código de verificación correcto"
 msgid "You must accept the legal advice"
 msgstr "Debe aceptar el aviso legal"
 
-#: inc/shortcodes/shortcodes.form.php:143
-#: inc/shortcodes/shortcodes.newsletter.php:52
+#: inc/shortcodes/shortcodes.form.php:121
+msgid "Sending"
+msgstr "Enviando"
+
+#: inc/shortcodes/shortcodes.form.php:145
+#: inc/shortcodes/shortcodes.newsletter.php:53
 #: inc/shortcodes/shortcodes.newsletter.php:98 single.php:143
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: inc/shortcodes/shortcodes.form.php:154
+#: inc/shortcodes/shortcodes.form.php:156
 msgid "Message"
 msgstr "Mensaje"
 
-#: inc/shortcodes/shortcodes.form.php:169
+#: inc/shortcodes/shortcodes.form.php:171
 msgid "State"
 msgstr "Provincia"
 
-#: inc/shortcodes/shortcodes.form.php:191
-#: inc/shortcodes/shortcodes.newsletter.php:55
+#: inc/shortcodes/shortcodes.form.php:193
+#: inc/shortcodes/shortcodes.newsletter.php:56
 #: inc/shortcodes/shortcodes.newsletter.php:80
 msgid "Privacy policy"
 msgstr "política de privacidad"
 
-#: inc/shortcodes/shortcodes.form.php:201
-#: inc/shortcodes/shortcodes.newsletter.php:59
+#: inc/shortcodes/shortcodes.form.php:203
+#: inc/shortcodes/shortcodes.newsletter.php:60
 #: inc/shortcodes/shortcodes.newsletter.php:84
 msgctxt "female"
 msgid "the"
 msgstr "la"
 
-#: inc/shortcodes/shortcodes.form.php:204
-#: inc/shortcodes/shortcodes.newsletter.php:62
+#: inc/shortcodes/shortcodes.form.php:206
+#: inc/shortcodes/shortcodes.newsletter.php:63
 #: inc/shortcodes/shortcodes.newsletter.php:87
 msgctxt "male"
 msgid "the"
 msgstr "el"
 
-#: inc/shortcodes/shortcodes.form.php:208
-#: inc/shortcodes/shortcodes.newsletter.php:66
+#: inc/shortcodes/shortcodes.form.php:210
+#: inc/shortcodes/shortcodes.newsletter.php:67
 #: inc/shortcodes/shortcodes.newsletter.php:91
 msgid "I have read, understood and accept"
 msgstr "He leído, entiendo y acepto"
 
-#: inc/shortcodes/shortcodes.form.php:224
+#: inc/shortcodes/shortcodes.form.php:226
 #, php-format
 msgid "Fill in the following field with <strong>\"%s\"</strong>"
 msgstr "Rellena el siguiente campo con <strong>\"%s\"</strong>"
 
-#: inc/shortcodes/shortcodes.form.php:227
+#: inc/shortcodes/shortcodes.form.php:229
 msgid "Fill in the following fields."
 msgstr "Complete los siguientes campos."
 
-#: inc/shortcodes/shortcodes.form.php:242
+#: inc/shortcodes/shortcodes.form.php:244
 msgid "No selected file"
 msgstr "Ningún archivo seleccionado"
 
-#: inc/shortcodes/shortcodes.form.php:242
+#: inc/shortcodes/shortcodes.form.php:244
 msgid "Maximum size exceeded"
 msgstr "Sobrepasado tamaño máximo"
 
-#: inc/shortcodes/shortcodes.form.php:346
-#: inc/shortcodes/shortcodes.form.php:445
+#: inc/shortcodes/shortcodes.form.php:348
+#: inc/shortcodes/shortcodes.form.php:376
+#: inc/shortcodes/shortcodes.form.php:487
 msgid "Select an option"
 msgstr "Selecciona una opción"
 
-#: inc/shortcodes/shortcodes.form.php:397
-#: inc/shortcodes/shortcodes.newsletter.php:48
+#: inc/shortcodes/shortcodes.form.php:427
+#: inc/shortcodes/shortcodes.newsletter.php:49
 #: inc/shortcodes/shortcodes.newsletter.php:96 single.php:142
 msgid "Name"
 msgstr "Nombre"
 
-#: inc/shortcodes/shortcodes.form.php:410
-#: inc/shortcodes/shortcodes.newsletter.php:50
+#: inc/shortcodes/shortcodes.form.php:440
+#: inc/shortcodes/shortcodes.newsletter.php:51
 #: inc/shortcodes/shortcodes.newsletter.php:97
 msgid "Last name"
 msgstr "Apellidos"
+
+#: inc/shortcodes/shortcodes.form.php:452
+msgid "Subject"
+msgstr "Asunto"
 
 #: inc/shortcodes/shortcodes.general.php:153
 msgid "Home"
@@ -396,10 +413,19 @@ msgstr "Sin resultados"
 msgid "This browser does not support video playback."
 msgstr "Este navegador no soporta reproducción de video."
 
+#: inc/shortcodes/shortcodes.newsletter.php:36
+msgid "Unsubscribing..."
+msgstr "Cancelando suscripción…"
+
 #: inc/shortcodes/shortcodes.newsletter.php:68
 #: inc/shortcodes/shortcodes.newsletter.php:100
-msgid "I want to unsubscribe from newsletter"
-msgstr "Quiero darme de baja del boletín de noticias"
+msgid "If you want to unsubscribe from our newsletter, click"
+msgstr "Si quieres darte de baja en nuestro boletín de noticias, pulsa"
+
+#: inc/shortcodes/shortcodes.newsletter.php:68
+#: inc/shortcodes/shortcodes.newsletter.php:100
+msgid "here"
+msgstr "aquí"
 
 #: inc/shortcodes/shortcodes.newsletter.php:69
 #: inc/shortcodes/shortcodes.newsletter.php:101
@@ -480,6 +506,9 @@ msgstr "Compartir por correo electrónico"
 msgid "Comment"
 msgstr "Comentario"
 
+#~ msgid "I want to unsubscribe from newsletter"
+#~ msgstr "Quiero darme de baja del boletín de noticias"
+
 #~ msgid "Nothing found."
 #~ msgstr "Sin resultados."
 
@@ -513,9 +542,6 @@ msgstr "Comentario"
 
 #~ msgid "% Comments"
 #~ msgstr "% comentarios"
-
-#~ msgid "Sending"
-#~ msgstr "Enviando"
 
 #~ msgid "Legal Advice"
 #~ msgstr "Aviso legal"

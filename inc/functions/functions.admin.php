@@ -8,9 +8,7 @@ if (!function_exists('b_f_fonts')) {
 	
 	function b_f_fonts($var_font) {
 
-		global $b_g_google_api;
-
-		$var_fonts = json_decode(file_get_contents(('https://www.googleapis.com/webfonts/v1/webfonts?key='.$b_g_google_api)));
+		$var_fonts = json_decode(b_f_get_file_content(get_template_directory_uri().'/inc/data/data.google.fonts.json'));
 
 		$b_g_google_fonts = array();
 
@@ -359,7 +357,7 @@ function b_f_i_manage_term_columns($out, $column, $term_id) {
 			$var_value = '';
 		}
 
-		$out = sprintf('<span class="term-meta-featured-image-block" style="" >%s</div>', esc_attr($value));
+		$out = sprintf('<span class="term-meta-featured-image-block" style="" >%s</div>', esc_attr($var_value));
 	}
 
 	return '<a style="background-image: url('.wp_get_attachment_image_src($var_value, 'thumbnail')[0].');"></a>';
@@ -459,7 +457,7 @@ if (!function_exists('b_f_thumbnail_columns_data')) {
 
 		switch ($var_column) {
 			case 'admin_thumb':
-				echo '<a style="background-image: url('.wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'thumbnail')[0].');" href="'.get_edit_post_link().'"></a>';
+				echo '<a style="background-image: url('.wp_get_attachment_image_src(get_post_thumbnail_id($var_post_id), 'thumbnail')[0].');" href="'.get_edit_post_link().'"></a>';
 				break;
 		}
 
@@ -523,5 +521,106 @@ if (!function_exists('b_f_sanitize_upload')) {
 
 }
 
+// Añadir tema al panel de administración
+
+if (!function_exists('b_f_admin_menu')) {
+	
+	function b_f_admin_menu() {
+
+		// Variables globales
+		global $b_g_icon;
+		
+		add_menu_page('Opciones del tema', 'bilnea', 'manage_options', 'bilnea', 'b_f_options_page', $b_g_icon, 75);
+	}
+
+	add_action('admin_menu', 'b_f_admin_menu');
+
+}
+
+if (!function_exists('b_f_subscribers_menu')) {
+	
+	function b_f_subscribers_menu() { 
+		add_submenu_page('bilnea', 'Suscriptores', 'Suscriptores', 'manage_options', 'subscribers', 'bilnea_subscribers_page');
+	}
+
+	if (b_f_option('b_opt_subscribers') == 1) {
+		add_action('admin_menu', 'b_f_subscribers_menu');
+	}
+
+}
+
+
+// Variable para almacenar las opciones del tema
+
+if (!function_exists('b_f_variables')) {
+	
+	function b_f_variables() { 
+		register_setting( 'pluginPage', 'bilnea_settings' );
+	}
+
+	add_action('admin_init', 'b_f_variables');
+
+}
+
+
+// Cambiar la ruta de acceso
+/*
+if (!function_exists('b_f_admin_url')) {
+	
+	function b_f_admin_url($var_url, $var_path, $var_scheme) {
+
+		// Variables locales
+		$var_old = array('/(wp-admin)/');
+
+		if (b_f_option('b_opt_wp-admin')) {
+
+			defined('WP_ADMIN_DIR') || define('WP_ADMIN_DIR', b_f_option('b_opt_wp-admin'));
+			defined('SITECOOKIEPATH') || define('SITECOOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('siteurl').'/' ));
+			defined('ADMIN_COOKIE_PATH') || define('ADMIN_COOKIE_PATH', SITECOOKIEPATH . WP_ADMIN_DIR);
+
+			add_rewrite_rule( '^'.b_f_option('b_opt_wp-admin').'/(.*)','wp-admin/$1?%{QUERY_STRING}' );
+
+			$var_new = array(str_replace('/', '', b_f_option('b_opt_wp-admin')));
+			return preg_replace($var_old, $var_new, $var_url, 1);
+		} else {
+			return $var_url;
+		}
+
+	}
+
+	add_filter('site_url',  'b_f_admin_url', 10, 3);
+
+}
+
+
+
+/*
+if ((b_f_option('b_opt_wp-admin') != '' && b_f_option('b_opt_wp-admin') != 'wp-admin') && !is_user_logged_in()) {
+	if ($_SERVER['PHP_SELF'] != '/wp-admin/admin-ajax.php') {
+		if (((strpos($_SERVER['REQUEST_URI'], 'wp-login.php') && !isset($_POST['log'])) || strpos($_SERVER['REQUEST_URI'], 'wp-admin')) && !strpos($_SERVER['HTTP_REFERER'], b_f_option('b_opt_wp-admin'))) {
+			include_once(get_stylesheet_directory().'/404.php');
+			die();
+		} else if (strpos($_SERVER['REQUEST_URI'], b_f_option('b_opt_wp-admin'))) {
+			add_action('login_enqueue_scripts', 'b_f_login_scripts');
+			include_once(ABSPATH.'/wp-login.php');
+			die();
+		}
+	}
+} else if ((b_f_option('b_opt_wp-admin') != '' && b_f_option('b_opt_wp-admin') != 'wp-admin') && is_user_logged_in()) {
+	if (strpos($_SERVER['REQUEST_URI'], b_f_option('b_opt_wp-admin'))) {
+		add_action('login_enqueue_scripts', 'b_f_login_scripts');
+		include_once(ABSPATH.'/wp-login.php');
+		die();
+	}
+}
+
+*/
+
+function b_f_go_home() {
+	wp_redirect(home_url());
+	exit();
+}
+
+add_action('wp_logout','b_f_go_home');
 
 ?>

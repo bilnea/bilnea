@@ -6,42 +6,6 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 ?>
 
-<!-- Buscador -->
-<h4 style="margin-top: 16px;">Buscador</h4>
-Limitar la búsqueda a los tipos de objetos
-<div style="display: block; clear: both;"></div>
-
-<?php
-
-$var_exclude = array('attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset');
-$var_search_types = ((b_f_option('b_opt_search-include') == null) ? array() : b_f_option('b_opt_search-include'));
-
-foreach (get_post_types() as $var_type) {
-	if (!in_array($var_type, $var_exclude)) {
-		$var_selected = (in_array($var_type, $var_search_types) ? ' checked' : '');
-		echo '<div style="width: 30%; display: inline-block;"><input type="checkbox" name="bilnea_settings[b_opt_search-include][]"'.$var_selected.' value="'.$var_type.'" /> '.get_post_type_object($var_type)->labels->name.'</div>';
-	}
-}
-
-?>
-
-<div style="display: block; clear: both;"></div>
-Mostrar los resultados en este orden
-<select multiple name="bilnea_settings[b_opt_search-order][]" style="display: block; width: 100%;">
-	
-	<?php
-
-	foreach (get_post_types() as $var_type) {
-		if (!in_array($var_type, $var_exclude)) {
-			$var_selected = (in_array($var_type, $var_search_types) ? ' selected' : '');
-			echo '<option value="'.$var_type.'" '.selected(b_f_option('b_opt_search-order'), $var_type).$var_selected.'> '.get_post_type_object($var_type)->labels->name.'</option>';
-		}
-	}
-
-	?>
-
-</select>
-<br /><br />
 
 <!-- Formulario de contacto -->
 <h4>Formulario de contacto y envío de correo</h4>

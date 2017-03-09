@@ -473,53 +473,7 @@ add_shortcode('b_wpml', 'mostrar_idioma');
 
 
 
-function b_f_accordion($atts, $content = null) {
-	wp_enqueue_script('b_s_accordion');
-	$a = shortcode_atts(array(
-		'class' 		=> null,
-		'active' 		=> 0,
-		'multiple' 		=> 'false',
-		'close'			=> 'false',
-	), $atts);
-	$c = '';
-	if (esc_attr($a['multiple']) == 'true') {
-		$c .= '-multiple';
-	}
-	if (esc_attr($a['class']) != null) {
-		$c .= ' '.esc_attr($a['class']);
-	}
-	if (esc_attr($a['close']) == 'true') {
-		$c .= ' c2close';
-	}
-	$out = '<div class="b_accordion'.$c.'"'.$m;
-	$out .= ' data-active="'.esc_attr($a['active']).'"';
-	$out .= '>';
-	add_shortcode('b_accordion_frame', 'b_f_accordion_frame');
-	$out .= do_shortcode($content);
-	$out .= '</div>';
-	return $out;
-}
 
-add_shortcode('b_accordion', 'b_f_accordion');
-
-function b_f_accordion_frame($atts, $content = null) {
-	$a = shortcode_atts(array(
-		'title' 		=> null,
-		'element' 		=> 'h4',
-		'class' 		=> null,
-		'id' => null,
-	), $atts, 'b_a_frame');
-	$c = ''; $i = '';
-	if (esc_attr($a['class']) != null) {
-		$c .= ' '.esc_attr($a['class']);
-	}
-	if (esc_attr($a['id']) != null) {
-		$i .= ' id="'.esc_attr($a['id']).'"';
-	}
-	$out = '<div'.$i.' class="accordion_frame'.$c.'"><'.b_f_sanitize(esc_attr($a['element'])).' class="accordion_title">'.esc_attr($a['title']).'</'.b_f_sanitize(esc_attr($a['element'])).'><div class="accordion_content">'.do_shortcode($content).'</div></div>';
-	return $out;
-
-}
 
 function b_f_timeline($atts) {
 	$a = shortcode_atts(array(
@@ -546,10 +500,7 @@ function b_f_timeline($atts) {
 	return $out;
 }
 
-function b_f_sanitize($s) {
-	$out = preg_replace("/[^a-zA-Z0-9]+/", "", html_entity_decode($s, ENT_QUOTES));
-	return $out;
-}
+
 
 
 

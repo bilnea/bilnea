@@ -70,4 +70,93 @@ if (!function_exists('b_f_get_excerpt')) {
 	}
 }
 
+// Función que devuelve un valor en métrica
+
+if (!function_exists('b_f_size')) {
+	
+	function b_f_size($var_arg = '', $var_overflow = 0) {
+		$var_num = preg_replace('/\s+/', '', b_f_option($var_arg, true));
+		$var_num = str_replace('px', '', $var_num);
+		if (ctype_digit($var_num)) {
+			$var_num = $var_num+$var_overflow;
+			$var_num .= 'px';
+		}
+		return $var_num;
+	}
+
+}
+
+if (!function_exists('b_f_size_unit')) {
+	
+	function b_f_size_unit($var_size) {
+
+		$var_number = str_replace('px', '', preg_replace('/\s+/', '', $var_size));
+		if (is_numeric($var_number)) {
+			$var_number .= 'px';
+		}
+		
+		return $var_number;
+	}
+
+}
+
+
+// Función que devuelve un color
+
+if (!function_exists('b_f_color')) {
+	
+	function b_f_color($var_arg='') {
+
+		$var_color = preg_replace('/\s+/', '', b_f_option($var_arg));
+
+		if (ctype_digit($var_color)) {
+			$var_color = '#'.$var_color;
+		}
+
+		return $var_color;
+	}
+
+}
+
+
+// Añadir clase si se accede desde dispositivo móvil
+
+if (!function_exists('b_f_mobile_class')) {
+	
+	function b_f_mobile_class($var_classes = '') {
+
+		if (wp_is_mobile()){
+			$var_classes[] = 'is-mobile';
+		}
+
+		return $var_classes;
+
+	}
+
+	add_filter('body_class','b_f_mobile_class');
+
+}
+
+
+if (!function_exists('b_f_get_file_content')) {
+	
+	function b_f_get_file_content($var_url) {
+
+		$var_curl = curl_init();
+
+		curl_setopt($var_curl, CURLOPT_URL, $var_url);
+
+		curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+
+		$var_output = curl_exec($var_curl);
+
+		curl_close($var_curl);
+
+		return $var_output;
+
+	}
+
+}
+
 ?>

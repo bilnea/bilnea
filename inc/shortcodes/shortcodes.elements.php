@@ -75,4 +75,70 @@ if (!function_exists('b_s_button')) {
 
 }
 
+
+// Acordeón
+
+if (!function_exists('b_s_accordion')) {
+	
+	function b_s_accordion($atts, $content = null) {
+
+		// Scripts
+		wp_enqueue_script('b_s_accordion');
+
+		// Shortcode panel acordeón
+		add_shortcode('b_accordion_frame', 'b_s_accordion_frame');
+		
+		// Atributos
+		$a = shortcode_atts(array(
+			'class' 		=> null,
+			'active' 		=> 0,
+			'multiple' 		=> false,
+			'close'	 		=> false,
+		), $atts);
+
+		// Variables locales
+		$var_class = array('b_accordion');
+		if (esc_attr($a['multiple']) == 'true') {
+			array_push($var_class, 'multiple');
+		}
+		if (esc_attr($a['class']) != null) {
+			array_push($var_class, esc_attr($a['class']));
+		}
+		if (esc_attr($a['close']) == 'true') {
+			array_push($var_class, 'c2close');
+		}
+
+		return '<div class="'.implode(' ', $var_class).'" data-active="'.esc_attr($a['active']).'">'.do_shortcode($content).'</div>';
+
+	}
+
+	add_shortcode('b_accordion', 'b_s_accordion');
+
+}
+
+if (!function_exists('b_s_accordion_frame')) {
+	
+	function b_s_accordion_frame($atts, $content = null) {
+
+		// Atributos
+		$a = shortcode_atts(array(
+			'title' 		=> null,
+			'element' 		=> 'h4',
+			'class' 		=> null,
+			'id' => null,
+		), $atts, 'b_a_frame');
+
+		// Variables locales
+		$var_class = array('accordion_frame');
+		if (esc_attr($a['class']) != null) {
+			array_push($var_class, esc_attr($a['class']));
+		}
+		$var_id = ((esc_attr($a['id']) != null) ? ' id="'.esc_attr($a['id']).'"' : '');
+
+		return '<div'.$var_id.' class="'.implode(' ', $var_class).'"><'.b_f_sanitize(esc_attr($a['element'])).' class="accordion_title">'.esc_attr($a['title']).'</'.b_f_sanitize(esc_attr($a['element'])).'><div class="accordion_content">'.do_shortcode($content).'</div></div>';
+
+	}
+
+}
+
 ?>

@@ -14,9 +14,11 @@ jQuery(function($) {
 		$('body > .main-search').fadeIn();
 		$('body').addClass('searching');
 	});
-	$('body > .main-search span.close, body > .main-search').click(function() {
-		$('body > .main-search').fadeOut();
-		$('body').removeClass('searching');
+	$('body > .main-search span.close, body > .main-search').click(function(e) {
+		if (!jQuery(e.target).is('input')) {
+			$('body > .main-search').fadeOut();
+			$('body').removeClass('searching');
+		}
 	})
 	$('form.form input:radio:first').attr('checked', true);
 	$('.b_input_radio').each(function() {

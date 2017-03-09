@@ -37,7 +37,7 @@ if (comments_open()) {
 
 if (!function_exists('b_f_i_image')) {
 	function b_f_i_image($arg = array('', 'thumbnail')) {
-		return wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), $arg[1])[0];
+		return wp_get_attachment_image_src(get_post_thumbnail_id(get_the_id()), $arg[1])[0];
 	}
 }
 

@@ -14,7 +14,7 @@ if (!function_exists('b_f_newsletter')) {
 		function b_f_newsletter($atts, $content = null) {
 
 			// Variables globales
-			global $b_g_language;
+			global $b_g_language, $b_g_version;
 
 			// Atributos
 			$a = shortcode_atts(array(
@@ -32,7 +32,8 @@ if (!function_exists('b_f_newsletter')) {
 				'text' => __('There are errors on the form. Please fix them before continuing', 'bilnea'),
 				'empty' => __('Fill in all the required fields', 'bilnea'),
 				'email' => __('Enter a valid email address', 'bilnea'),
-				'legal' => __('You must accept the legal advice', 'bilnea')
+				'legal' => __('You must accept the legal advice', 'bilnea'),
+				'unsubscribing' => __('Unsubscribing...')
 			);
 
 			if (b_f_option('b_opt_newsl_service') == 'mailchimp') {
@@ -64,8 +65,7 @@ if (!function_exists('b_f_newsletter')) {
 				}
 
 				$out .= '<label for="s_legal-'.$var_random.'">* '.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$var_placeholder.'" target="_blank">'.strtolower($var_placeholder).'</a>.</label>';
-				$out .= '<input class="b_input_checkbox" value="1" type="checkbox" id="s_delete-'.$var_random.'" name="s_delete" />';
-				$out .= '<label for="s_delete-'.$var_random.'">'.__('I want to unsubscribe from newsletter', 'bilnea').'.</label>';
+				$out .= '<span class="s_delete">'.__('If you want to unsubscribe from our newsletter, click', 'bilnea').' <a>'.__('here', 'bilnea').'.</a></span>';
 				$out .= '<div class="s_submit">'.__('Subscribe', 'bilnea').'</div>';
 				$out .= '<input type="hidden" class="redirect_to" name="s_redirect" value="'.esc_attr($a['redirect']).'" />';
 				$out .= '</div><div class="response"></div>';
@@ -97,7 +97,7 @@ if (!function_exists('b_f_newsletter')) {
 					'<input type="text" name="s_last" placeholder="* '.__('Last name', 'bilnea').'" />',
 					'<input class="input" type="email" name="s_email" placeholder="* '.__('Email', 'bilnea').'" />',
 					$var_legal,
-					'<input class="b_input_checkbox" value="1" type="checkbox" id="s_delete-'.$var_random.'" name="s_delete" /><label for="s_delete-'.$var_random.'">'.__('I want to unsubscribe from newsletter', 'bilnea').'.</label>',
+					'<span class="s_delete">'.__('If you want to unsubscribe from our newsletter, click', 'bilnea').' <a>'.__('here', 'bilnea').'.</a></span>',
 					'<div class="s_submit" data-send="'.__('Subscribe', 'bilnea').'" data-sending="'.__('Subscribing', 'bilnea').'">'.__('Subscribe', 'bilnea').'</div>'
 				);
 
