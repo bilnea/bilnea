@@ -23,6 +23,7 @@ if (!function_exists('b_f_table_contact')) {
 			$var_query = 'CREATE TABLE '.$var_table.' (
 					`id` INT NOT NULL AUTO_INCREMENT,
 					`data` longtext,
+					`attachments` longtext,
 					`ip` varchar(100),
 					`page` varchar(200),
 					`date` varchar(200),

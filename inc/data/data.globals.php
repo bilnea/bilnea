@@ -29,6 +29,8 @@ $b_g_months = array(
 	__('December', 'bilnea')
 );
 
+$b_g_uniqid = uniqid();
+
 $var_curl = curl_init();
 curl_setopt($var_curl, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, true);

@@ -623,4 +623,6 @@ function b_f_go_home() {
 
 add_action('wp_logout','b_f_go_home');
 
+remove_filter('pre_term_description', 'wp_filter_kses');
+
 ?>

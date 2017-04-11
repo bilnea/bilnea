@@ -4,15 +4,14 @@ function initMap() {
 		if (pattern.test(varName)) {
 			var a = varName.replace('map_', '');
 			var c = eval('center_'+a);
-			var myStyles;
 			if (eval('poi_'+a) == 'false') {
-				myStyles =[{
+				window['styles_'+a].push({
 					featureType: "poi",
 					elementType: "labels",
 					stylers: [{
 						visibility: "off"
 					}]
-				}];
+				});
 			};
 			if (eval('drag_'+a) == 'false') {
 				var controles = true;
@@ -22,7 +21,7 @@ function initMap() {
 			window['map_'+a] = new google.maps.Map(document.getElementById('map-'+a), {
 				zoom: eval('zoom_'+a),
 				center: c,
-				styles: myStyles,
+				styles: window['styles_'+a],
 				disableDefaultUI: controles,
 				zoomControl: eval('z_control_'+a),
 				mapTypeControl: eval('m_control_'+a),

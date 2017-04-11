@@ -9,17 +9,13 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 if (!function_exists('b_a_send_form')) {
 
-	function b_a_send_form(){
-
-		// Variables globales
-		global $wpdb;
+	function b_a_send_form() {
 
 		// Comprobación variables
-		if (isset($_POST['eid']) && $_POST['eid'] != '' && isset($_POST['cid']) && $_POST['cid'] != '' && isset($_POST['action']) && $_POST['action'] == 'b_send_form') {
+		if (isset($_POST['eid']) && $_POST['eid'] != '' && isset($_POST['action']) && $_POST['action'] == 'b_send_form') {
 
 			// Variables globales
-			global $b_g_hash;
-			global $b_g_language;
+			global $wpdb, $b_g_hash, $b_g_language, $b_g_uniqid;
 
 			// Variables locales
 			$var_name = get_bloginfo('name');
@@ -57,6 +53,43 @@ if (!function_exists('b_a_send_form')) {
 				$var_temp[$var_names['b_i_message']] = $_POST['b_i_message'];
 			}
 
+			if (!function_exists( 'wp_handle_upload')) require_once(ABSPATH.'wp-admin/includes/file.php');
+
+			$attachments = array();
+			$uploaded_files = array();
+
+			add_filter('upload_dir', 'b_f_i_change_upload_dir');
+
+			foreach ($_FILES as $key => $files) {
+
+				$upload_overrides = array('test_form' => false);
+
+				$attachments = array();
+
+				foreach ($files['name'] as $key => $value) {
+					if ($files['name'][$key]) {
+
+						$file = array(
+							'name' => $files['name'][$key],
+							'type' => $files['type'][$key],
+							'tmp_name' => $files['tmp_name'][$key],
+							'error' => $files['error'][$key],
+							'size' => $files['size'][$key]
+						);
+						
+						array_push($uploaded_files, wp_upload_dir()['baseurl'].'/mail/'.$b_g_uniqid.'/'.$file['name']);
+
+						$movefile = wp_handle_upload($file, $upload_overrides);
+
+						$attachments[] = $movefile['file'];
+
+					}
+				}
+
+			}
+
+			remove_filter('upload_dir', 'b_f_i_change_upload_dir');
+
 			$var_data = array(
 				'data' => serialize($var_temp),
 				'date' => date('Y-m-d H:i:s'),
@@ -65,7 +98,8 @@ if (!function_exists('b_a_send_form')) {
 				'ip' => $_POST['b_i_ip'],
 				'page' => rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_page']), "\0"),
 				'status' => 'sent',
-				'lang' => $b_g_language
+				'lang' => $b_g_language,
+				'attachments' => serialize($uploaded_files)
 			);
 
 			// Correo electrónico
@@ -91,7 +125,7 @@ if (!function_exists('b_a_send_form')) {
 			}
 
 			// Envío del formulario
-			if (wp_mail($var_to, $var_subject, $var_message, $var_headers)) {
+			if (wp_mail($var_to, $var_subject, $var_message, $var_headers, $attachments)) {
 				$wpdb->insert($var_table, $var_data);
 				setlocale(LC_ALL, $var_locale);
 
@@ -113,9 +147,9 @@ if (!function_exists('b_a_send_form')) {
 				}
 				
 				if (isset($_POST['b_i_redirect'])) {
-					echo '<script>jQuery(\'form[data-id="'.$_POST['eid'].'"]\')[0].reset(); window.location.href = "'.get_permalink(rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_redirect']), "\0")).'";</script><div class="sent-ok redirecting">'.__('Message sent sucesfully. Please wait a moment.', 'bilnea').'</div>';
+					echo '<script>window.location.href = "'.get_permalink(rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_redirect']), "\0")).'";</script><div class="sent-ok redirecting">'.__('Message sent sucesfully. Please wait a moment.', 'bilnea').'</div>';
 				} else {
-					echo '<script>jQuery(\'form[data-id="'.$_POST['eid'].'"]\')[0].reset();</script><div class="sent-ok">'.rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_sucess']), "\0").'</div>';
+					echo '<div class="sent-ok">'.rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_sucess']), "\0").'</div>';
 				}
 			} else {
 				$var_data['status'] = 'error';
@@ -123,7 +157,7 @@ if (!function_exists('b_a_send_form')) {
 				setlocale(LC_ALL, $var_locale);
 				echo '<div class="sent-error">'.__('Sorry, an error has ocurred sending your message. Please try again later.', 'bilnea').'</div>';
 			}
-	        wp_die();
+			wp_die();
 		} else {
 			die('No bots!');
 		}

@@ -75,7 +75,7 @@ jQuery(function($) {
 			var f = $(this).closest('form'),
 				g = 0,
 				x = '',
-				errors = [form_errors.text];
+				errors = [form_messages.text];
 			f.next('.response').html('');
 			$(f.find($('input.required, textarea.required'))).each(function() {
 				var t = $(this);
@@ -84,14 +84,14 @@ jQuery(function($) {
 					t.addClass('invalid');
 					g++;
 					t = '1';
-					errors.push(form_errors.empty);
+					errors.push(form_messages.empty);
 				};
 			});
 			if (f.find($('input[name$="email"]')).val() != '' && !b_js_check_email(f.find($('input[name$="email"]')).val())) {
 				f.find($('input[name$="email"]')).addClass('invalid');
 				g++;
 				t = '2';
-				errors.push(form_errors.email);
+				errors.push(form_messages.email);
 			};
 			$(f.find($('input.captcha'))).each(function() {
 				var t = $(this);
@@ -99,7 +99,7 @@ jQuery(function($) {
 					t.addClass('invalid');
 					g++;
 					t = '3';
-					errors.push(form_errors.captcha);
+					errors.push(form_messages.captcha);
 				};
 			});
 			$(f.find($('select.required'))).each(function() {
@@ -108,7 +108,7 @@ jQuery(function($) {
 					t.addClass('invalid');
 					g++;
 					t = '4';
-					errors.push(form_errors.empty);
+					errors.push(form_messages.empty);
 				};
 			});
 			$(f.find($('input.required[type="checkbox"][id^="legal-"]'))).each(function() {
@@ -117,7 +117,7 @@ jQuery(function($) {
 					t.addClass('invalid');
 					g++;
 					t = '5';
-					errors.push(form_errors.legal);
+					errors.push(form_messages.legal);
 				};
 			});
 			$(f.find($('input.required[type="checkbox"]:not(.invalid)'))).each(function() {
@@ -126,7 +126,7 @@ jQuery(function($) {
 					t.addClass('invalid');
 					g++;
 					t = '5';
-					errors.push(form_errors.empty);
+					errors.push(form_messages.empty);
 				};
 			});
 			$(f.find($('input.required[type="checkbox"]'))).next().click(function() {
@@ -136,33 +136,38 @@ jQuery(function($) {
 			$(f.find($('input[type="file"].invalid'))).each(function() {
 				g++;
 				t = '6';
-				errors.push(form_errors.empty);
+				errors.push(form_messages.empty);
+			});
+			$(f.find($('.file-button.invalid'))).each(function() {
+				g++;
+				errors.push($(this).children('.text').text());
 			});
 			$('.required.invalid').on('click focus', function() {
 				$(this).removeClass('invalid');
 			});
 			if (g == 0) {
 				var a = m.data('send'),
-					b = m.data('sending'),
-					data = new FormData(f);
-				if (f.find($('[type="file"]')).length) {
-					$.each(f.find($('[type="file"]'))[0].files, function(i, file) {
-						data.append('file[]', file);
-					});
-				};
-				data.append('cid', f.find($('div.captcha')).data('id'));
-				data.append('eid', f.data('id'));
-				data.append('action', 'b_send_form');
-				$.ajax({
-					url: bilnea.root_url+'/wp-admin/admin-ajax.php',
-					type: 'POST',
-					data: f.serialize()+'&cid='+f.find($('div.captcha')).data('id')+'&eid='+f.data('id')+'&redirect='+f.data('redirect')+'&action=b_send_form',
-					beforeSend: function() {
+					b = m.data('sending');
+				f.ajaxSubmit({
+					beforeSubmit: function(arr, $form, options) {
 						m.text(b).addClass('sending');
 					},
-					success: function (data) {
+					clearForm: true,
+					url: bilnea.root_url+'/wp-admin/admin-ajax.php',
+					data: {
+						eid: f.data('id'),
+						action: 'b_send_form',
+						redirect: f.data('redirect')
+					},
+					success: function(responseText, statusText, xhr, $form) {
 						m.text(a).removeClass('sending');
-						m.closest('form').next().html(data);
+						f.next().html(responseText);
+						if (f.find($('input[type="file"]')).length) {
+							f.find($('input[type="file"]')).each(function() {
+								var m = $(this).attr('data-init');
+								$(this).prev('.file-button').children('.text').text(m);
+							})
+						};
 					}
 				});
 			} else {
@@ -189,12 +194,17 @@ jQuery(function($) {
 		if (s > t.attr('data-size')) {
 			t.prev().addClass('invalid');
 			n = [t.attr('data-size-error')];
+		} else {
+			t.prev().removeClass('invalid');
 		}
 		if (n.length == 0) {
 			t.prev().children('.text').html('<span>'+t.attr('data-empty')+'</span>');
 		} else {
-			for (var i = 0; i < n.length; i++) {
-				$('<span>'+n[i]+'</span>').appendTo(t.prev().children('.text'));
+			if (n.length == 1) {
+				console.log(n);
+				$('<span>'+n[0]+'</span>').appendTo(t.prev().children('.text'));
+			} else if (n.length > 1) {
+				$('<span>'+n.length+' '+form_messages.files_selected+'</span>').appendTo(t.prev().children('.text'));
 			};
         }
     });

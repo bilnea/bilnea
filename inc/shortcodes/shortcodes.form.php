@@ -19,7 +19,6 @@ if (!function_exists('b_s_form')) {
 
 		// Atributos
 		$a = shortcode_atts(array(
-			'id' => null,
 			'class' => null,
 			'response' => true,
 			'to' => b_f_option('b_opt_form-email-'.$b_g_language),
@@ -48,19 +47,21 @@ if (!function_exists('b_s_form')) {
 		(esc_attr($a['id']) != null) ? $var_id = ' id="'.esc_attr($a['id']).'"' : $var_id = '';
 
 		// Javascript del formulario
-		wp_register_script('functions.form', get_template_directory_uri().'/js/internal/functions.form.js', array(), $b_g_version, true);
+		wp_register_script('functions.form', get_template_directory_uri().'/js/internal/functions.form.js', array('jquery', 'functions.ajaxform'), $b_g_version, true);
 		$var_temp = array(
 			'text' => __('There are errors on the form. Please fix them before continuing', 'bilnea'),
 			'empty' => __('Fill in all the required fields', 'bilnea'),
 			'email' => __('Enter a valid email address', 'bilnea'),
 			'captcha' => __('Enter a correct captcha value', 'bilnea'),
-			'legal' => __('You must accept the legal advice', 'bilnea')
+			'legal' => __('You must accept the legal advice', 'bilnea'),
+			'files_selected' => __('files selected', 'bilnea')
 		);
-		wp_localize_script('functions.form', 'form_errors', $var_temp);
+		wp_enqueue_script('functions.ajaxform');
+		wp_localize_script('functions.form', 'form_messages', $var_temp);
 		wp_enqueue_script('functions.form');
 
 		// Construcción del formulario
-		$out = '<form class="form'.$var_class.'"'.$var_id.' method="post" data-id="'.$var_random.'" data-name="'.$b_g_forms.'">';
+		$out = '<form class="form'.$var_class.'"'.$var_id.' id="form-'.$var_random.'" method="post" data-id="'.$var_random.'" data-name="'.$b_g_forms.'" enctype="multipart/form-data">';
 		$out .= do_shortcode($content);
 		$out .= '<input type="hidden" value="'.b_f_i_encrypt_decrypt('encrypt', esc_attr($a['to'])).'" name="b_i_to" />';
 		$out .= '<input type="hidden" value="'.b_f_i_encrypt_decrypt('encrypt', esc_attr($a['message'])).'" name="b_i_sucess" />';
@@ -164,9 +165,6 @@ if (!function_exists('b_s_input')) {
 			// Selector de provincia
 			case 'state':
 
-				// Datos externos
-				include('data/states.php');
-
 				if ($var_name == '') { $var_name = 'Provincia'; }
 				if (esc_attr($a['placeholder']) == '') { $var_placeholder = __('State', 'bilnea'); }
 				if (esc_attr($a['label']) == 'true') {
@@ -174,10 +172,15 @@ if (!function_exists('b_s_input')) {
 				} else {
 					$out = '<select name="b_i_state" class="input'.$var_class.'"'.$var_id.' data-name="'.$var_name.'"><option selected disabled>'.$var_required.$var_placeholder.'</option>';
 				}
-				if (esc_attr($a['data']) == null) {
-					foreach ($b_d_state as $key => $value) {
-						$out .= '<option value="'.$key.'--'.$value.'">'.$value.'</option>';
-					}
+
+				// Datos externos
+				if (esc_attr($a['options']) != null && file_exists(get_template_directory().'/inc/data/data.states.'.esc_attr($a['options']).'.php')) {
+					include(get_template_directory().'/inc/data/data.states.'.esc_attr($a['options']).'.php');
+				} else {
+					include(get_template_directory().'/inc/data/data.states.spain.php');
+				}
+				foreach ($b_d_state as $key => $value) {
+					$out .= '<option value="'.$key.'--'.$value.'">'.$value.'</option>';
 				}
 				$out .= '</select>';
 				if (esc_attr($a['label']) == 'true') { $out .= '</label>'; }
@@ -239,9 +242,10 @@ if (!function_exists('b_s_input')) {
 
 			// Archivo adjunto
 			case 'file':
+				$var_captcha = rand(0, 99999999);
 				$ftp = '';
 				if (esc_attr($a['allow']) != '') { $ftp = ' accept="'.esc_attr($a['allow']).'"'; }
-				return '<div class="file-button"><div class="icon"></div><div class="text">'.esc_attr($a['placeholder']).'</div></div><input class="input'.$var_class.'"'.$var_id.' type="file"'.$ftp.' name="'.esc_attr($a['type']).'" multiple data-empty="'.__('No selected file', 'bilnea').'" data-size="'.b_f_to_bytes(esc_attr($a['size'])).'" data-size-error="'.__('Maximum size exceeded', 'bilnea').'" />';
+				return '<div class="file-button"><div class="fa fa-paperclip"></div><div class="text">'.esc_attr($a['placeholder']).'</div></div><input class="input'.$var_class.'"'.$var_id.' type="file"'.$ftp.' name="'.esc_attr($a['type']).'-'.$var_random.'[]" multiple data-init="'.esc_attr($a['placeholder']).'" data-empty="'.__('No selected file', 'bilnea').'" data-size="'.b_f_to_bytes(esc_attr($a['size'])).'" data-size-error="'.__('Maximum size exceeded', 'bilnea').'" />';
 				break;
 
 			// Selector de semana
@@ -303,16 +307,16 @@ if (!function_exists('b_s_input')) {
 				break;
 
 			// Selector de día
-			case 'day':
+			case 'date':
 
 				// Carga de scripts
-				wp_enqueue_script('jquery-ui');
-				wp_enqueue_style('jquery-ui-css');
-				wp_enqueue_style('jquery-ui-css-theme');
+				wp_enqueue_script('functions.core.jquery.ui');
+				wp_enqueue_style('styles.core.jquery.ui');
+				wp_enqueue_style('styles.core.jquery.ui.theme');
 
 				// Construcción del selector
 				if (esc_attr($a['label']) == 'true') {
-					$out = '<label>'.$var_required.$var_placeholder.'<input class="datepicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_day" data-name="'.$var_name.'" /></label>'."\n";
+					$out = '<label>'.$var_required.$var_placeholder.'<input class="datepicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="date" name="b_i_custom_day" data-name="'.$var_name.'" /></label>'."\n";
 				} else {
 					$out = '<input class="datepicker-'.$var_random.' input'.$var_class.'"'.$var_id.' type="text" name="b_i_custom_day" placeholder="'.$var_required.$var_placeholder.'" data-name="'.$var_name.'" />'."\n";
 				}
@@ -335,6 +339,19 @@ if (!function_exists('b_s_input')) {
 				$out .= '			showOtherMonths: true,'."\n";
 				$out .= '			selectOtherMonths: true,'."\n";
 				$out .= '			showAnim: "fadeIn",'."\n";
+				$out .= '			closeText: "'.__('Close', 'bilnea').'",'."\n";
+				$out .= '			prevText: "<",'."\n";
+				$out .= '			nextText: ">",'."\n";
+				$out .= '			currentText: "'.__('Today', 'bilnea').'",'."\n";
+				$out .= '			monthNames: ["'.__('January', 'bilnea').'", "'.__('February', 'bilnea').'", "'.__('March', 'bilnea').'", "'.__('April', 'bilnea').'", "'.__('May', 'bilnea').'", "'.__('June', 'bilnea').'", "'.__('July', 'bilnea').'", "'.__('August', 'bilnea').'", "'.__('September', 'bilnea').'", "'.__('October', 'bilnea').'", "'.__('November', 'bilnea').'", "'.__('December', 'bilnea').'"],'."\n";
+				$out .= '			monthNamesShort: ["'.__('Jan', 'bilnea').'", "'.__('Feb', 'bilnea').'", "'.__('Mar', 'bilnea').'", "'.__('Apr', 'bilnea').'", "'.__('May', 'bilnea').'", "'.__('Jun', 'bilnea').'", "'.__('Jul', 'bilnea').'", "'.__('Aug', 'bilnea').'", "'.__('Sep', 'bilnea').'", "'.__('Oct', 'bilnea').'", "'.__('Nov', 'bilnea').'", "'.__('Dec', 'bilnea').'"],'."\n";
+				$out .= '			dayNames: ["'.__('Sunday', 'bilnea').'", "'.__('Monday', 'bilnea').'", "'.__('Tuesday', 'bilnea').'", "'.__('Wednesday', 'bilnea').'", "'.__('Thursday', 'bilnea').'", "'.__('Friday', 'bilnea').'", "'.__('Saturday', 'bilnea').'"],'."\n";
+				$out .= '			dayNamesShort: ["'.__('Sun', 'bilnea').'", "'.__('Mon', 'bilnea').'", "'.__('Tue', 'bilnea').'", "'.__('Wed', 'bilnea').'", "'.__('Thu', 'bilnea').'", "'.__('Fri', 'bilnea').'", "'.__('Sat', 'bilnea').'"],'."\n";
+				$out .= '			dayNamesMin: ["'.__('Su', 'bilnea').'", "'.__('Mo', 'bilnea').'", "'.__('Tu', 'bilnea').'", "'.__('We', 'bilnea').'", "'.__('Th', 'bilnea').'", "'.__('Fr', 'bilnea').'", "'.__('Sa', 'bilnea').'"],'."\n";
+				$out .= '			dateFormat: "'.__('yy-mm-dd', 'bilnea').'",'."\n";
+				$out .= '			firstDay: '._x('0', 'Datepicker first day', 'bilnea').','."\n";
+				$out .= '			isRTL: '._x('false', 'Datepicker rtl', 'bilnea').','."\n";
+				$out .= '			showMonthAfterYear: '._x('false', 'Datepicker month after year', 'bilnea')."\n";
 				$out .= '		});'."\n";
 				$out .= '	});'."\n";
 				$out .= '</script>'."\n";
@@ -403,7 +420,7 @@ if (!function_exists('b_s_input')) {
 				if ($var_name == '') { $var_name = 'Opción'; }
 				$var_options = explode('|', esc_attr($a['options']));
 				if (esc_attr($a['label']) == 'true') {
-					$out = '<fieldset><legend>'.$var_required.$var_placeholder.'</legend>';
+					$out = '<fieldset class="'.$var_class.'"><legend>'.$var_required.$var_placeholder.'</legend>';
 				} else {
 					$out = '';
 				}
@@ -411,9 +428,9 @@ if (!function_exists('b_s_input')) {
 					$var_random = rand(0, 999);
 					if (count(explode(':', $option)) > 1) {
 						$option = explode(':', $option);
-						$out .= '  <input data-name="'.$var_name.'" class="b_input_radio'.$var_class.'"type="radio" value="'.$option[0].'" name="b_i_custom_radio-'.$var_key.'" id="radio-'.$var_random.'"><label for="radio-'.$var_random.'">'.$option[1].'</label>'."\n";
+						$out .= '  <input data-name="'.$var_name.'" class="b_input_radio" type="radio" value="'.$option[0].'" name="b_i_custom_radio-'.$var_key.'" id="radio-'.$var_random.'"><label for="radio-'.$var_random.'">'.$option[1].'</label>'."\n";
 					} else {
-						$out .= '  <input data-name="'.$var_name.'" class="b_input_radio'.$var_class.'"type="radio" value="'.$option.'" name="b_i_custom_radio-'.$var_key.'" id="radio-'.$var_random.'"><label for="radio-'.$var_random.'">'.$option.'</label>'."\n";
+						$out .= '  <input data-name="'.$var_name.'" class="b_input_radio" type="radio" value="'.$option.'" name="b_i_custom_radio-'.$var_key.'" id="radio-'.$var_random.'"><label for="radio-'.$var_random.'">'.$option.'</label>'."\n";
 					}
 				}
 				if (esc_attr($a['label']) == 'true') { $out .= '</fieldset>'; }

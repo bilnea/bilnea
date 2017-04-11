@@ -69,6 +69,9 @@ if (!function_exists('b_f_load_scripts')) {
 		// Super Simple Slider
 		wp_register_script('functions.slider', get_template_directory_uri().'/js/external/functions.media.flexslider.js', array('jquery'), b_f_versions('flexslider'), false);
 
+		// AjaxSubmit
+		wp_register_script('functions.ajaxform', get_template_directory_uri().'/js/external/functions.form.ajaxform.js', array('jquery'), b_f_versions('ajaxform'), false);
+
 	}
 
 }

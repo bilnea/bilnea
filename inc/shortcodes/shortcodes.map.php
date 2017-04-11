@@ -16,6 +16,7 @@ if (!function_exists('b_s_map')) {
 
 		// Shortcodes dependientes
 		add_shortcode('b_marker', 'b_s_marker');
+		add_shortcode('b_map_style', 'b_s_map_style');
 
 		// Atributos
 		$a = shortcode_atts(array(
@@ -120,6 +121,11 @@ if (!function_exists('b_s_map')) {
 		$out .= '	var m_control_'.$var_random.' = '.esc_attr($a['m_control']).';'."\n";
 		$out .= '	var z_control_'.$var_random.' = '.esc_attr($a['z_control']).';'."\n";
 		$out .= '	var markers_'.$var_random.' = new Array();'."\n";
+		if (has_shortcode($content, 'b_map_style')) {
+			$out .= '	var styles_'.$var_random.' = '.preg_replace("/(.*)(\[b_map_style\])(.*)(\[\/b_map_style\])(.*)/s", "$3", $content).';'."\n";
+		} else {
+			$out .= '	var_styles_'.$var_random.' = \'\';'."\n";
+		}
 		$out .= '</script><div class="map-options" data-id="'.$var_random.'">'.do_shortcode($content).'</div>'."\n";
 
 		return $out;
@@ -167,6 +173,15 @@ if (!function_exists('b_s_marker')) {
 		$out .= '</script>'."\n";
 
 		return $out;
+
+	}	
+}
+
+if (!function_exists('b_s_map_style')) {
+
+	function b_s_map_style() {
+
+		return '';
 
 	}	
 }
