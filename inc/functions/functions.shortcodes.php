@@ -77,9 +77,23 @@ if (!function_exists('b_f_p_upload')) {
 }
 
 
+if (!function_exists('b_f_p_featured')) {
+	
+	function b_f_p_featured($content) {
+
+		$content = str_replace('{{b_featured-image}}', wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'full')[0], $content);
+
+		return $content;
+
+	}
+
+}
+
+
 add_filter('the_content','b_f_p_id');
 add_filter('the_content','b_f_p_root');
 add_filter('the_content','b_f_p_upload');
+add_filter('the_content','b_f_p_featured');
 
 
 if (!function_exists('b_f_shortcode')) {

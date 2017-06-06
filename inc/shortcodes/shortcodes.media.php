@@ -50,11 +50,16 @@ if (!function_exists('b_s_gallery')) {
 			if ($var_total >= esc_attr($a['columns'])) {
 				$var_total = 0;
 			}
+			if ((esc_attr($a['columns']%$var_width == 0))) {
+				$var_class = '1'.((esc_attr($a['columns']/$var_width)));
+			} else {
+				$var_class = $var_width.esc_attr($a['columns']);
+			}
 			$var_sizes = array($var_pixel*$var_width, $var_pixel);
 			if (esc_attr($a['lightbox']) == true) {
-				$out .= '<a class="x'.$var_width.esc_attr($a['columns']).'" href="'.wp_get_attachment_url($var_id).'" style="background-image: url('.wp_get_attachment_image_src($var_id, 'large')[0].'); background-position: '.$var_position.';"></a>';
+				$out .= '<a class="x'.$var_class.'" href="'.wp_get_attachment_url($var_id).'" style="background-image: url('.wp_get_attachment_image_src($var_id, 'large')[0].'); background-position: '.$var_position.';"></a>';
 			} else {
-				$out .= '<div class="x'.$var_width.esc_attr($a['columns']).'" style="background-image: url('.wp_get_attachment_image_src($var_id, 'large')[0].'); background-position: '.$var_position.';">';
+				$out .= '<div class="x'.$var_class.'" style="background-image: url('.wp_get_attachment_image_src($var_id, 'large')[0].'); background-position: '.$var_position.';">';
 			}
 		}
 

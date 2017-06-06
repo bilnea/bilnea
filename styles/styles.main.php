@@ -286,7 +286,8 @@ html[lang="ar"] .row > * {
 	background-color: <?= b_f_color('b_opt_topbar-color') ?>;
 }
 
-.header-top, .header-top * {
+.main_container .header-top,
+.main_container .header-top * {
 	<?= b_i_s_fonts('top-bar'); ?>
 }
 

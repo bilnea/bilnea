@@ -52,9 +52,6 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 		<script type="text/javascript">
 			jQuery(window).on('load scroll', function() {
 				var responsive_width = <?= preg_replace('/[^0-9]/', '', b_f_option('b_opt_responsive')) ?>;
-				if (jQuery(window).outerWidth() < responsive_width) {
-					jQuery('#socket').html(jQuery('#socket').html().replace(' | Desarrollo web', '<br />Desarrollo web'));
-				};
 			});
 		</script>
 
@@ -249,7 +246,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_search_icon}}');
 						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, $var_search);
 
-						echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_header-top-content-'.$b_g_language)));
+						echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_header-top-content-'.$b_g_language))));
 
 						?>
 
@@ -293,7 +290,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 							$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_search_icon}}');
 							$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, $var_search);
 
-							echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_header-main-content-'.$b_g_language)));
+							echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_header-main-content-'.$b_g_language))));
 
 							?>
 

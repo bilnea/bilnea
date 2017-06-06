@@ -124,7 +124,7 @@ if (!function_exists('b_s_map')) {
 		if (has_shortcode($content, 'b_map_style')) {
 			$out .= '	var styles_'.$var_random.' = '.preg_replace("/(.*)(\[b_map_style\])(.*)(\[\/b_map_style\])(.*)/s", "$3", $content).';'."\n";
 		} else {
-			$out .= '	var_styles_'.$var_random.' = \'\';'."\n";
+			$out .= '	var styles_'.$var_random.' = [];'."\n";
 		}
 		$out .= '</script><div class="map-options" data-id="'.$var_random.'">'.do_shortcode($content).'</div>'."\n";
 
@@ -146,9 +146,10 @@ if (!function_exists('b_s_marker')) {
 			'size' => '40',
 		), $atts);
 
+		$var_random = rand(100000, 999999);
 
-		$out = '<script type="text/javascript" id="b_map_script">'."\n";
-		$out .= '	var a = jQuery(\'#b_map_script\').closest(\'.map-options\').attr(\'data-id\');'."\n";
+		$out = '<script type="text/javascript" id="b_map_script_'.$var_random.'">'."\n";
+		$out .= '	var a = jQuery(\'#b_map_script_'.$var_random.'\').closest(\'.map-options\').attr(\'data-id\');'."\n";
 		$out .= '	jQuery(\'#b_map_script\').remove(\'attr\', \'id\');'."\n";
 		$out .= '		var marker = {'."\n";
 		$out .= '			position: {lat: '.explode(',', str_replace(' ', '', esc_attr($a['position'])))[0].', lng: '.explode(',', str_replace(' ', '', esc_attr($a['position'])))[1].'},'."\n";

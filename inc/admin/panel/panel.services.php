@@ -9,6 +9,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 <!-- Suscriptores -->
 <h4>Boletín de noticias</h4>
 <input type="checkbox" name="bilnea_settings[b_opt_subscribers]" <?php checked(b_f_option('b_opt_subscribers'), 1 ); ?> value="1" class="disabler" data-connect="subscribers">Activar módulo de boletín de noticias<br />
+<input type="checkbox" name="bilnea_settings[b_opt_admin_subsc]" <?php checked(b_f_option('b_opt_admin_subsc'), 1 ); ?> value="1" data-connect="subscribers">Activar gestión de suscriptores<br />
 <hr />
 <div style="overflow: hidden; padding-bottom: 3px;" data-connect="subscribers">
 	<div style="width: calc(30% - 7px); display: inline-block; margin-right: 14px; float: left;">

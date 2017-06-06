@@ -9,7 +9,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 if (!function_exists('b_s_recent_posts')) {
 
-	function b_s_recent_posts($atts){
+	function b_s_recent_posts($atts, $content = null) {
 
 		// Atributos
 		$a = shortcode_atts(array(
@@ -53,67 +53,16 @@ if (!function_exists('b_s_recent_posts')) {
 		$out = '<div class="recent-posts">';
 
 		$i = 1;
-		
-		while($query->have_posts()) : $query->the_post();
 
-			if ((esc_attr($a['featured']) == 'true' && $i == 1) || esc_attr($a['featured']) == 'false') {
+		if ($content == null) {
+			
+			while($query->have_posts()) {
 
-				$out .= '<div class="'.$var_class.' featured-post auto-height">';
+				$query->the_post();
 
-				if (esc_attr($a['image']) == 'true') {
-					$out .= '<a class="recent-posts-image" href="'.get_permalink().'" title="'.get_the_title().'"';
-					if (has_post_thumbnail()) {
-						$out .= ' style="background-image: url('.wp_get_attachment_image_src(get_post_thumbnail_id(),'full', true)[0].'); background-size: cover;"';
-					}
-					$out .= '></a>';
-				}
+				if ((esc_attr($a['featured']) == 'true' && $i == 1) || esc_attr($a['featured']) == 'false') {
 
-				if (esc_attr($a['date']) == 'true' || esc_attr($a['author']) == 'true') {
-					$out .= '<div class="meta-info">';
-					if (esc_attr($a['author']) == 'true') {
-						$out .= '<span class="author">'.__('Published by ', 'bilnea').get_the_author().'</span> ';
-					}
-					if (esc_attr($a['date']) == 'true' && esc_attr($a['author']) == 'true') {
-						$out .= '<span class="date">'.__('the', 'bilnea').' ';
-					} else if (esc_attr($a['date']) == 'true') {
-						$out .= '<span class="date">';
-					}
-					if (esc_attr($a['date']) == 'true') {
-						$out .= get_the_date().'</span>';
-					}
-					$out .= '</div>';
-				}
-
-				$out .= '<a href="'.get_permalink().'" title="'.get_the_title().'"><h4>'.get_the_title().'</h4></a>';
-
-				if (esc_attr($a['excerpt']) == 'true') {
-					if (get_the_excerpt() != '') {
-						$out .= '<div class="excerpt">'.get_the_excerpt().'</div>';
-					} else {
-						$out .= '<div class="excerpt">'.b_f_get_excerpt(get_the_content()).'</div>';
-					}
-					
-					$out .= '<a class="read-more" href="'.get_permalink().'">'.__('Read more', 'bilnea').'</a>';
-				}
-
-				$out .= '</div>';
-			}
-
-			$i++;
-
-		endwhile;
-
-		if (esc_attr($a['featured']) == 'true') {
-
-			$out .= '<div class="'.$var_class.'">';
-
-			$i = 1;
-
-			while($query->have_posts()) : $query->the_post();
-
-				if ($i > 1) {
-
-					$out .= '<div>';
+					$out .= '<div class="'.$var_class.' featured-post auto-height">';
 
 					if (esc_attr($a['image']) == 'true') {
 						$out .= '<a class="recent-posts-image" href="'.get_permalink().'" title="'.get_the_title().'"';
@@ -140,7 +89,7 @@ if (!function_exists('b_s_recent_posts')) {
 					}
 
 					$out .= '<a href="'.get_permalink().'" title="'.get_the_title().'"><h4>'.get_the_title().'</h4></a>';
-					
+
 					if (esc_attr($a['excerpt']) == 'true') {
 						if (get_the_excerpt() != '') {
 							$out .= '<div class="excerpt">'.get_the_excerpt().'</div>';
@@ -152,17 +101,89 @@ if (!function_exists('b_s_recent_posts')) {
 					}
 
 					$out .= '</div>';
-
 				}
 
 				$i++;
 
-			endwhile;
+			}
 
-			$out .= '</div>';
+			if (esc_attr($a['featured']) == 'true') {
+
+				$out .= '<div class="'.$var_class.'">';
+
+				$i = 1;
+
+				while($query->have_posts()) : $query->the_post();
+
+					if ($i > 1) {
+
+						$out .= '<div>';
+
+						if (esc_attr($a['image']) == 'true') {
+							$out .= '<a class="recent-posts-image" href="'.get_permalink().'" title="'.get_the_title().'"';
+							if (has_post_thumbnail()) {
+								$out .= ' style="background-image: url('.wp_get_attachment_image_src(get_post_thumbnail_id(),'full', true)[0].'); background-size: cover;"';
+							}
+							$out .= '></a>';
+						}
+
+						if (esc_attr($a['date']) == 'true' || esc_attr($a['author']) == 'true') {
+							$out .= '<div class="meta-info">';
+							if (esc_attr($a['author']) == 'true') {
+								$out .= '<span class="author">'.__('Published by ', 'bilnea').get_the_author().'</span> ';
+							}
+							if (esc_attr($a['date']) == 'true' && esc_attr($a['author']) == 'true') {
+								$out .= '<span class="date">'.__('the', 'bilnea').' ';
+							} else if (esc_attr($a['date']) == 'true') {
+								$out .= '<span class="date">';
+							}
+							if (esc_attr($a['date']) == 'true') {
+								$out .= get_the_date().'</span>';
+							}
+							$out .= '</div>';
+						}
+
+						$out .= '<a href="'.get_permalink().'" title="'.get_the_title().'"><h4>'.get_the_title().'</h4></a>';
+						
+						if (esc_attr($a['excerpt']) == 'true') {
+							if (get_the_excerpt() != '') {
+								$out .= '<div class="excerpt">'.get_the_excerpt().'</div>';
+							} else {
+								$out .= '<div class="excerpt">'.b_f_get_excerpt(get_the_content()).'</div>';
+							}
+							
+							$out .= '<a class="read-more" href="'.get_permalink().'">'.__('Read more', 'bilnea').'</a>';
+						}
+
+						$out .= '</div>';
+
+					}
+
+					$i++;
+
+				endwhile;
+
+				$out .= '</div>';
+			}
+
+			wp_reset_postdata();
+
+		} else {
+
+			while($query->have_posts()) {
+
+				$query->the_post();
+
+				$var_shortcodes = array('{{b_title}}', '{{b_link}}', '{{b_date}}', '{{b_image}}', '{{b_excerpt}}');
+				$var_replace = array(get_the_title(), get_permalink(), get_the_date(), wp_get_attachment_image_src(get_post_thumbnail_id(),'full', true)[0], wp_trim_words(get_the_content()));
+
+				$out .= '<div class="recent-'.get_the_id().'">'.str_replace($var_shortcodes, $var_replace, $content).'</div>';
+
+				$i++;
+
+			}
+
 		}
-
-		wp_reset_postdata();
 
 		$out .= '</div>';
 

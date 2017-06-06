@@ -1,5 +1,5 @@
 jQuery(function() {
-	jQuery('.parallax').each(function() {
+	jQuery('.parallax, [data-class*="parallax"]').each(function() {
 		var t = jQuery(this),
 			i = t.css('background-image'),
 			p = t.css('background-position'),

@@ -542,11 +542,9 @@ if (!function_exists('b_f_subscribers_menu')) {
 	function b_f_subscribers_menu() { 
 		add_submenu_page('bilnea', 'Suscriptores', 'Suscriptores', 'manage_options', 'subscribers', 'bilnea_subscribers_page');
 	}
-
-	if (b_f_option('b_opt_subscribers') == 1) {
+	if (b_f_option('b_opt_subscribers') == 1 && b_f_option('b_opt_admin_subsc') == 1) {
 		add_action('admin_menu', 'b_f_subscribers_menu');
 	}
-
 }
 
 

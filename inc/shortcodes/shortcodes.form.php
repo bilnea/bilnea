@@ -437,6 +437,29 @@ if (!function_exists('b_s_input')) {
 				return $out;
 				break;
 
+			// Radio
+			case 'checkbox':
+				$var_key = rand(0, 99999999);
+				$var_options = explode('|', esc_attr($a['options']));
+				if (esc_attr($a['label']) == 'true') {
+					$out = '<fieldset class="'.$var_class.'"><legend>'.$var_required.$var_placeholder.'</legend>';
+				} else {
+					$out = '';
+				}
+				$out .= '  <input data-name="'.$var_name.'" class="b_input_checkbox" type="checkbox" value="'.$var_placeholder.'" name="b_i_custom_checkbox-'.$var_key.'" id="checkbox-'.$var_random.'"><label for="radio-'.$var_random.'">'.$var_placeholder.'</label>'."\n";
+				foreach ($var_options as $option) {
+					$var_random = rand(0, 999);
+					if (count(explode(':', $option)) > 1) {
+						$option = explode(':', $option);
+						$out .= '  <input data-name="'.$var_name.'" class="b_input_checkbox" type="checkbox" value="'.$option[0].'" name="b_i_custom_checkbox-'.$var_key.'" id="checkbox-'.$var_random.'"><label for="radio-'.$var_random.'">'.$option[1].'</label>'."\n";
+					} else {
+						
+					}
+				}
+				if (esc_attr($a['label']) == 'true') { $out .= '</fieldset>'; }
+				return $out;
+				break;
+
 			// Nombre (Aparecerá como remitente del mensaje)
 			case 'name':
 				if ($var_name == '') { $var_name = 'Nombre'; }

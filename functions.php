@@ -83,6 +83,16 @@ if (!function_exists('b_f_versions')) {
 				return '2.6.3';
 				break;
 
+			// responsiveCarousel.JS
+			case 'responsivecarousel':
+				return '1.2.0';
+				break;
+
+			// Vide
+			case 'vide':
+				return '0.5.1';
+				break;
+
 		}
 
 	}

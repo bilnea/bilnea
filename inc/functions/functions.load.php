@@ -69,8 +69,14 @@ if (!function_exists('b_f_load_scripts')) {
 		// Super Simple Slider
 		wp_register_script('functions.slider', get_template_directory_uri().'/js/external/functions.media.flexslider.js', array('jquery'), b_f_versions('flexslider'), false);
 
+		// responsiveCarousel.JS
+		wp_register_script('functions.carousel', get_template_directory_uri().'/js/external/functions.media.responsivecarousel.js', array('jquery'), b_f_versions('responsivecarousel'), false);
+
 		// AjaxSubmit
 		wp_register_script('functions.ajaxform', get_template_directory_uri().'/js/external/functions.form.ajaxform.js', array('jquery'), b_f_versions('ajaxform'), false);
+
+		// Vide
+		wp_register_script('functions.media.vide', get_template_directory_uri().'/js/external/functions.media.vide.js', array('jquery'), b_f_versions('vide'), false);
 
 	}
 
@@ -101,6 +107,7 @@ if (!function_exists('b_f_frontend_scripts')) {
 		wp_enqueue_script('functions.anchor');
 		wp_enqueue_script('functions.accordion');
 		wp_enqueue_script('functions.child.main');
+		wp_enqueue_script('functions.design.parallax');
 
 		wp_enqueue_script('functions.design.fitvids');
 		$var_log .= 'Fitvids '.b_f_versions('fitvids').'\n';
@@ -113,6 +120,9 @@ if (!function_exists('b_f_frontend_scripts')) {
 
 		wp_enqueue_script('functions.design.animatecolors');
 		$var_log .= 'Animated Colors '.b_f_versions('animate-colors').'\n';
+
+		wp_enqueue_script('functions.media.vide');
+		$var_log .= 'Vide '.b_f_versions('vide').'\n';
 
 		if (b_f_option('b_opt_anticopy') == 1) {
 			wp_enqueue_script('functions.anticopy');

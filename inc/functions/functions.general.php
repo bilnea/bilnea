@@ -38,7 +38,7 @@ if (!function_exists('b_f_get_excerpt')) {
 
 		if ($var_words == true) {
 			if ($var_length == null) {
-				$var_length = b_f_option('b_opt_blog-excerpt-length');
+				$var_length = 40;
 			}
 			$var_cutted = false;
 			$array_words = explode(' ', $var_text);
@@ -107,7 +107,7 @@ if (!function_exists('b_f_color')) {
 	
 	function b_f_color($var_arg='') {
 
-		$var_color = preg_replace('/\s+/', '', b_f_option($var_arg));
+		$var_color = preg_replace('/\s+/', '', b_f_option($var_arg, true));
 
 		if (ctype_digit($var_color)) {
 			$var_color = '#'.$var_color;

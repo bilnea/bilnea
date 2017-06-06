@@ -14,18 +14,13 @@ if (!function_exists('b_s_slider')) {
 		// Variables globales
 		global $b_g_sliders;
 
-		// Scripts
-		wp_enqueue_script('functions.slider');
-
-		// Estilos
-		wp_enqueue_style('styles.slider');
-
 		// Shortcodes dependientes
 		add_shortcode('b_show', 'b_s_slideshow');
 
 		// Atributos
 		$a = shortcode_atts(array(
 			'start' => true,
+			'columns' => 4,
 			'time' => 7,
 			'buttons' => 'true',
 			'width' => 1,
@@ -35,60 +30,117 @@ if (!function_exists('b_s_slider')) {
 			'animation' => 'slide',
 			'easing' => 'ease-in',
 			'arrows' => 'true',
+			'type' => 'slider'
 		), $atts);
 
-		// Variables locales
-		$var_style = ''; 
+		switch (esc_attr($a['type'])) {
 
-		(esc_attr($a['id']) != null) ? $var_id = ' id="'.esc_attr($a['id']).'"' : $var_id = '';
-		(esc_attr($a['class']) != null) ? $var_class = ' '.esc_attr($a['class']) : $var_class = '';
+			case 'slider':
 
-		if (esc_attr($a['width']) == 0) {
-			$var_class .= ' container';
-		} elseif (esc_attr($a['width']) > 0 && esc_attr($a['width']) <= 1) {
-			$var_style .= 'width: '.(esc_attr($a['width'])*100).'%;';
-		} elseif (is_numeric(esc_attr($a['width']))) {
-			$var_style .= 'width: '.esc_attr($a['width']).'px';
-		} else {
-			$var_style .= 'width: '.esc_attr($a['width']);
+				// Scripts
+				wp_enqueue_script('functions.slider');
+
+				// Estilos
+				wp_enqueue_style('styles.slider');
+
+				// Variables locales
+				$var_style = ''; 
+
+				(esc_attr($a['id']) != null) ? $var_id = ' id="'.esc_attr($a['id']).'"' : $var_id = '';
+				(esc_attr($a['class']) != null) ? $var_class = ' '.esc_attr($a['class']) : $var_class = '';
+
+				if (esc_attr($a['width']) == 0) {
+					$var_class .= ' container';
+				} elseif (esc_attr($a['width']) > 0 && esc_attr($a['width']) <= 1) {
+					$var_style .= 'width: '.(esc_attr($a['width'])*100).'%;';
+				} elseif (is_numeric(esc_attr($a['width']))) {
+					$var_style .= 'width: '.esc_attr($a['width']).'px';
+				} else {
+					$var_style .= 'width: '.esc_attr($a['width']);
+				}
+
+				if (esc_attr($a['height']) > 0 && esc_attr($a['height']) <= 1) {
+					$var_style .= ' height: '.(esc_attr($a['height'])*100).'vh;';
+				} elseif (is_numeric(esc_attr($a['height']))) {
+					$var_style .= ' height: '.esc_attr($a['height']).'px';
+				} else {
+					$var_style .= ' height: '.esc_attr($a['height']);
+				}
+
+				// Script específico
+				$out  = '<div class="slider-'.$b_g_sliders.$var_class.' flexslider" style="'.$var_style.'"'.$var_id.'><ul class="slides">'.do_shortcode($content).'</ul></div>'."\n";
+				$out .= '<script type="text/javascript">'."\n";
+				$out .= 'jQuery(function($) {'."\n";
+				$out .= '	$(\'.slider-'.$b_g_sliders.' .slides > li\').each(function() {'."\n";
+				$out .= '		var t = $(this);'."\n";
+				$out .= '		t.height(t.closest(\'div[class^="slider-"]\').height());'."\n";
+				$out .= '	})'."\n";
+				$out .= '	$(\'.slider-'.$b_g_sliders.'\').flexslider({'."\n";
+				$out .= '		animation: "'.esc_attr($a['animation']).'",'."\n";
+				$out .= '		animationLoop: true,'."\n";
+				$out .= '		easing: "'.esc_attr($a['easing']).'",'."\n";
+				if (esc_attr($a['buttons']) != 'true') {
+					$out .= '		controlNav: false,'."\n";
+				}
+				$out .= '		prevText:  "'.__('Previous', 'bilnea').'",'."\n";
+				$out .= '		nextText:  "'.__('Next', 'bilnea').'",'."\n";
+				if (esc_attr($a['arrows']) != 'true') {
+					$out .= '		directionNav: false,'."\n";
+				}
+				$out .= '		slideshowSpeed:  '.(esc_attr($a['time'])*1000).','."\n";
+				$out .= '	})'."\n";
+				$out .= '})'."\n";
+				$out .= '</script>';
+
+				$b_g_sliders++;
+
+				return $out;
+				break;
+
+			case 'carousel':
+
+				// Scripts
+				wp_enqueue_script('functions.carousel');
+
+				// Estilos
+				wp_enqueue_style('styles.carousel');
+
+				// Variables locales
+				$var_style = ''; 
+
+				(esc_attr($a['id']) != null) ? $var_id = ' id="'.esc_attr($a['id']).'"' : $var_id = '';
+				(esc_attr($a['class']) != null) ? $var_class = ' '.esc_attr($a['class']) : $var_class = '';
+
+				if (esc_attr($a['width']) == 0) {
+					$var_class .= ' container';
+				} elseif (esc_attr($a['width']) > 0 && esc_attr($a['width']) <= 1) {
+					$var_style .= 'width: '.(esc_attr($a['width'])*100).'%;';
+				} elseif (is_numeric(esc_attr($a['width']))) {
+					$var_style .= 'width: '.esc_attr($a['width']).'px';
+				} else {
+					$var_style .= 'width: '.esc_attr($a['width']);
+				}
+
+				// Script específico
+				$out  = '<div class="crsl-items carousel-'.$b_g_sliders.$var_class.'" '.((esc_attr($a['arrows']) == 'true') ? 'data-navigation="nav-'.$b_g_sliders.'"' : '').' style="'.$var_style.'"'.$var_id.'><ul class="crsl-wrap">'.do_shortcode($content).'</ul></div>'."\n";
+				if (esc_attr($a['arrows']) == 'true') {
+					$out .= '<div id="nav-'.$b_g_sliders.'"><a class="next"></a><a class="previous"></a></div>'."\n";
+				}
+				$out .= '<script type="text/javascript">'."\n";
+				$out .= '	jQuery(function() {'."\n";
+				$out .= '		jQuery(\'.carousel-'.$b_g_sliders.'\').carousel({'."\n";
+				$out .= '			visible: '.esc_attr($a['columns']).','."\n";
+				$out .= '			speed: 600,'."\n";
+				$out .= '			itemMinWidth: 100,'."\n";
+				$out .= '			autoRotate: 4000,'."\n";
+				$out .= '		});'."\n";
+				$out .= '		jQuery(\'.carousel-'.$b_g_sliders.'\').children().children().css(\'padding-bottom\', \''.esc_attr($a['height']).'\')'."\n";
+				$out .= '	});'."\n";
+				$out .= '</script>';
+				return $out;
+				break;
+			
 		}
-
-		if (esc_attr($a['height']) > 0 && esc_attr($a['height']) <= 1) {
-			$var_style .= ' height: '.(esc_attr($a['height'])*100).'vh;';
-		} elseif (is_numeric(esc_attr($a['height']))) {
-			$var_style .= ' height: '.esc_attr($a['height']).'px';
-		} else {
-			$var_style .= ' height: '.esc_attr($a['height']);
-		}
-
-		// Script específico
-		$out  = '<div class="slider-'.$b_g_sliders.$var_class.' flexslider" style="'.$var_style.'"'.$var_id.'><ul class="slides">'.do_shortcode($content).'</ul></div>'."\n";
-		$out .= '<script type="text/javascript">'."\n";
-		$out .= 'jQuery(function($) {'."\n";
-		$out .= '	$(\'.slider-'.$b_g_sliders.' .slides > li\').each(function() {'."\n";
-		$out .= '		var t = $(this);'."\n";
-		$out .= '		t.height(t.closest(\'div[class^="slider-"]\').height());'."\n";
-		$out .= '	})'."\n";
-		$out .= '	$(\'.slider-'.$b_g_sliders.'\').flexslider({'."\n";
-		$out .= '		animation: "'.esc_attr($a['animation']).'",'."\n";
-		$out .= '		animationLoop: true,'."\n";
-		$out .= '		easing: "'.esc_attr($a['easing']).'",'."\n";
-		if (esc_attr($a['buttons']) != 'true') {
-			$out .= '		controlNav: false,'."\n";
-		}
-		$out .= '		prevText:  "'.__('Previous', 'bilnea').'",'."\n";
-		$out .= '		nextText:  "'.__('Next', 'bilnea').'",'."\n";
-		if (esc_attr($a['arrows']) != 'true') {
-			$out .= '		directionNav: false,'."\n";
-		}
-		$out .= '		slideshowSpeed:  '.(esc_attr($a['time'])*1000)."\n";
-		$out .= '	})'."\n";
-		$out .= '})'."\n";
-		$out .= '</script>';
-
-		$b_g_sliders++;
-
-		return $out;
 		
 	}
 
@@ -109,7 +161,8 @@ if (!function_exists('b_s_slideshow')) {
 			'position' => 'cc',
 			'class' => null,
 			'url' => null,
-			'target' => null
+			'target' => null,
+			'parallax' => false
 		), $atts);
 
 		// Alineación
@@ -143,15 +196,23 @@ if (!function_exists('b_s_slideshow')) {
 			}
 		}
 
-		(esc_attr($a['class']) != null) ? $var_class = ' data-class="'.esc_attr($a['class']).'"' : $var_class = '';
+		$var_class = array('crsl-item');
+
+		if (esc_attr($a['class']) != null) {
+			array_push($var_class, esc_attr($a['class']));
+		}
+
+		if (esc_attr($a['parallax']) != false) {
+			array_push($var_class, 'parallax');
+		}
 
 		if (esc_attr($a['url']) != null) {
 			(is_numeric(esc_attr($a['url']))) ? $var_link = get_permalink(esc_attr($a['url'])) : $var_link = esc_attr($a['url']);
 			(esc_attr($a['target']) == 'blank') ? $var_atts = ' onclick="window.open('.$var_link.')"' : $var_atts = ' onclick="window.location = '.$var_link.'"';
 
-			return '<li '.$var_atts.$var_style.$var_class.'>'.do_shortcode($content).'</li>';
+			return '<li '.$var_atts.$var_style.' class="'.implode(' ', $var_class).'"">'.do_shortcode($content).'</li>';
 		} else { 
-			return '<li'.$var_style.$var_class.'>'.do_shortcode($content).'</li>';
+			return '<li'.$var_style.' class="'.implode(' ', $var_class).'"">'.do_shortcode($content).'</li>';
 		}
 
 	}

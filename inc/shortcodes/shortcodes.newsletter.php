@@ -51,6 +51,7 @@ if (!function_exists('b_f_newsletter')) {
 					$out .= '<input type="text" name="s_last" placeholder="* '.__('Last name', 'bilnea').'" />';
 				}
 				$out .= '<input class="input" type="email" name="s_email" placeholder="* '.__('Email', 'bilnea').'" />';
+				$out .= '<div class="s_submit">'.__('Subscribe', 'bilnea').'</div>';
 				$out .= '<input class="b_input_checkbox" value="true" type="checkbox" id="s_legal-'.$var_random.'" name="s_legal-'.$var_random.'" />';
 
 				$var_placeholder = __('Privacy policy', 'bilnea');
@@ -66,7 +67,6 @@ if (!function_exists('b_f_newsletter')) {
 
 				$out .= '<label for="s_legal-'.$var_random.'">* '.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$var_placeholder.'" target="_blank">'.strtolower($var_placeholder).'</a>.</label>';
 				$out .= '<span class="s_delete">'.__('If you want to unsubscribe from our newsletter, click', 'bilnea').' <a>'.__('here', 'bilnea').'.</a></span>';
-				$out .= '<div class="s_submit">'.__('Subscribe', 'bilnea').'</div>';
 				$out .= '<input type="hidden" class="redirect_to" name="s_redirect" value="'.esc_attr($a['redirect']).'" />';
 				$out .= '</div><div class="response"></div>';
 

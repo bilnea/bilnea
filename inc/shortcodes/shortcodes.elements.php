@@ -141,4 +141,49 @@ if (!function_exists('b_s_accordion_frame')) {
 
 }
 
+
+// Socket
+
+if (!function_exists('b_s_socket')) {
+	
+	function b_s_socket() {
+
+		$out = '&copy; '.date('Y').' '.get_bloginfo('name').'. ';
+	
+
+		// Variables globales
+		global $b_g_language;
+
+		// Variables locales
+		$var_links = array();
+
+		// Aviso legal
+		if (is_numeric(b_f_option('b_opt_legal-advice-'.$b_g_language))) {
+			array_push($var_links, '<a href="'.get_permalink(b_f_option('b_opt_legal-advice-'.$b_g_language)).'" target="_blank" title="'.get_the_title(b_f_option('b_opt_legal-advice-'.$b_g_language)).'" rel="noindex">'.get_the_title(b_f_option('b_opt_legal-advice-'.$b_g_language)).'</a>');
+		}
+							
+		// Política de privacidad
+		if (is_numeric(b_f_option('b_opt_privacy-policy-'.$b_g_language))) {
+			array_push($var_links, '<a href="'.get_permalink(b_f_option('b_opt_privacy-policy-'.$b_g_language)).'" target="_blank" title="'.get_the_title(b_f_option('b_opt_privacy-policy-'.$b_g_language)).'" rel="noindex">'.get_the_title(b_f_option('b_opt_privacy-policy-'.$b_g_language)).'</a>');
+		}
+
+		// Política de cookies
+		if (is_numeric(b_f_option('b_opt_cookies-policy-'.$b_g_language))) {
+			array_push($var_links, '<a href="'.get_permalink(b_f_option('b_opt_cookies-policy-'.$b_g_language)).'" target="_blank" title="'.get_the_title(b_f_option('b_opt_cookies-policy-'.$b_g_language)).'" rel="noindex">'.get_the_title(b_f_option('b_opt_cookies-policy-'.$b_g_language)).'</a>');
+		}
+
+		// Firma de bilnea
+		if (md5(b_f_option('socket_no-development')) != 'e8f00e69e2bc444b3c291110d037eb7d') {
+			array_push($var_links, __('Made with <i class="fa fa-heart-o"></i> by', 'bilnea').' <a href="http://bilnea.com" title="'.__('bilnea. Communication & Digital Marketing Agency', 'bilnea').'" target="_blank" rel="nofollow">bilnea</a>');
+		}
+
+		$out .= implode(' | ', $var_links);
+
+		return $out;
+
+	}
+
+	add_shortcode('b_socket', 'b_s_socket');
+}
+
 ?>

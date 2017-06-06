@@ -43,7 +43,7 @@ if (!function_exists('b_f_i_rmdir')) {
 
 		foreach ($files as $file) {
 			if (is_dir($file)) {
-				self::deleteDir($file);
+				b_f_i_rmdir($file);
 			} else {
 				unlink($file);
 			}

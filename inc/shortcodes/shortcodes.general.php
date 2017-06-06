@@ -254,7 +254,7 @@ if (!function_exists('b_s_title')) {
 }
 
 
-// Categorias
+// Archivos
 
 if (!function_exists('b_s_file')) {
 
@@ -298,5 +298,6 @@ if (!function_exists('b_s_file')) {
 
 	add_shortcode('b_file', 'b_s_file');
 }
+
 
 ?>
