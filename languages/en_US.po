@@ -1,437 +1,140 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: bilnea Wordpress theme\n"
-"POT-Creation-Date: 2016-12-15 13:24+0100\n"
-"PO-Revision-Date: 2016-12-15 13:26+0100\n"
+"Project-Id-Version: bilnea Wordpress theme (1.0)\n"
+"POT-Creation-Date: 2015-12-12 16:40+0100\n"
+"PO-Revision-Date: 2015-12-12 16:44+0100\n"
 "Last-Translator: \n"
-"Language-Team: Samuel E. Cerezo <samuelcerezo@bilnea.com>\n"
+"Language-Team: bilnea <samuelcerezo@bilnea.com>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.6\n"
 "X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_x:1,2c\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_n_noop:1,2;_nx:1,2;_nx_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: archive.php:57
-msgid "Nothing found."
-msgstr "Nothing found."
+#: footer.php:61
+msgid "Aviso legal"
+msgstr "Legal notice"
+
+#: footer.php:64
+msgid "Política de Privacidad"
+msgstr "Privacy policy"
+
+#: footer.php:67
+msgid "Política de Cookies"
+msgstr "Cookies policy"
 
 #: footer.php:73
-msgid "Made with <i class=\"fa fa-heart-o\"></i> by"
-msgstr "Made with <i class=\"fa fa-heart-o\"></i> by"
+msgid "Desarrollo web por"
+msgstr "Web development by"
 
 #: footer.php:73
-msgid "bilnea. Communication & Digital Marketing Agency"
+msgid "bilnea. Agencia de Comunicación & Marketing Digital"
 msgstr "bilnea. Communication & Digital Marketing Agency"
 
-#: functions.php:198
-msgid "of"
-msgstr "of"
+#: functions.php:152
+msgid "Menú principal"
+msgstr "Main menu"
 
-#: functions.php:732
-msgid "author"
-msgstr "author"
+#: functions.php:158
+msgid "Barra inferior"
+msgstr "Bottom bar"
 
-#: functions.php:733
-msgid "search"
-msgstr "search"
+#: functions.php:164
+msgid "Barra superior"
+msgstr "Top bar"
 
-#: functions.php:734
-msgid "comments"
-msgstr "comments"
+#: functions.php:170
+msgid "Menú widget"
+msgstr "Widget menu"
 
-#: functions.php:735 inc/data/data.pagination.php:10
-#: inc/data/data.pagination.php:26 search.php:71 search.php:87
-msgid "page"
-msgstr "page"
+#: inc/shortcodes.php:175
+msgid "Correo electrónico"
+msgstr "Email address"
 
-#: functions.php:1373
-msgid "* I have read, understood and accept the "
-msgstr "* I have read, understood and accept the "
+#: inc/shortcodes.php:178
+msgid "Mensaje"
+msgstr "Message"
 
-#: functions.php:1373
-msgid "privacy policy"
-msgstr "privacy policy"
+#: inc/shortcodes.php:182
+msgid "Provincia"
+msgstr "State"
 
-#: header.php:90
-#, php-format
+#: inc/shortcodes.php:189
+msgid "Política de privacidad"
+msgstr "Privacy policy"
+
+#: inc/shortcodes.php:192
+msgid "la"
+msgstr "the"
+
+#: inc/shortcodes.php:195
+msgid "el"
+msgstr "the"
+
+#: inc/shortcodes.php:199
+msgid "He leído, entiendo y acepto "
+msgstr "I have read, understood and accepted the terms of"
+
+#: inc/shortcodes.php:211
+msgid "Completa los siguientes campos con su valor."
+msgstr "Complete the next fields with their values."
+
+#: inc/shortcodes.php:290
 msgid ""
-"We use our own and third-part <em>cookies</em> to analyse the use and "
-"measurement of our web in order to improve our services. If you go on "
-"surfing, we assume you acceept their use. <br />You can change your settings "
-"or find more information <a href=\"%1$s\" target=\"_blank\" title=\"%2$s "
-"cookies policy\">here</a>."
+"Mensaje enviado correctamente. Atenderemos su solicitud a la mayor brevedad. "
+"Se ha enviado una copia del mismo a su dirección de correo electrónico"
 msgstr ""
-"We use our own and third-part <em>cookies</em> to analyse the use and "
-"measurement of our web in order to improve our services. If you go on "
-"surfing, we assume you acceept their use. <br />You can change your settings "
-"or find more information <a href=\"%1$s\" target=\"_blank\" title=\"%2$s "
-"cookies policy\">here</a>."
 
-#: header.php:94
-msgid "Ok"
-msgstr "Ok"
+#: inc/shortcodes.php:309
+msgid "Enviar"
+msgstr "Send"
 
-#: inc/admin/admin.forms.php:132
-#, php-format
-msgid "Response to the message sent from &quot;%s&quot; website "
-msgstr "Response to the message sent from &quot;%s&quot; website "
+#: inc/shortcodes.php:374
+msgid "Publicado por "
+msgstr "Published by"
 
-#: inc/ajax/ajax.form.php:96
-msgid ""
-"Your message has been sucesfully sent.<br /><br />Here is a copy of your "
-"message."
-msgstr ""
-"Your message has been sucesfully sent.<br /><br />Here is a copy of your "
-"message."
-
-#: inc/ajax/ajax.form.php:100
-msgid ""
-"Please do not respond directly to this e-mail. The inbox of this account is "
-"disabled."
-msgstr ""
-"Please do not respond directly to this e-mail. The inbox of this account is "
-"disabled."
-
-#: inc/ajax/ajax.form.php:103
-msgid "Here is a copy of your message to"
-msgstr "Here is a copy of your message to"
-
-#: inc/ajax/ajax.form.php:107
-msgid "Message sent sucesfully. Please wait a moment."
-msgstr "Message sent sucesfully. Please wait a moment."
-
-#: inc/ajax/ajax.form.php:115
-msgid ""
-"Sorry, an error has ocurred sending your message. Please try again later."
-msgstr ""
-"Sorry, an error has ocurred sending your message. Please try again later."
-
-#: inc/data/data.blog.php:27 single.php:57
-msgid "No comments"
-msgstr "No comments"
-
-#: inc/data/data.blog.php:29 single.php:59
-msgid " comments"
-msgstr ""
-
-#: inc/data/data.blog.php:31 single.php:61
-msgid "1 comment"
-msgstr ""
-
-#: inc/data/data.blog.php:35 single.php:65
-msgid "Comments are disabled"
-msgstr ""
-
-#: inc/data/data.globals.php:20
-msgid "January"
-msgstr ""
-
-#: inc/data/data.globals.php:21
-msgid "February"
-msgstr ""
-
-#: inc/data/data.globals.php:22
-msgid "March"
-msgstr ""
-
-#: inc/data/data.globals.php:23
-msgid "April"
-msgstr ""
-
-#: inc/data/data.globals.php:24
-msgid "May"
-msgstr ""
-
-#: inc/data/data.globals.php:25
-msgid "June"
-msgstr ""
-
-#: inc/data/data.globals.php:26
-msgid "July"
-msgstr ""
-
-#: inc/data/data.globals.php:27
-msgid "August"
-msgstr ""
-
-#: inc/data/data.globals.php:28
-msgid "September"
-msgstr ""
-
-#: inc/data/data.globals.php:29
-msgid "October"
-msgstr ""
-
-#: inc/data/data.globals.php:30
-msgid "November"
-msgstr ""
-
-#: inc/data/data.globals.php:31
-msgid "December"
-msgstr ""
-
-#: inc/data/data.pagination.php:13 search.php:74
-msgid "Previous"
-msgstr ""
-
-#: inc/data/data.pagination.php:14 search.php:75
-msgid "Next"
-msgstr ""
-
-#: inc/data/data.pagination.php:17 inc/shortcodes.php:361 search.php:78
-#, php-format
-msgid "Page %1$s of %2$s"
-msgstr ""
-
-#: inc/data/data.pagination.php:20 search.php:81
-msgid "First"
-msgstr ""
-
-#: inc/data/data.pagination.php:26 search.php:87
-msgid "Last"
-msgstr ""
-
-#: inc/shortcodes.php:356
-msgid "No posts found"
-msgstr ""
-
-#: inc/shortcodes.php:535
-msgid "It's not possible to get latest tweets. No username configured"
-msgstr ""
-
-#: inc/shortcodes.php:538
-msgid "No tweets"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.blog.php:73 inc/shortcodes/shortcodes.blog.php:128
-msgid "Published by "
-msgstr ""
-
-#: inc/shortcodes/shortcodes.blog.php:76 inc/shortcodes/shortcodes.blog.php:131
-msgid "the"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.blog.php:95 inc/shortcodes/shortcodes.blog.php:150
-msgid "Read more"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.blog.php:185
-msgid "All"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.blog.php:248
-#: inc/shortcodes/shortcodes.blog.php:261
-#: inc/shortcodes/shortcodes.blog.php:263
-msgid "Tweet this"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:26
-msgid ""
-"Your message has been sent sucesfully. Your request will delay. A copy has "
-"been sent to your email."
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:27 inc/shortcodes/shortcodes.form.php:422
-msgid "Send"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:53
-#: inc/shortcodes/shortcodes.newsletter.php:32 single.php:19
-msgid "There are errors on the form. Please fix them before continuing"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:54
-#: inc/shortcodes/shortcodes.newsletter.php:33 single.php:20
-msgid "Fill in all the required fields"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:55
-#: inc/shortcodes/shortcodes.newsletter.php:34 single.php:21
-msgid "Enter a valid email address"
-msgstr ""
+#: inc/shortcodes.php:387 inc/shortcodes.php:601
+msgid "Leer más"
+msgstr "Read more"
 
-#: inc/shortcodes/shortcodes.form.php:56
-msgid "Enter a correct captcha value"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:57
-#: inc/shortcodes/shortcodes.newsletter.php:35 single.php:22
-msgid "You must accept the legal advice"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:143
-#: inc/shortcodes/shortcodes.newsletter.php:52
-#: inc/shortcodes/shortcodes.newsletter.php:96 single.php:143
-msgid "Email"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:154
-msgid "Message"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:169
-msgid "State"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:191
-#: inc/shortcodes/shortcodes.newsletter.php:55
-#: inc/shortcodes/shortcodes.newsletter.php:78
-msgid "Privacy policy"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:201
-#: inc/shortcodes/shortcodes.newsletter.php:59
-#: inc/shortcodes/shortcodes.newsletter.php:82
-msgctxt "female"
-msgid "the"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:204
-#: inc/shortcodes/shortcodes.newsletter.php:62
-#: inc/shortcodes/shortcodes.newsletter.php:85
-msgctxt "male"
-msgid "the"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:208
-#: inc/shortcodes/shortcodes.newsletter.php:66
-#: inc/shortcodes/shortcodes.newsletter.php:89
-msgid "I have read, understood and accept"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:224
-#, php-format
-msgid "Fill in the following field with <strong>\"%s\"</strong>"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:227
-msgid "Fill in the following fields."
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:242
-msgid "No selected file"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:242
-msgid "Maximum size exceeded"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:346
-#: inc/shortcodes/shortcodes.form.php:445
-msgid "Select an option"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:397
-#: inc/shortcodes/shortcodes.newsletter.php:48
-#: inc/shortcodes/shortcodes.newsletter.php:94 single.php:142
-msgid "Name"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.form.php:410
-#: inc/shortcodes/shortcodes.newsletter.php:50
-#: inc/shortcodes/shortcodes.newsletter.php:95
-msgid "Last name"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.general.php:153
-msgid "Home"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.general.php:198
-msgid "Categories"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.general.php:200
-msgid "Tags"
-msgstr ""
+#: inc/shortcodes.php:424
+msgid "Inicio"
+msgstr "Home"
 
-#: inc/shortcodes/shortcodes.general.php:209
-#, php-format
-msgid "Search results for \"%1$s\""
-msgstr ""
-
-#: inc/shortcodes/shortcodes.general.php:227
-msgid "Publications of"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.general.php:229
-msgid "Not found"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.newsletter.php:67
-#: inc/shortcodes/shortcodes.newsletter.php:98
-msgid "Subscribe"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.newsletter.php:98
-msgid "Subscribing"
-msgstr ""
-
-#: inc/shortcodes/shortcodes.social.php:178
-msgid "No Twitter API key set"
-msgstr ""
-
-#: index.php:62
-msgid "Nothing found"
-msgstr ""
-
-#: php/subscriber.php:37
-msgid "Please confirm your newsletter subscription by visiting the link below:"
-msgstr ""
-
-#: php/subscriber.php:39
-msgid ""
-"If you have registered for a subscription accidentally or the newsletter was "
-"not ordered in your name, please ignore this email."
-msgstr ""
-
-#: php/subscriber.php:43
-msgid "Thanks for subscribing"
-msgstr ""
-
-#: search.php:40
-#, php-format
-msgid "%1$s search results for \"%2$s\""
-msgstr ""
-
-#: search.php:42
-#, php-format
-msgid "No results for \"%1$s\""
-msgstr ""
-
-#: search.php:110
-msgid "Try to redefine your search using another term, or visit the homepage."
-msgstr ""
-
-#: single.php:85 single.php:112
-msgid "Share in Twitter"
-msgstr ""
-
-#: single.php:88 single.php:113
-msgid "Share in Facebook"
-msgstr ""
-
-#: single.php:91 single.php:114
-msgid "Share in Linkedin"
-msgstr ""
-
-#: single.php:94 single.php:115
-msgid "Share in Google +"
-msgstr ""
-
-#: single.php:98 single.php:117
-msgid "Share in Whatsapp"
-msgstr ""
-
-#: single.php:102 single.php:119
-msgid "Share by email"
-msgstr ""
+#: inc/shortcodes.php:529
+msgid "d/m/Y"
+msgstr "Y/m/d"
 
-#: single.php:145
+#: index.php:32
 msgid "Comment"
 msgstr ""
+
+#: index.php:32
+msgid "1 Comment"
+msgstr ""
+
+#: index.php:32
+msgid "% Comments"
+msgstr ""
+
+#: search.php:35
+#, php-format
+msgid "%u resultado para"
+msgid_plural "%u resultados para"
+msgstr[0] "%u result found for"
+msgstr[1] "%u results found for"
+
+#: search.php:37
+msgid "Ningún resultado para"
+msgstr "No results were found for"
+
+#: search.php:107
+msgid ""
+"Pruebe a redefinir su búsqueda utilizando otro término o visite la página "
+"principal."
+msgstr "Try to refine your search using another term or visit the homepage."

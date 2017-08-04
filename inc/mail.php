@@ -88,7 +88,7 @@ $txt .= "\r\n";
 $txt .= $_SESSION['blogname']."\r\n";
 $txt .= $_SESSION['siteurl']."\r\n";
 $headers = 'Content-Type: text/plain; charset=UTF-8'."\r\n";
-$headers .= 'From: "'.$_SESSION['blogname'].'" <noreply@'.$_SERVER['SERVER_NAME'].'>';
+$headers .= 'From: "'.$_SESSION['blogname'].'" <noreply@'.$_SERVER['SERVER_NAME'].'.com>';
 
 @mail($to,$subject,$txt,$headers);
 

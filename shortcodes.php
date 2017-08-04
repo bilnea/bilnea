@@ -157,7 +157,7 @@ function b_f_slideshow($atts, $content = null) {
 		case 'br': $cen = 'right bottom'; break;
 		default: $cen = 'center'; break;
 	}
-	if (esc_attr($a['url']) != null) { $img = ' class="parallax" style="background-image: url('.str_replace('b_root', preg_replace('(^https?://)', '', get_site_url()), esc_url(esc_attr($a['url']))).'); background-position: '.$cen.';"'; }
+	if (esc_attr($a['url']) != null) { $img = ' style="background-image: url('.str_replace('b_root', preg_replace('(^https?://)', '', get_site_url()), esc_url(esc_attr($a['url']))).'); background-position: '.$cen.';"'; }
 	return '<div'.$img.'>'.do_shortcode($content).'</div>';
 }
 
@@ -252,7 +252,7 @@ function b_f_input($atts) {
 				break;
 		}
 		$txt  = '<input class="input'.$fw.'" id="legal-'.$ran.'" type="checkbox" name="legal">';
-		$txt .= '<p>'.$ob.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$plh.'" target="_blank">'.$plh.'</a>.</p>';
+		$txt .= '<p>'.$ob.__('I have read, understood and accept', 'bilnea').' '.$art.' <a href="'.esc_attr($a['url']).'" title="'.$plh.'" target="_blank">'.strtolower($plh).'</a>.</p>';
 		return $txt;
 	} else if (esc_attr($a['type']) == 'captcha') {
 		session_start();
@@ -462,7 +462,7 @@ function recientes($atts){
 		if (esc_attr($a['date']) == 'true' || esc_attr($a['author']) == 'true') {
 			$e .= '<div class="meta-info">';
 			if (esc_attr($a['author']) == 'true') {
-				$e .= __('Publicado por ', 'bilnea').get_the_author().' ';
+				$e .= __('Published by ', 'bilnea').get_the_author().' ';
 			}
 			if (esc_attr($a['date']) == 'true' && esc_attr($a['author']) == 'true') {
 				$e .= 'el ';
@@ -475,7 +475,7 @@ function recientes($atts){
 		$e .= '<a href="'.get_permalink().'" title="'.get_the_title().'"><h4>'.get_the_title().'</h4></a>';
 		if (esc_attr($a['excerpt']) == 'true') {
 			$e .= '<div class="extracto">'.get_the_excerpt().'</div>';
-			$e .= '<a class="read-more" href="'.get_permalink().'">'.__('Leer más', 'bilnea').'</a>';
+			$e .= '<a class="read-more" href="'.get_permalink().'">'.__('Read more', 'bilnea').'</a>';
 		}
 		$e .= '</div>';
 	endwhile;
@@ -512,7 +512,7 @@ add_shortcode('b_sidebar', 'b_f_select_sidebar');
 function b_f_breadcrumb($atts) {
 	$a = shortcode_atts(array(
 		'separator' => '»',
-		'home' => __('Inicio', 'bilnea'),
+		'home' => __('Home', 'bilnea'),
 		'length' => '1000000',
 	), $atts);
 	$sep = '<span class="delimiter">'.esc_attr($a['separator']).'</span>';
@@ -598,18 +598,15 @@ function titulo() {
 
 add_shortcode('b_title', 'titulo');
 
-function link_id($atts, $content = null) {
+function link_id($atts) {
 	$a = shortcode_atts(array(
 		'id' => null,
 		'class' => null,
 	), $atts);
 	$id = esc_attr($a['id']);
 	$cl = ' class="'.esc_attr($a['class']).'"';
-	if ($content == null) {
-		$content = the_title($id);
-	}
 	if ($id != null) {
-		return '<a href="'.get_permalink($id).'" title="'.get_the_title($id).'"'.$cl.'>'.$content.'</a>';
+		return '<a href="'.get_permalink($id).'" title="'.get_the_title($id).'"'.$cl.'>'.get_the_title($id).'</a>';
 	}
 }
 
@@ -1165,16 +1162,5 @@ function b_f_quote($atts, $content = null) {
 }
 
 add_shortcode('b_quote', 'b_f_quote');
-
-function b_f_categories() {
-	$opts = array(
-				'hide_empty'	=> 0,
-				'title_li' 		=> '',
-				'echo' 			=> 0
-			);
-	return '<ul class="category-wrapper">'.wp_list_categories($opts).'</ul>';
-}
-
-add_shortcode('b_categories', 'b_f_categories');
 
 ?>

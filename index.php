@@ -1,81 +1,71 @@
 <?php
-
 /**
- * Plantilla de la página de entradas
- *
+ * The template for displaying the home/index page.
+ * This template will also be called in any case where the Wordpress engine 
+ * doesn't know which template to use (e.g. 404 error)
  */
 
-$var_paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-include 'inc/data/data.query.php';
-
-$query = new WP_Query($args); 
+if ( have_posts() ) :
 
 get_header();
-
 ?>
+	<div id="primary" class="main-row">
+		<div id="content" role="main" class="span8 offset2">
 
-<div id="primary" class="main-row">
-	<div id="content" role="main" class="span8 offset2">
-		<article class="post">
-			<div class="the-content">
+				<?php while ( have_posts() ) : the_post(); ?>
 
-			<?php
+					<article class="post">
+					
+						<h2 class="title">
+							<a href="<?php the_permalink(); // Get the link to this post ?>" title="<?php the_title(); ?>">
+								<?php the_title(); // Show the title of the posts as a link ?>
+							</a>
+						</h2>
+						<div class="post-meta">
+							<?php the_time('m/d/Y'); // Display the time published ?> | 
+							<?php if( comments_open() ) : // If we have comments open on this post, display a link and count of them ?>
+								<span class="comments-link">
+									<?php comments_popup_link( __( 'Comment', 'break' ), __( '1 Comment', 'break' ), __( '% Comments', 'break' ) ); 
+									// Display the comment count with the applicable pluralization
+									?>
+								</span>
+							<?php endif; ?>
+						
+						</div><!--/post-meta -->
+						
+						<div class="the-content">
+							<?php the_content( 'Continue...' ); 
+							// This call the main content of the post, the stuff in the main text box while composing.
+							// This will wrap everything in p tags and show a link as 'Continue...' where/if the
+							// author inserted a <!-- more --> link in the post body
+							?>
+							
+							<?php wp_link_pages(); // This will display pagination links, if applicable to the post ?>
+						</div><!-- the-content -->
+		
+						<div class="meta clearfix">
+							<div class="category"><?php echo get_the_category_list(); // Display the categories this post belongs to, as links ?></div>
+							<div class="tags"><?php echo get_the_tag_list( '| &nbsp;', '&nbsp;' ); // Display the tags this post has, as links separated by spaces and pipes ?></div>
+						</div><!-- Meta -->
+						
+					</article>
 
-			// Variables globales
-			global $b_g_language;
+				<?php endwhile; // OK, let's stop the posts loop once we've exhausted our query/number of posts ?>
+				
+				<!-- pagintation -->
+				<div id="pagination" class="clearfix">
+					<div class="past-page"><?php previous_posts_link( 'newer' ); // Display a link to  newer posts, if there are any, with the text 'newer' ?></div>
+					<div class="next-page"><?php next_posts_link( 'older' ); // Display a link to  older posts, if there are any, with the text 'older' ?></div>
+				</div><!-- pagination -->
 
-			//locales
-			$var_blog = '<div class="blog-wrapper">';
-			$var_id = 1;
 
-			if ($query->have_posts()) {
 
-				while ($query->have_posts()) {
+		</div><!-- #content .site-content -->
+	</div><!-- #primary .content-area -->
+<?php get_footer(); // This fxn gets the footer.php file and renders it ?>
+			<?php else :
+				
+				include_once(get_stylesheet_directory().'/404.php');
 
-					$query->the_post();
-
-					include 'inc/data/data.blog.php';
-
-					switch ($var_id%2) {
-						case 0:
-							$var_blog .= '<div data-id="'.get_the_ID().'" class="entry-even auto-height">'.do_shortcode(preg_replace_callback("/{{b_image-([0-9a-zA-Z]+)}}/", "b_f_i_image", str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_blog-content-even-'.$b_g_language)))).'</div>';
-							break;
-						default:
-							$var_blog .= '<div data-id="'.get_the_ID().'" class="entry-odd auto-height">'.do_shortcode(preg_replace_callback("/{{b_image-([0-9a-zA-Z]+)}}/", "b_f_i_image", str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_blog-content-odd-'.$b_g_language)))).'</div>';
-							break;
-					}
-
-					$var_id++;
-
-				}
-
-				$var_blog .= '</div>';
-
-				include 'inc/data/data.pagination.php';
-
-				echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_blog-content-page-'.$b_g_language)));
-
-			} else {
-
-				$var_shortcodes = array('{{b_blog}}', '{{b_pagination}}');
-				$var_replace = array(__('Nothing found', 'bilnea'), '');
-
-				echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_blog-content-page-'.$b_g_language)));
-
-			}
-
-			?>
-
-			</div>
-		</article>
-	</div>
-</div>
-
-<?php
-
-get_footer();
-
-wp_reset_postdata();
-
-?>
+			endif; // OK, I think that takes care of both scenarios (having posts or not having any posts) ?>
