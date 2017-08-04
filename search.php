@@ -1,50 +1,112 @@
 <?php
-/**
- * The template for displaying any single page.
- *
- */
 
-global $query_string;
+global $wp_query;
 
-get_header(); // This fxn gets the header.php file and renders it ?>
+get_header();
+
+?>
 	<div id="primary" class="row-fluid">
 		<div id="content" role="main" class="span8 offset2">
-
-			<?php if ( have_posts() ) : 
-			// Do we have any posts/pages in the databse that match our query?
+			<div class="search-title">
+				<div class="container">
+				<h1>
+					<?php
+					if ($wp_query->found_posts > 0) {
+						printf(__('%1$s search results for "%2$s"', 'bilnea'), $wp_query->found_posts, get_search_query());
+					} else {
+						printf(__('No results for "%1$s"', 'bilnea'), get_search_query());
+					}
+					?>
+				</h1>
+				</div>
+			</div>
+			<?php 
+			if (have_posts()) :
 			?>
+				<div class="container">
+					<?php
+					while (have_posts()) : the_post();
 
-				Se han encontrado <?php echo $wp_query->found_posts; ?> resultados para "<?php echo get_search_query(); ?>".
+						$var_title = get_the_title();
+						$var_excerpt = b_f_get_excerpt(preg_replace('~\[([a-z]|[A-Z]|[0-9]|\/|_|=|"| |<|>|-|#|\(|\)|.|,)+?\]~s', '', strip_tags(get_the_content())), 60);
+						$var_content = preg_replace('~\[([a-z]|[A-Z]|[0-9]|\/|_|=|"| |<|>|-|#|\(|\)|.|,)+?\]~s', '', strip_tags(get_the_content()));
 
-				<?php while ( have_posts() ) : the_post(); 
-				// If we have a page to show, start a loop that will display it
+						$var_keys = explode(' ', $s);
+
+						$var_title = preg_replace('/('.implode('|', $var_keys) .')/iu', '<strong class="title-highlight">\0</strong>', $var_title);
+						$var_excerpt = preg_replace('/('.implode('|', $var_keys) .')/iu', '<strong class="excerpt-highlight">\0</strong>', $var_excerpt);
+
+						$var_total = count(explode(' ', get_the_title()))+count(explode(' ', $var_content));
+						$var_ocurrances = substr_count(strtolower(get_the_title().' '.$var_content), strtolower($s));
+
+						?>
+						<article class="resultado" style="margin-top: 20px;">
+							<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+								<h2 class="question">
+									<?= $var_title ?>
+								</h2>
+							</a>
+							<div class="the-content">
+								<span class="search-ocurrances"><?= number_format((float)$var_ocurrances/$var_total, 3, "'", '').'%' ?></span><?= $var_excerpt ?>
+							</div>	
+						</article>
+						<?php
+					endwhile;
+
+					$var_current = max(1, get_query_var('paged'));
+
+					$var_pagination_block = paginate_links( array(
+						'format' => __('page', 'bilnea').'/%#%',
+						'current' => $var_current,
+						'total' => $wp_query->max_num_pages,
+						'prev_text' => '‹ <span>'.__('Previous', 'bilnea').'</span>',
+						'next_text' => '<span>'.__('Next', 'bilnea').'</span> ›'
+					));
+
+					$var_pagination = '<div class="b_pagination"><span class="total-pages">'.sprintf(__('Page %1$s of %2$s', 'bilnea'), $var_current, $wp_query->max_num_pages).'</span>';
+
+					if ($var_current > 2) {
+						$var_pagination .= '<a class="first page-numbers" href="'.get_permalink().'">« <span>'.__('First', 'bilnea').'</span></a>';
+					}
+
+					$var_pagination .= $var_pagination_block;
+
+					if ($var_current < ($wp_query->max_num_pages-2)) {
+						$var_pagination .= '<a class="last page-numbers" href="'.get_permalink().'/'.__('page', 'bilnea').'/'.($wp_query->max_num_pages-2).'"><span>'.__('Last', 'bilnea').' »</span></a>';
+					}
+
+					$var_pagination .= '</div>';
+
+					if ($wp_query->max_num_pages == 1) {
+						$var_pagination = '';
+					}
+
+					echo $var_pagination;
+
+					?>
+
+				<?php
+				else :
+				?>
+				<div class="container" style="margin: 20px auto 40px auto">
+					<article class="resultado">
+						<span style="display: block; margin-bottom: 10px; font-size: 14px; color: #4D4D4D;">
+							<?php the_time('j | F, Y'); ?>
+						</span>
+						<div class="the-content">
+							<?php
+							_e('Try to redefine your search using another term, or visit the homepage.', 'bilnea');
+							?>
+						</div>	
+					</article>
+				</div>
+				<?php
+				endif;
 				?>
 
-					<article class="post">
-					
-						<h1 class="title"><?php the_title(); // Display the title of the page ?></h1>
-						
-						<div class="the-content">
-							<?php the_content(); 
-							// This call the main content of the page, the stuff in the main text box while composing.
-							// This will wrap everything in p tags
-							?>
-							
-							<?php wp_link_pages(); // This will display pagination links, if applicable to the page ?>
-						</div><!-- the-content -->
-						
-					</article>
-
-				<?php endwhile; // OK, let's stop the page loop once we've displayed it ?>
-
-			<?php else : // Well, if there are no posts to display and loop through, let's apologize to the reader (also your 404 error) ?>
-				
-				<article class="post error">
-					<h1 class="404">Nothing posted yet</h1>
-				</article>
-
-			<?php endif; // OK, I think that takes care of both scenarios (having a page or not having a page to show) ?>
-
-		</div><!-- #content .site-content -->
-	</div><!-- #primary .content-area -->
-<?php get_footer(); // This fxn gets the footer.php file and renders it ?>
+			</div>
+		</div>
+	</div>
+<?php
+get_footer();
+?>
