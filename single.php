@@ -10,6 +10,7 @@ if (have_posts()) {
 	while (have_posts()) {
 
 		the_post();
+		$id = get_the_ID();
 
 		get_header();
 
@@ -67,7 +68,7 @@ if (have_posts()) {
 
 					if (!function_exists('b_f_i_image')) {
 						function b_f_i_image($arg = array('', 'thumbnail')) {
-							return wp_get_attachment_image_src(get_post_thumbnail_id(get_the_id()), $arg[1])[0];
+							return wp_get_attachment_image_src(get_post_thumbnail_id($id), $arg[1])[0];
 						}
 					}
 
@@ -163,7 +164,7 @@ if (have_posts()) {
 					$var_shortcodes = array('{{b_title}}', '{{b_permalink}}', '{{b_content}}', '{{b_date}}', '{{b_categories}}', '{{b_author}}', '{{b_tags}}', '{{b_comments-number}}', '{{b_comments-form}}', '{{b_comments-list}}');
 					$var_replace = array(get_the_title(), get_permalink(), apply_filters('the_content',$post->post_content), get_the_date(b_f_option('b_opt_blog-date-'.$b_g_language)), $var_categories, get_the_author_link(), $var_tags, $var_comments, $var_comments_form, $var_comments_list);
 
-					echo do_shortcode(preg_replace_callback("/{{b_share(-)?([a-zA-Z]+)?}}/", "b_f_i_share", preg_replace_callback("/{{b_id-([0-9]+)}}/", "b_f_i_url",  preg_replace_callback("/{{b_image-([0-9a-zA-Z]+)}}/", "b_f_i_image", str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_blog-content-single-'.$b_g_language))))));
+					echo preg_replace_callback("/{{b_share(-)?([a-zA-Z]+)?}}/", "b_f_i_share", preg_replace_callback("/{{b_id-([0-9]+)}}/", "b_f_i_url",  preg_replace_callback("/{{b_image-([0-9a-zA-Z]+)}}/", "b_f_i_image", str_replace($var_shortcodes, $var_replace, do_shortcode(b_f_option('b_opt_blog-content-single-'.$b_g_language))))));
 
 					?>
 

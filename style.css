@@ -111,7 +111,6 @@ script {
 a, input, button, textarea {
 	outline: none;
 	-webkit-box-shadow: none;
-	   -moz-box-shadow: none;
 	    -ms-box-shadow: none;
 	     -o-box-shadow: none;
 	        box-shadow: none;
@@ -255,7 +254,6 @@ html input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover {
 	-webkit-box-shadow: 0 0 3px rgba(0,0,0,0.5);
-	   -moz-box-shadow: 0 0 3px rgba(0,0,0,0.5);
 	        box-shadow: 0 0 3px rgba(0,0,0,0.5);
 }
 
@@ -268,19 +266,18 @@ html input[type="button"]:active,
 input[type="reset"]:active,
 input[type="submit"]:active {
 	-webkit-box-shadow: 0 0 3px rgba(0,0,0,0.5);
-	   -moz-box-shadow: 0 0 3px rgba(0,0,0,0.5);
 	        box-shadow: 0 0 3px rgba(0,0,0,0.5);
 }
 
 input[type="checkbox"],
 input[type="radio"] {
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 	padding: 0;
 }
 
 input[type="search"] {
 	-webkit-appearance: textfield;
-	-moz-box-sizing: content-box;
 	-webkit-box-sizing: content-box;
 	box-sizing: content-box;
 }
@@ -373,9 +370,7 @@ input[type="checkbox"]:not(.b_input_checkbox) + label:after {
 	top: -1px;
 	left: 4px;
 	-webkit-transform: rotate(40deg);
-	   -moz-transform: rotate(40deg);
 	    -ms-transform: rotate(40deg);
-	     -o-transform: rotate(40deg);
 	        transform: rotate(40deg);
 }
 
@@ -465,9 +460,7 @@ input.b_input_checkbox + label::after {
 	left: 4px;
 	cursor: pointer;
 	-webkit-transform: rotate(40deg);
-	   -moz-transform: rotate(40deg);
 	    -ms-transform: rotate(40deg);
-	     -o-transform: rotate(40deg);
 	        transform: rotate(40deg);
 }
 
@@ -631,19 +624,17 @@ pre {
 	padding: 1.6em;
 	overflow: auto;
 	max-width: 100%;
-	box-shadow: 0 3px 5px #ddd inset;
+	-webkit-box-shadow: 0 3px 5px #ddd inset;
+	        box-shadow: 0 3px 5px #ddd inset;
 }
 
 a {
 	-webkit-transition: all 0.25s ease-in-out;
-	   -moz-transition: all 0.25s ease-in-out;
-	    -ms-transition: all 0.25s ease-in-out;
 	     -o-transition: all 0.25s ease-in-out;
 	        transition: all 0.25s ease-in-out;
 	text-decoration: none;
 	outline: 0;
 	-webkit-box-shadow: none;
-	   -moz-box-shadow: none;
 	    -ms-box-shadow: none;
 	     -o-box-shadow: none;
 	        box-shadow: none;
@@ -658,8 +649,6 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
 	-webkit-transition: background-color 50000s ease-in-out 0s;
-	   -moz-transition: background-color 50000s ease-in-out 0s;
-	    -ms-transition: background-color 50000s ease-in-out 0s;
 	     -o-transition: background-color 50000s ease-in-out 0s;
 	        transition: background-color 50000s ease-in-out 0s;
 }
@@ -704,11 +693,101 @@ input:-webkit-autofill:active {
 .row > * {
 	display: inline-block;
 	float: left;
+	width: 100%;
+}
+
+html[lang="ar"] .row > * {
+	float: right;
+	margin-left: 0;
 }
 
 .row > .first {
 	margin-left: 0;
 	clear: left;
+}
+
+.x11 {
+	width: 100.0000%;
+}
+
+.x12 {
+	width: 50.00000%;
+}
+
+.x13 {
+	width: 33.33333%;
+}
+
+.x14 {
+	width: 25.00000%;
+}
+
+.x15 {
+	width: 20.00000%;
+}
+
+.x16 {
+	width: 16.66666%;
+}
+
+.x17 {
+	width: 14.28571%;
+}
+
+.x18 {
+	width: 12.50000%;
+}
+
+.x19 {
+	width: 11.11111%;
+}
+
+.x10 {
+	width: 10%;
+}
+
+.x23 {
+	width: 66.66666%;
+}
+
+.x25 {
+	width: 40.00000%;
+}
+
+.x27 {
+	width: 28.57142%;
+}
+
+.x34 {
+	width: 75.00000%;
+}
+
+.x35 {
+	width: 60.00000%;
+}
+
+.x37 {
+	width: 42.85714%;
+}
+
+.x38 {
+	width: 37.50000%;
+}
+
+.x45 {
+	width: 80.00000%;
+}
+
+.x47 {
+	width: 57.14285%;
+}
+
+.x56 {
+	width: 83.33333%;
+}
+
+.x58 {
+	width: 62.50000%;
 }
 
 html[lang="ar"] .row > .first {
@@ -903,14 +982,18 @@ header#header nav li {
 @keyframes menuanimacion {
 	
 	from {
-		transform: scale(2) skew(20deg, 0) translate3d(10px, 0, 0);
-		transform-origin: left bottom;
+		-webkit-transform: scale(2) skew(20deg, 0) translate3d(10px, 0, 0);
+		        transform: scale(2) skew(20deg, 0) translate3d(10px, 0, 0);
+		-webkit-transform-origin: left bottom;
+		        transform-origin: left bottom;
 		opacity: 0;
 	}
 
 	to {
-		transform: scale(1) skew(0, 0) translate3d(0, 0, 0);
-		transform-origin: left bottom;
+		-webkit-transform: scale(1) skew(0, 0) translate3d(0, 0, 0);
+		        transform: scale(1) skew(0, 0) translate3d(0, 0, 0);
+		-webkit-transform-origin: left bottom;
+		        transform-origin: left bottom;
 		opacity: 1;
 	}
 }
@@ -948,8 +1031,6 @@ header#header nav li {
 	text-transform: uppercase;
 	cursor: pointer;
 	-webkit-transition: all 0.2s ease;
-	   -moz-transition: all 0.2s ease;
-	    -ms-transition: all 0.2s ease;
 	     -o-transition: all 0.2s ease;
 	        transition: all 0.2s ease;
 }
@@ -1027,9 +1108,7 @@ header#header nav li {
 	z-index: 1;
 	bottom: -5px;
 	-webkit-transform: translateY(100%);
-	   -moz-transform: translateY(100%);
 	    -ms-transform: translateY(100%);
-	     -o-transform: translateY(100%);
 	        transform: translateY(100%);
 	width: 100%;
 	left: 0;
@@ -1094,7 +1173,6 @@ header#header #searchform {
 	border-radius: 4px;
 	outline: none;
 	-webkit-box-shadow: none;
-	   -moz-box-shadow: none;
 	        box-shadow: none;
 }
 
@@ -1116,18 +1194,23 @@ header#header.sticky {
 	width: 100%;
 	z-index: 100;
 	-webkit-transition: transform 0.2s ease-in-out;
-	   -moz-transition: transform 0.2s ease-in-out;
-	    -ms-transition: transform 0.2s ease-in-out;
 	     -o-transition: transform 0.2s ease-in-out;
+	        -webkit-transition: -webkit-transform 0.2s ease-in-out;
+	        transition: -webkit-transform 0.2s ease-in-out;
 	        transition: transform 0.2s ease-in-out;
+	        transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
 }
 
 header#header.static {
-	transform: translateY(-100%);
+	-webkit-transform: translateY(-100%);
+	    -ms-transform: translateY(-100%);
+	        transform: translateY(-100%);
 }
 
 header#header.animated {
-	transform: translateY(0%);
+	-webkit-transform: translateY(0%);
+	    -ms-transform: translateY(0%);
+	        transform: translateY(0%);
 }
 
 /* Menú principal */
@@ -1154,8 +1237,6 @@ header#header .searchform input[type="text"] {
 
 header ul.menu li.menu-item:after {
 	-webkit-transition: all 0.8s ease;
-	   -moz-transition: all 0.8s ease;
-	    -ms-transition: all 0.8s ease;
 	     -o-transition: all 0.8s ease;
 	        transition: all 0.8s ease;
 	position: absolute;
@@ -1168,8 +1249,6 @@ header ul.menu li.menu-item:after {
 
 header ul.menu li:hover:after {
 	-webkit-transition: all 0.4s ease;
-	   -moz-transition: all 0.4s ease;
-	    -ms-transition: all 0.4s ease;
 	     -o-transition: all 0.4s ease;
 	        transition: all 0.4s ease;
 }
@@ -1191,9 +1270,10 @@ header#header #searchsubmit {
 	height: 32px;
 	font-size: 0;
 	text-indent: -9999px;
-	appearance: none;
+	-webkit-appearance: none;
+	   -moz-appearance: none;
+	        appearance: none;
 	-webkit-box-shadow: none !important;
-	   -moz-box-shadow: none !important;
 	    -ms-box-shadow: none !important;
 	     -o-box-shadow: none !important;
 	        box-shadow: none !important;
@@ -1202,8 +1282,6 @@ header#header #searchsubmit {
 	border: none;
 	cursor: pointer;
 	-webkit-transition: background 0.3s;
-	   -moz-transition: background 0.3s;
-	    -ms-transition: background 0.3s;
 	     -o-transition: background 0.3s;
 	        transition: background 0.3s;
 }
@@ -1241,8 +1319,6 @@ header#header #searchsubmit {
 
 .mobile-button span {
 	-webkit-transition: background 0s 0.3s;
-	   -moz-transition: background 0s 0.3s;
-	    -ms-transition: background 0s 0.3s;
 	     -o-transition: background 0s 0.3s;
 	        transition: background 0s 0.3s;
 }
@@ -1250,31 +1326,29 @@ header#header #searchsubmit {
 .mobile-button span::before,
 .mobile-button span::after {
 	-webkit-transition-duration: 0.3s, 0.3s;
-	   -moz-transition-duration: 0.3s, 0.3s;
-	    -ms-transition-duration: 0.3s, 0.3s;
 	     -o-transition-duration: 0.3s, 0.3s;
 	        transition-duration: 0.3s, 0.3s;
 	-webkit-transition-delay: 0.3s, 0s;
-	   -moz-transition-delay: 0.3s, 0s;
-	    -ms-transition-delay: 0.3s, 0s;
 	     -o-transition-delay: 0.3s, 0s;
 	        transition-delay: 0.3s, 0s;
 }
 
 .mobile-button span::before {
 	-webkit-transition-property: top, transform;
-	   -moz-transition-property: top, transform;
-	    -ms-transition-property: top, transform;
 	     -o-transition-property: top, transform;
+	        -webkit-transition-property: top, -webkit-transform;
+	        transition-property: top, -webkit-transform;
 	        transition-property: top, transform;
+	        transition-property: top, transform, -webkit-transform;
 }
 
 .mobile-button span::after {
 	-webkit-transition-property: bottom, transform;
-	   -moz-transition-property: bottom, transform;
-	    -ms-transition-property: bottom, transform;
 	     -o-transition-property: bottom, transform;
+	        -webkit-transition-property: bottom, -webkit-transform;
+	        transition-property: bottom, -webkit-transform;
 	        transition-property: bottom, transform;
+	        transition-property: bottom, transform, -webkit-transform;
 }
 
 .mobile-button.active span {
@@ -1284,26 +1358,20 @@ header#header #searchsubmit {
 .mobile-button.active span::before {
 	top: 0;
 	-webkit-transform: rotate(45deg);
-	   -moz-transform: rotate(45deg);
 	    -ms-transform: rotate(45deg);
-	     -o-transform: rotate(45deg);
 	        transform: rotate(45deg);
 }
 
 .mobile-button.active span::after {
 	bottom: 0;
 	-webkit-transform: rotate(-45deg);
-	   -moz-transform: rotate(-45deg);
 	    -ms-transform: rotate(-45deg);
-	     -o-transform: rotate(-45deg);
 	        transform: rotate(-45deg);
 }
 
 .mobile-button.active span::before,
 .mobile-button.active span::after {
 	-webkit-transition-delay: 0s, 0.3s;
-	   -moz-transition-delay: 0s, 0.3s;
-	    -ms-transition-delay: 0s, 0.3s;
 	     -o-transition-delay: 0s, 0.3s;
 	        transition-delay: 0s, 0.3s;
 }
@@ -1326,9 +1394,7 @@ header#header #searchsubmit {
 	position: absolute;
 	left: 50%;
 	-webkit-transform: translateX(-50%);
-	   -moz-transform: translateX(-50%);
 	    -ms-transform: translateX(-50%);
-	     -o-transform: translateX(-50%);
 	        transform: translateX(-50%);
 }
 
@@ -1419,13 +1485,10 @@ div[class^="slider-"] {
 	opacity: 0;
 	position: absolute;
 	-webkit-transform: scale(2);
-	   -moz-transform: scale(2);
 	    -ms-transform: scale(2);
-	     -o-transform: scale(2);
 	        transform: scale(2);
 	-webkit-transition: all 600ms cubic-bezier(0.365, 0, 0.145, 1);
 	-webkit-transition: all 600ms cubic-bezier(0.365, -0.005, 0.145, 1.005); 
-	   -moz-transition: all 600ms cubic-bezier(0.365, -0.005, 0.145, 1.005); 
 	     -o-transition: all 600ms cubic-bezier(0.365, -0.005, 0.145, 1.005); 
 	        transition: all 600ms cubic-bezier(0.365, -0.005, 0.145, 1.005);
 }
@@ -1433,9 +1496,7 @@ div[class^="slider-"] {
 .boton-overlay:hover .overlay {
 	opacity: 1;
 	-webkit-transform: scale(1);
-	   -moz-transform: scale(1);
 	    -ms-transform: scale(1);
-	     -o-transform: scale(1);
 	        transform: scale(1);
 }
 
@@ -1514,41 +1575,26 @@ div[class^="slider-"] {
 
 .b_loader .b_out_1 {
 	-webkit-animation-delay: 1.52s;
-	   -moz-animation-delay: 1.52s;
-	    -ms-animation-delay: 1.52s;
-	     -o-animation-delay: 1.52s;
 	        animation-delay: 1.52s;
 }
 
 .b_loader .b_out_2 {
 	-webkit-animation-delay: 0.3s;
-	   -moz-animation-delay: 0.3s;
-	    -ms-animation-delay: 0.3s;
-	     -o-animation-delay: 0.3s;
 	        animation-delay: 0.3s;
 }
 
 .b_loader .b_out_3 {
 	-webkit-animation-delay: 0.61s;
-	   -moz-animation-delay: 0.61s;
-	    -ms-animation-delay: 0.61s;
-	     -o-animation-delay: 0.61s;
 	        animation-delay: 0.61s;
 }
 
 .b_loader .b_out_4 {
 	-webkit-animation-delay: 0.91s;
-	   -moz-animation-delay: 0.91s;
-	    -ms-animation-delay: 0.91s;
-	     -o-animation-delay: 0.91s;
 	        animation-delay: 0.91s;
 }
 
 .b_loader .b_out_5 {
 	-webkit-animation-delay: 1.22s;
-	   -moz-animation-delay: 1.22s;
-	    -ms-animation-delay: 1.22s;
-	     -o-animation-delay: 1.22s;
 	        animation-delay: 1.22s;
 }
 
@@ -1558,161 +1604,67 @@ div[class^="slider-"] {
 	0% {
 		opacity: 1;
 		z-index:99;
-		transform: rotate(180deg);
-		animation-timing-function: ease-out;
+		-webkit-transform: rotate(180deg);
+		        transform: rotate(180deg);
+		-webkit-animation-timing-function: ease-out;
+		        animation-timing-function: ease-out;
 	}
 
 	7% {
 		opacity: 1;
-		transform: rotate(300deg);
-		animation-timing-function: linear;
+		-webkit-transform: rotate(300deg);
+		        transform: rotate(300deg);
+		-webkit-animation-timing-function: linear;
+		        animation-timing-function: linear;
 		origin:0%;
 	}
 
 	30% {
 		opacity: 1;
-		transform:rotate(410deg);
-		animation-timing-function: ease-in-out;
+		-webkit-transform:rotate(410deg);
+		        transform:rotate(410deg);
+		-webkit-animation-timing-function: ease-in-out;
+		        animation-timing-function: ease-in-out;
 		origin:7%;
 	}
 
 	39% {
 		opacity: 1;
-		transform: rotate(645deg);
-		animation-timing-function: linear;
+		-webkit-transform: rotate(645deg);
+		        transform: rotate(645deg);
+		-webkit-animation-timing-function: linear;
+		        animation-timing-function: linear;
 		origin:30%;
 	}
 
 	70% {
 		opacity: 1;
-		transform: rotate(770deg);
-		animation-timing-function: ease-out;
+		-webkit-transform: rotate(770deg);
+		        transform: rotate(770deg);
+		-webkit-animation-timing-function: ease-out;
+		        animation-timing-function: ease-out;
 		origin:39%;
 	}
 
 	75% {
 		opacity: 1;
-		transform: rotate(900deg);
-		animation-timing-function: ease-out;
+		-webkit-transform: rotate(900deg);
+		        transform: rotate(900deg);
+		-webkit-animation-timing-function: ease-out;
+		        animation-timing-function: ease-out;
 		origin:70%;
 	}
 
 	76% {
 	opacity: 0;
-		transform:rotate(900deg);
+		-webkit-transform:rotate(900deg);
+		        transform:rotate(900deg);
 	}
 
 	100% {
 	opacity: 0;
-		transform: rotate(900deg);
-	}
-}
-
-@-o-keyframes orbit {
-	0% {
-		opacity: 1;
-		z-index:99;
-		-o-transform: rotate(180deg);
-		-o-animation-timing-function: ease-out;
-	}
-
-	7% {
-		opacity: 1;
-		-o-transform: rotate(300deg);
-		-o-animation-timing-function: linear;
-		-o-origin:0%;
-	}
-
-	30% {
-		opacity: 1;
-		-o-transform:rotate(410deg);
-		-o-animation-timing-function: ease-in-out;
-		-o-origin:7%;
-	}
-
-	39% {
-		opacity: 1;
-		-o-transform: rotate(645deg);
-		-o-animation-timing-function: linear;
-		-o-origin:30%;
-	}
-
-	70% {
-		opacity: 1;
-		-o-transform: rotate(770deg);
-		-o-animation-timing-function: ease-out;
-		-o-origin:39%;
-	}
-
-	75% {
-		opacity: 1;
-		-o-transform: rotate(900deg);
-		-o-animation-timing-function: ease-out;
-		-o-origin:70%;
-	}
-
-	76% {
-	opacity: 0;
-		-o-transform:rotate(900deg);
-	}
-
-	100% {
-	opacity: 0;
-		-o-transform: rotate(900deg);
-	}
-}
-
-@-ms-keyframes orbit {
-	0% {
-		opacity: 1;
-		z-index:99;
-		-ms-transform: rotate(180deg);
-		-ms-animation-timing-function: ease-out;
-	}
-
-	7% {
-		opacity: 1;
-		-ms-transform: rotate(300deg);
-		-ms-animation-timing-function: linear;
-		-ms-origin:0%;
-	}
-
-	30% {
-		opacity: 1;
-		-ms-transform:rotate(410deg);
-		-ms-animation-timing-function: ease-in-out;
-		-ms-origin:7%;
-	}
-
-	39% {
-		opacity: 1;
-		-ms-transform: rotate(645deg);
-		-ms-animation-timing-function: linear;
-		-ms-origin:30%;
-	}
-
-	70% {
-		opacity: 1;
-		-ms-transform: rotate(770deg);
-		-ms-animation-timing-function: ease-out;
-		-ms-origin:39%;
-	}
-
-	75% {
-		opacity: 1;
-		-ms-transform: rotate(900deg);
-		-ms-animation-timing-function: ease-out;
-		-ms-origin:70%;
-	}
-
-	76% {
-	opacity: 0;
-		-ms-transform:rotate(900deg);
-	}
-
-	100% {
-	opacity: 0;
-		-ms-transform: rotate(900deg);
+		-webkit-transform: rotate(900deg);
+		        transform: rotate(900deg);
 	}
 }
 
@@ -1767,60 +1719,6 @@ div[class^="slider-"] {
 	100% {
 	opacity: 0;
 		-webkit-transform: rotate(900deg);
-	}
-}
-
-@-moz-keyframes orbit {
-	0% {
-		opacity: 1;
-		z-index:99;
-		-moz-transform: rotate(180deg);
-		-moz-animation-timing-function: ease-out;
-	}
-
-	7% {
-		opacity: 1;
-		-moz-transform: rotate(300deg);
-		-moz-animation-timing-function: linear;
-		-moz-origin:0%;
-	}
-
-	30% {
-		opacity: 1;
-		-moz-transform:rotate(410deg);
-		-moz-animation-timing-function: ease-in-out;
-		-moz-origin:7%;
-	}
-
-	39% {
-		opacity: 1;
-		-moz-transform: rotate(645deg);
-		-moz-animation-timing-function: linear;
-		-moz-origin:30%;
-	}
-
-	70% {
-		opacity: 1;
-		-moz-transform: rotate(770deg);
-		-moz-animation-timing-function: ease-out;
-		-moz-origin:39%;
-	}
-
-	75% {
-		opacity: 1;
-		-moz-transform: rotate(900deg);
-		-moz-animation-timing-function: ease-out;
-		-moz-origin:70%;
-	}
-
-	76% {
-		opacity: 0;
-		-moz-transform:rotate(900deg);
-	}
-
-	100% {
-		opacity: 0;
-		-moz-transform: rotate(900deg);
 	}
 }
 

@@ -1,0 +1,749 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: bilnea Wordpress theme\n"
+"POT-Creation-Date: 2017-04-10 11:02+0200\n"
+"PO-Revision-Date: 2017-04-10 11:02+0200\n"
+"Last-Translator: \n"
+"Language-Team: Samuel E. Cerezo <samuelcerezo@bilnea.com>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: archive.php:58 index.php:62
+msgid "Nothing found"
+msgstr "Sin resultados"
+
+#: footer.php:73
+msgid "Made with <i class=\"fa fa-heart-o\"></i> by"
+msgstr "Hecho con <i class=\"fa fa-heart-o\"></i> por"
+
+#: footer.php:73
+msgid "bilnea. Communication & Digital Marketing Agency"
+msgstr "bilnea. Agencia de Comunicación y Marketing Digital"
+
+#: functions.php:539
+msgid "* I have read, understood and accept the "
+msgstr "* He leído, entiendo y acepto la "
+
+#: functions.php:539
+msgid "privacy policy"
+msgstr "política de privacidad"
+
+#: header.php:94
+#, php-format
+msgid ""
+"We use our own and third-part <em>cookies</em> to analyse the use and "
+"measurement of our web in order to improve our services. If you go on "
+"surfing, we assume you acceept their use. <br />You can change your settings "
+"or find more information <a href=\"%1$s\" target=\"_blank\" title=\"%2$s "
+"cookies policy\">here</a>."
+msgstr ""
+"Utilizamos <em>cookies</em> propias y de terceros para realizar análisis de "
+"uso y de medición de nuestra web para mejoras de nuestros servicios. Si "
+"continúa navegando, consideramos que acepta su uso. <br />Puede cambiar la "
+"configuración u obtener más información <a href=\"%1$s\" target=\"_blank\" "
+"title=\"Política de cookies de %2$s\">aquí</a>."
+
+#: header.php:98
+msgid "Ok"
+msgstr "Aceptar"
+
+#: inc/admin/admin.forms.php:134
+#, php-format
+msgid "Response to the message sent from &quot;%s&quot; website "
+msgstr "Respuesta al mensaje enviado desde la página web &quot;%s&quot; "
+
+#: inc/ajax/ajax.backup.php:99 inc/ajax/ajax.form.php:137
+msgid ""
+"Your message has been sucesfully sent.<br /><br />Here is a copy of your "
+"message."
+msgstr ""
+"Tu mensaje se ha enviado correctamente.<br /><br />Aquí tienes una copia del "
+"mismo."
+
+#: inc/ajax/ajax.backup.php:105 inc/ajax/ajax.form.php:143
+msgid ""
+"Please do not respond directly to this e-mail. The inbox of this account is "
+"disabled."
+msgstr ""
+"Por favor, no respondas a este mensaje. La recepción de mensajes para esta "
+"cuenta está deshabilitada."
+
+#: inc/ajax/ajax.backup.php:108 inc/ajax/ajax.form.php:146
+msgid "Here is a copy of your message to"
+msgstr "Aquí tienes una copia de tu mensaje enviado a"
+
+#: inc/ajax/ajax.backup.php:112 inc/ajax/ajax.form.php:150
+msgid "Message sent sucesfully. Please wait a moment."
+msgstr "Mensaje enviado correctamente. Por favor, espera un momento."
+
+#: inc/ajax/ajax.backup.php:120 inc/ajax/ajax.form.php:158
+msgid ""
+"Sorry, an error has ocurred sending your message. Please try again later."
+msgstr ""
+"Lo sentimos, ha ocurrido un error al enviar el mensaje. Por favor, vuelva a "
+"intentarlo más tarde."
+
+#: inc/ajax/ajax.mailchimp.php:41
+msgid "You are already subscribed to our newsletter"
+msgstr "Ya estás suscrito a nuestro boletín de noticias"
+
+#: inc/ajax/ajax.mailchimp.php:67 inc/ajax/ajax.mailchimp.php:73
+msgid "You're subscribed. Please, wait a moment."
+msgstr "Te has suscrito correctamente. Un momento."
+
+#: inc/ajax/ajax.mailchimp.php:69
+msgid "You've been subscribed to our newsletter succesfully."
+msgstr "Te has suscrito a nuestro boletín de noticias correctamente."
+
+#: inc/ajax/ajax.mailchimp.php:75
+msgid ""
+"You're subscribed. Shortly, you will be e-mailed with a request to confirm "
+"your membership. Please make sure to click the link in that message to "
+"confirm your subscription."
+msgstr ""
+"Te has suscrito correctamente. En breve recibirás un correo electrónico. "
+"Pulsa en el enlace que te mandaremos en este correo para confirmar tu "
+"suscripción."
+
+#: inc/ajax/ajax.mailchimp.php:78
+msgid ""
+"You've been unsubscribed from our newsletter sucesfully. We're sorry to see "
+"you go."
+msgstr ""
+"Te has dado de baja de nuestro boletín de noticias correctamente. Sentimos "
+"tu marcha."
+
+#: inc/data/data.blog.php:27 single.php:57
+msgid "No comments"
+msgstr "Sin comentarios"
+
+#: inc/data/data.blog.php:29 single.php:59
+msgid " comments"
+msgstr " comentarios"
+
+#: inc/data/data.blog.php:31 single.php:61
+msgid "1 comment"
+msgstr "1 comentario"
+
+#: inc/data/data.blog.php:35 single.php:65
+msgid "Comments are disabled"
+msgstr "Comentarios deshabilitados"
+
+#: inc/data/data.globals.php:18 inc/shortcodes/shortcodes.form.php:346
+msgid "January"
+msgstr "Enero"
+
+#: inc/data/data.globals.php:19 inc/shortcodes/shortcodes.form.php:346
+msgid "February"
+msgstr "Febrero"
+
+#: inc/data/data.globals.php:20 inc/shortcodes/shortcodes.form.php:346
+msgid "March"
+msgstr "Marzo"
+
+#: inc/data/data.globals.php:21 inc/shortcodes/shortcodes.form.php:346
+msgid "April"
+msgstr "Abril"
+
+#: inc/data/data.globals.php:22 inc/shortcodes/shortcodes.form.php:346
+#: inc/shortcodes/shortcodes.form.php:347
+msgid "May"
+msgstr "Mayo"
+
+#: inc/data/data.globals.php:23 inc/shortcodes/shortcodes.form.php:346
+msgid "June"
+msgstr "Junio"
+
+#: inc/data/data.globals.php:24 inc/shortcodes/shortcodes.form.php:346
+msgid "July"
+msgstr "Julio"
+
+#: inc/data/data.globals.php:25 inc/shortcodes/shortcodes.form.php:346
+msgid "August"
+msgstr "Agosto"
+
+#: inc/data/data.globals.php:26 inc/shortcodes/shortcodes.form.php:346
+msgid "September"
+msgstr "Septiembre"
+
+#: inc/data/data.globals.php:27 inc/shortcodes/shortcodes.form.php:346
+msgid "October"
+msgstr "Octubre"
+
+#: inc/data/data.globals.php:28 inc/shortcodes/shortcodes.form.php:346
+msgid "November"
+msgstr "Noviembre"
+
+#: inc/data/data.globals.php:29 inc/shortcodes/shortcodes.form.php:346
+msgid "December"
+msgstr "Diciembre"
+
+#: inc/data/data.pagination.php:10 inc/data/data.pagination.php:26
+#: inc/functions/functions.init.php:66 search.php:59 search.php:75
+msgid "page"
+msgstr "pagina"
+
+#: inc/data/data.pagination.php:13 inc/shortcodes/shortcodes.slider.php:79
+#: search.php:62
+msgid "Previous"
+msgstr "Anterior"
+
+#: inc/data/data.pagination.php:14 inc/shortcodes/shortcodes.slider.php:80
+#: search.php:63
+msgid "Next"
+msgstr "Siguiente"
+
+#: inc/data/data.pagination.php:17 inc/shortcodes.php:361 search.php:66
+#, php-format
+msgid "Page %1$s of %2$s"
+msgstr "Página %1$s de %2$s"
+
+#: inc/data/data.pagination.php:20 search.php:69
+msgid "First"
+msgstr "Primero"
+
+#: inc/data/data.pagination.php:26 search.php:75
+msgid "Last"
+msgstr "Último"
+
+#: inc/functions/functions.cron.php:14
+msgid "Weekly"
+msgstr "Semanal"
+
+#: inc/functions/functions.cron.php:19
+msgid "Monthly"
+msgstr "Mensual"
+
+#: inc/functions/functions.init.php:63
+msgid "author"
+msgstr "autor"
+
+#: inc/functions/functions.init.php:64
+msgid "search"
+msgstr "buscar"
+
+#: inc/functions/functions.init.php:65
+msgid "comments"
+msgstr "comentarios"
+
+#: inc/functions/functions.load.php:48
+msgid "of"
+msgstr "de"
+
+#: inc/shortcodes.php:356
+msgid "No posts found"
+msgstr "Sin resultados"
+
+#: inc/shortcodes.php:489
+msgid "It's not possible to get latest tweets. No username configured"
+msgstr ""
+"No ha sido posible obtener los últimos tuits. No se ha definido usuario"
+
+#: inc/shortcodes.php:492
+msgid "No tweets"
+msgstr "Sin tuits"
+
+#: inc/shortcodes/shortcodes.blog.php:74 inc/shortcodes/shortcodes.blog.php:129
+msgid "Published by "
+msgstr "Publicado por "
+
+#: inc/shortcodes/shortcodes.blog.php:77 inc/shortcodes/shortcodes.blog.php:132
+msgid "the"
+msgstr "el"
+
+#: inc/shortcodes/shortcodes.blog.php:96 inc/shortcodes/shortcodes.blog.php:151
+msgid "Read more"
+msgstr "Leer más"
+
+#: inc/shortcodes/shortcodes.blog.php:186
+msgid "All"
+msgstr "Todo"
+
+#: inc/shortcodes/shortcodes.blog.php:249
+#: inc/shortcodes/shortcodes.blog.php:262
+#: inc/shortcodes/shortcodes.blog.php:264
+msgid "Tweet this"
+msgstr "Tuitéalo"
+
+#: inc/shortcodes/shortcodes.form.php:25
+msgid ""
+"Your message has been sent sucesfully. Your request will delay. A copy has "
+"been sent to your email."
+msgstr ""
+"Mensaje enviado correctamente. Atenderemos su solicitud a la mayor brevedad. "
+"Se ha enviado una copia a su dirección de correo electrónico."
+
+#: inc/shortcodes/shortcodes.form.php:26 inc/shortcodes/shortcodes.form.php:481
+msgid "Send"
+msgstr "Enviar"
+
+#: inc/shortcodes/shortcodes.form.php:52
+#: inc/shortcodes/shortcodes.newsletter.php:32 single.php:19
+msgid "There are errors on the form. Please fix them before continuing"
+msgstr ""
+"Existen errores en el formulario. Por favor, revísalos antes de continuar"
+
+#: inc/shortcodes/shortcodes.form.php:53
+#: inc/shortcodes/shortcodes.newsletter.php:33 single.php:20
+msgid "Fill in all the required fields"
+msgstr "Completa los campos requeridos"
+
+#: inc/shortcodes/shortcodes.form.php:54
+#: inc/shortcodes/shortcodes.newsletter.php:34 single.php:21
+msgid "Enter a valid email address"
+msgstr "Introduce una dirección de correo electrónico válida"
+
+#: inc/shortcodes/shortcodes.form.php:55
+msgid "Enter a correct captcha value"
+msgstr "Introduce el código de verificación correcto"
+
+#: inc/shortcodes/shortcodes.form.php:56
+#: inc/shortcodes/shortcodes.newsletter.php:35 single.php:22
+msgid "You must accept the legal advice"
+msgstr "Debe aceptar el aviso legal"
+
+#: inc/shortcodes/shortcodes.form.php:57
+msgid "files selected"
+msgstr "archivos seleccionados"
+
+#: inc/shortcodes/shortcodes.form.php:122
+msgid "Sending"
+msgstr "Enviando"
+
+#: inc/shortcodes/shortcodes.form.php:146
+#: inc/shortcodes/shortcodes.newsletter.php:53
+#: inc/shortcodes/shortcodes.newsletter.php:98 single.php:148
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: inc/shortcodes/shortcodes.form.php:157
+msgid "Message"
+msgstr "Mensaje"
+
+#: inc/shortcodes/shortcodes.form.php:169
+msgid "State"
+msgstr "Provincia"
+
+#: inc/shortcodes/shortcodes.form.php:196
+#: inc/shortcodes/shortcodes.newsletter.php:56
+#: inc/shortcodes/shortcodes.newsletter.php:80
+msgid "Privacy policy"
+msgstr "política de privacidad"
+
+#: inc/shortcodes/shortcodes.form.php:206
+#: inc/shortcodes/shortcodes.newsletter.php:60
+#: inc/shortcodes/shortcodes.newsletter.php:84
+msgctxt "female"
+msgid "the"
+msgstr "la"
+
+#: inc/shortcodes/shortcodes.form.php:209
+#: inc/shortcodes/shortcodes.newsletter.php:63
+#: inc/shortcodes/shortcodes.newsletter.php:87
+msgctxt "male"
+msgid "the"
+msgstr "el"
+
+#: inc/shortcodes/shortcodes.form.php:213
+#: inc/shortcodes/shortcodes.newsletter.php:67
+#: inc/shortcodes/shortcodes.newsletter.php:91
+msgid "I have read, understood and accept"
+msgstr "He leído, entiendo y acepto"
+
+#: inc/shortcodes/shortcodes.form.php:229
+#, php-format
+msgid "Fill in the following field with <strong>\"%s\"</strong>"
+msgstr "Rellena el siguiente campo con <strong>\"%s\"</strong>"
+
+#: inc/shortcodes/shortcodes.form.php:232
+msgid "Fill in the following fields."
+msgstr "Complete los siguientes campos."
+
+#: inc/shortcodes/shortcodes.form.php:248
+msgid "No selected file"
+msgstr "Ningún archivo seleccionado"
+
+#: inc/shortcodes/shortcodes.form.php:248
+msgid "Maximum size exceeded"
+msgstr "Sobrepasado tamaño máximo"
+
+#: inc/shortcodes/shortcodes.form.php:342
+msgid "Close"
+msgstr "Cerrar"
+
+#: inc/shortcodes/shortcodes.form.php:345
+msgid "Today"
+msgstr "Hoy"
+
+#: inc/shortcodes/shortcodes.form.php:347
+msgid "Jan"
+msgstr "Ene"
+
+#: inc/shortcodes/shortcodes.form.php:347
+msgid "Feb"
+msgstr "Feb"
+
+#: inc/shortcodes/shortcodes.form.php:347
+msgid "Mar"
+msgstr "Mar"
+
+#: inc/shortcodes/shortcodes.form.php:347
+msgid "Apr"
+msgstr "Abr"
+
+#: inc/shortcodes/shortcodes.form.php:347
+msgid "Jun"
+msgstr "Jun"
+
+#: inc/shortcodes/shortcodes.form.php:347
+msgid "Jul"
+msgstr "Jul"
+
+#: inc/shortcodes/shortcodes.form.php:347
+msgid "Aug"
+msgstr "Ago"
+
+#: inc/shortcodes/shortcodes.form.php:347
+msgid "Sep"
+msgstr "Sep"
+
+#: inc/shortcodes/shortcodes.form.php:347
+msgid "Oct"
+msgstr "Oct"
+
+#: inc/shortcodes/shortcodes.form.php:347
+msgid "Nov"
+msgstr "Nov"
+
+#: inc/shortcodes/shortcodes.form.php:347
+msgid "Dec"
+msgstr "Dic"
+
+#: inc/shortcodes/shortcodes.form.php:348
+msgid "Sunday"
+msgstr "Domingo"
+
+#: inc/shortcodes/shortcodes.form.php:348
+msgid "Monday"
+msgstr "Lunes"
+
+#: inc/shortcodes/shortcodes.form.php:348
+msgid "Tuesday"
+msgstr "Martes"
+
+#: inc/shortcodes/shortcodes.form.php:348
+msgid "Wednesday"
+msgstr "Miércoles"
+
+#: inc/shortcodes/shortcodes.form.php:348
+msgid "Thursday"
+msgstr "Jueves"
+
+#: inc/shortcodes/shortcodes.form.php:348
+msgid "Friday"
+msgstr "Viernes"
+
+#: inc/shortcodes/shortcodes.form.php:348
+msgid "Saturday"
+msgstr "Sábado"
+
+#: inc/shortcodes/shortcodes.form.php:349
+msgid "Sun"
+msgstr "Dom"
+
+#: inc/shortcodes/shortcodes.form.php:349
+msgid "Mon"
+msgstr "Lun"
+
+#: inc/shortcodes/shortcodes.form.php:349
+msgid "Tue"
+msgstr "Mar"
+
+#: inc/shortcodes/shortcodes.form.php:349
+msgid "Wed"
+msgstr "Mie"
+
+#: inc/shortcodes/shortcodes.form.php:349
+msgid "Thu"
+msgstr "Jue"
+
+#: inc/shortcodes/shortcodes.form.php:349
+msgid "Fri"
+msgstr "Vie"
+
+#: inc/shortcodes/shortcodes.form.php:349
+msgid "Sat"
+msgstr "Sab"
+
+#: inc/shortcodes/shortcodes.form.php:350
+msgid "Su"
+msgstr "D"
+
+#: inc/shortcodes/shortcodes.form.php:350
+msgid "Mo"
+msgstr "L"
+
+#: inc/shortcodes/shortcodes.form.php:350
+msgid "Tu"
+msgstr "M"
+
+#: inc/shortcodes/shortcodes.form.php:350
+msgid "We"
+msgstr "X"
+
+#: inc/shortcodes/shortcodes.form.php:350
+msgid "Th"
+msgstr "J"
+
+#: inc/shortcodes/shortcodes.form.php:350
+msgid "Fr"
+msgstr "V"
+
+#: inc/shortcodes/shortcodes.form.php:350
+msgid "Sa"
+msgstr "S"
+
+#: inc/shortcodes/shortcodes.form.php:351
+msgid "yy-mm-dd"
+msgstr "dd/mm/yy"
+
+#: inc/shortcodes/shortcodes.form.php:352
+msgctxt "Datepicker first day"
+msgid "0"
+msgstr "1"
+
+#: inc/shortcodes/shortcodes.form.php:353
+msgctxt "Datepicker rtl"
+msgid "false"
+msgstr "false"
+
+#: inc/shortcodes/shortcodes.form.php:354
+msgctxt "Datepicker month after year"
+msgid "false"
+msgstr "false"
+
+#: inc/shortcodes/shortcodes.form.php:365
+#: inc/shortcodes/shortcodes.form.php:393
+#: inc/shortcodes/shortcodes.form.php:504
+msgid "Select an option"
+msgstr "Selecciona una opción"
+
+#: inc/shortcodes/shortcodes.form.php:444
+#: inc/shortcodes/shortcodes.newsletter.php:49
+#: inc/shortcodes/shortcodes.newsletter.php:96 single.php:147
+msgid "Name"
+msgstr "Nombre"
+
+#: inc/shortcodes/shortcodes.form.php:457
+#: inc/shortcodes/shortcodes.newsletter.php:51
+#: inc/shortcodes/shortcodes.newsletter.php:97
+msgid "Last name"
+msgstr "Apellidos"
+
+#: inc/shortcodes/shortcodes.form.php:469
+msgid "Subject"
+msgstr "Asunto"
+
+#: inc/shortcodes/shortcodes.general.php:153
+msgid "Home"
+msgstr "Inicio"
+
+#: inc/shortcodes/shortcodes.general.php:198
+msgid "Categories"
+msgstr "Categorías"
+
+#: inc/shortcodes/shortcodes.general.php:200
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: inc/shortcodes/shortcodes.general.php:209
+#, php-format
+msgid "Search results for \"%1$s\""
+msgstr "Resultados de búsqueda para \"%1$s\""
+
+#: inc/shortcodes/shortcodes.general.php:227
+msgid "Publications of"
+msgstr "Publicaciones de"
+
+#: inc/shortcodes/shortcodes.general.php:229
+msgid "Not found"
+msgstr "Sin resultados"
+
+#: inc/shortcodes/shortcodes.media.php:115
+msgid "This browser does not support video playback."
+msgstr "Este navegador no soporta reproducción de video."
+
+#: inc/shortcodes/shortcodes.newsletter.php:36
+msgid "Unsubscribing..."
+msgstr "Cancelando suscripción…"
+
+#: inc/shortcodes/shortcodes.newsletter.php:68
+#: inc/shortcodes/shortcodes.newsletter.php:100
+msgid "If you want to unsubscribe from our newsletter, click"
+msgstr "Si quieres darte de baja en nuestro boletín de noticias, pulsa"
+
+#: inc/shortcodes/shortcodes.newsletter.php:68
+#: inc/shortcodes/shortcodes.newsletter.php:100
+msgid "here"
+msgstr "aquí"
+
+#: inc/shortcodes/shortcodes.newsletter.php:69
+#: inc/shortcodes/shortcodes.newsletter.php:101
+msgid "Subscribe"
+msgstr "Suscríbete"
+
+#: inc/shortcodes/shortcodes.newsletter.php:101
+msgid "Subscribing"
+msgstr "Suscribiendo"
+
+#: inc/shortcodes/shortcodes.social.php:178
+msgid "No Twitter API key set"
+msgstr "No se ha establecido una clave API de Twitter"
+
+#: php/subscriber.php:37
+msgid "Please confirm your newsletter subscription by visiting the link below:"
+msgstr ""
+"Por favor, confirma la suscripción al boletín de noticias en el siguiente "
+"enlace:"
+
+#: php/subscriber.php:39
+msgid ""
+"If you have registered for a subscription accidentally or the newsletter was "
+"not ordered in your name, please ignore this email."
+msgstr ""
+"Si te has suscrito al boletín de noticias de manera accidental o no has "
+"solicitado la suscripción, por favor ignota este correo electrónico."
+
+#: php/subscriber.php:43
+msgid "Thanks for subscribing"
+msgstr "Gracias por suscribirte"
+
+#: search.php:15
+#, php-format
+msgid "%1$s search results for \"%2$s\""
+msgstr "%1$s resultados para \"%2$s\""
+
+#: search.php:17
+#, php-format
+msgid "No results for \"%1$s\""
+msgstr "Sin resultados para \"%1$s\""
+
+#: search.php:98
+msgid "Try to redefine your search using another term, or visit the homepage."
+msgstr ""
+"Pruebe a redefinir su búsqueda utilizando otro término o visite la página "
+"principal."
+
+#: searchform.php:3
+msgid "Search"
+msgstr "Buscar"
+
+#: single.php:90 single.php:117
+msgid "Share in Twitter"
+msgstr "Compartir en Twitter"
+
+#: single.php:93 single.php:118
+msgid "Share in Facebook"
+msgstr "Compartir en Facebook"
+
+#: single.php:96 single.php:119
+msgid "Share in Linkedin"
+msgstr "Compartir en Linkedin"
+
+#: single.php:99 single.php:120
+msgid "Share in Google +"
+msgstr "Compartir en Google +"
+
+#: single.php:103 single.php:122
+msgid "Share in Whatsapp"
+msgstr "Compartir en Whatsapp"
+
+#: single.php:107 single.php:124
+msgid "Share by email"
+msgstr "Compartir por correo electrónico"
+
+#: single.php:150
+msgid "Comment"
+msgstr "Comentario"
+
+#~ msgid "I want to unsubscribe from newsletter"
+#~ msgstr "Quiero darme de baja del boletín de noticias"
+
+#~ msgid "Nothing found."
+#~ msgstr "Sin resultados."
+
+#~ msgid ""
+#~ "Your message has been sent sucesfully sent.<br /><br />Here is a copy of "
+#~ "your message."
+#~ msgstr ""
+#~ "Tu mensaje se ha enviado correctamente.<br /><br />A continuación se "
+#~ "adjunta una copia de tu mensaje."
+
+#~ msgid "* Name"
+#~ msgstr "* Nombre"
+
+#~ msgid "* Last name"
+#~ msgstr "* Apellidos"
+
+#~ msgid "* Email"
+#~ msgstr "* Correo electrónico"
+
+#~ msgid "Suscribe"
+#~ msgstr "Suscríbete"
+
+#~ msgid "* Comment"
+#~ msgstr "* Comentario"
+
+#~ msgid "Your message have been sent sucesfully."
+#~ msgstr "Tu mensaje se ha enviado correctamente."
+
+#~ msgid "1 Comment"
+#~ msgstr "1 comentario"
+
+#~ msgid "% Comments"
+#~ msgstr "% comentarios"
+
+#~ msgid "Legal Advice"
+#~ msgstr "Aviso legal"
+
+#~ msgid "Privacy Policy"
+#~ msgstr "Política de privacidad"
+
+#~ msgid "Cookies Policy"
+#~ msgstr "Política de cookies"
+
+#~ msgid "Made with <i class=\"fa fa-heart\"></i> by"
+#~ msgstr "Hecho con <i class=“fa fa-heart”"
+
+#~ msgid "Web development by"
+#~ msgstr "Desarrollo web por"
+
+#~ msgid "No results for"
+#~ msgstr "Sin resultados para\t"
+
+#~ msgid "Please, confirm you're human before comment."
+#~ msgstr "Por favor, confirma que eres humano antes de comentar."
+
+#~ msgid "You must enable JavaScript before comment."
+#~ msgstr "Debes activar JavaScript para comentar."
+
+#~ msgid ""
+#~ "We use our own and third-part <em>cookies</em> to analyse the use and "
+#~ "measurement of our web in order to improve our services. If you go on "
+#~ "surfing, we assume you acceept their use.<br />You can change your "
+#~ "settings or find more information <a href=\"%1$s\" target=\"_blank\" "
+#~ "title=\"%2$s cookies policy\">here</a>."
+#~ msgstr ""
+#~ "Utilizamos <em>cookies</em> propias y de terceros para realizar análisis "
+#~ "de uso y de medición de nuestra web para mejoras de nuestros servicios. "
+#~ "Si continúa navegando, consideramos que acepta su uso.<br />Puede cambiar "
+#~ "la configuración u obtener más información <a href=\"%1$s\" target="
+#~ "\"_blank\" title=“Política de cookies de %2$s\">aquí</a>."
