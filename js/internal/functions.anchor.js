@@ -1,6 +1,5 @@
 jQuery(function($) {
 	$('a[href*="#"]:not([href="#"])').click(function() {
-		jQuery('#mobile-header:visible button.mobile-button').click();
 		var t = 0;
 		if ($('header.sticky').length) {
 			t = $('header.sticky').outerHeight();

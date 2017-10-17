@@ -93,7 +93,6 @@ jQuery(function($) {
 						v = 10;
 					}
 					e.css('width', 'calc((((100% - ('+s+' * '+(v-1)+')) / '+v+') * '+u+') + '+(u-1)+' * '+s+')');
-					console.log('calc((((100% - ('+s+' * '+(v-1)+')) / '+v+') * '+u+') + '+(u-1)+' * '+s+')');
 				}
 			});
 			if (e.hasClass('first')) {
