@@ -16,13 +16,39 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 	$var_rrss = explode(',', b_f_option('b_opt_social-order', true));
 	foreach ($var_rrss as $temp_rrss) {
-		($temp_rrss == 'snapchat') ? $icon = '-ghost' : $icon = '';
-		(in_array($temp_rrss, array('google-plus', 'youtube', 'linkedin', 'rss'))) ? $var_placeholder = 'url' : $var_placeholder = 'url o usuario';
+		switch ($temp_rrss) {
+			case 'snapchat':
+				$icon = $temp_rrss.'-ghost';
+				break;
+			case 'telegram':
+				$icon = 'paper-plane';
+				break;
+			default:
+				$icon = $temp_rrss;
+				break;
+		}
+		switch ($temp_rrss) {
+			case 'google-plus':
+			case 'youtube':
+			case 'linkedin':
+			case 'rss':
+				$var_placeholder = 'url';
+				break;
+			case 'whatsapp':
+				$var_placeholder = 'número de teléfono';
+				break;
+			case 'telegram':
+				$var_placeholder = 'usuario';
+				break;
+			default:
+				$var_placeholder = 'url o usuario';
+				break;
+		}
 
 		?>
 
 		<div style="width: 100%; display: inline-block;" class="color-wrapper" id="<?= $temp_rrss ?>">
-			<i class="fa fa-<?= $temp_rrss.$icon ?>"></i>
+			<i class="fa fa-<?= $icon ?>"></i>
 			<input type="text" class="gran" name="bilnea_settings[b_opt_social-<?= $temp_rrss ?>]" value="<?= b_f_option('b_opt_social-'.$temp_rrss) ?>" placeholder="<?= $var_placeholder ?>" />
 			<div>
 				<input type="text" class="sp-input" name="bilnea_settings[b_opt_social-<?= $temp_rrss ?>-color]" value="<?= b_f_option('b_opt_social-'.$temp_rrss.'-color') ?>" placeholder="<?= b_f_default('b_opt_social-'.$temp_rrss.'-color') ?>" />

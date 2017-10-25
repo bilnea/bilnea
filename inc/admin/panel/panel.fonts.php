@@ -38,7 +38,7 @@ global $b_g_google_fonts;
 	<?php b_f_fonts('hover'); ?>
 </div>
 
-<h4>Encabezados</h4>
+<h4>Encabezados de los artículos</h4>
 
 <!-- H1 -->
 <div class="text-container">

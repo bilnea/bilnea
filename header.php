@@ -171,14 +171,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 						// Variables locales
 						$var_menu = wp_nav_menu(array('theme_location' => 'menu_mobile', 'container_id' => 'mobile_menu', 'echo' => false));
 						if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">';
-							$var_curl = curl_init();
-							curl_setopt($var_curl, CURLOPT_URL, b_f_option('b_opt_main-logo'));
-							curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, 1);
-							curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
-							$var_logo .= curl_exec($var_curl);
-							curl_close($var_curl);
-							$var_logo .= '</a>';
+							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.b_f_get_file_content(b_f_option('b_opt_main-logo')).'</a>';
 						} else {
 							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
 						}
@@ -231,14 +224,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 						// Variables locales
 						$var_menu = wp_nav_menu(array('theme_location' => 'menu_top', 'container_id' => 'top_menu', 'echo' => false));
 						if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">';
-							$var_curl = curl_init();
-							curl_setopt($var_curl, CURLOPT_URL, b_f_option('b_opt_main-logo'));
-							curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, 1);
-							curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
-							$var_logo .= curl_exec($var_curl);
-							curl_close($var_curl);
-							$var_logo .= '</a>';
+							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.b_f_get_file_content(b_f_option('b_opt_main-logo')).'</a>';
 						} else {
 							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
 						}
@@ -275,14 +261,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 							// Variables locales
 							$var_menu = wp_nav_menu(array('theme_location' => 'menu_main', 'container_id' => 'main_menu', 'echo' => false));
 							if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-								$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">';
-								$var_curl = curl_init();
-								curl_setopt($var_curl, CURLOPT_URL, b_f_option('b_opt_main-logo'));
-								curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, 1);
-								curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
-								$var_logo .= curl_exec($var_curl);
-								curl_close($var_curl);
-								$var_logo .= '</a>';
+								$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.b_f_get_file_content(b_f_option('b_opt_main-logo')).'</a>';
 							} else {
 								$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
 							}
@@ -324,14 +303,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 					// Variables locales
 					$var_menu = wp_nav_menu(array('theme_location' => 'menu_mobile', 'container_id' => 'mobile_menu', 'echo' => false));
 					if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-						$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">';
-						$var_curl = curl_init();
-						curl_setopt($var_curl, CURLOPT_URL, b_f_option('b_opt_main-logo'));
-						curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, 1);
-						curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
-						$var_logo .= curl_exec($var_curl);
-						curl_close($var_curl);
-						$var_logo .= '</a>';
+						$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.b_f_get_file_content(b_f_option('b_opt_main-logo')).'</a>';
 					} else {
 						$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
 					}

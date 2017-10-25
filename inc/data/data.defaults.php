@@ -301,7 +301,7 @@ function b_f_default($var_data) {
 			return get_option('admin_email');
 			break;
 		case 'b_opt_social-order':
-			return 'facebook,twitter,instagram,snapchat,google-plus,youtube,linkedin,pinterest,flickr,foursquare,rss';
+			return 'facebook,twitter,instagram,snapchat,google-plus,whatsapp,telegram,youtube,linkedin,pinterest,flickr,foursquare,rss';
 			break;
 		case 'b_opt_social-facebook-color':
 			return '#3b5998';
@@ -336,8 +336,56 @@ function b_f_default($var_data) {
 		case 'b_opt_social-rss-color':
 			return '#f8991d';
 			break;
+		case 'b_opt_social-whatsapp-color':
+			return '#25d366';
+			break;
+		case 'b_opt_social-telegram-color':
+			return '#0088cc';
+			break;
 		case 'b_opt_search-include':
 			return array('page', 'post');
+			break;
+		case 'b_opt_footer-title_ttf-size':
+			return '16px';
+			break;
+		case 'b_opt_footer-title_ttf-color':
+			return 'white';
+			break;
+		case 'b_opt_footer_ttf-size':
+			return '14px';
+			break;
+		case 'b_opt_footer_ttf-color':
+			return 'white';
+			break;
+		case 'b_opt_footer-link_ttf-size':
+			return '14px';
+			break;
+		case 'b_opt_footer-link_ttf-color':
+			return 'white';
+			break;
+		case 'b_opt_footer-hover_ttf-size':
+			return '14px';
+			break;
+		case 'b_opt_footer-hover_ttf-color':
+			return 'white';
+			break;
+		case 'b_opt_socket_ttf-size':
+			return '10px';
+			break;
+		case 'b_opt_socket_ttf-color':
+			return 'white';
+			break;
+		case 'b_opt_socket-link_ttf-size':
+			return '10px';
+			break;
+		case 'b_opt_socket-link_ttf-color':
+			return 'white';
+			break;
+		case 'b_opt_socket-hover_ttf-size':
+			return '10px';
+			break;
+		case 'b_opt_socket-hover_ttf-color':
+			return 'white';
 			break;
 	}
 }

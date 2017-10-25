@@ -114,27 +114,33 @@ function b_i_s_fonts($var_font) {
 
 /* Encabezados */
 
-.main_container h1, .main_container h1 * {
+body.single .main_container article.post h1, 
+body.single .main_container article.post h1 * {
 	<?= b_i_s_fonts('h1'); ?>
 }
 
-.main_container h2, .main_container h2 * {
+body.single .main_container article.post h2, 
+body.single .main_container article.post h2 * {
 	<?= b_i_s_fonts('h2'); ?>
 }
 
-.main_container h3, .main_container h3 * {
+body.single .main_container article.post h3, 
+body.single .main_container article.post h3 * {
 	<?= b_i_s_fonts('h3'); ?>
 }
 
-.main_container h4, .main_container h4 * {
+body.single .main_container article.post h4, 
+body.single .main_container article.post h4 * {
 	<?= b_i_s_fonts('h4'); ?>
 }
 
-.main_container h5, .main_container h5 * {
+body.single .main_container article.post h5, 
+body.single .main_container article.post h5 * {
 	<?= b_i_s_fonts('h5'); ?>
 }
 
-.main_container h6, .main_container h6 * {
+body.single .main_container article.post h6, 
+body.single .main_container article.post h6 * {
 	<?= b_i_s_fonts('h6'); ?>
 }
 
@@ -194,7 +200,12 @@ header#header {
 	background-color: <?= b_f_color('b_opt_header-color') ?>;
 }
 
-header#header .header > .container {
+header#header .header {
+	background-color: <?= b_f_color('b_opt_menu-color') ?>;
+	height: <?= b_f_size('b_opt_menu-height') ?>;
+}
+
+header#header {
 	height: <?= b_f_size('b_opt_header-height') ?>;
 }
 
@@ -348,7 +359,7 @@ aside#sidebar {
 		?>
 		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-text')/100)).$var_unit; ?>;
 	}
-	h1 {
+	body.single article.post h1 {
 		<?php
 		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h1_ttf-size'));
 		$var_unit .= ($var_unit == '') ? 'px' : '';
@@ -356,7 +367,7 @@ aside#sidebar {
 		?>
 		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
 	}
-	h2 {
+	body.single article.post h2 {
 		<?php
 		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h2_ttf-size'));
 		$var_unit .= ($var_unit == '') ? 'px' : '';
@@ -364,7 +375,7 @@ aside#sidebar {
 		?>
 		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
 	}
-	h3 {
+	body.single article.post h3 {
 		<?php
 		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h3_ttf-size'));
 		$var_unit .= ($var_unit == '') ? 'px' : '';
@@ -372,7 +383,7 @@ aside#sidebar {
 		?>
 		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
 	}
-	h4 {
+	body.single article.post h4 {
 		<?php
 		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h4_ttf-size'));
 		$var_unit .= ($var_unit == '') ? 'px' : '';
@@ -380,7 +391,7 @@ aside#sidebar {
 		?>
 		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
 	}
-	h5 {
+	body.single article.post h5 {
 		<?php
 		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h5_ttf-size'));
 		$var_unit .= ($var_unit == '') ? 'px' : '';
@@ -388,7 +399,7 @@ aside#sidebar {
 		?>
 		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
 	}
-	h6 {
+	body.single article.post h6 {
 		<?php
 		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h6_ttf-size'));
 		$var_unit .= ($var_unit == '') ? 'px' : '';

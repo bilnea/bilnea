@@ -4,6 +4,29 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 	die();
 }
 
+if (!function_exists('b_f_dashboard')) {
+
+	function b_f_dashboard() {
+
+		global $wp_meta_boxes;
+
+		wp_add_dashboard_widget('bilnea_widget', 'bilnea Digital, S.L.', function() {
+
+			$out = '<div class="bilnea_dashboard"><a href="https://bilnea.com" target="_blank" class="thumb" style="background-image: url('.get_template_directory_uri().'/img/logo-bilnea.png); display: block; background-size: contain; background-position: center; padding-bottom: 20%; background-repeat: no-repeat; margin-bottom: 20px;"></a>Desarrollo web realizado por <a href="https://bilnea.com" target="_blank">bilnea: La Agencia de Comunicación y Marketing Digital</a>. Puedes contactarnos en <a href="mailto:hola@bilnea.com">hola@bilnea.com</a> o en los teléfonos <a href="tel:968168456">968 168 456</a> o <a href="tel:961155808">96 11 55 808</a>.<br /><br /><em style="font-size: .8em;">&copy; '.date('Y').' bilnea, Samuel E. Cerezo, Carlos García.</em></div>';
+
+			echo $out;
+
+		});
+
+			
+
+	}
+
+	add_action('wp_dashboard_setup', 'b_f_dashboard');
+
+}
+
+
 if (!function_exists('b_f_fonts')) {
 	
 	function b_f_fonts($var_font) {

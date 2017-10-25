@@ -18,6 +18,7 @@ if (!function_exists('b_f_load_scripts')) {
 		wp_register_script('functions.main', get_template_directory_uri().'/js/internal/functions.main.js', array('jquery'), $b_g_version, true);
 		wp_register_script('functions.anchor', get_template_directory_uri().'/js/internal/functions.anchor.js', array('jquery'), $b_g_version, true);
 		wp_register_script('functions.accordion', get_template_directory_uri().'/js/internal/functions.accordion.js', array('jquery'), $b_g_version, true);
+		wp_register_script('functions.design', get_template_directory_uri().'/js/internal/functions.design.js', array('jquery'), $b_g_version, true);
 		wp_register_script('functions.design.parallax', get_template_directory_uri().'/js/internal/functions.design.parallax.js', array('jquery'), $b_g_version, true);
 		wp_register_script('functions.design.menu', get_template_directory_uri().'/js/internal/functions.design.menu.js', array('jquery'), $b_g_version, true);
 		wp_register_script('functions.admin', get_template_directory_uri().'/js/internal/functions.admin.js', array(), $b_g_version, true);
@@ -110,6 +111,7 @@ if (!function_exists('b_f_frontend_scripts')) {
 		wp_enqueue_script('functions.anchor');
 		wp_enqueue_script('functions.accordion');
 		wp_enqueue_script('functions.child.main');
+		wp_enqueue_script('functions.design');
 		wp_enqueue_script('functions.design.parallax');
 
 		wp_enqueue_script('functions.design.fitvids');

@@ -142,6 +142,10 @@ if (!function_exists('b_f_get_file_content')) {
 	
 	function b_f_get_file_content($var_url) {
 
+		if ((substr($var_url, 0, 7) != 'http://') && (substr($var_url, 0, 8) != 'https://')) {
+			$var_url = get_site_url(null, $var_url);
+		}
+
 		$var_curl = curl_init();
 
 		curl_setopt($var_curl, CURLOPT_URL, $var_url);
