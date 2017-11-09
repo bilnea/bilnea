@@ -104,7 +104,8 @@ if (!function_exists('b_f_frontend_scripts')) {
 
 		$var_temp = array(
 			'version' => $b_g_version,
-			'root_url' => site_url()
+			'site_url' => site_url(),
+			'post_id' => $post->ID
 		);
 		wp_localize_script('functions.main', 'bilnea', $var_temp);
 		wp_enqueue_script('functions.main');

@@ -7,7 +7,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 ?>
 <h4>Desarollado por</h4>
 Desarrollado por Samuel E. Cerezo para bilnea Digital, S.L.<br />
-&copy; 2016 bilnea Digital, S.L.
+&copy; 2017 bilnea Digital, S.L.
 <em class="notice" style="font-size: 12px;">Las respectivas tecnologías utilizadas corresponden a su(s) respectivo(s) autor(es), a continuación detallados.</em>
 <h4 style="margin-top: 10px;">Tecnologías de terceros</h4>
 <strong>Animate Colors</strong><br />

@@ -8,7 +8,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 // Contador
 
 if (!function_exists('b_s_counter')) {
-	
+
 	function b_s_counter($atts) {
 
 		// Atributos
@@ -17,6 +17,12 @@ if (!function_exists('b_s_counter')) {
 			'units' => 'd,h,m',
 			'label' => false,
 		), $atts);
+
+		// Fecha actual
+
+		$fechafijada = (date('U', strtotime($a['date']))*1000);
+
+		$fechaactual = (date('U', strtotime(date('F d, Y H:i:s')))*1000);
 
 		// Número aleatorio para identificar al contador
 		$var_random = rand(0, 99999999);
@@ -27,8 +33,17 @@ if (!function_exists('b_s_counter')) {
 		$out = '<div class="b_counter" id="counter-'.$var_random.'"></div>';
 
 		$out .= '<script type="text/javascript">'."\n";
+
+
+
 		$out .= '	jQuery(function() {'."\n";
-		$out .= '		var date = new Date('.(date('U', strtotime($a['date']))*1000).'),'."\n";
+		if ($fechaactual > $fechafijada) {
+			$out .= '		var date = new Date("0 0, 0 00:00:00");'."\n";
+		} else {
+			$out .= '		var date = new Date('.(date('U', strtotime($a['date']))*1000).'),'."\n";
+		}
+
+
 		$out .= '			now = new Date(),'."\n";
 		$out .= '			diff = (date.getTime()/1000) - ('.current_time('timestamp').');'."\n";
 		$out .= ''."\n";

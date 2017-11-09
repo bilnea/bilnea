@@ -87,52 +87,52 @@ function b_f_default($var_data) {
 		case 'b_opt_h1_ttf-font':
 			return 'Montserrat';
 			break;
-		case 'b_opt_h1_ttf-size'	:
+		case 'b_opt_h1_ttf-size':
 			return '28px';
 			break;
 		case 'b_opt_h1_ttf-color':
 			return 'black';
 			break;
-		case 'b_opt_h2_ttf-font'	:
+		case 'b_opt_h2_ttf-font':
 			return 'Montserrat';
 			break;
-		case 'b_opt_h2_ttf-size'	:
+		case 'b_opt_h2_ttf-size':
 			return '24px';
 			break;
 		case 'b_opt_h2_ttf-color':
 			return 'black';
 			break;
-		case 'b_opt_h3_ttf-font'	:
+		case 'b_opt_h3_ttf-font':
 			return 'Montserrat';
 			break;
-		case 'b_opt_h3_ttf-size'	:
+		case 'b_opt_h3_ttf-size':
 			return '20px';
 			break;
 		case 'b_opt_h3_ttf-color':
 			return 'black';
 			break;
-		case 'b_opt_h4_ttf-font'	:
+		case 'b_opt_h4_ttf-font':
 			return 'Montserrat';
 			break;
-		case 'b_opt_h4_ttf-size'	:
+		case 'b_opt_h4_ttf-size':
 			return '18px';
 			break;
 		case 'b_opt_h4_ttf-color':
 			return 'black';
 			break;
-		case 'b_opt_h5_ttf-font'	:
+		case 'b_opt_h5_ttf-font':
 			return 'Montserrat';
 			break;
-		case 'b_opt_h5_ttf-size'	:
+		case 'b_opt_h5_ttf-size':
 			return '16px';
 			break;
 		case 'b_opt_h5_ttf-color':
 			return 'black';
 			break;
-		case 'b_opt_h6_ttf-font'	:
+		case 'b_opt_h6_ttf-font':
 			return 'Montserrat';
 			break;
-		case 'b_opt_h6_ttf-size'	:
+		case 'b_opt_h6_ttf-size':
 			return '14px';
 			break;
 		case 'b_opt_h6_ttf-color':
@@ -174,14 +174,14 @@ function b_f_default($var_data) {
 		case 'b_opt_hover_ttf-color':
 			return 'rgba(40, 157, 204, 0.8)';
 			break;
-		case 'b_opt_menu-color'	:
+		case 'b_opt_menu-color':
 			return '#e1e1e1';
 			break;
-		case 'b_opt_menu-color'	:
+		case 'b_opt_menu-color':
 			return '#289dcc';
 			break;
 		case 'b_opt_body_bg_color':
-			return '#fafafa';
+			return 'white';
 			break;
 		case 'b_opt_footer-color':
 			return '#289dcc';
@@ -189,19 +189,19 @@ function b_f_default($var_data) {
 		case 'footer_title_color':
 			return 'black';
 			break;
-		case 'footer_title_size'	:
+		case 'footer_title_size':
 			return '18px';
 			break;
-		case 'footer_title_font'	:
+		case 'footer_title_font':
 			return 'Montserrat';
 			break;
-		case 'footer_text_color'	:
+		case 'footer_text_color':
 			return '#222222';
 			break;
-		case 'footer_text_size'	:
+		case 'footer_text_size':
 			return '18px';
 			break;
-		case 'footer_text_font'	:
+		case 'footer_text_font':
 			return 'Open+Sans';
 			break;
 		case 'b_opt_submenu-color':
@@ -210,17 +210,17 @@ function b_f_default($var_data) {
 		case 'b_opt_socket-color':
 			return 'black';
 			break;
-		case 'socket_text_color'	:
+		case 'socket_text_color':
 			return 'white';
 			break;
-		case 'socket_text_size'	:
+		case 'socket_text_size':
 			return '12px';
 			break;
-		case 'b_opt_mobile-menu'	:
+		case 'b_opt_mobile-menu':
 			return 2;
 			break;
-		case 'b_opt_responsive'	:
-			return '768px';
+		case 'b_opt_responsive':
+			return '767px';
 			break;
 		case 'b_opt_mobile-margin':
 			return '8px';
@@ -234,7 +234,7 @@ function b_f_default($var_data) {
 		case 'b_opt_construction':
 			return 0;
 			break;
-		case 'b_opt_jquery-ui'	:
+		case 'b_opt_jquery-ui':
 			return 0;
 			break;
 		case 'b_opt_jquery-mobile':
@@ -243,7 +243,7 @@ function b_f_default($var_data) {
 		case 'b_opt_jquery-mobile-css':
 			return 0;
 			break;
-		case 'b_opt_lightbox'	:
+		case 'b_opt_lightbox':
 			return 1;
 			break;
 		case 'b_opt_lightbox-location':
@@ -267,13 +267,13 @@ function b_f_default($var_data) {
 		case 'b_opt_show-cookies':
 			return 1;
 			break;
-		case 'b_opt_main-logo'	:
+		case 'b_opt_main-logo':
 			return get_template_directory_uri().'/img/logo-bilnea.png';
 			break;
 		case 'b_opt_hyphenator-selector':
 			return 'text';
 			break;
-		case 'b_opt_blog-number'	:
+		case 'b_opt_blog-number':
 			return 5;
 			break;
 		case 'b_opt_blog-excerpt':
@@ -291,13 +291,13 @@ function b_f_default($var_data) {
 		case 'b_opt_blog-date-es':
 			return 'd/m/Y';
 			break;
-		case 'b_opt_blog-order'	:
+		case 'b_opt_blog-order':
 			return 'date';
 			break;
 		case 'b_opt_blog'		:
 			return 1;
 			break;
-		case 'b_opt_form-email'	:
+		case 'b_opt_form-email':
 			return get_option('admin_email');
 			break;
 		case 'b_opt_social-order':

@@ -28,18 +28,6 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 		<![endif]-->
 
 		<?php wp_head(); ?>
-		<script type="text/javascript">
-			var bilnea = {
-<?php
-	if (isset($post)) {
-		echo '				post_id: '.$post->ID.','."\n";
-	};
-?>
-				main_theme_uri: '<?= get_template_directory_uri() ?>',
-				child_theme_uri: '<?= get_stylesheet_directory_uri() ?>',
-				main_uri: '<?= get_site_url() ?>'
-			}
-		</script>
 	</head>
 
 	<body <?php body_class(); echo (b_f_option('b_opt_anticopy') == 1) ? ' onkeypress="return anticopia(event);" onkeydown="return anticopia(event);" oncontextmenu="return false;"' : ''; ?>>
@@ -51,7 +39,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 
 		<script type="text/javascript">
 			jQuery(window).on('load scroll', function() {
-				var responsive_width = <?= preg_replace('/[^0-9]/', '', b_f_option('b_opt_responsive')) ?>;
+				var responsive_width = <?= preg_replace('/[^0-9]/', '', b_f_option('b_opt_responsive', true)) ?>;
 			});
 		</script>
 

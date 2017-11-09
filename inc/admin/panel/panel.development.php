@@ -177,6 +177,11 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 	</div>
 </div>
 
+<!-- Compresión -->
+<h4>Compresión</h4>
+<input type="checkbox" name="bilnea_settings[b_opt_minify_js]" <?php checked(b_f_option('b_opt_minify_js'), 1); ?> value="1">Comprimir JS<br />
+<input type="checkbox" name="bilnea_settings[b_opt_minify_css]" <?php checked(b_f_option('b_opt_minify_css'), 1); ?> value="1">Comprimir CSS<br /><br />
+
 <!-- Precarga -->
 <h4>Precarga</h4>
 <input type="checkbox" name="bilnea_settings[b_opt_loader]" <?php checked(b_f_option('b_opt_loader'), 1); ?> value="1">Activar módulo de precarga<br />

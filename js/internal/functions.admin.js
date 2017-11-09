@@ -1,6 +1,12 @@
 console.log('bilnea Theme '+bilnea.version+'\n');
 
 jQuery(function($) {
+	$(document).ajaxSuccess(function(e, request, settings){
+		if ($('.term-meta-featured-image-wrap').length > 0) {
+			$('.term-meta-featured-image-wrap .thumbnail').css('background-image', 'none');
+			$('.term-meta-featured-image-wrap input#term-meta-featured-image').val('');
+		}
+	});
 	var inp = 'input[name="bilnea_settings';
 	$('.lateral h3').click(function() {
 		if (!$(this).hasClass('activo')) {

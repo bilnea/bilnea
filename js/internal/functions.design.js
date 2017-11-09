@@ -84,7 +84,11 @@ jQuery(function($) {
 				case e.hasClass('x90'):
 					t += (9/10); break;
 			}
-			var cl = e.attr('class').split(/\s+/);
+			if (e.attr('class') == undefined) {
+				var cl = [];
+			} else {
+				var cl = e.attr('class').split(/\s+/);
+			};
 			$.each(cl, function(index, item) {
 				if (/^x([0-9]{2})/g.test(item)) {
 					var u = parseInt(item[1]),

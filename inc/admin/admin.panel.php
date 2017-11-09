@@ -21,6 +21,20 @@ function b_f_options_page() {
 	// Variables locales
 	$var_dir = get_template_directory_uri();
 
+	if (isset($_GET['settings-updated'])) {
+
+	?>
+
+	<div id="message" class="updated" style="margin: 20px 20px 0 0;">
+		<p>
+			<strong><?php _e('Settings saved.') ?></strong>
+		</p>
+	</div>
+
+	<?php
+
+	}
+
 	?>
 
 	<script type="text/javascript">

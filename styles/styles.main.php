@@ -98,17 +98,15 @@ function b_i_s_fonts($var_font) {
 
 /* Estilos generales */
 
-.main_container  * {
+body {
 	<?= b_i_s_fonts('text'); ?>
 }
 
-.main_container  b, .main_container  b *,
-.main_container  strong,
-.main_container  strong * {
+b, strong {
 	<?= b_i_s_fonts('bold'); ?>
 }
 
-.main_container a, .main_container a * {
+a {
 	<?= b_i_s_fonts('link'); ?>
 }
 

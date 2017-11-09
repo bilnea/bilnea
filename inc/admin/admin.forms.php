@@ -41,7 +41,9 @@ if (!function_exists('b_p_forms')) {
 
 		if (isset($_GET['delete']) && $_GET['delete'] != '') {
 			$var_data = $wpdb->get_results('SELECT * FROM '.$var_table.' WHERE id = '.$_GET['delete'], ARRAY_A)[0];
-			b_f_i_rmdir(pathinfo(ABSPATH.'wp-content'.explode('/wp-content', unserialize($var_data['attachments'])[0])[1])['dirname']);
+			if (count(unserialize($var_data['attachments'])) > 0) {
+				b_f_i_rmdir(pathinfo(ABSPATH.'wp-content'.explode('/wp-content', unserialize($var_data['attachments'])[0])[1])['dirname']);
+			}
 			$wpdb->delete($var_table, array('id' => $_GET['delete']));
 		}
 

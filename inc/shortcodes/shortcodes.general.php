@@ -285,6 +285,8 @@ if (!function_exists('b_s_file')) {
 			$var_class .= ' '.$var_extension;
 			if (($var_extension == 'png') || ($var_extension == 'gif') || ($var_extension == 'tiff') || ($var_extension == 'jpg') || ($var_extension == 'jpeg')) {
 				$out = '<img src="'.$var_url.'" class="'.$var_class.'" />';
+			} else if ($var_extension == 'svg') {
+				$out = b_f_get_file_content($var_url);
 			} else {
 				$out = '<a href="'.$var_url.'"'.$var_target.' class="'.$var_class.'">'.$content.'</a>';
 			}

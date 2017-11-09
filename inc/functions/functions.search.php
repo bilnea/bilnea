@@ -11,7 +11,7 @@ if (!function_exists('b_f_limit_search')) {
 	
 	function b_f_limit_search($query) {
 
-		if(is_search()) {
+		if(is_search() && !is_admin()) {
 
 			// Variables locales
 			$var_search_objects = array('nav_menu_item');
@@ -48,7 +48,7 @@ if (!function_exists('b_f_search_order')) {
 		// Variables globales
 		global $wpdb;
 
-		if (is_search()) {
+		if (is_search() && !is_admin()) {
 
 			$var_orderby = 'CASE';
 

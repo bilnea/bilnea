@@ -12,10 +12,7 @@ if (!function_exists('b_s_form')) {
 	function b_s_form($atts, $content = null) {
 
 		// Variables globales
-		global $b_g_version;
-		global $b_g_hash;
-		global $b_g_forms;
-		global $b_g_language;
+		global $b_g_version, $b_g_hash, $b_g_forms, $b_g_language;
 
 		// Atributos
 		$a = shortcode_atts(array(
@@ -48,6 +45,7 @@ if (!function_exists('b_s_form')) {
 
 		// Javascript del formulario
 		wp_register_script('functions.form', get_template_directory_uri().'/js/internal/functions.form.js', array('jquery', 'functions.ajaxform'), $b_g_version, true);
+
 		$var_temp = array(
 			'text' => __('There are errors on the form. Please fix them before continuing', 'bilnea'),
 			'empty' => __('Fill in all the required fields', 'bilnea'),
