@@ -227,7 +227,9 @@ if (!function_exists('b_s_breadcrumb')) {
 				$out .=  __('Publications of', 'bilnea').': '.$var_user->display_name;
 			} elseif (is_404()) {
 				$out .=  __('Not found', 'bilnea');
-			} else {
+			} else if (is_tax()) {
+				$term = get_field('taxonomy');
+				$out .= $term->name;
 			}
 			$out .= '</div>';
 

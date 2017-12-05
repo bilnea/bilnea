@@ -63,4 +63,65 @@ if (!function_exists('b_s_counter')) {
 
 }
 
+
+// Contador creciente
+
+if (!function_exists('b_s_counterup')) {
+
+	function b_s_counterup($atts) {
+
+		// Atributos
+		$a = shortcode_atts(array(
+			'start' => 0,
+			'value' => null,
+			'separator' => '.',
+			'decimal' => ',',
+			'prefix' => null,
+			'suffix' => null,
+			'decimals' => 0,
+			'time' => 4
+		), $atts);
+
+		// Número aleatorio para identificar al contador
+		$var_random = rand(0, 99999999);
+
+		wp_enqueue_script('functions.counter.countup');
+
+		$out = '<div class="wow" id="b_counterup-'.$var_random.'"></div>';
+		$out .= '<script type="text/javascript">'."\n";
+		$out .= '	jQuery(window).on(\'load scroll\', function() {'."\n";
+		$out .= '		if (!jQuery(\'#b_counterup-'.$var_random.'\').hasClass(\'initialized\') && jQuery(\'#b_counterup-'.$var_random.'\').hasClass(\'animated\')) {'."\n";
+		$out .= '			jQuery(\'#b_counterup-'.$var_random.'\').addClass(\'initialized\')'."\n";
+		$out .= '			var counter_opts_'.$var_random.' = {'."\n";
+		$out .= '				useEasing: true,'."\n";
+		$out .= '				useGrouping: true,'."\n";
+		$out .= '				separator: \''.$a['separator'].'\','."\n";
+		$out .= '				decimal: \''.$a['decimal'].'\','."\n";
+		if (!is_null($a['prefix'])) {
+			$out .= '			prefix: \''.$a['prefix'].'\','."\n";
+		}
+		if (!is_null($a['suffix'])) {
+			$out .= '			suffix: \''.$a['suffix'].'\','."\n";
+		}
+		$out .= '			}'."\n";
+		$out .= '			var counter_'.$var_random.' = new CountUp(\'b_counterup-'.$var_random.'\', '.$a['start'].', '.$a['value'].', '.$a['decimals'].', '.$a['time'].', counter_opts_'.$var_random.');'."\n";
+		$out .= '			if (!counter_'.$var_random.'.error) {'."\n";
+		$out .= '				counter_'.$var_random.'.start();'."\n";
+		$out .= '			} else {'."\n";
+		$out .= '				console.error(counter_'.$var_random.'.error);'."\n";
+		$out .= '			}'."\n";
+		$out .= '		};'."\n";
+		$out .= '	})'."\n";
+		$out .= '</script>'."\n";
+
+		if (!is_null($a['value'])) {
+			return $out;
+		}
+
+	}
+
+	add_shortcode('b_counterup', 'b_s_counterup');
+
+}
+
 ?>

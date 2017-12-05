@@ -36,6 +36,9 @@ if (!function_exists('b_f_load_scripts')) {
 		// Flipclock
 		wp_register_script('functions.counter.flipclock', get_template_directory_uri().'/js/external/functions.counter.flipclock.js', array('jquery'), b_f_versions('flipclock'), true);
 
+		// CounterUP
+		wp_register_script('functions.counter.countup', get_template_directory_uri().'/js/external/functions.counter.countup.js', array('jquery'), b_f_versions('countup'), true);
+
 		// Fitvids
 		wp_register_script('functions.design.fitvids', get_template_directory_uri().'/js/external/functions.design.fitvids.js', array('jquery'), b_f_versions('fitvids'), true);
 

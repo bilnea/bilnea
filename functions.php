@@ -83,6 +83,11 @@ if (!function_exists('b_f_versions')) {
 				return '0.8.0 Beta';
 				break;
 
+			// CountUP
+			case 'countup':
+				return '1.9.3';
+				break;
+
 			// Super Simple Slider
 			case 'flexslider':
 				return '2.6.3';

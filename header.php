@@ -97,11 +97,11 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 						jQuery('.main_container, #mobile-header.sticky').animate({
 							'margin-top': 0
 						}, 200);
-						setCookie('cookies_viewed', 'yes', 365);
+						b_js_set_cookie('cookies_viewed', 'yes', 365);
 					})
 
-					if (getCookie('cookies_viewed') != 'yes') {
-						setCookie('cookies_viewed', 'yes', 365);
+					if (b_js_get_cookie('cookies_viewed') != 'yes') {
+						b_js_set_cookie('cookies_viewed', 'yes', 365);
 					} else {
 						jQuery('#cookie_warning').hide();
 					}
@@ -109,23 +109,6 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 					jQuery('.main_container, #mobile-header.sticky').css('margin-top', cwh);
 				})
 
-				function setCookie(cname, cvalue, exdays) {
-					var d = new Date();
-					d.setTime(d.getTime() + (exdays*24*60*60*1000));
-					var expires = "expires="+d.toUTCString();
-					document.cookie = cname + "=" + cvalue + "; " + expires;
-				}
-
-				function getCookie(cname) {
-					var name = cname+'=';
-					var ca = document.cookie.split(';');
-					for(var i=0; i<ca.length; i++) {
-						var c = ca[i];
-						while (c.charAt(0)==' ') c = c.substring(1);
-						if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-					}
-					return '';
-				}
 			</script>
 
 			<?php
