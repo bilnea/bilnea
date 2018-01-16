@@ -1,151 +1,177 @@
 jQuery(function($) {
-	$('select[name^="b_i_custom_select"]').on('change', function() {
+
+	$('select[name^="b_i_select"]').on('change', function() {
 		$(this).addClass('selected');
 	});
+
 	$('form[data-id]').each(function() {
-		var ran = $(this).attr('data-id');
-		var x = {};
-		$(this).find($('[data-name]')).each(function() {
+
+		var f = $(this),
+			r = $(this).attr('data-id'),
+			x = {};
+
+		f.children('.elementor-row').each(function() {
+			var t = $(this),
+				c = Math.round(100/t.children().length);
+			if (t.html() == '') {
+				t.remove();
+			}
+			t.children('.elementor-column').addClass('elementor-col-'+c);
+		});
+
+		$(this).find('[data-name]').each(function() {
 			var t = $(this);
 			x[t.attr('name')] = t.attr('data-name');
 		});
-		$(this).find($('[name="b_i_names"]')).val(JSON.stringify(x));
 
-		$('body').on('keyup', 'input.captcha', function() {
-			var key = event.keyCode || event.charCode;
-			var inputs = $('input.captcha');
-			if (($(this).val().length === this.size) && key != 32) {
-				inputs.eq(inputs.index(this) + 1).focus();
+		$(this).find('[name="b_i_names"]').val(JSON.stringify(x));
+
+		f.find('input.captcha').on('keyup', function() {
+			var k = event.keyCode || event.charCode,
+				i = f.find('input.captcha');
+			if (($(this).val().length === this.size) && k != 32) {
+				i.eq(i.index(this) + 1).focus();
 			} 
-			if( key == 8 || key == 46 ) {
-				var indexNum = inputs.index(this);
-				if(indexNum != 0) {
-					inputs.eq(inputs.index(this) - 1).val('').focus();
+			if (k == 8 || k == 46) {
+				var j = i.index(this);
+				if (j != 0) {
+					i.eq(i.index(this)-1).val('').focus();
 				}
 			}
 		});
-		$('.input.required:not([name="email"])').on('keyup', function() {
+
+		f.find('.input[data-required="true"]:not([data-type="email"])').on('keyup', function() {
 			var t = $(this);
 			if (t.val() == '') {
-				t.addClass('invalid').removeClass('valid');
+				t.closest('.form-control').addClass('invalid').removeClass('valid');
 			} else {
-				t.addClass('valid').removeClass('invalid');
+				t.closest('.form-control').addClass('valid').removeClass('invalid');
 			}
 		});
-		$('.input:not(required)').on('keyup', function() {
+
+		f.find('.input:not([data-required="true"])').on('keyup', function() {
 			var t = $(this);
 			if (t.val() == '') {
-				t.removeClass('valid');
+				t.closest('.form-control').removeClass('valid');
 			} else {
-				t.addClass('valid');
+				t.closest('.form-control').addClass('valid');
 			}
 		});
-		$('input.captcha.required').on('keyup', function() {
+		f.find('input.captcha[data-required="true"]').on('keyup', function() {
 			var t = $(this),
 				p = t.attr('placeholder');
 			if (t.val() == '') {
-				t.addClass('invalid').removeClass('valid');
+				t.closest('.form-control').addClass('invalid').removeClass('valid');
 			} else {
 				if (t.val() == p) {
-					t.addClass('valid').removeClass('invalid');
+					t.closest('.form-control').addClass('valid').removeClass('invalid');
 				} else {
-					t.addClass('invalid').removeClass('valid');
+					t.closest('.form-control').addClass('invalid').removeClass('valid');
 				}
 			}
 		});
-		$('input.required[type="checkbox"]').change(function() {
+		f.find('input[data-required="true"][type="checkbox"]').change(function() {
 			var t = $(this);
 			if (t.is(':checked')) {
-				t.addClass('valid').removeClass('invalid');
+				t.closest('.form-control').addClass('valid').removeClass('invalid');
 			} else {
-				t.addClass('invalid').removeClass('valid');
+				t.closest('.form-control').addClass('invalid').removeClass('valid');
 			}
 		});
-		$('.input.required[name="email"]').on('keyup', function() {
+		f.find('.input[data-required="true"][data-type="email"]').on('keyup', function() {
 			var t = $(this);
 			if (t.val() == '') {
-				t.addClass('invalid').removeClass('valid');
+				t.closest('.form-control').addClass('invalid').removeClass('valid');
 			} else {
 				if (b_js_check_email(t.val())) {
-					t.addClass('valid').removeClass('invalid');
+					t.closest('.form-control').addClass('valid').removeClass('invalid');
 				} else {
-					t.addClass('invalid').removeClass('valid');
+					t.closest('.form-control').addClass('invalid').removeClass('valid');
 				}
 			}
 		});
-		$(this).find($('.form-send')).click(function() {
-			var m = $(this);
-			var f = $(this).closest('form'),
+		f.find('.form-send').click(function() {
+			var m = $(this),
 				g = 0,
 				x = '',
-				errors = [form_messages.text];
-			f.next('.response').html('');
-			$(f.find($('input.required, textarea.required'))).each(function() {
+				e = window['form_messages_'+r],
+				p = [],
+				errors = [e.text];
+			f.find('.response').html('');
+			f.find('input[data-reply="yes"]').each(function() {
+				var t = $(this);
+				p.push(t.val());
+			});
+			f.find('[name="b_i_reply"]').val(p.join(','));
+			f.find('input[data-required="true"], textarea[data-required="true"]').each(function() {
 				var t = $(this);
 				t.removeClass('invalid');
 				if (t.val() == '') {
 					t.addClass('invalid');
 					g++;
 					t = '1';
-					errors.push(form_messages.empty);
+					errors.push(e.empty);
 				};
 			});
-			if (f.find($('input[name$="email"]')).val() != '' && !b_js_check_email(f.find($('input[name$="email"]')).val())) {
-				f.find($('input[name$="email"]')).addClass('invalid');
-				g++;
-				t = '2';
-				errors.push(form_messages.email);
-			};
-			$(f.find($('input.captcha'))).each(function() {
+			f.find('input[data-type="email"]').each(function() {
+				var t = $(this);
+				t.removeClass('invalid');
+				if (t.val() != '' && !b_js_check_email(t.val())) {
+					g++;
+					t = '2';
+					errors.push(e.email);
+				}
+			});
+			f.find('input.captcha').each(function() {
 				var t = $(this);
 				if (t.val() != t.attr('placeholder')) {
 					t.addClass('invalid');
 					g++;
 					t = '3';
-					errors.push(form_messages.captcha);
+					errors.push(e.captcha);
 				};
 			});
-			$(f.find($('select.required'))).each(function() {
+			f.find('select[data-required="true"]').each(function() {
 				var t = $(this);
 				if (t.children('option:selected').is(':disabled')) {
 					t.addClass('invalid');
 					g++;
 					t = '4';
-					errors.push(form_messages.empty);
+					errors.push(e.empty);
 				};
 			});
-			$(f.find($('input.required[type="checkbox"][id^="legal-"]'))).each(function() {
+			f.find('input[data-required="true"][type="checkbox"][id^="legal-"]').each(function() {
 				var t = $(this);
 				if (t[0].checked == false) {
 					t.addClass('invalid');
 					g++;
 					t = '5';
-					errors.push(form_messages.legal);
+					errors.push(e.legal);
 				};
 			});
-			$(f.find($('input.required[type="checkbox"]:not(.invalid)'))).each(function() {
+			f.find('input[data-required="true"][type="checkbox"]:not(.invalid)').each(function() {
 				var t = $(this);
 				if (t[0].checked == false) {
 					t.addClass('invalid');
 					g++;
 					t = '5';
-					errors.push(form_messages.empty);
+					errors.push(e.empty);
 				};
 			});
-			$(f.find($('input.required[type="checkbox"]'))).next().click(function() {
+			f.find('input[data-required="true"][type="checkbox"]').next().click(function() {
 				var t = $(this);
 				t.parent().removeClass('invalid');
 			});
-			$(f.find($('input[type="file"].invalid'))).each(function() {
+			f.find('input[type="file"].invalid').each(function() {
 				g++;
 				t = '6';
-				errors.push(form_messages.empty);
+				errors.push(e.empty);
 			});
-			$(f.find($('.file-button.invalid'))).each(function() {
+			f.find('.file-button.invalid').each(function() {
 				g++;
 				errors.push($(this).children('.text').text());
 			});
-			$('.required.invalid').on('click focus', function() {
+			f.find('[data-required="true"].invalid').on('click focus', function() {
 				$(this).removeClass('invalid');
 			});
 			if (g == 0) {
@@ -155,16 +181,15 @@ jQuery(function($) {
 					beforeSubmit: function(arr, $form, options) {
 						m.text(b).addClass('sending');
 					},
-					clearForm: true,
-					url: bilnea.root_url+'/wp-admin/admin-ajax.php',
+					url: bilnea.site_url+'/wp-admin/admin-ajax.php',
 					data: {
 						eid: f.data('id'),
 						action: 'b_send_form',
-						redirect: f.data('redirect')
+						redirect: f.find('input[name="b_i_redirect"]').val()
 					},
 					success: function(responseText, statusText, xhr, $form) {
 						m.text(a).removeClass('sending');
-						f.next().html(responseText);
+						f.children('.response').html(responseText);
 						if (f.find($('input[type="file"]')).length) {
 							f.find($('input[type="file"]')).each(function() {
 								var m = $(this).attr('data-init');
@@ -175,7 +200,7 @@ jQuery(function($) {
 				});
 			} else {
 				$.unique(errors);
-				f.next('.response').html('<div class="errors">'+errors.join('. ')+'.</div>');
+				f.find('.response').html('<div class="errors">'+errors.join('. ')+'.</div>');
 			}
 		})
 	});
@@ -207,7 +232,7 @@ jQuery(function($) {
 				console.log(n);
 				$('<span>'+n[0]+'</span>').appendTo(t.prev().children('.text'));
 			} else if (n.length > 1) {
-				$('<span>'+n.length+' '+form_messages.files_selected+'</span>').appendTo(t.prev().children('.text'));
+				$('<span>'+n.length+' '+e.files_selected+'</span>').appendTo(t.prev().children('.text'));
 			};
         }
     });

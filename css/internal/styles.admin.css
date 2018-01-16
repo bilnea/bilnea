@@ -690,6 +690,14 @@ body > .sp-container .sp-clear {
 	background-color: rgba(255, 255, 255, 0.6) !important;
 }
 
+#back_color .sp-alpha {
+	display: none !important;
+}
+
+#back_color .sp-alpha-enabled .sp-top {
+	margin-bottom: 1px;
+}
+
 #admin_thumb,
 #term-featured-image {
 	width: 90px;

@@ -244,6 +244,65 @@ if (!function_exists('b_s_twitter')) {
 	}
 
 	add_shortcode('b_twitter', 'b_s_twitter');
+
+}
+
+
+// Compartir url actual
+
+if (!function_exists('b_s_sharer')) {
+	
+	function b_s_sharer($atts) {
+
+		$a = shortcode_atts(array(
+			'social' => 'twitter, facebook, linkedin, google-plus, whatsapp',
+			'text' => __('We share?', 'bilnea'),
+		), $atts);
+
+		$out = '<div class="b_sharer"><span>'.esc_attr($a['text']).'</span>'."\n";
+
+		foreach (explode(',', esc_attr($a['social'])) as $social) {
+
+			switch (trim($social)) {
+				case 'twitter':
+					$var_user = '';
+					if (strpos(b_f_option('b_opt_social-twitter'), 'twitter.com') !== false) {
+						$var_user = explode('twitter.com/', b_f_option('b_opt_social-twitter'))[1];
+					} else {
+						$var_user = str_replace('@', '', b_f_option('b_opt_social-twitter'));
+					}
+					($var_user != '') ? $var_via = '&via='.$var_user : $var_via = '';
+					$out .= '<a target="_blank" class="sharer fa fa-twitter" href="https://twitter.com/intent/tweet?original_referer='.urlencode(get_the_permalink()).'&related='.$var_user.'&text='.rawurlencode(get_the_title()).'&tw_p=tweetbutton&url='.urlencode(get_the_permalink()).$var_via.'" title="'.__('Share in Twitter', 'bilnea').'"></a>';
+					break;
+				case 'facebook':
+					$out .= '<a target="_blank" class="sharer fa fa-facebook" href="http://www.facebook.com/sharer.php?u='.urlencode(get_the_permalink()).'&t='.rawurlencode(get_the_title()).'" title="'.__('Share in Facebook', 'bilnea').'"></a>';
+					break;
+				case 'linkedin':
+					$out .= '<a target="_blank" class="sharer fa fa-linkedin" href="http://linkedin.com/shareArticle?mini=true&title='.rawurlencode(get_the_title()).'&url='.urlencode(get_the_permalink()).'" title="'.__('Share in Linkedin', 'bilnea').'"></a>';
+					break;
+				case 'google-plus':
+					$out .= '<a target="_blank" class="sharer fa fa-google-plus" href="https://plus.google.com/share?url='.urlencode(get_the_permalink()).'" title="'.__('Share in Google +', 'bilnea').'"></a>';
+					break;
+				case 'whatsapp':
+					if (wp_is_mobile()) {
+						$out .= '<a class="sharer fa fa-whatsapp" href="whatsapp://send?text='.rawurlencode(get_the_title()).' – '.urlencode(get_the_permalink()).'" title="'.__('Share in Whatsapp', 'bilnea').'"></a>';
+					}
+					break;
+				case 'mail':
+					$out .= '<a class="sharer fa fa-envelope" href="mailto:?subject='.rawurlencode(get_the_title()).'&body='.urlencode(get_the_permalink()).'" title="'.__('Share by email', 'bilnea').'"></a>';
+					break;
+			}
+
+		}
+
+		$out .= '</div>';
+
+		return $out;
+			
+	}
+
+	add_shortcode('b_sharer', 'b_s_sharer');
+
 }
 
 ?>

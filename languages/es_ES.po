@@ -1,42 +1,39 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: bilnea Wordpress theme\n"
-"POT-Creation-Date: 2017-04-10 11:02+0200\n"
-"PO-Revision-Date: 2017-04-10 11:02+0200\n"
+"Project-Id-Version: bilnea WordPress theme\n"
+"POT-Creation-Date: 2018-01-05 12:30+0100\n"
+"PO-Revision-Date: 2018-01-10 12:32+0100\n"
 "Last-Translator: \n"
-"Language-Team: Samuel E. Cerezo <samuelcerezo@bilnea.com>\n"
-"Language: es\n"
+"Language-Team: \n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0\n"
-"X-Poedit-Basepath: ..\n"
+"X-Generator: Poedit 2.0.3\n"
+"X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: style.css\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_x:1,2c\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
 
 #: archive.php:58 index.php:62
 msgid "Nothing found"
 msgstr "Sin resultados"
 
-#: footer.php:73
-msgid "Made with <i class=\"fa fa-heart-o\"></i> by"
-msgstr "Hecho con <i class=\"fa fa-heart-o\"></i> por"
-
-#: footer.php:73
-msgid "bilnea. Communication & Digital Marketing Agency"
-msgstr "bilnea. Agencia de Comunicación y Marketing Digital"
-
-#: functions.php:539
+#: functions.php:570
 msgid "* I have read, understood and accept the "
 msgstr "* He leído, entiendo y acepto la "
 
-#: functions.php:539
+#: functions.php:570
 msgid "privacy policy"
 msgstr "política de privacidad"
 
-#: header.php:94
+#: header.php:79
 #, php-format
 msgid ""
 "We use our own and third-part <em>cookies</em> to analyse the use and "
@@ -51,14 +48,18 @@ msgstr ""
 "configuración u obtener más información <a href=\"%1$s\" target=\"_blank\" "
 "title=\"Política de cookies de %2$s\">aquí</a>."
 
-#: header.php:98
+#: header.php:83
 msgid "Ok"
 msgstr "Aceptar"
 
-#: inc/admin/admin.forms.php:134
+#: inc/admin/admin.forms.php:136
 #, php-format
 msgid "Response to the message sent from &quot;%s&quot; website "
-msgstr "Respuesta al mensaje enviado desde la página web &quot;%s&quot; "
+msgstr "Respuesta al mensaje enviado desde el sitio web \"%s\""
+
+#: inc/admin/admin.panel.php:30
+msgid "Settings saved."
+msgstr "Configuración guardada."
 
 #: inc/ajax/ajax.backup.php:99 inc/ajax/ajax.form.php:137
 msgid ""
@@ -88,7 +89,7 @@ msgstr "Mensaje enviado correctamente. Por favor, espera un momento."
 msgid ""
 "Sorry, an error has ocurred sending your message. Please try again later."
 msgstr ""
-"Lo sentimos, ha ocurrido un error al enviar el mensaje. Por favor, vuelva a "
+"Lo sentimos, ha ocurrido un error al enviar el mensaje. Por favor, vuelve a "
 "intentarlo más tarde."
 
 #: inc/ajax/ajax.mailchimp.php:41
@@ -121,68 +122,68 @@ msgstr ""
 "Te has dado de baja de nuestro boletín de noticias correctamente. Sentimos "
 "tu marcha."
 
-#: inc/data/data.blog.php:27 single.php:57
+#: inc/data/data.blog.php:27 single.php:58
 msgid "No comments"
-msgstr "Sin comentarios"
+msgstr "No hay comentarios"
 
-#: inc/data/data.blog.php:29 single.php:59
+#: inc/data/data.blog.php:29 single.php:60
 msgid " comments"
 msgstr " comentarios"
 
-#: inc/data/data.blog.php:31 single.php:61
+#: inc/data/data.blog.php:31 single.php:62
 msgid "1 comment"
 msgstr "1 comentario"
 
-#: inc/data/data.blog.php:35 single.php:65
+#: inc/data/data.blog.php:35 single.php:66
 msgid "Comments are disabled"
 msgstr "Comentarios deshabilitados"
 
-#: inc/data/data.globals.php:18 inc/shortcodes/shortcodes.form.php:346
+#: inc/data/data.globals.php:18 inc/shortcodes/shortcodes.form.php:344
 msgid "January"
 msgstr "Enero"
 
-#: inc/data/data.globals.php:19 inc/shortcodes/shortcodes.form.php:346
+#: inc/data/data.globals.php:19 inc/shortcodes/shortcodes.form.php:344
 msgid "February"
 msgstr "Febrero"
 
-#: inc/data/data.globals.php:20 inc/shortcodes/shortcodes.form.php:346
+#: inc/data/data.globals.php:20 inc/shortcodes/shortcodes.form.php:344
 msgid "March"
 msgstr "Marzo"
 
-#: inc/data/data.globals.php:21 inc/shortcodes/shortcodes.form.php:346
+#: inc/data/data.globals.php:21 inc/shortcodes/shortcodes.form.php:344
 msgid "April"
 msgstr "Abril"
 
-#: inc/data/data.globals.php:22 inc/shortcodes/shortcodes.form.php:346
-#: inc/shortcodes/shortcodes.form.php:347
+#: inc/data/data.globals.php:22 inc/shortcodes/shortcodes.form.php:344
+#: inc/shortcodes/shortcodes.form.php:345
 msgid "May"
 msgstr "Mayo"
 
-#: inc/data/data.globals.php:23 inc/shortcodes/shortcodes.form.php:346
+#: inc/data/data.globals.php:23 inc/shortcodes/shortcodes.form.php:344
 msgid "June"
 msgstr "Junio"
 
-#: inc/data/data.globals.php:24 inc/shortcodes/shortcodes.form.php:346
+#: inc/data/data.globals.php:24 inc/shortcodes/shortcodes.form.php:344
 msgid "July"
 msgstr "Julio"
 
-#: inc/data/data.globals.php:25 inc/shortcodes/shortcodes.form.php:346
+#: inc/data/data.globals.php:25 inc/shortcodes/shortcodes.form.php:344
 msgid "August"
 msgstr "Agosto"
 
-#: inc/data/data.globals.php:26 inc/shortcodes/shortcodes.form.php:346
+#: inc/data/data.globals.php:26 inc/shortcodes/shortcodes.form.php:344
 msgid "September"
 msgstr "Septiembre"
 
-#: inc/data/data.globals.php:27 inc/shortcodes/shortcodes.form.php:346
+#: inc/data/data.globals.php:27 inc/shortcodes/shortcodes.form.php:344
 msgid "October"
 msgstr "Octubre"
 
-#: inc/data/data.globals.php:28 inc/shortcodes/shortcodes.form.php:346
+#: inc/data/data.globals.php:28 inc/shortcodes/shortcodes.form.php:344
 msgid "November"
 msgstr "Noviembre"
 
-#: inc/data/data.globals.php:29 inc/shortcodes/shortcodes.form.php:346
+#: inc/data/data.globals.php:29 inc/shortcodes/shortcodes.form.php:344
 msgid "December"
 msgstr "Diciembre"
 
@@ -191,12 +192,12 @@ msgstr "Diciembre"
 msgid "page"
 msgstr "pagina"
 
-#: inc/data/data.pagination.php:13 inc/shortcodes/shortcodes.slider.php:79
+#: inc/data/data.pagination.php:13 inc/shortcodes/shortcodes.slider.php:85
 #: search.php:62
 msgid "Previous"
 msgstr "Anterior"
 
-#: inc/data/data.pagination.php:14 inc/shortcodes/shortcodes.slider.php:80
+#: inc/data/data.pagination.php:14 inc/shortcodes/shortcodes.slider.php:86
 #: search.php:63
 msgid "Next"
 msgstr "Siguiente"
@@ -213,6 +214,929 @@ msgstr "Primero"
 #: inc/data/data.pagination.php:26 search.php:75
 msgid "Last"
 msgstr "Último"
+
+#: inc/elementor/elementor.init.php:34
+msgid ""
+"Elementor by bilnea is not working because you are using an old version of "
+"Elementor."
+msgstr ""
+"Elementor by bilnea no está funcionando porque estás utilizando una versión "
+"antigua de Elementor."
+
+#: inc/elementor/elementor.init.php:35
+msgid "Update Elementor Now"
+msgstr "Actualiza Elementor ahora"
+
+#: inc/elementor/elementor.main.php:59
+msgid "bilnea Widgets"
+msgstr "Elementos bilnea"
+
+#: inc/elementor/widgets/widget.blog.php:19
+#: inc/elementor/widgets/widget.blog.php:38
+msgid "Blog"
+msgstr "BlogBlog"
+
+#: inc/elementor/widgets/widget.blog.php:44
+#: inc/elementor/widgets/widget.mailchimp.php:45
+#: inc/elementor/widgets/widget.map.php:39
+#: inc/elementor/widgets/widget.recents.php:44
+msgid "Configuration"
+msgstr "Configuración"
+
+#: inc/elementor/widgets/widget.blog.php:60
+#: inc/elementor/widgets/widget.recents.php:60
+msgid "Post type"
+msgstr "Tipo de objeto"
+
+#: inc/elementor/widgets/widget.blog.php:70
+#: inc/elementor/widgets/widget.recents.php:70
+msgid "Order by"
+msgstr "Ordenar por"
+
+#: inc/elementor/widgets/widget.blog.php:74
+#: inc/elementor/widgets/widget.recents.php:74
+msgid "Date"
+msgstr "Fecha"
+
+#: inc/elementor/widgets/widget.blog.php:75
+#: inc/elementor/widgets/widget.breadcrumb.php:88
+#: inc/elementor/widgets/widget.form.php:172
+#: inc/elementor/widgets/widget.form.php:206
+#: inc/elementor/widgets/widget.mailchimp.php:163
+#: inc/elementor/widgets/widget.recents.php:75
+#: inc/shortcodes/shortcodes.form.php:465
+#: inc/shortcodes/shortcodes.newsletter.php:49
+#: inc/shortcodes/shortcodes.newsletter.php:96 single.php:148
+msgid "Name"
+msgstr "Nombre"
+
+#: inc/elementor/widgets/widget.blog.php:76
+#: inc/elementor/widgets/widget.recents.php:76
+msgid "Random"
+msgstr "Aleatorio"
+
+#: inc/elementor/widgets/widget.blog.php:84
+msgid "Offset"
+msgstr "Comenzar en"
+
+#: inc/elementor/widgets/widget.blog.php:93
+msgid "Posts per page"
+msgstr "Posts por página"
+
+#: inc/elementor/widgets/widget.blog.php:108
+msgid "Columns"
+msgstr "Columnas"
+
+#: inc/elementor/widgets/widget.blog.php:123
+msgid "Equal height"
+msgstr "Alturas iguales"
+
+#: inc/elementor/widgets/widget.blog.php:133
+#: inc/elementor/widgets/widget.recents.php:99
+msgid "Taxonomy Query"
+msgstr "Consulta por taxonomía"
+
+#: inc/elementor/widgets/widget.blog.php:144
+#: inc/elementor/widgets/widget.recents.php:110
+#: inc/elementor/widgets/widget.taxonomies.php:50
+msgid "Taxonomy"
+msgstr "Taxonomía"
+
+#: inc/elementor/widgets/widget.blog.php:156
+#: inc/elementor/widgets/widget.recents.php:122
+msgid "Key"
+msgstr "Key"
+
+#: inc/elementor/widgets/widget.blog.php:160
+#: inc/elementor/widgets/widget.recents.php:126
+msgid "Term slug"
+msgstr "Term slug"
+
+#: inc/elementor/widgets/widget.blog.php:161
+#: inc/elementor/widgets/widget.recents.php:127
+msgid "Term ID"
+msgstr "Term ID"
+
+#: inc/elementor/widgets/widget.blog.php:172
+#: inc/elementor/widgets/widget.recents.php:138
+msgid "Values"
+msgstr "Valores"
+
+#: inc/elementor/widgets/widget.blog.php:184
+#: inc/elementor/widgets/widget.blog.php:253
+#: inc/elementor/widgets/widget.recents.php:150
+#: inc/elementor/widgets/widget.recents.php:219
+msgid "Operator"
+msgstr "Operador"
+
+#: inc/elementor/widgets/widget.blog.php:206
+#: inc/elementor/widgets/widget.recents.php:172
+msgid "Meta Query"
+msgstr "Consulta por metainformación"
+
+#: inc/elementor/widgets/widget.blog.php:217
+#: inc/elementor/widgets/widget.recents.php:183
+msgid "Meta tag"
+msgstr "Meta etiqueta"
+
+#: inc/elementor/widgets/widget.blog.php:229
+#: inc/elementor/widgets/widget.recents.php:195
+msgid "Meta key"
+msgstr "Meta key"
+
+#: inc/elementor/widgets/widget.blog.php:241
+#: inc/elementor/widgets/widget.recents.php:207
+msgid "Meta value"
+msgstr "Metavalor"
+
+#: inc/elementor/widgets/widget.blog.php:274
+#: inc/elementor/widgets/widget.mailchimp.php:104
+#: inc/elementor/widgets/widget.recents.php:240
+#: inc/elementor/widgets/widget.slider.php:224
+#: inc/elementor/widgets/widget.slider.php:229
+msgid "Content"
+msgstr "Contenido"
+
+#: inc/elementor/widgets/widget.blog.php:279
+#: inc/elementor/widgets/widget.blog.php:299
+#: inc/elementor/widgets/widget.mailchimp.php:109
+#: inc/elementor/widgets/widget.recents.php:245
+#, php-format
+msgid "You can use the followings snippets %s"
+msgstr "Puedes utilizar los siguientes códigos %s"
+
+#: inc/elementor/widgets/widget.blog.php:282
+#: inc/elementor/widgets/widget.blog.php:302
+#: inc/elementor/widgets/widget.mailchimp.php:112
+#: inc/elementor/widgets/widget.recents.php:248
+msgid "Enter your enhaced content here"
+msgstr "Introduce aquí tu contenido"
+
+#: inc/elementor/widgets/widget.blog.php:289
+msgid "Different content for even"
+msgstr "Contenido distinto para elementos pares"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:17
+msgid "Breadcrumb"
+msgstr "Migas de pan"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:36
+#: inc/elementor/widgets/widget.breadcrumb.php:106
+msgid "Breadcrumbs"
+msgstr "Migas de pan"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:43
+msgid "Separator"
+msgstr "Separador"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:52
+msgid "Show home"
+msgstr "Mostrar Inicio"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:63
+msgid "Home value"
+msgstr "Texto para inicio"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:65
+#: inc/shortcodes/shortcodes.general.php:153
+msgid "Home"
+msgstr "Inicio"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:75
+msgid "Custom breadcrumbs"
+msgstr "Migas personalizadas"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:90
+#: inc/elementor/widgets/widget.form.php:52
+msgid "Text"
+msgstr "Texto"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:97
+#: inc/elementor/widgets/widget.slider.php:251
+msgid "Url"
+msgstr "Url"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:99
+#: inc/elementor/widgets/widget.slider.php:253
+#: inc/elementor/widgets/widget.taxonomies.php:84
+msgid "http://your-link.com"
+msgstr "http://tu-enlace.com"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:143
+#: inc/elementor/widgets/widget.breadcrumb.php:145
+#: inc/elementor/widgets/widget.breadcrumb.php:147
+#, php-format
+msgid "%s"
+msgstr "%s"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:145
+msgctxt "Fecha para archivos mensuales"
+msgid "F Y"
+msgstr "F Y"
+
+#: inc/elementor/widgets/widget.breadcrumb.php:147
+msgctxt "Fecha para archivos anuales"
+msgid "Y"
+msgstr "Y"
+
+#: inc/elementor/widgets/widget.form.php:20
+msgid "Form"
+msgstr "Formulario"
+
+#: inc/elementor/widgets/widget.form.php:39
+#: inc/elementor/widgets/widget.form.php:166
+msgid "Inputs"
+msgstr "Elementos"
+
+#: inc/elementor/widgets/widget.form.php:48
+#: inc/elementor/widgets/widget.slider.php:162
+msgid "Type"
+msgstr "Tipo"
+
+#: inc/elementor/widgets/widget.form.php:53
+#: inc/elementor/widgets/widget.form.php:178
+#: inc/elementor/widgets/widget.mailchimp.php:165
+#: inc/shortcodes/shortcodes.form.php:144
+#: inc/shortcodes/shortcodes.newsletter.php:53
+#: inc/shortcodes/shortcodes.newsletter.php:98 single.php:149
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: inc/elementor/widgets/widget.form.php:54
+msgid "Number"
+msgstr "Número"
+
+#: inc/elementor/widgets/widget.form.php:55
+msgid "Radio"
+msgstr "Radio"
+
+#: inc/elementor/widgets/widget.form.php:56
+msgid "Checkbox"
+msgstr "Checkbox"
+
+#: inc/elementor/widgets/widget.form.php:57
+msgid "Select"
+msgstr "Selector"
+
+#: inc/elementor/widgets/widget.form.php:58
+#: inc/elementor/widgets/widget.form.php:421
+msgid "Legal notice"
+msgstr "Aviso legal"
+
+#: inc/elementor/widgets/widget.form.php:59
+msgid "File"
+msgstr "Archivo"
+
+#: inc/elementor/widgets/widget.form.php:60
+msgid "Textarea"
+msgstr "Área de texto"
+
+#: inc/elementor/widgets/widget.form.php:61
+msgid "Mailchimp checkbox"
+msgstr "Checkbox de Mailchimp"
+
+#: inc/elementor/widgets/widget.form.php:69
+msgid "Label"
+msgstr "Etiqueta"
+
+#: inc/elementor/widgets/widget.form.php:78
+msgid "Label as placeholder"
+msgstr "Etiqueta como marcador"
+
+#: inc/elementor/widgets/widget.form.php:91
+msgid "Required"
+msgstr "Requerido"
+
+#: inc/elementor/widgets/widget.form.php:101
+msgid "Rows"
+msgstr "Filas"
+
+#: inc/elementor/widgets/widget.form.php:113
+msgid "Options. One per line, \"value::name\" format."
+msgstr "Opciones. Una por línea. Formato como “valor::nombre”."
+
+#: inc/elementor/widgets/widget.form.php:126
+msgid "Multiple"
+msgstr "Múltiple"
+
+#: inc/elementor/widgets/widget.form.php:139
+msgid "Break line"
+msgstr "Salto de línea"
+
+#: inc/elementor/widgets/widget.form.php:150
+msgid "Break position"
+msgstr "Crear división"
+
+#: inc/elementor/widgets/widget.form.php:154
+msgid "Before"
+msgstr "Antes"
+
+#: inc/elementor/widgets/widget.form.php:155
+msgid "After"
+msgstr "Después"
+
+#: inc/elementor/widgets/widget.form.php:184
+#: inc/shortcodes/shortcodes.form.php:155
+msgid "Message"
+msgstr "Mensaje"
+
+#: inc/elementor/widgets/widget.form.php:198
+msgid "Options"
+msgstr "Opciones"
+
+#: inc/elementor/widgets/widget.form.php:208
+#, php-format
+msgid "Form #%d / %s"
+msgstr "Form #%d / %s"
+
+#: inc/elementor/widgets/widget.form.php:215
+#: inc/shortcodes/shortcodes.form.php:490
+msgid "Subject"
+msgstr "Asunto"
+
+#: inc/elementor/widgets/widget.form.php:217
+#: inc/shortcodes/shortcodes.form.php:25
+#, php-format
+msgid "Message sent from %s website form"
+msgstr "Mensaje enviado desde el formulario en el sitio web %s"
+
+#: inc/elementor/widgets/widget.form.php:224
+msgid "Receivers"
+msgstr "Destinatarios"
+
+#: inc/elementor/widgets/widget.form.php:227
+msgid "your@address.com"
+msgstr "tu@email.com"
+
+#: inc/elementor/widgets/widget.form.php:234
+msgid "Store in database"
+msgstr "Guardar en base de datos"
+
+#: inc/elementor/widgets/widget.form.php:244
+#: inc/elementor/widgets/widget.mailchimp.php:74
+msgid "Redirect on success"
+msgstr "Redirigir en caso de envío exitoso"
+
+#: inc/elementor/widgets/widget.form.php:254
+#: inc/elementor/widgets/widget.mailchimp.php:84
+msgid "Where redirect"
+msgstr "Dónde redirigir"
+
+#: inc/elementor/widgets/widget.form.php:256
+msgid "http://your-domain.com"
+msgstr "http://tu-dominio.com"
+
+#: inc/elementor/widgets/widget.form.php:266
+msgid "Send text"
+msgstr "Texto del botón de envío"
+
+#: inc/elementor/widgets/widget.form.php:268
+#: inc/shortcodes/shortcodes.form.php:23 inc/shortcodes/shortcodes.form.php:502
+msgid "Send"
+msgstr "Enviar"
+
+#: inc/elementor/widgets/widget.form.php:275
+msgid "Sending text"
+msgstr "Texto para transición"
+
+#: inc/elementor/widgets/widget.form.php:277
+#: inc/shortcodes/shortcodes.form.php:120
+msgid "Sending"
+msgstr "Enviando"
+
+#: inc/elementor/widgets/widget.form.php:286
+msgid "Messages"
+msgstr "Mensajes"
+
+#: inc/elementor/widgets/widget.form.php:294
+msgid "Success message"
+msgstr "Mensaje de éxito"
+
+#: inc/elementor/widgets/widget.form.php:296
+#: inc/shortcodes/shortcodes.form.php:22
+msgid ""
+"Your message has been sent sucesfully. Your request will delay. A copy has "
+"been sent to your email."
+msgstr ""
+"Mensaje enviado correctamente. Atenderemos su solicitud a la mayor brevedad. "
+"Se ha enviado una copia a su dirección de correo electrónico."
+
+#: inc/elementor/widgets/widget.form.php:303
+msgid "Invalid inputs"
+msgstr "Campos inválidos"
+
+#: inc/elementor/widgets/widget.form.php:305
+#: inc/elementor/widgets/widget.mailchimp.php:132
+#: inc/shortcodes/shortcodes.form.php:50
+#: inc/shortcodes/shortcodes.newsletter.php:32 single.php:20
+msgid "There are errors on the form. Please fix them before continuing"
+msgstr ""
+"Existen errores en el formulario. Por favor, corrígelos antes de continuar"
+
+#: inc/elementor/widgets/widget.form.php:312
+msgid "Empty inputs"
+msgstr "Campos vacíos"
+
+#: inc/elementor/widgets/widget.form.php:314
+#: inc/elementor/widgets/widget.mailchimp.php:133
+#: inc/shortcodes/shortcodes.form.php:51
+#: inc/shortcodes/shortcodes.newsletter.php:33 single.php:21
+msgid "Fill in all the required fields"
+msgstr "Completa todos los campos requeridos"
+
+#: inc/elementor/widgets/widget.form.php:321
+msgid "Bad email"
+msgstr "Correo electrónico incorrecto"
+
+#: inc/elementor/widgets/widget.form.php:323
+#: inc/elementor/widgets/widget.mailchimp.php:134
+#: inc/shortcodes/shortcodes.form.php:52
+#: inc/shortcodes/shortcodes.newsletter.php:34 single.php:22
+msgid "Enter a valid email address"
+msgstr "Introduce una dirección de correo electrónico válida"
+
+#: inc/elementor/widgets/widget.form.php:330
+msgid "Bad captcha"
+msgstr "Verificación captcha errónea"
+
+#: inc/elementor/widgets/widget.form.php:332
+#: inc/shortcodes/shortcodes.form.php:53
+msgid "Enter a correct captcha value"
+msgstr "Introduce el código de verificación correcto"
+
+#: inc/elementor/widgets/widget.form.php:339
+msgid "Legal acceptance"
+msgstr "Aceptación del aviso legal"
+
+#: inc/elementor/widgets/widget.form.php:341
+#: inc/elementor/widgets/widget.mailchimp.php:135
+#: inc/shortcodes/shortcodes.form.php:54
+#: inc/shortcodes/shortcodes.newsletter.php:35 single.php:23
+msgid "You must accept the legal advice"
+msgstr "Debes aceptar el aviso legal"
+
+#: inc/elementor/widgets/widget.form.php:364
+#: inc/shortcodes/shortcodes.form.php:55
+msgid "files selected"
+msgstr "archivos seleccionados"
+
+#: inc/elementor/widgets/widget.form.php:418
+#, php-format
+msgid ""
+"I have read, understood and accept the <a href=\"%s\" target=\"_blank"
+"\">privacy policy</a>."
+msgstr ""
+"He leído, entiendo y acepto la <a href=“%s” target=“_blank”>política de "
+"privacidad</a>."
+
+#: inc/elementor/widgets/widget.mailchimp.php:19
+#: inc/elementor/widgets/widget.mailchimp.php:39
+msgid "Mailchimp form"
+msgstr "Formulario Mailchimp"
+
+#: inc/elementor/widgets/widget.mailchimp.php:54
+msgid "List"
+msgstr "Lista"
+
+#: inc/elementor/widgets/widget.mailchimp.php:64
+msgid "Double opt-in"
+msgstr "Doble verificación"
+
+#: inc/elementor/widgets/widget.mailchimp.php:96
+msgid "Button text"
+msgstr "Texto del botón"
+
+#: inc/elementor/widgets/widget.mailchimp.php:136
+#: inc/shortcodes/shortcodes.newsletter.php:36
+msgid "Unsubscribing..."
+msgstr "Cancelando suscripción…"
+
+#: inc/elementor/widgets/widget.mailchimp.php:147
+#: inc/shortcodes/shortcodes.form.php:194
+#: inc/shortcodes/shortcodes.newsletter.php:56
+#: inc/shortcodes/shortcodes.newsletter.php:80
+msgid "Privacy policy"
+msgstr "Política de privacidad"
+
+#: inc/elementor/widgets/widget.mailchimp.php:151
+#: inc/shortcodes/shortcodes.form.php:204
+#: inc/shortcodes/shortcodes.newsletter.php:60
+#: inc/shortcodes/shortcodes.newsletter.php:84
+msgctxt "female"
+msgid "the"
+msgstr "la"
+
+#: inc/elementor/widgets/widget.mailchimp.php:154
+#: inc/shortcodes/shortcodes.form.php:207
+#: inc/shortcodes/shortcodes.newsletter.php:63
+#: inc/shortcodes/shortcodes.newsletter.php:87
+msgctxt "male"
+msgid "the"
+msgstr "el"
+
+#: inc/elementor/widgets/widget.mailchimp.php:158
+#: inc/shortcodes/shortcodes.form.php:211
+#: inc/shortcodes/shortcodes.newsletter.php:67
+#: inc/shortcodes/shortcodes.newsletter.php:91
+msgid "I have read, understood and accept"
+msgstr "He leído, entiendo y acepto"
+
+#: inc/elementor/widgets/widget.mailchimp.php:164
+#: inc/shortcodes/shortcodes.form.php:478
+#: inc/shortcodes/shortcodes.newsletter.php:51
+#: inc/shortcodes/shortcodes.newsletter.php:97
+msgid "Last name"
+msgstr "Apellidos"
+
+#: inc/elementor/widgets/widget.mailchimp.php:167
+#: inc/shortcodes/shortcodes.newsletter.php:68
+#: inc/shortcodes/shortcodes.newsletter.php:100
+msgid "If you want to unsubscribe from our newsletter, click"
+msgstr "Si quieres darte de baja en nuestro boletín de noticias, pulsa"
+
+#: inc/elementor/widgets/widget.mailchimp.php:167
+#: inc/shortcodes/shortcodes.newsletter.php:68
+#: inc/shortcodes/shortcodes.newsletter.php:100
+msgid "here"
+msgstr "aquí"
+
+#: inc/elementor/widgets/widget.mailchimp.php:168
+#: inc/shortcodes/shortcodes.newsletter.php:101
+msgid "Subscribing"
+msgstr "Suscribiendo"
+
+#: inc/elementor/widgets/widget.map.php:20
+msgid "Map"
+msgstr "Mapa"
+
+#: inc/elementor/widgets/widget.map.php:48
+#: inc/elementor/widgets/widget.map.php:163
+#: inc/elementor/widgets/widget.slider.php:278
+#: inc/elementor/widgets/widget.slider.php:340
+#: inc/elementor/widgets/widget.slider.php:581
+#: inc/elementor/widgets/widget.slider.php:630
+msgid "Center"
+msgstr "Centro"
+
+#: inc/elementor/widgets/widget.map.php:59
+msgid "Zoom Level"
+msgstr "Nivel de zoom"
+
+#: inc/elementor/widgets/widget.map.php:76
+#: inc/elementor/widgets/widget.slider.php:382
+msgid "Height"
+msgstr "Altura"
+
+#: inc/elementor/widgets/widget.map.php:85
+msgid "Prevent Scroll"
+msgstr "Prevenir desplazamiento"
+
+#: inc/elementor/widgets/widget.map.php:95
+msgid "Show POIs"
+msgstr "Mostrar puntos de interés"
+
+#: inc/elementor/widgets/widget.map.php:105
+msgid "Style"
+msgstr "EstiloEstilo"
+
+#: inc/elementor/widgets/widget.map.php:107
+msgid "Write here style script"
+msgstr "Escribe aquí el código de estilo"
+
+#: inc/elementor/widgets/widget.map.php:116
+#: inc/elementor/widgets/widget.map.php:183
+msgid "Markers"
+msgstr "Marcadores"
+
+#: inc/elementor/widgets/widget.map.php:126
+msgid "Address or coordinates"
+msgstr "Dirección o coordenadas"
+
+#: inc/elementor/widgets/widget.map.php:137
+msgid "Choose icon"
+msgstr "Elige un icono"
+
+#: inc/elementor/widgets/widget.map.php:145
+msgid "Size"
+msgstr "Tamaño"
+
+#: inc/elementor/widgets/widget.map.php:155
+msgid "Position"
+msgstr "Posición"
+
+#: inc/elementor/widgets/widget.map.php:159
+msgid "Top left"
+msgstr "Arriba a la izquierda"
+
+#: inc/elementor/widgets/widget.map.php:160
+msgid "Top center"
+msgstr "Arriba centrado"
+
+#: inc/elementor/widgets/widget.map.php:161
+msgid "Top right"
+msgstr "Arriba a la derecha"
+
+#: inc/elementor/widgets/widget.map.php:162
+msgid "Center left"
+msgstr "Centrado izquierda"
+
+#: inc/elementor/widgets/widget.map.php:164
+msgid "Center right"
+msgstr "Centrado derecha"
+
+#: inc/elementor/widgets/widget.map.php:165
+msgid "Bottom left"
+msgstr "Abajo a la izquierda"
+
+#: inc/elementor/widgets/widget.map.php:166
+msgid "Bottom center"
+msgstr "Abajo centrado"
+
+#: inc/elementor/widgets/widget.map.php:167
+msgid "Bottom right"
+msgstr "Abajo a la derecha"
+
+#: inc/elementor/widgets/widget.map.php:175
+msgid "Bubble info"
+msgstr "Bocadillo de información"
+
+#: inc/elementor/widgets/widget.recents.php:19
+#: inc/elementor/widgets/widget.recents.php:38
+msgid "Recent post"
+msgstr "Publicaciones recientes"
+
+#: inc/elementor/widgets/widget.recents.php:84
+msgid "Posts to show"
+msgstr "Publicaciones a mostrar"
+
+#: inc/elementor/widgets/widget.slider.php:20
+msgid "Slider"
+msgstr "Pase de diapositivas"
+
+#: inc/elementor/widgets/widget.slider.php:39
+#: inc/elementor/widgets/widget.slider.php:361
+#: inc/elementor/widgets/widget.slider.php:519
+msgid "Slides"
+msgstr "Diapositivas"
+
+#: inc/elementor/widgets/widget.slider.php:47
+msgid "Background"
+msgstr "Fondo"
+
+#: inc/elementor/widgets/widget.slider.php:52
+#: inc/elementor/widgets/widget.slider.php:121
+msgid "Color"
+msgstr "Color"
+
+#: inc/elementor/widgets/widget.slider.php:64
+msgid "Image"
+msgstr "Imagen"
+
+#: inc/elementor/widgets/widget.slider.php:75
+msgid "Background size"
+msgstr "Tamaño del fondo"
+
+#: inc/elementor/widgets/widget.slider.php:79
+msgid "Cover"
+msgstr "Cubrir"
+
+#: inc/elementor/widgets/widget.slider.php:80
+msgid "Contain"
+msgstr "Contener"
+
+#: inc/elementor/widgets/widget.slider.php:81
+msgid "Auto"
+msgstr "Auto"
+
+#: inc/elementor/widgets/widget.slider.php:101
+msgid "Background Overlay"
+msgstr "Superposición de fondo"
+
+#: inc/elementor/widgets/widget.slider.php:142
+msgid "Animation"
+msgstr "Animación"
+
+#: inc/elementor/widgets/widget.slider.php:166
+msgid "Zoom in"
+msgstr "Acercar"
+
+#: inc/elementor/widgets/widget.slider.php:167
+msgid "Zoom out"
+msgstr "Alejar"
+
+#: inc/elementor/widgets/widget.slider.php:184
+msgid "Parallax"
+msgstr "Animación parallax"
+
+#: inc/elementor/widgets/widget.slider.php:204
+msgid "Parallax speed"
+msgstr "Velocidad parallax"
+
+#: inc/elementor/widgets/widget.slider.php:232
+msgid "Enter your embed code here"
+msgstr "Introduce el código aquí"
+
+#: inc/elementor/widgets/widget.slider.php:240
+msgid "Link"
+msgstr "Enlace"
+
+#: inc/elementor/widgets/widget.slider.php:269
+#: inc/elementor/widgets/widget.slider.php:571
+msgid "Horizontal Position"
+msgstr "Posición horizontal"
+
+#: inc/elementor/widgets/widget.slider.php:274
+#: inc/elementor/widgets/widget.slider.php:336
+#: inc/elementor/widgets/widget.slider.php:508
+#: inc/elementor/widgets/widget.slider.php:577
+#: inc/elementor/widgets/widget.slider.php:626
+msgid "Left"
+msgstr "Izquierda"
+
+#: inc/elementor/widgets/widget.slider.php:282
+#: inc/elementor/widgets/widget.slider.php:344
+#: inc/elementor/widgets/widget.slider.php:507
+#: inc/elementor/widgets/widget.slider.php:585
+#: inc/elementor/widgets/widget.slider.php:634
+msgid "Right"
+msgstr "Derecha"
+
+#: inc/elementor/widgets/widget.slider.php:300
+#: inc/elementor/widgets/widget.slider.php:596
+msgid "Vertical Position"
+msgstr "Posición vertical"
+
+#: inc/elementor/widgets/widget.slider.php:305
+#: inc/elementor/widgets/widget.slider.php:602
+msgid "Top"
+msgstr "Superior"
+
+#: inc/elementor/widgets/widget.slider.php:309
+#: inc/elementor/widgets/widget.slider.php:606
+msgid "Middle"
+msgstr "Medio"
+
+#: inc/elementor/widgets/widget.slider.php:313
+#: inc/elementor/widgets/widget.slider.php:610
+msgid "Bottom"
+msgstr "Abajo"
+
+#: inc/elementor/widgets/widget.slider.php:331
+#: inc/elementor/widgets/widget.slider.php:621
+msgid "Text Align"
+msgstr "Alineación de Texto"
+
+#: inc/elementor/widgets/widget.slider.php:410
+msgid "Slider Options"
+msgstr "Opciones del pase de diapositivas"
+
+#: inc/elementor/widgets/widget.slider.php:418
+#: inc/elementor/widgets/widget.slider.php:650
+msgid "Navigation"
+msgstr "Navegación"
+
+#: inc/elementor/widgets/widget.slider.php:422
+msgid "Arrows and Dots"
+msgstr "Flechas y puntos"
+
+#: inc/elementor/widgets/widget.slider.php:423
+#: inc/elementor/widgets/widget.slider.php:661
+msgid "Arrows"
+msgstr "Flechas"
+
+#: inc/elementor/widgets/widget.slider.php:424
+#: inc/elementor/widgets/widget.slider.php:723
+msgid "Dots"
+msgstr "Puntos"
+
+#: inc/elementor/widgets/widget.slider.php:425
+#: inc/elementor/widgets/widget.slider.php:504
+msgid "None"
+msgstr "No"
+
+#: inc/elementor/widgets/widget.slider.php:433
+msgid "Pause on Hover"
+msgstr "Pausar al posicionarse sobre el pase"
+
+#: inc/elementor/widgets/widget.slider.php:443
+msgid "Autoplay"
+msgstr "Reproducción automática"
+
+#: inc/elementor/widgets/widget.slider.php:453
+msgid "Autoplay Speed"
+msgstr "Velocidad de la reproducción automática"
+
+#: inc/elementor/widgets/widget.slider.php:468
+msgid "Infinite Loop"
+msgstr "Repetición infinita"
+
+#: inc/elementor/widgets/widget.slider.php:478
+msgid "Transition"
+msgstr "Transición"
+
+#: inc/elementor/widgets/widget.slider.php:482
+msgid "Slide"
+msgstr "Diapositiva"
+
+#: inc/elementor/widgets/widget.slider.php:483
+msgid "Fade"
+msgstr "Desvanecer"
+
+#: inc/elementor/widgets/widget.slider.php:491
+msgid "Transition Speed (ms)"
+msgstr "Velocidad de transición (ms)"
+
+#: inc/elementor/widgets/widget.slider.php:500
+msgid "Content Animation"
+msgstr "Animación del contenido"
+
+#: inc/elementor/widgets/widget.slider.php:505
+msgid "Down"
+msgstr "Abajo"
+
+#: inc/elementor/widgets/widget.slider.php:506
+msgid "Up"
+msgstr "Arriba"
+
+#: inc/elementor/widgets/widget.slider.php:509
+msgid "Zoom"
+msgstr "Ampliar"
+
+#: inc/elementor/widgets/widget.slider.php:527
+msgid "Content Width"
+msgstr "Ancho de contenido"
+
+#: inc/elementor/widgets/widget.slider.php:559
+msgid "Padding"
+msgstr "Relleno"
+
+#: inc/elementor/widgets/widget.slider.php:673
+msgid "Arrows Position"
+msgstr "Posición de flechas"
+
+#: inc/elementor/widgets/widget.slider.php:677
+#: inc/elementor/widgets/widget.slider.php:740
+msgid "Inside"
+msgstr "Interior"
+
+#: inc/elementor/widgets/widget.slider.php:678
+#: inc/elementor/widgets/widget.slider.php:739
+msgid "Outside"
+msgstr "Exterior"
+
+#: inc/elementor/widgets/widget.slider.php:689
+msgid "Arrows Size"
+msgstr "Tamaño de las flechas"
+
+#: inc/elementor/widgets/widget.slider.php:709
+msgid "Arrows Color"
+msgstr "Color de las flechas"
+
+#: inc/elementor/widgets/widget.slider.php:735
+msgid "Dots Position"
+msgstr "Posición de los puntos"
+
+#: inc/elementor/widgets/widget.slider.php:751
+msgid "Dots Size"
+msgstr "Tamaño de los puntos"
+
+#: inc/elementor/widgets/widget.slider.php:771
+msgid "Dots Color"
+msgstr "Color de los puntos"
+
+#: inc/elementor/widgets/widget.taxonomies.php:16
+#: inc/elementor/widgets/widget.taxonomies.php:35
+msgid "Taxonomies"
+msgstr "TaxonomíasTaxonomías"
+
+#: inc/elementor/widgets/widget.taxonomies.php:60
+msgid "Show all"
+msgstr "Mostrar todos"
+
+#: inc/elementor/widgets/widget.taxonomies.php:70
+msgid "\"All\" text"
+msgstr "Texto para “todos”"
+
+#: inc/elementor/widgets/widget.taxonomies.php:72
+#: inc/shortcodes/shortcodes.blog.php:214
+msgid "All"
+msgstr "Todo"
+
+#: inc/elementor/widgets/widget.taxonomies.php:82
+msgid "\"All\" url"
+msgstr "Url para “todos”"
+
+#: inc/elementor/widgets/widget.taxonomies.php:94
+msgid "Show empty"
+msgstr "Mostrar incluso vacías"
+
+#: inc/elementor/widgets/widget.taxonomies.php:104
+msgid "Show childrens"
+msgstr "Mostrar hijos"
+
+#: inc/functions/functions.admin.php:845
+msgid "Title"
+msgstr "Titulo "
 
 #: inc/functions/functions.cron.php:14
 msgid "Weekly"
@@ -234,7 +1158,7 @@ msgstr "buscar"
 msgid "comments"
 msgstr "comentarios"
 
-#: inc/functions/functions.load.php:48
+#: inc/functions/functions.load.php:52
 msgid "of"
 msgstr "de"
 
@@ -251,310 +1175,214 @@ msgstr ""
 msgid "No tweets"
 msgstr "Sin tuits"
 
-#: inc/shortcodes/shortcodes.blog.php:74 inc/shortcodes/shortcodes.blog.php:129
+#: inc/shortcodes/shortcodes.blog.php:83 inc/shortcodes/shortcodes.blog.php:138
 msgid "Published by "
 msgstr "Publicado por "
 
-#: inc/shortcodes/shortcodes.blog.php:77 inc/shortcodes/shortcodes.blog.php:132
+#: inc/shortcodes/shortcodes.blog.php:86 inc/shortcodes/shortcodes.blog.php:141
 msgid "the"
 msgstr "el"
 
-#: inc/shortcodes/shortcodes.blog.php:96 inc/shortcodes/shortcodes.blog.php:151
+#: inc/shortcodes/shortcodes.blog.php:105
+#: inc/shortcodes/shortcodes.blog.php:160
 msgid "Read more"
 msgstr "Leer más"
 
-#: inc/shortcodes/shortcodes.blog.php:186
-msgid "All"
-msgstr "Todo"
-
-#: inc/shortcodes/shortcodes.blog.php:249
-#: inc/shortcodes/shortcodes.blog.php:262
-#: inc/shortcodes/shortcodes.blog.php:264
+#: inc/shortcodes/shortcodes.blog.php:279
+#: inc/shortcodes/shortcodes.blog.php:292
+#: inc/shortcodes/shortcodes.blog.php:294
 msgid "Tweet this"
 msgstr "Tuitéalo"
 
-#: inc/shortcodes/shortcodes.form.php:25
-msgid ""
-"Your message has been sent sucesfully. Your request will delay. A copy has "
-"been sent to your email."
-msgstr ""
-"Mensaje enviado correctamente. Atenderemos su solicitud a la mayor brevedad. "
-"Se ha enviado una copia a su dirección de correo electrónico."
+#: inc/shortcodes/shortcodes.elements.php:177
+msgid "Made with <i class=\"fa fa-heart-o\"></i> by"
+msgstr "Hecho con <i class=\"fa fa-heart-o\"></i> por"
 
-#: inc/shortcodes/shortcodes.form.php:26 inc/shortcodes/shortcodes.form.php:481
-msgid "Send"
-msgstr "Enviar"
+#: inc/shortcodes/shortcodes.elements.php:177
+msgid "bilnea. Communication & Digital Marketing Agency"
+msgstr "bilnea. Agencia de Comunicación y Marketing Digital"
 
-#: inc/shortcodes/shortcodes.form.php:52
-#: inc/shortcodes/shortcodes.newsletter.php:32 single.php:19
-msgid "There are errors on the form. Please fix them before continuing"
-msgstr ""
-"Existen errores en el formulario. Por favor, revísalos antes de continuar"
-
-#: inc/shortcodes/shortcodes.form.php:53
-#: inc/shortcodes/shortcodes.newsletter.php:33 single.php:20
-msgid "Fill in all the required fields"
-msgstr "Completa los campos requeridos"
-
-#: inc/shortcodes/shortcodes.form.php:54
-#: inc/shortcodes/shortcodes.newsletter.php:34 single.php:21
-msgid "Enter a valid email address"
-msgstr "Introduce una dirección de correo electrónico válida"
-
-#: inc/shortcodes/shortcodes.form.php:55
-msgid "Enter a correct captcha value"
-msgstr "Introduce el código de verificación correcto"
-
-#: inc/shortcodes/shortcodes.form.php:56
-#: inc/shortcodes/shortcodes.newsletter.php:35 single.php:22
-msgid "You must accept the legal advice"
-msgstr "Debe aceptar el aviso legal"
-
-#: inc/shortcodes/shortcodes.form.php:57
-msgid "files selected"
-msgstr "archivos seleccionados"
-
-#: inc/shortcodes/shortcodes.form.php:122
-msgid "Sending"
-msgstr "Enviando"
-
-#: inc/shortcodes/shortcodes.form.php:146
-#: inc/shortcodes/shortcodes.newsletter.php:53
-#: inc/shortcodes/shortcodes.newsletter.php:98 single.php:148
-msgid "Email"
-msgstr "Correo electrónico"
-
-#: inc/shortcodes/shortcodes.form.php:157
-msgid "Message"
-msgstr "Mensaje"
-
-#: inc/shortcodes/shortcodes.form.php:169
+#: inc/shortcodes/shortcodes.form.php:167
 msgid "State"
 msgstr "Provincia"
 
-#: inc/shortcodes/shortcodes.form.php:196
-#: inc/shortcodes/shortcodes.newsletter.php:56
-#: inc/shortcodes/shortcodes.newsletter.php:80
-msgid "Privacy policy"
-msgstr "política de privacidad"
-
-#: inc/shortcodes/shortcodes.form.php:206
-#: inc/shortcodes/shortcodes.newsletter.php:60
-#: inc/shortcodes/shortcodes.newsletter.php:84
-msgctxt "female"
-msgid "the"
-msgstr "la"
-
-#: inc/shortcodes/shortcodes.form.php:209
-#: inc/shortcodes/shortcodes.newsletter.php:63
-#: inc/shortcodes/shortcodes.newsletter.php:87
-msgctxt "male"
-msgid "the"
-msgstr "el"
-
-#: inc/shortcodes/shortcodes.form.php:213
-#: inc/shortcodes/shortcodes.newsletter.php:67
-#: inc/shortcodes/shortcodes.newsletter.php:91
-msgid "I have read, understood and accept"
-msgstr "He leído, entiendo y acepto"
-
-#: inc/shortcodes/shortcodes.form.php:229
+#: inc/shortcodes/shortcodes.form.php:227
 #, php-format
 msgid "Fill in the following field with <strong>\"%s\"</strong>"
 msgstr "Rellena el siguiente campo con <strong>\"%s\"</strong>"
 
-#: inc/shortcodes/shortcodes.form.php:232
+#: inc/shortcodes/shortcodes.form.php:230
 msgid "Fill in the following fields."
 msgstr "Complete los siguientes campos."
 
-#: inc/shortcodes/shortcodes.form.php:248
+#: inc/shortcodes/shortcodes.form.php:246
 msgid "No selected file"
 msgstr "Ningún archivo seleccionado"
 
-#: inc/shortcodes/shortcodes.form.php:248
+#: inc/shortcodes/shortcodes.form.php:246
 msgid "Maximum size exceeded"
 msgstr "Sobrepasado tamaño máximo"
 
-#: inc/shortcodes/shortcodes.form.php:342
+#: inc/shortcodes/shortcodes.form.php:340
 msgid "Close"
 msgstr "Cerrar"
 
-#: inc/shortcodes/shortcodes.form.php:345
+#: inc/shortcodes/shortcodes.form.php:343
 msgid "Today"
 msgstr "Hoy"
 
-#: inc/shortcodes/shortcodes.form.php:347
+#: inc/shortcodes/shortcodes.form.php:345
 msgid "Jan"
 msgstr "Ene"
 
-#: inc/shortcodes/shortcodes.form.php:347
+#: inc/shortcodes/shortcodes.form.php:345
 msgid "Feb"
 msgstr "Feb"
 
-#: inc/shortcodes/shortcodes.form.php:347
+#: inc/shortcodes/shortcodes.form.php:345
 msgid "Mar"
 msgstr "Mar"
 
-#: inc/shortcodes/shortcodes.form.php:347
+#: inc/shortcodes/shortcodes.form.php:345
 msgid "Apr"
 msgstr "Abr"
 
-#: inc/shortcodes/shortcodes.form.php:347
+#: inc/shortcodes/shortcodes.form.php:345
 msgid "Jun"
 msgstr "Jun"
 
-#: inc/shortcodes/shortcodes.form.php:347
+#: inc/shortcodes/shortcodes.form.php:345
 msgid "Jul"
 msgstr "Jul"
 
-#: inc/shortcodes/shortcodes.form.php:347
+#: inc/shortcodes/shortcodes.form.php:345
 msgid "Aug"
 msgstr "Ago"
 
-#: inc/shortcodes/shortcodes.form.php:347
+#: inc/shortcodes/shortcodes.form.php:345
 msgid "Sep"
 msgstr "Sep"
 
-#: inc/shortcodes/shortcodes.form.php:347
+#: inc/shortcodes/shortcodes.form.php:345
 msgid "Oct"
 msgstr "Oct"
 
-#: inc/shortcodes/shortcodes.form.php:347
+#: inc/shortcodes/shortcodes.form.php:345
 msgid "Nov"
 msgstr "Nov"
 
-#: inc/shortcodes/shortcodes.form.php:347
+#: inc/shortcodes/shortcodes.form.php:345
 msgid "Dec"
 msgstr "Dic"
 
-#: inc/shortcodes/shortcodes.form.php:348
+#: inc/shortcodes/shortcodes.form.php:346
 msgid "Sunday"
 msgstr "Domingo"
 
-#: inc/shortcodes/shortcodes.form.php:348
+#: inc/shortcodes/shortcodes.form.php:346
 msgid "Monday"
 msgstr "Lunes"
 
-#: inc/shortcodes/shortcodes.form.php:348
+#: inc/shortcodes/shortcodes.form.php:346
 msgid "Tuesday"
 msgstr "Martes"
 
-#: inc/shortcodes/shortcodes.form.php:348
+#: inc/shortcodes/shortcodes.form.php:346
 msgid "Wednesday"
 msgstr "Miércoles"
 
-#: inc/shortcodes/shortcodes.form.php:348
+#: inc/shortcodes/shortcodes.form.php:346
 msgid "Thursday"
 msgstr "Jueves"
 
-#: inc/shortcodes/shortcodes.form.php:348
+#: inc/shortcodes/shortcodes.form.php:346
 msgid "Friday"
 msgstr "Viernes"
 
-#: inc/shortcodes/shortcodes.form.php:348
+#: inc/shortcodes/shortcodes.form.php:346
 msgid "Saturday"
 msgstr "Sábado"
 
-#: inc/shortcodes/shortcodes.form.php:349
+#: inc/shortcodes/shortcodes.form.php:347
 msgid "Sun"
 msgstr "Dom"
 
-#: inc/shortcodes/shortcodes.form.php:349
+#: inc/shortcodes/shortcodes.form.php:347
 msgid "Mon"
 msgstr "Lun"
 
-#: inc/shortcodes/shortcodes.form.php:349
+#: inc/shortcodes/shortcodes.form.php:347
 msgid "Tue"
 msgstr "Mar"
 
-#: inc/shortcodes/shortcodes.form.php:349
+#: inc/shortcodes/shortcodes.form.php:347
 msgid "Wed"
-msgstr "Mie"
+msgstr "Mié"
 
-#: inc/shortcodes/shortcodes.form.php:349
+#: inc/shortcodes/shortcodes.form.php:347
 msgid "Thu"
 msgstr "Jue"
 
-#: inc/shortcodes/shortcodes.form.php:349
+#: inc/shortcodes/shortcodes.form.php:347
 msgid "Fri"
 msgstr "Vie"
 
-#: inc/shortcodes/shortcodes.form.php:349
+#: inc/shortcodes/shortcodes.form.php:347
 msgid "Sat"
-msgstr "Sab"
+msgstr "Sáb"
 
-#: inc/shortcodes/shortcodes.form.php:350
+#: inc/shortcodes/shortcodes.form.php:348
 msgid "Su"
 msgstr "D"
 
-#: inc/shortcodes/shortcodes.form.php:350
+#: inc/shortcodes/shortcodes.form.php:348
 msgid "Mo"
 msgstr "L"
 
-#: inc/shortcodes/shortcodes.form.php:350
+#: inc/shortcodes/shortcodes.form.php:348
 msgid "Tu"
 msgstr "M"
 
-#: inc/shortcodes/shortcodes.form.php:350
+#: inc/shortcodes/shortcodes.form.php:348
 msgid "We"
 msgstr "X"
 
-#: inc/shortcodes/shortcodes.form.php:350
+#: inc/shortcodes/shortcodes.form.php:348
 msgid "Th"
 msgstr "J"
 
-#: inc/shortcodes/shortcodes.form.php:350
+#: inc/shortcodes/shortcodes.form.php:348
 msgid "Fr"
 msgstr "V"
 
-#: inc/shortcodes/shortcodes.form.php:350
+#: inc/shortcodes/shortcodes.form.php:348
 msgid "Sa"
 msgstr "S"
 
-#: inc/shortcodes/shortcodes.form.php:351
+#: inc/shortcodes/shortcodes.form.php:349
 msgid "yy-mm-dd"
 msgstr "dd/mm/yy"
 
-#: inc/shortcodes/shortcodes.form.php:352
+#: inc/shortcodes/shortcodes.form.php:350
 msgctxt "Datepicker first day"
 msgid "0"
 msgstr "1"
 
-#: inc/shortcodes/shortcodes.form.php:353
+#: inc/shortcodes/shortcodes.form.php:351
 msgctxt "Datepicker rtl"
 msgid "false"
-msgstr "false"
+msgstr "true"
 
-#: inc/shortcodes/shortcodes.form.php:354
+#: inc/shortcodes/shortcodes.form.php:352
 msgctxt "Datepicker month after year"
 msgid "false"
-msgstr "false"
+msgstr "true"
 
-#: inc/shortcodes/shortcodes.form.php:365
-#: inc/shortcodes/shortcodes.form.php:393
-#: inc/shortcodes/shortcodes.form.php:504
+#: inc/shortcodes/shortcodes.form.php:363
+#: inc/shortcodes/shortcodes.form.php:391
+#: inc/shortcodes/shortcodes.form.php:525
 msgid "Select an option"
 msgstr "Selecciona una opción"
-
-#: inc/shortcodes/shortcodes.form.php:444
-#: inc/shortcodes/shortcodes.newsletter.php:49
-#: inc/shortcodes/shortcodes.newsletter.php:96 single.php:147
-msgid "Name"
-msgstr "Nombre"
-
-#: inc/shortcodes/shortcodes.form.php:457
-#: inc/shortcodes/shortcodes.newsletter.php:51
-#: inc/shortcodes/shortcodes.newsletter.php:97
-msgid "Last name"
-msgstr "Apellidos"
-
-#: inc/shortcodes/shortcodes.form.php:469
-msgid "Subject"
-msgstr "Asunto"
-
-#: inc/shortcodes/shortcodes.general.php:153
-msgid "Home"
-msgstr "Inicio"
 
 #: inc/shortcodes/shortcodes.general.php:198
 msgid "Categories"
@@ -577,36 +1405,55 @@ msgstr "Publicaciones de"
 msgid "Not found"
 msgstr "Sin resultados"
 
-#: inc/shortcodes/shortcodes.media.php:115
+#: inc/shortcodes/shortcodes.media.php:117
 msgid "This browser does not support video playback."
 msgstr "Este navegador no soporta reproducción de video."
-
-#: inc/shortcodes/shortcodes.newsletter.php:36
-msgid "Unsubscribing..."
-msgstr "Cancelando suscripción…"
-
-#: inc/shortcodes/shortcodes.newsletter.php:68
-#: inc/shortcodes/shortcodes.newsletter.php:100
-msgid "If you want to unsubscribe from our newsletter, click"
-msgstr "Si quieres darte de baja en nuestro boletín de noticias, pulsa"
-
-#: inc/shortcodes/shortcodes.newsletter.php:68
-#: inc/shortcodes/shortcodes.newsletter.php:100
-msgid "here"
-msgstr "aquí"
 
 #: inc/shortcodes/shortcodes.newsletter.php:69
 #: inc/shortcodes/shortcodes.newsletter.php:101
 msgid "Subscribe"
-msgstr "Suscríbete"
-
-#: inc/shortcodes/shortcodes.newsletter.php:101
-msgid "Subscribing"
-msgstr "Suscribiendo"
+msgstr "Suscribirse"
 
 #: inc/shortcodes/shortcodes.social.php:178
 msgid "No Twitter API key set"
 msgstr "No se ha establecido una clave API de Twitter"
+
+#: inc/shortcodes/shortcodes.social.php:259
+msgid "We share?"
+msgstr "¿Compartimos?"
+
+#: inc/shortcodes/shortcodes.social.php:275 single.php:91 single.php:118
+msgid "Share in Twitter"
+msgstr "Compartir en Twitter"
+
+#: inc/shortcodes/shortcodes.social.php:278 single.php:94 single.php:119
+msgid "Share in Facebook"
+msgstr "Compartir en Facebook"
+
+#: inc/shortcodes/shortcodes.social.php:281 single.php:97 single.php:120
+msgid "Share in Linkedin"
+msgstr "Compartir en Linkedin"
+
+#: inc/shortcodes/shortcodes.social.php:284 single.php:100 single.php:121
+msgid "Share in Google +"
+msgstr "Compartir en Google +"
+
+#: inc/shortcodes/shortcodes.social.php:288 single.php:104 single.php:123
+msgid "Share in Whatsapp"
+msgstr "Compartir en Whatsapp"
+
+#: inc/shortcodes/shortcodes.social.php:292 single.php:108 single.php:125
+msgid "Share by email"
+msgstr "Compartir por correo electrónico"
+
+#: php/subscriber.php:35
+#, php-format
+msgid ""
+"An email message has been sent to %s.Please confirm your email address to "
+"complete your subscription."
+msgstr ""
+"Se ha enviado un correo electrónico a %s. Por favor comprueba tu bandeja de "
+"entrada para completar tu suscripción."
 
 #: php/subscriber.php:37
 msgid "Please confirm your newsletter subscription by visiting the link below:"
@@ -620,7 +1467,7 @@ msgid ""
 "not ordered in your name, please ignore this email."
 msgstr ""
 "Si te has suscrito al boletín de noticias de manera accidental o no has "
-"solicitado la suscripción, por favor ignota este correo electrónico."
+"solicitado la suscripción, por favor ignora este correo electrónico."
 
 #: php/subscriber.php:43
 msgid "Thanks for subscribing"
@@ -646,104 +1493,27 @@ msgstr ""
 msgid "Search"
 msgstr "Buscar"
 
-#: single.php:90 single.php:117
-msgid "Share in Twitter"
-msgstr "Compartir en Twitter"
-
-#: single.php:93 single.php:118
-msgid "Share in Facebook"
-msgstr "Compartir en Facebook"
-
-#: single.php:96 single.php:119
-msgid "Share in Linkedin"
-msgstr "Compartir en Linkedin"
-
-#: single.php:99 single.php:120
-msgid "Share in Google +"
-msgstr "Compartir en Google +"
-
-#: single.php:103 single.php:122
-msgid "Share in Whatsapp"
-msgstr "Compartir en Whatsapp"
-
-#: single.php:107 single.php:124
-msgid "Share by email"
-msgstr "Compartir por correo electrónico"
-
-#: single.php:150
+#: single.php:151
 msgid "Comment"
 msgstr "Comentario"
 
-#~ msgid "I want to unsubscribe from newsletter"
-#~ msgstr "Quiero darme de baja del boletín de noticias"
+#. Theme Name of the plugin/theme
+msgid "bilnea WordPress theme"
+msgstr "Tema de WordPress bilnea"
 
-#~ msgid "Nothing found."
-#~ msgstr "Sin resultados."
+#. Theme URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "http://bilnea.com"
+msgstr "http://bilnea.com"
 
-#~ msgid ""
-#~ "Your message has been sent sucesfully sent.<br /><br />Here is a copy of "
-#~ "your message."
-#~ msgstr ""
-#~ "Tu mensaje se ha enviado correctamente.<br /><br />A continuación se "
-#~ "adjunta una copia de tu mensaje."
+#. Description of the plugin/theme
+msgid ""
+"A super simple theme developed and designed by bilnea crew for to be main "
+"theme used in client webs."
+msgstr ""
+"Un tema super sencillo desarrollado y diseñado por el equipo de bilnea para "
+"ser el tema principal en las webs desarrolladas por nosotros."
 
-#~ msgid "* Name"
-#~ msgstr "* Nombre"
-
-#~ msgid "* Last name"
-#~ msgstr "* Apellidos"
-
-#~ msgid "* Email"
-#~ msgstr "* Correo electrónico"
-
-#~ msgid "Suscribe"
-#~ msgstr "Suscríbete"
-
-#~ msgid "* Comment"
-#~ msgstr "* Comentario"
-
-#~ msgid "Your message have been sent sucesfully."
-#~ msgstr "Tu mensaje se ha enviado correctamente."
-
-#~ msgid "1 Comment"
-#~ msgstr "1 comentario"
-
-#~ msgid "% Comments"
-#~ msgstr "% comentarios"
-
-#~ msgid "Legal Advice"
-#~ msgstr "Aviso legal"
-
-#~ msgid "Privacy Policy"
-#~ msgstr "Política de privacidad"
-
-#~ msgid "Cookies Policy"
-#~ msgstr "Política de cookies"
-
-#~ msgid "Made with <i class=\"fa fa-heart\"></i> by"
-#~ msgstr "Hecho con <i class=“fa fa-heart”"
-
-#~ msgid "Web development by"
-#~ msgstr "Desarrollo web por"
-
-#~ msgid "No results for"
-#~ msgstr "Sin resultados para\t"
-
-#~ msgid "Please, confirm you're human before comment."
-#~ msgstr "Por favor, confirma que eres humano antes de comentar."
-
-#~ msgid "You must enable JavaScript before comment."
-#~ msgstr "Debes activar JavaScript para comentar."
-
-#~ msgid ""
-#~ "We use our own and third-part <em>cookies</em> to analyse the use and "
-#~ "measurement of our web in order to improve our services. If you go on "
-#~ "surfing, we assume you acceept their use.<br />You can change your "
-#~ "settings or find more information <a href=\"%1$s\" target=\"_blank\" "
-#~ "title=\"%2$s cookies policy\">here</a>."
-#~ msgstr ""
-#~ "Utilizamos <em>cookies</em> propias y de terceros para realizar análisis "
-#~ "de uso y de medición de nuestra web para mejoras de nuestros servicios. "
-#~ "Si continúa navegando, consideramos que acepta su uso.<br />Puede cambiar "
-#~ "la configuración u obtener más información <a href=\"%1$s\" target="
-#~ "\"_blank\" title=“Política de cookies de %2$s\">aquí</a>."
+#. Author of the plugin/theme
+msgid "Samuel E. Cerezo"
+msgstr "Samuel E. Cerezo"

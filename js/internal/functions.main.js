@@ -95,6 +95,7 @@ jQuery(window).on('resize', function() {
 
 jQuery(window).on('load resize', function() {
 	b_js_adjust_height('.auto-height');
+	b_js_adjust_height('.elementor-bilnea-blog > div > .auto-height', true);
 });
 
 jQuery(window).on('load scroll', function() {

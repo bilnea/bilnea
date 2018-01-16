@@ -187,18 +187,20 @@ jQuery(function($) {
 		if (c != '') {
 			$(this).spectrum({
 				color: c,
-				preferredFormat: "hex",
+				preferredFormat: "rgb",
 				flat: true,
 				showInput: true,
 				allowEmpty:true,
+				showAlpha: true,
 				showButtons: false
 			});
 		} else {
 			$(this).spectrum({
-				preferredFormat: "hex",
+				preferredFormat: "rgb",
 				flat: true,
 				showInput: true,
 				allowEmpty:true,
+				showAlpha: true,
 				showButtons: false
 			});
 		}
@@ -214,7 +216,7 @@ jQuery(function($) {
 			preferredFormat: "rgb",
 			allowEmpty:true,
 			showButtons: false,
-			showAlpha: false,
+			showAlpha: true,
 			clickoutFiresChange: true,
 			move: function(color) {
 				t.prev().val(color.toRgbString());

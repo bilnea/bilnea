@@ -60,7 +60,7 @@ jQuery(function($) {
 			var a = q.data('send'),
 				b = q.data('sending');
 			$.ajax({
-				url: bilnea.root_url+'/wp-admin/admin-ajax.php',
+				url: bilnea.site_url+'/wp-admin/admin-ajax.php',
 				type: 'POST',
 				data: f.find($(':input')).serialize()+'&action=b_mailchimpsubscribe',
 				beforeSend: function() {
@@ -94,7 +94,7 @@ jQuery(function($) {
 		};
 		if (g == 0) {
 			$.ajax({
-				url: bilnea.root_url+'/wp-admin/admin-ajax.php',
+				url: bilnea.site_url+'/wp-admin/admin-ajax.php',
 				type: 'POST',
 				data: f.find($(':input')).serialize()+'&s_delete=1&action=b_mailchimpsubscribe',
 				beforeSend: function() {

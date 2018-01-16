@@ -389,30 +389,32 @@ add_action('init', 'b_f_i_register_term_metabox', 50);
 
 if (!function_exists('b_f_i_encrypt_decrypt')) {
 	
-	function b_f_i_encrypt_decrypt($action, $string) {
+	function b_f_i_encrypt_decrypt($action, $raw) {
 
 		// Variables globales
 		global $b_g_hash;
 
-		$output = false;
+		$key = $b_g_hash;
 
-		// Variables locales
-		$var_method = "AES-256-CBC";
-		$var_secret = 'f;)Le*BEDaJU|yy]z}YC,Atz<2_hV<.PX$})&,$&Z<va^BQ[ueF%{^:3]vf_LLD$';
-
-		$var_key = hash('sha256', $b_g_hash);
-	    
-		$var_vector = substr(hash('sha256', $var_secret), 0, 16);
-
-		if($action == 'encrypt') {
-			$output = openssl_encrypt($string, $var_method, $var_key, 0, $var_vector);
-			$output = base64_encode($output);
+		if ($action == 'encrypt') {
+			return base64_encode(mcrypt_encrypt(
+				MCRYPT_RIJNDAEL_256,
+				md5($key),
+				$raw,
+				MCRYPT_MODE_CBC,
+				md5(md5($key))
+			));
+		} else if ($action == 'decrypt') {
+	   		return rtrim(
+				mcrypt_decrypt(
+					MCRYPT_RIJNDAEL_256,
+					md5($key),
+					base64_decode($raw),
+					MCRYPT_MODE_CBC,
+					md5(md5($key))
+				)
+			);
 		}
-		else if($action == 'decrypt'){
-	   		$output = openssl_decrypt(base64_decode($string), $var_method, $var_key, 0, $var_vector);
-		}
-
-		return $output;
 
 	}
 

@@ -156,13 +156,15 @@ if (have_posts()) {
 						'title_reply_after' => ''
 					);
 
+					the_content();
+
 					ob_start();
 					comment_form($args, get_the_ID());
 
 					$var_comments_form = ob_get_clean().'<div class="response"></div>';
 
 					$var_shortcodes = array('{{b_title}}', '{{b_permalink}}', '{{b_content}}', '{{b_date}}', '{{b_categories}}', '{{b_author}}', '{{b_tags}}', '{{b_comments-number}}', '{{b_comments-form}}', '{{b_comments-list}}');
-					$var_replace = array(get_the_title(), get_permalink(), apply_filters('the_content',$post->post_content), get_the_date(b_f_option('b_opt_blog-date-'.$b_g_language)), $var_categories, get_the_author_link(), $var_tags, $var_comments, $var_comments_form, $var_comments_list);
+					$var_replace = array(get_the_title(), get_permalink(), $var_content, get_the_date(b_f_option('b_opt_blog-date-'.$b_g_language)), $var_categories, get_the_author_link(), $var_tags, $var_comments, $var_comments_form, $var_comments_list);
 
 					echo preg_replace_callback("/{{b_share(-)?([a-zA-Z]+)?}}/", "b_f_i_share", preg_replace_callback("/{{b_id-([0-9]+)}}/", "b_f_i_url",  preg_replace_callback("/{{b_image-([0-9a-zA-Z]+)}}/", "b_f_i_image", str_replace($var_shortcodes, $var_replace, do_shortcode(b_f_option('b_opt_blog-content-single-'.$b_g_language))))));
 

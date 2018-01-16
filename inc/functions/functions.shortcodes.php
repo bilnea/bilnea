@@ -90,10 +90,34 @@ if (!function_exists('b_f_p_featured')) {
 }
 
 
+if (!function_exists('b_f_p_svg')) {
+
+	function b_f_p_svg($content) {
+
+		$content = preg_replace_callback("/<img [^>]* ?src=[\"\']([^\"\']*\.svg)[\"\'].*>/Ui", "b_f_i_svg", $content);
+
+		return $content;
+	}
+
+}
+
+
+if (!function_exists('b_f_i_svg')) {
+
+	function b_f_i_svg($arg) {
+
+		return b_f_get_file_content($arg[1]);
+
+	}
+
+}
+
+
 add_filter('the_content','b_f_p_id');
 add_filter('the_content','b_f_p_root');
 add_filter('the_content','b_f_p_upload');
 add_filter('the_content','b_f_p_featured');
+add_filter('the_content','b_f_p_svg');
 
 
 if (!function_exists('b_f_shortcode')) {

@@ -179,7 +179,7 @@ body {
 }
 
 .main_container {
-	background-color: <?= b_f_color('b_opt_main-color') ?>;
+	background-color: <?= b_f_option('b_opt_main-color') ?>;
 }
 
 

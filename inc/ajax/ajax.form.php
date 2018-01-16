@@ -18,40 +18,24 @@ if (!function_exists('b_a_send_form')) {
 			global $wpdb, $b_g_hash, $b_g_language, $b_g_uniqid;
 
 			// Variables locales
-			$var_name = get_bloginfo('name');
-			if (isset($_POST['b_i_name']) && $_POST['b_i_name'] != '') {
-				$var_name = ucfirst($_POST['b_i_name']);
-			}
-			if (isset($_POST['b_i_last-name']) && $_POST['b_i_last-name'] != '') {
-				$var_name .= ' '.ucfirst($_POST['b_i_last-name']);
-			}
 			(isset($_POST['b_i_form-name']) && $_POST['b_i_form-name'] != '') ? $var_form_name = $_POST['b_i_form-name'].' ' : $var_form_name = '';
 			$var_to = rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_to']), "\0");
-			$var_headers = 'From: '.$var_name.' <noreply@'.$_SERVER['SERVER_NAME'].'>'."\r\n";
-			$var_headers .= 'Reply-to: '.$var_name.' <'.((isset($_POST['b_i_email']) && $_POST['b_i_email'] != '') ? $_POST['b_i_email'] : 'noreply@'.$_SERVER['SERVER_NAME']).'>'."\r\n";
+			$var_headers = 'From: '.get_bloginfo('name').' <noreply@'.$_SERVER['SERVER_NAME'].'>'."\r\n";
+			if (isset($_POST['b_i_reply']) && $_POST['b_i_reply'] != '') {
+				$var_headers .= 'Reply-to: '.$_POST['b_i_reply']."\r\n";
+			}
 			$var_headers .= 'Content-Type: text/html; charset=UTF-8';
 
 			// Preparación de datos
 			$var_names = json_decode(str_replace('\"', '"', str_replace("'", "\'", $_POST['b_i_names'])), true);
 			$var_table = $wpdb->prefix.'form_users';
 			$var_temp = array();
-			if (isset($_POST['b_i_name']) && $_POST['b_i_name'] != '') {
-				$var_temp[$var_names['b_i_name']] = $_POST['b_i_name'];
-			}
-			if (isset($_POST['b_i_last-name']) && $_POST['b_i_last-name'] != '') {
-				$var_temp[$var_names['b_i_last-name']] = $_POST['b_i_last-name'];
-			}
-			if (isset($_POST['b_i_email']) && $_POST['b_i_email'] != '') {
-				$var_temp[$var_names['b_i_email']] = $_POST['b_i_email'];
-			}
 			foreach ($_POST as $key => $value) {
-				if (substr($key, 0, 10) == 'b_i_custom' && substr($key, 0, 17) != 'b_i_custom_mailer' && substr($key, 0, 18) != 'b_i_custom_subject') {
+				if (!in_array($key, array('b_i_to', 'b_i_sucess', 'b_i_subject', 'b_i_formname', 'b_i_page', 'b_i_ip', 'b_i_redirect', 'b_i_names', 'b_i_reply'))) {
 					$var_temp[str_replace("\'", "'", $var_names[$key])] = $value;
 				}
 			}
-			if (isset($_POST['b_i_message']) && $_POST['b_i_message'] != '') {
-				$var_temp[$var_names['b_i_message']] = $_POST['b_i_message'];
-			}
+
 
 			if (!function_exists( 'wp_handle_upload')) require_once(ABSPATH.'wp-admin/includes/file.php');
 
@@ -93,7 +77,7 @@ if (!function_exists('b_a_send_form')) {
 			$var_data = array(
 				'data' => serialize($var_temp),
 				'date' => date('Y-m-d H:i:s'),
-				'email' => ((isset($_POST['b_i_email']) && $_POST['b_i_email'] != '') ? $_POST['b_i_email'] : 'Sin correo electrónico'),
+				'email' => ((isset($_POST['b_i_reply']) && $_POST['b_i_reply'] != '') ? $_POST['b_i_reply'] : 'Sin correo electrónico'),
 				'formname' => rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_formname']), "\0"),
 				'ip' => $_POST['b_i_ip'],
 				'page' => rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_page']), "\0"),
@@ -123,14 +107,14 @@ if (!function_exists('b_a_send_form')) {
 			if (b_f_option('b_opt_smtp') == 1) {
 				add_action('phpmailer_init', 'b_f_smtp_server');
 			}
-
+print_r(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_to']));
 			// Envío del formulario
 			if (wp_mail($var_to, $var_subject, $var_message, $var_headers, $attachments)) {
 				$wpdb->insert($var_table, $var_data);
 				setlocale(LC_ALL, $var_locale);
 
 				// Correo de respuesta
-				if ((isset($_POST['b_i_response']) && $_POST['b_i_response'] == 'true') && (isset($_POST['b_i_email']) && $_POST['b_i_email'] != '')) {
+				if ((isset($_POST['b_i_response']) && $_POST['b_i_response'] == 'true') && (isset($_POST['b_i_reply']) && $_POST['b_i_reply'] != '')) {
 					if (b_f_option('b_opt_response-email-'.$b_g_language) != '') {
 						$var_message = b_f_option('b_opt_response-email-'.$b_g_language);
 					} else {
@@ -143,11 +127,11 @@ if (!function_exists('b_a_send_form')) {
 					$var_message .= '<hr />'.__('Please do not respond directly to this e-mail. The inbox of this account is disabled.', 'bilnea');
 					$var_headers = 'From: '.get_bloginfo('name').' <noreply@'.$_SERVER['SERVER_NAME'].'>'."\r\n";
 					$var_headers .= 'Content-Type: text/html; charset=UTF-8';
-					wp_mail($_POST['b_i_email'], __('Here is a copy of your message to', 'bilnea').' '.get_bloginfo('name'), $var_message, $var_headers);
+					wp_mail($_POST['b_i_reply'], __('Here is a copy of your message to', 'bilnea').' '.get_bloginfo('name'), $var_message, $var_headers);
 				}
 				
-				if (isset($_POST['b_i_redirect'])) {
-					echo '<script>window.location.href = "'.get_permalink(rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_redirect']), "\0")).'";</script><div class="sent-ok redirecting">'.__('Message sent sucesfully. Please wait a moment.', 'bilnea').'</div>';
+				if (isset($_POST['b_i_redirect']) && $_POST['b_i_redirect'] != '') {
+					echo '<script>window.location.href = "'.b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_redirect']).'";</script><div class="sent-ok redirecting">'.__('Message sent sucesfully. Please wait a moment.', 'bilnea').'</div>';
 				} else {
 					echo '<div class="sent-ok">'.rtrim(b_f_i_encrypt_decrypt('decrypt', $_POST['b_i_sucess']), "\0").'</div>';
 				}

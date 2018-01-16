@@ -5,11 +5,9 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 }
 
 
-// Mapa
+// Galería
 
 if (!function_exists('b_s_gallery')) {
-
-	remove_shortcode('gallery');
 
 	function b_s_gallery($atts) {
 
@@ -69,7 +67,6 @@ if (!function_exists('b_s_gallery')) {
 
 	}
 
-	add_shortcode('gallery', 'b_s_gallery');
 	add_shortcode('b_gallery', 'b_s_gallery');
 
 }

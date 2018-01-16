@@ -476,6 +476,22 @@ input.b_input_checkbox:checked + label:hover::after {
 	opacity: 1;
 }
 
+input[data-type="text"],
+input[data-type="email"],
+input[data-type="number"],
+textarea {
+	-webkit-appearance: none;
+	display: block;
+	width: 100%;
+	padding: 4px 10px;
+	border-radius: 0;
+	border: 0;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
+	outline: 0;
+	resize: none;
+}
+
 #mobile-menu-button {
 	display: inline-block;
 	vertical-align: top;

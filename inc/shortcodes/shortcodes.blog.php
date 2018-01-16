@@ -212,7 +212,7 @@ if (!function_exists('b_s_categories')) {
 		$a = shortcode_atts(array(
 			'orderby' => 'name',
 			'all' => __('All', 'bilnea'),
-			'term' => 'category',
+			'tax' => 'category',
 			'class' => null,
 		), $atts);
 
@@ -222,7 +222,7 @@ if (!function_exists('b_s_categories')) {
 			'title_li' => '',
 			'echo' => 0,
 			'show_option_all' => esc_attr($a['all']),
-			'taxonomy' => esc_attr($a['term']),
+			'taxonomy' => esc_attr($a['tax']),
 			'orderby' => 'name',
 			'order' => 'ASC'
 		);

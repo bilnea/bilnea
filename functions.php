@@ -8,14 +8,17 @@ Desarrollado por Samuel E. Cerezo para bilnea Digital S.L.
 
 */
 
-
 // Versiones de la plataforma
 
 $b_g_version = '3.0';
 
 if (!function_exists('b_f_versions')) {
 	
-	function b_f_versions($var_resource) {
+	function b_f_versions($var_resource = null) {
+
+		// Variables globales
+		global $b_g_version;
+
 		switch ($var_resource) {
 
 			// Font Awesome
@@ -103,6 +106,11 @@ if (!function_exists('b_f_versions')) {
 				return '0.5.1';
 				break;
 
+			// bilnea Theme
+			default:
+				return $b_g_version;
+				break;
+
 		}
 
 	}
@@ -183,13 +191,16 @@ function custom_excerpt_more($var_more) {
 	return '...';
 }
 
-add_filter( 'excerpt_more', 'custom_excerpt_more' );
+add_filter('excerpt_more', 'custom_excerpt_more');
+
+
+// Elementor
+
+include('inc/elementor/elementor.init.php');
 
 
 
-
-
-
+b_f_weekly_cron();
 
 
 

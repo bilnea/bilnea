@@ -9,23 +9,20 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 if (!function_exists('b_f_load_scripts')) {
 	
-	function b_f_load_scripts()  {
-
-		// Variables globales
-		global $b_g_version;
+	function b_f_load_scripts() {
 
 		// Scripts del tema
-		wp_register_script('functions.main', get_template_directory_uri().'/js/internal/functions.main.js', array('jquery'), $b_g_version, true);
-		wp_register_script('functions.anchor', get_template_directory_uri().'/js/internal/functions.anchor.js', array('jquery'), $b_g_version, true);
-		wp_register_script('functions.accordion', get_template_directory_uri().'/js/internal/functions.accordion.js', array('jquery'), $b_g_version, true);
-		wp_register_script('functions.design', get_template_directory_uri().'/js/internal/functions.design.js', array('jquery'), $b_g_version, true);
-		wp_register_script('functions.design.parallax', get_template_directory_uri().'/js/internal/functions.design.parallax.js', array('jquery'), $b_g_version, true);
-		wp_register_script('functions.design.menu', get_template_directory_uri().'/js/internal/functions.design.menu.js', array('jquery'), $b_g_version, true);
-		wp_register_script('functions.admin', get_template_directory_uri().'/js/internal/functions.admin.js', array(), $b_g_version, true);
+		wp_register_script('functions.main', get_template_directory_uri().'/js/internal/functions.main.js', array('jquery'), b_f_versions(), true);
+		wp_register_script('functions.anchor', get_template_directory_uri().'/js/internal/functions.anchor.js', array('jquery'), b_f_versions(), true);
+		wp_register_script('functions.accordion', get_template_directory_uri().'/js/internal/functions.accordion.js', array('jquery'), b_f_versions(), true);
+		wp_register_script('functions.design', get_template_directory_uri().'/js/internal/functions.design.js', array('jquery'), b_f_versions(), true);
+		wp_register_script('functions.design.parallax', get_template_directory_uri().'/js/internal/functions.design.parallax.js', array('jquery'), b_f_versions(), true);
+		wp_register_script('functions.design.menu', get_template_directory_uri().'/js/internal/functions.design.menu.js', array('jquery'), b_f_versions(), true);
+		wp_register_script('functions.admin', get_template_directory_uri().'/js/internal/functions.admin.js', array(), b_f_versions(), true);
 			
 		// Scripts del tema hijo
-		wp_register_script('functions.child.main', get_stylesheet_directory_uri().'/js/main.js', array('jquery'), $b_g_version, true);
-		wp_register_script('functions.child.admin', get_stylesheet_directory_uri().'/js/admin.js', array('jquery', 'functions.admin'), $b_g_version, true);
+		wp_register_script('functions.child.main', get_stylesheet_directory_uri().'/js/main.js', array('jquery'), b_f_versions(), true);
+		wp_register_script('functions.child.admin', get_stylesheet_directory_uri().'/js/admin.js', array('jquery', 'functions.admin'), b_f_versions(), true);
 
 		// jQuery UI
 		wp_register_script('functions.core.jquery.ui', get_template_directory_uri().'/js/external/functions.core.jquery.ui.js', array('jquery'), b_f_versions('jquery-ui'), true);
@@ -46,7 +43,7 @@ if (!function_exists('b_f_load_scripts')) {
 		wp_register_script('functions.core.jquery.queryobject', get_template_directory_uri().'/js/external/functions.core.jquery.queryobject.js', array('jquery'), b_f_versions('query-object'), true);
 
 		// Anticopia
-		wp_register_script('functions.anticopy', get_template_directory_uri().'/js/internal/functions.anticopy.js', array(), $b_g_version, true);
+		wp_register_script('functions.anticopy', get_template_directory_uri().'/js/internal/functions.anticopy.js', array(), b_f_versions(), true);
 
 		// Lightbox
 		wp_register_script('functions.design.magnificpopup', get_template_directory_uri().'/js/external/functions.design.magnificpopup.js', array('jquery'), b_f_versions('magnific-popup'), false);
@@ -73,9 +70,6 @@ if (!function_exists('b_f_load_scripts')) {
 		// Spectrum
 		wp_register_script('functions.functionality.spectrum', get_template_directory_uri().'/js/external/functions.functionality.spectrum.js', array('jquery'), b_f_versions('spectrum'), true);
 
-		// Super Simple Slider
-		wp_register_script('functions.slider', get_template_directory_uri().'/js/external/functions.media.flexslider.js', array('jquery'), b_f_versions('flexslider'), false);
-
 		// responsiveCarousel.JS
 		wp_register_script('functions.carousel', get_template_directory_uri().'/js/external/functions.media.responsivecarousel.js', array('jquery'), b_f_versions('responsivecarousel'), false);
 
@@ -97,7 +91,7 @@ if (!function_exists('b_f_frontend_scripts')) {
 	function b_f_frontend_scripts() {
 
 		// Variables globales
-		global $post, $b_g_version;
+		global $post;
 
 		// Variables locales
 		$var_log = 'Scripts loaded:\n';
@@ -106,7 +100,7 @@ if (!function_exists('b_f_frontend_scripts')) {
 		b_f_load_scripts();
 
 		$var_temp = array(
-			'version' => $b_g_version,
+			'version' => b_f_versions(),
 			'site_url' => site_url(),
 			'post_id' => $post->ID
 		);
@@ -182,19 +176,19 @@ if (!function_exists('b_f_frontend_scripts')) {
 
 		// Scripts específicos de la página
 		if (isset($post) && file_exists(get_stylesheet_directory().'/js/'.$post->post_type.'-'.$post->ID.'.js')) {
-			wp_enqueue_script($post->post_type.'-'.$post->ID.'-js', get_stylesheet_directory_uri().'/js/'.$post->post_type.'-'.$post->ID.'.js', array('jquery', 'functions.child.main'), $b_g_version, true );
+			wp_enqueue_script($post->post_type.'-'.$post->ID.'-js', get_stylesheet_directory_uri().'/js/'.$post->post_type.'-'.$post->ID.'.js', array('jquery', 'functions.child.main'), b_f_versions(), true );
 		}
 
 		if (is_home() && file_exists(get_stylesheet_directory().'/js/blog.js')) {
-			wp_enqueue_script('bilnea.blog-js', get_stylesheet_directory_uri().'/js/blog.js', array('jquery', 'functions.child.main'), $b_g_version, true );
+			wp_enqueue_script('bilnea.blog-js', get_stylesheet_directory_uri().'/js/blog.js', array('jquery', 'functions.child.main'), b_f_versions(), true );
 		}
 
 		if (is_front_page() && file_exists(get_stylesheet_directory().'/js/home.js')) {
-			wp_enqueue_script('bilnea.home-js', get_stylesheet_directory_uri().'/js/home.js', array('jquery', 'functions.child.main'), $b_g_version, true );
+			wp_enqueue_script('bilnea.home-js', get_stylesheet_directory_uri().'/js/home.js', array('jquery', 'functions.child.main'), b_f_versions(), true );
 		}
 
 		if (is_single() && file_exists(get_stylesheet_directory().'/js/single-'.$post->post_type.'.js')) {
-			wp_enqueue_script($post->post_type.'-'.$post->ID.'-js', get_stylesheet_directory_uri().'/js/single-'.$post->post_type.'.js', array('jquery', 'functions.child.main'), $b_g_version, true );
+			wp_enqueue_script($post->post_type.'-'.$post->ID.'-js', get_stylesheet_directory_uri().'/js/single-'.$post->post_type.'.js', array('jquery', 'functions.child.main'), b_f_versions(), true );
 		}
 
 		add_filter('script_loader_tag', function ($var_tag, $var_handle) {
@@ -226,9 +220,6 @@ if (!function_exists('b_f_backend_scripts')) {
 	
 	function b_f_backend_scripts() {
 
-		// Variables globales
-		global $b_g_version;
-
 		// Variables locales
 		$var_log = 'Scripts loaded:\n';
 
@@ -236,7 +227,7 @@ if (!function_exists('b_f_backend_scripts')) {
 		b_f_load_scripts();
 
 		$var_temp = array(
-			'version' => $b_g_version
+			'version' => b_f_versions()
 		);
 
 		foreach ($_GET as $key => $value) {
@@ -292,18 +283,15 @@ if (!function_exists('b_f_load_styles')) {
 	
 	function b_f_load_styles()  {
 
-		// Variables globales
-		global $b_g_version;
-
 		// Hojas de estilos del tema
-		wp_register_style('styles.bilnea', get_stylesheet_directory_uri().'/style.css', false, $b_g_version);
-		wp_register_style('styles.main', get_template_directory_uri().'/styles/styles.main.php', false, $b_g_version);
-		wp_register_style('styles.admin', get_template_directory_uri().'/css/internal/styles.admin.css', array('styles.functionality.spectrum'), $b_g_version);
+		wp_register_style('styles.bilnea', get_stylesheet_directory_uri().'/style.css', false, b_f_versions());
+		wp_register_style('styles.main', get_template_directory_uri().'/styles/styles.main.php', false, b_f_versions());
+		wp_register_style('styles.admin', get_template_directory_uri().'/css/internal/styles.admin.css', array('styles.functionality.spectrum'), b_f_versions());
 		
 
 		// Hojas de estilos del tema hijo
-		wp_register_style('styles.child.main', get_stylesheet_directory_uri().'/css/main.css', false, $b_g_version);
-		wp_register_style('styles.child.admin', get_stylesheet_directory_uri().'/css/admin.css', false, $b_g_version);
+		wp_register_style('styles.child.main', get_stylesheet_directory_uri().'/css/main.css', false, b_f_versions());
+		wp_register_style('styles.child.admin', get_stylesheet_directory_uri().'/css/admin.css', false, b_f_versions());
 
 		// Flexslider
 		wp_register_style('styles.slider', get_template_directory_uri().'/css/external/styles.media.flexslider.css', false, b_f_versions('flexslider'));
@@ -343,7 +331,6 @@ if (!function_exists('b_f_frontend_styles')) {
 
 		// Variables globales
 		global $post;
-		global $b_g_version;
 
 		// Variables locales
 		$var_log = 'Styles loaded:\n';
@@ -380,23 +367,23 @@ if (!function_exists('b_f_frontend_styles')) {
 
 		// Hojas de estilo específicas de la página
 		if (isset($post) && file_exists(get_stylesheet_directory().'/css/'.$post->post_type.'-'.$post->ID.'.css')) {
-			wp_enqueue_style($post->post_type.'-'.$post->ID.'-css', get_stylesheet_directory_uri().'/css/'.$post->post_type.'-'.$post->ID.'.css', array('styles.child.main'), $b_g_version);
+			wp_enqueue_style($post->post_type.'-'.$post->ID.'-css', get_stylesheet_directory_uri().'/css/'.$post->post_type.'-'.$post->ID.'.css', array('styles.child.main'), b_f_versions());
 		}
 
 		if (is_home() && file_exists(get_stylesheet_directory().'/css/blog.css')) {
-			wp_enqueue_style('bilnea.blog-css', get_stylesheet_directory_uri().'/css/blog.css', array('styles.child.main'), $b_g_version);
+			wp_enqueue_style('bilnea.blog-css', get_stylesheet_directory_uri().'/css/blog.css', array('styles.child.main'), b_f_versions());
 		}
 
 		if (is_front_page() && file_exists(get_stylesheet_directory().'/css/home.css')) {
-			wp_enqueue_style('bilnea.home-css', get_stylesheet_directory_uri().'/css/home.css', array('styles.child.main'), $b_g_version);
+			wp_enqueue_style('bilnea.home-css', get_stylesheet_directory_uri().'/css/home.css', array('styles.child.main'), b_f_versions());
 		}
 
 		if (is_archive() && file_exists(get_stylesheet_directory().'/css/archive.css')) {
-			wp_enqueue_style('bilnea.archive-css', get_stylesheet_directory_uri().'/css/archive.css', array('styles.child.main'), $b_g_version);
+			wp_enqueue_style('bilnea.archive-css', get_stylesheet_directory_uri().'/css/archive.css', array('styles.child.main'), b_f_versions());
 		}
 
 		if (is_single() && file_exists(get_stylesheet_directory().'/css/single-'.$post->post_type.'.css')) {
-			wp_enqueue_style($post->post_type.'-'.$post->ID.'-css', get_stylesheet_directory_uri().'/css/single-'.$post->post_type.'.css', array('styles.child.main'), $b_g_version);
+			wp_enqueue_style($post->post_type.'-'.$post->ID.'-css', get_stylesheet_directory_uri().'/css/single-'.$post->post_type.'.css', array('styles.child.main'), b_f_versions());
 		}
 
 		// Hijas de estilo responsive
@@ -417,9 +404,9 @@ if (!function_exists('b_f_frontend_styles')) {
 
 		foreach($var_temp as $var_size => $var_file) {
 			if ($var_size == 'mobile' && is_mobile()) {
-				wp_enqueue_style('media-styles-'.$var_size, get_stylesheet_directory_uri().'/css/'.$var_file, array('styles.child.main'), $b_g_version);
+				wp_enqueue_style('media-styles-'.$var_size, get_stylesheet_directory_uri().'/css/'.$var_file, array('styles.child.main'), b_f_versions());
 			} else {
-				wp_enqueue_style('media-styles-'.$var_size, get_stylesheet_directory_uri().'/css/'.$var_file, array('styles.child.main'), $b_g_version, '(max-width: '.$var_size.'px)');
+				wp_enqueue_style('media-styles-'.$var_size, get_stylesheet_directory_uri().'/css/'.$var_file, array('styles.child.main'), b_f_versions(), '(max-width: '.$var_size.'px)');
 			}
 		}
 
@@ -443,9 +430,6 @@ if (!function_exists('b_f_frontend_styles')) {
 if (!function_exists('b_f_backend_styles')) {
 	
 	function b_f_backend_styles() {
-
-		// Variables globales
-		global $b_g_version;
 
 		// Variables locales
 		$var_log = 'Styles loaded:\n';
