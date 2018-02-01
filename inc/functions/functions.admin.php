@@ -73,8 +73,7 @@ if (!function_exists('b_f_fonts')) {
 
 		<!-- Selector color -->
 		<div class="font-color-picker">
-			<input type="text" class="sp-input" name="bilnea_settings[b_opt_<?= $var_font ?>_ttf-color]" value="<?= b_f_option('b_opt_'.$var_font.'_ttf-color'); ?>" placeholder="<?= b_f_default('b_opt_'.$var_font.'_ttf-color'); ?>" />
-			<input type="text" class="colora text peq">
+			<input type="text" data-alpha="true" data-type="color" name="bilnea_settings[b_opt_<?= $var_font ?>_ttf-color]" value="<?= b_f_option('b_opt_'.$var_font.'_ttf-color'); ?>" placeholder="<?= b_f_default('b_opt_'.$var_font.'_ttf-color'); ?>" />
 		</div>
 
 		<!-- Selector estilo -->
@@ -888,5 +887,45 @@ if (!function_exists('b_f_seo_title')) {
 
 }
 
+if (!function_exists('b_f_admin_elementor')) {
+
+	function b_f_admin_elementor($title = null, $slug = null) {
+
+		global $b_g_language;
+
+		if (is_null($title) || is_null($slug)) {
+			return;
+		}
+
+		$out = '<div data-type="block">'.$title.'</div>'."\n";
+		$out .= '<div data-type="block" data-size="50">'."\n";
+		$out .= '	<select name="bilnea_settings[b_opt_widget-'.$slug.'-'.$b_g_language.']" style="margin-top: -2px; width: 100% !important;">'."\n";
+		$out .= '		<option value="none" selected>Seleccionar widget</option>'."\n";
+
+		$args = array(
+			'post_type'		 => 'elementor_library',
+			'posts_per_page' => -1,
+			'post_status'	 => 'publish'
+		);
+
+		foreach (get_posts($args) as $widget) {
+			$out .= '		<option value="'.$widget->ID.'"'.((b_f_option('b_opt_widget-'.$slug.'-'.$b_g_language) == $widget->ID) ? ' selected' : '').'>'.$widget->post_title.'</option>'."\n";
+		}
+
+		$out .= '	</select>'."\n";
+		$out .= '</div>'."\n";
+		$out .= '<div data-type="block" data-size="50" data-float="right">'."\n";
+
+		if (b_f_option('b_opt_widget-'.$slug.'-'.$b_g_language) != 'none' && !is_null(b_f_option('b_opt_widget-'.$slug.'-'.$b_g_language)) && current_user_can('edit_pages')) {
+			$out.= '		<a data-type="elementor-link" target="_blank" href="'.trim(site_url(), '/').'/wp-admin/post.php?post='.b_f_option('b_opt_widget-'.$slug.'-'.$b_g_language).'&action=elementor">Editar bloque</a>'."\n";
+		}
+			
+		$out .= '</div>'."\n";
+
+		return $out;
+
+	}
+
+}
 
 ?>

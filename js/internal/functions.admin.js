@@ -1,6 +1,24 @@
 console.log('bilnea Theme '+bilnea.version+'\n');
 
 jQuery(function($) {
+
+	$('[data-type="color"]').wpColorPicker();
+
+	$('[data-type="settings"] h3').click(function() {
+		if (!$(this).hasClass('activo')) {
+			$('[data-type="settings"] h3').removeClass('activo');
+			$(this).addClass('activo');
+			var indice = $('[data-type="settings"] h3').index(this);
+			$('#tab').val(indice+1);
+			$('[data-type="settings"] main .activo').fadeOut(250, function() {
+				$('[data-type="settings"] main .activo').removeClass('activo');
+				$('[data-type="settings"] main > div:nth-child('+(indice+1)+')').fadeIn(250).addClass('activo');
+			})
+		};
+	})
+
+
+
 	$(document).ajaxSuccess(function(e, request, settings){
 		if ($('.term-meta-featured-image-wrap').length > 0) {
 			$('.term-meta-featured-image-wrap .thumbnail').css('background-image', 'none');
@@ -8,18 +26,7 @@ jQuery(function($) {
 		}
 	});
 	var inp = 'input[name="bilnea_settings';
-	$('.lateral h3').click(function() {
-		if (!$(this).hasClass('activo')) {
-			$('.lateral h3').removeClass('activo');
-			$(this).addClass('activo');
-			var indice = $('.lateral h3').index(this);
-			$('#tab').val(indice+1);
-			$('.central .activo').fadeOut(250, function() {
-				$('.central .activo').removeClass('activo');
-				$('.central > div:nth-child('+(indice+1)+')').fadeIn(250).addClass('activo');
-			})
-		};
-	})
+	
 	$('#subir_imagen').click(function(e) {
 		e.preventDefault();
 		var imagen = wp.media({
@@ -421,7 +428,7 @@ jQuery(function($) {
 		s.detach().appendTo($(e.target));
 		$(e.target).trigger('change');
 	})
-	$('#bilset select').select2();
+	$('[data-type="settings"] select').select2();
 	$('.lang-switcher:not(.current)').click(function() {
 		var t = $(this),
 			l = t.attr('data-lang');

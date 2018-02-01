@@ -130,4 +130,57 @@ if (!function_exists('b_f_remove_info')) {
 
 }
 
+
+if (!function_exists('b_f_e_menu')) {
+
+	function b_f_e_menu() {
+		add_submenu_page('bilnea', 'Widgets', 'Widgets', 'manage_options', 'edit.php?post_type=elementor_library');
+	}
+
+	add_action('admin_menu', 'b_f_e_menu');
+
+}
+
+
+if (!function_exists('b_f_e_seo')) {
+	
+	function b_f_e_seo($columns) {
+		unset($columns['wpseo-score']);
+		unset($columns['wpseo-score-readability']);
+		unset($columns['wpseo-title']);
+		unset($columns['wpseo-metadesc']);
+		unset($columns['wpseo-focuskw']);
+		unset($columns['wpseo-links']);
+		unset($columns['wpseo-linked']);
+		unset($columns['gadwp_stats']);
+		return $columns;
+	}
+
+	add_filter('manage_edit-elementor_library_columns', 'b_f_e_seo', 10, 1);
+
+}
+
+
+if (!function_exists('b_f_e_metaboxes')) {
+	
+	function b_f_e_metaboxes() {
+		remove_meta_box('wpseo_meta', 'elementor_library', 'normal');
+		remove_meta_box('authordiv', 'elementor_library', 'normal');
+	}
+
+	add_action('add_meta_boxes', 'b_f_e_metaboxes', 100);
+
+}
+
+
+if (!function_exists('b_f_e_thumbnail')) {
+
+	function b_f_e_thumbnail() {
+		remove_post_type_support('elementor_library', 'thumbnail');
+	}
+
+	add_action('init', 'b_f_e_thumbnail');
+
+}
+
 ?>

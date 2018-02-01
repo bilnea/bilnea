@@ -117,183 +117,34 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 
 		}
 
-		if (b_f_option('b_opt_mobile-menu') == 2 || b_f_option('b_opt_mobile-menu') == 3) {
+		?>
 
-			?>
+		<div id="mobile-menu">
+			<div class="container">
 
-			<div id="mobile-menu" data="type-<?= b_f_option('b_opt_mobile-menu') ?>">
-
-				<?php
-				
-				if (b_f_page_get_metabox('b_o_page_mobile_menu') == 1) {
-					
-					?>
-
-					<div class="container">
-
-						<?php
-
-						if (function_exists('icl_object_id')) {
-							$var_language_selector = $sitepress->get_language_selector();
-						} else {
-							$var_language_selector = '';
-						}
-
-						// Variables locales
-						$var_menu = wp_nav_menu(array('theme_location' => 'menu_mobile', 'container_id' => 'mobile_menu', 'echo' => false));
-						if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.b_f_get_file_content(b_f_option('b_opt_main-logo')).'</a>';
-						} else {
-							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
-						}
-								
-						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_switcher}}', '{{b_search_icon}}');
-						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>', $var_search);
-
-						echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_mobile-menu-'.$b_g_language))));
-
-						?>
-
-					</div>
-
-					<?php
-
-				}
-
-				?>
+				<?= do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-mobile-menu-'.$b_g_language).'"]'); ?>
 
 			</div>
+		</div>
 
-			<?php
-			
-		}
-			
-		?>
 
 		<div class="main_container <?php if (b_f_option('b_opt_body-width') == 1) { echo ' container'; } ?>" data-role="page">
 
 			<!-- Cabecera de página escritorio -->
 			<header id="header" class="site-header<?php echo ((b_f_option('b_opt_sticky-menu') == 1) ? ' sticky' : ''); echo ((b_f_option('b_opt_sticky-menu-animated') == 1) ? ' animated' : ''); ?>" role="banner">
 
-				<!-- Barra superior -->
-				<?php
-
-				if (b_f_option('b_opt_top-bar') == 1 && get_post_meta(get_the_ID(), 'b_o_page_metabox_top_bar', true) == 1 || !is_page()) {
-
-					?>
-
-					<div class="header-top">
-
-						<?php
-
-						if (function_exists('icl_object_id')) {
-							$var_language_selector = $sitepress->get_language_selector();
-						} else {
-							$var_language_selector = '';
-						}
-
-						// Variables locales
-						$var_menu = wp_nav_menu(array('theme_location' => 'menu_top', 'container_id' => 'top_menu', 'echo' => false));
-						if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.b_f_get_file_content(b_f_option('b_opt_main-logo')).'</a>';
-						} else {
-							$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
-						}
-							
-						$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_search_icon}}');
-						$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, $var_search);
-
-						echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_header-top-content-'.$b_g_language))));
-
-						?>
-
-					</div>
-
-				<?php
-
-				}
-
-				if (get_post_meta(get_the_ID(), 'b_o_page_metabox_header', true) == 1 || !is_page()) {
-
-					?>
-			
-					<!-- Bloque menú de la cabecera -->
-					<div class="header">
-						<div <?php if (b_f_option('b_opt_menu-width') == 2) { echo 'class="container"'; } ?>>
-
-							<?php
-
-							if (function_exists('icl_object_id')) {
-								$var_language_selector = $sitepress->get_language_selector();
-							} else {
-								$var_language_selector = '';
-							}
-
-							// Variables locales
-							$var_menu = wp_nav_menu(array('theme_location' => 'menu_main', 'container_id' => 'main_menu', 'echo' => false));
-							if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-								$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.b_f_get_file_content(b_f_option('b_opt_main-logo')).'</a>';
-							} else {
-								$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
-							}
-		
-							$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_search_icon}}');
-							$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, $var_search);
-
-							echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_header-main-content-'.$b_g_language))));
-
-							?>
-
-						</div>
-					</div>
-
-					<?php
-
-				}
-
-				?>
+				<?= do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-header-'.$b_g_language).'"]') ?>
 				
 			</header>
 
 	<!-- Cabecera para dispositivos móviles -->
-	<?php
-
-	if (b_f_option('b_opt_mobile-menu') == 3 && b_f_page_get_metabox('b_o_page_mobile_menu') == 1)  {
-		?>
-			<header id="mobile-header">
-				<div class="container">
+	<header id="mobile-header">
+		<div class="container">
 					
-					<?php
-
-					if (function_exists('icl_object_id')) {
-						$var_language_selector = $sitepress->get_language_selector();
-					} else {
-						$var_language_selector = '';
-					}
-
-					// Variables locales
-					$var_menu = wp_nav_menu(array('theme_location' => 'menu_mobile', 'container_id' => 'mobile_menu', 'echo' => false));
-					if (strtolower(pathinfo(b_f_option('b_opt_main-logo'), PATHINFO_EXTENSION)) == 'svg') {
-						$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo">'.b_f_get_file_content(b_f_option('b_opt_main-logo')).'</a>';
-					} else {
-						$var_logo = '<a href="'.get_site_url().'" title="'.get_option('blogname').'" class="logo" style="display: none;"><img src="'.b_f_option('b_opt_main-logo').'" /></a>';
-					}
-						
-					$var_shortcodes = array('{{b_menu}}','{{b_logo}}','{{b_search}}','{{b_rrss}}','{{b_language_selector}}', '{{b_switcher}}', '{{b_search_icon}}');
-					$var_replace = array($var_menu, $var_logo, get_search_form(false), b_s_rrss(array()), $var_language_selector, '<div id="mobile-menu-button"><button class="mobile-button"><span></span></button></div>', $var_search);
-
-					echo preg_replace_callback("/{{b_menu-([0-9]+)}}/", "b_f_i_menu", do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_mobile-header-'.$b_g_language))));
-
-					?>
+			<?= do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-mobile-header-'.$b_g_language).'"]'); ?>
 					
-				</div>
-			</header>
-
-
-		<?php
-	}
-
-	?>
+		</div>
+	</header>
 
 	<!-- Contenido -->
 	<div class="content-wrapper">

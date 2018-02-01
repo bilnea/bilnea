@@ -1,11 +1,7 @@
 <?php
 
-get_header();
-
 ?>
 
-<div id="primary" class="main-row">
-	<div id="content" role="main" class="span8 offset2">
 		<article class="post">
 			<div class="the-content">
 
@@ -29,7 +25,7 @@ get_header();
 
 						the_content();
 
-						global $b_g_language;
+						global $b_g_language, $product;
 
 						$categories = array();
 						$tags = array();
@@ -48,10 +44,11 @@ get_header();
 							'{{b_content}}' => '<div class="b_content">'.$content.'</div>',
 							'{{b_date}}' => get_the_date(),
 							'{{b_categories}}' => $categories,
-							'{{b_image}}' => wp_get_attachment_image_src(get_post_thumbnail_id($id), 'full')[0]
+							'{{b_image}}' => wp_get_attachment_image_src(get_post_thumbnail_id($id), 'full')[0],
+							'{{b_w_sku}}' => $product->get_sku()
 						);
 
-						echo strtr(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-'.get_post_type().'-'.$b_g_language).'"]'), $replacements);
+						echo strtr(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-product-'.$b_g_language).'"]'), $replacements);
 
 					}
 
@@ -61,11 +58,3 @@ get_header();
 
 			</div>
 		</article>
-	</div>
-</div>
-
-<?php
-
-get_footer();
-
-?>

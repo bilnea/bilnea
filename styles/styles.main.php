@@ -96,19 +96,6 @@ function b_i_s_fonts($var_font) {
 
 ?>
 
-/* Estilos generales */
-
-body {
-	<?= b_i_s_fonts('text'); ?>
-}
-
-b, strong {
-	<?= b_i_s_fonts('bold'); ?>
-}
-
-a {
-	<?= b_i_s_fonts('link'); ?>
-}
 
 /* Encabezados */
 
@@ -185,56 +172,6 @@ body {
 
 /* Cabecera */
 
-.header-top {
-	background-color: <?= b_f_color('b_opt_topbar-color') ?>;
-}
-
-.main_container .header-top,
-.main_container .header-top * {
-	<?= b_i_s_fonts('top-bar'); ?>
-}
-
-header#header {
-	background-color: <?= b_f_color('b_opt_header-color') ?>;
-}
-
-header#header .header {
-	background-color: <?= b_f_color('b_opt_menu-color') ?>;
-	height: <?= b_f_size('b_opt_menu-height') ?>;
-}
-
-header#header {
-	height: <?= b_f_size('b_opt_header-height') ?>;
-}
-
-#main-header #searchsubmit {
-	color: <?= b_f_color('b_opt_menu-color') ?>;
-}
-
-header a.logo {
-	height: <?= b_f_size('b_opt_logo-height') ?>;
-	display: inline-block;
-}
-
-#main_menu {
-	line-height: <?= b_f_size('b_opt_menu-height') ?>;
-}
-
-#main_menu > li > a {
-	height: <?= b_f_size('b_opt_menu-height') ?>;
-	display: inline-block;
-}
-
-#main_menu li:hover:after,
-#main_menu li[class*="current"]::after {
-	background-color: <?= b_f_color('b_opt_active-color') ?>;
-}
-
-#main_menu li,
-#main_menu li * {
-	<?= b_i_s_fonts('main-menu'); ?>
-}
-
 #mobile-menu #main_menu > ul > li > a {
 	<?= b_i_s_fonts('main-menu'); ?>
 	color: <?= b_f_color('b_opt_header-color') ?>;
@@ -266,44 +203,6 @@ header a.logo {
 	display: none;
 }
 
-/* Pie de página */
-
-#footer {
-	background-color: <?= b_f_color('b_opt_footer-color') ?>;
-}
-
-#footer * {
-	<?= b_i_s_fonts('footer'); ?>
-}
-
-#footer .footer-title {
-	<?= b_i_s_fonts('footer-title'); ?>
-}
-
-#footer a {
-	<?= b_i_s_fonts('footer-link'); ?>
-}
-
-#footer a:hover {
-	<?= b_i_s_fonts('footer-hover'); ?>
-}
-
-#socket {
-	background-color: <?= b_f_color('b_opt_socket-color') ?>;
-}
-
-#socket * {
-	<?= b_i_s_fonts('socket'); ?>
-}
-
-
-#socket a {
-	<?= b_i_s_fonts('socket-link'); ?>
-}
-
-#socket a:hover {
-	<?= b_i_s_fonts('socket-hover'); ?>
-}
 
 /* Barra lateral */
 
@@ -320,95 +219,11 @@ aside#sidebar {
 }
 
 @media all and (max-width: <?= b_f_size('b_opt_responsive') ?>) {
-	.container {
-		padding-left: <?= b_f_size('b_opt_mobile-margin') ?> !important;
-		padding-right: <?= b_f_size('b_opt_mobile-margin') ?> !important;
-		width: auto !important;
-	}
-	* {
-		<?php
-		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_text_ttf-size'));
-		$var_unit .= ($var_unit == '') ? 'px' : '';
-		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_text_ttf-size'));
-		?>
-		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-text')/100)).$var_unit; ?>;
-	}
 	header#header {
 		display: none
 	}
 	header#mobile-header {
 		display: block;
 	}
-	b, b *,
-	strong,
-	strong * {
-		<?php
-		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_bold_ttf-size'));
-		$var_unit .= ($var_unit == '') ? 'px' : '';
-		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_bold_ttf-size'));
-		?>
-		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-text')/100)).$var_unit; ?>;
-	}
-	a, a * {
-		<?php
-		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_link_ttf-size'));
-		$var_unit .= ($var_unit == '') ? 'px' : '';
-		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_link_ttf-size'));
-		?>
-		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-text')/100)).$var_unit; ?>;
-	}
-	body.single article.post h1 {
-		<?php
-		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h1_ttf-size'));
-		$var_unit .= ($var_unit == '') ? 'px' : '';
-		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h1_ttf-size'));
-		?>
-		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
-	}
-	body.single article.post h2 {
-		<?php
-		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h2_ttf-size'));
-		$var_unit .= ($var_unit == '') ? 'px' : '';
-		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h2_ttf-size'));
-		?>
-		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
-	}
-	body.single article.post h3 {
-		<?php
-		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h3_ttf-size'));
-		$var_unit .= ($var_unit == '') ? 'px' : '';
-		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h3_ttf-size'));
-		?>
-		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
-	}
-	body.single article.post h4 {
-		<?php
-		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h4_ttf-size'));
-		$var_unit .= ($var_unit == '') ? 'px' : '';
-		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h4_ttf-size'));
-		?>
-		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
-	}
-	body.single article.post h5 {
-		<?php
-		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h5_ttf-size'));
-		$var_unit .= ($var_unit == '') ? 'px' : '';
-		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h5_ttf-size'));
-		?>
-		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
-	}
-	body.single article.post h6 {
-		<?php
-		$var_unit = preg_replace('/[0-9]+/', '', b_f_option('b_opt_h6_ttf-size'));
-		$var_unit .= ($var_unit == '') ? 'px' : '';
-		$var_size = preg_replace('/[^0-9]/', '', b_f_size('b_opt_h6_ttf-size'));
-		?>
-		font-size: <?php echo ($var_size*(b_f_option('b_opt_mobile-htext')/100)).$var_unit; ?>;
-	}
-	<?php if (b_f_option('b_opt_mobile-sidebar') == 1) : ?>
-	aside#sidebar {
-		display: none;
-	}
-	<?php endif; ?>
 }
 

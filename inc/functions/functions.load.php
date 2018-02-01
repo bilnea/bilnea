@@ -226,6 +226,9 @@ if (!function_exists('b_f_backend_scripts')) {
 		// Carga scripts
 		b_f_load_scripts();
 
+		wp_enqueue_style('wp-color-picker');
+		wp_enqueue_script('wp-color-picker-alpha', get_template_directory_uri().'/js/external/functions.admin.colorpicker-alpha.js', array('wp-color-picker'), b_f_versions(), true);
+
 		$var_temp = array(
 			'version' => b_f_versions()
 		);

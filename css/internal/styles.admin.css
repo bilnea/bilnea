@@ -12,29 +12,285 @@ para bilnea (bilnea.com)
 
 /* Tipografías */
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:100,900);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 
 /* Estilos generales */
 
-#bilset input[type="text"],
-#bilset input[type="email"] {
+[data-type="text"],
+[data-type="email"] {
+	font-size: 13px;
 	-o-text-overflow: ellipsis;
 	   text-overflow: ellipsis;
 }
 
-.sp-input {
-	padding: 3px 7px !important;
+[data-type="textarea"] {
+	resize: none;
+}
+
+button {
+	outline: 0;
+	-webkit-box-shadow: none !important;
+	        box-shadow: none !important;
+}
+
+
+/* Data type */
+
+[data-type="title"] {
+	margin-top: 0;
+	background-color: #03b3e3;
+	margin: 20px 0 10px 0;
+	padding: 0 8px;
+	color: white;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-family: 'Montserrat';
+	font-weight: 400;
+}
+
+[data-type="block"] {
+	display: block;
+	position: relative;
+	line-height: 26px;
+}
+
+[data-type="notice"] {
+	display: block;
+	border: 1px solid #eee;
+	background-color: #fafafa;
+	line-height: 20px;
+	padding: 6px 10px;
+	margin: 12px 0 0 0;
+	font-size: 11px;
+	line-height: 15px;
+	font-style: italic;
+	text-align: center;
+}
+
+[data-type="icon"] {
+	width: 24px;
+	line-height: 24px !important;
+	background-color: #fafafa;
+	text-align: center;
+	display: inline-block;
+	border: 1px solid #ddd;
+}
+
+
+/* Float */
+
+[data-float="left"] {
+	float: left;
+}
+
+[data-float="right"] {
+	float: right;
+}
+
+
+/* Sizes */
+
+[data-size="10"] {
+	width: 10%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+[data-size="33"] {
+	width: 33%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+[data-size="50"] {
+	width: 49.5%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+[data-size="66"] {
+	width: 66%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+[data-size="100"] {
+	width: 100%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+
+/* Elements */
+
+hr {
+	border-bottom: 0;
+	border-top: 1px solid #ddd;
+	margin: 4px 0;
+}
+
+
+/* CSS Classes */
+
+[data-type="settings"] {
+	margin-right: 15px;
+	border: 1px solid #bdbdbd;
+	background-color: white;
+	display: table;
+	width: 739px;
+}
+
+[data-type="settings"] aside {
+	width: 200px;
+	display: table-cell;
+	height: 100%;
+	border-right: 1px solid #BDBDBD;
+	background-color: #e1e1e1;
+}
+
+[data-type="settings"] aside > h3:last-child {
+	margin-bottom: -1px;
+}
+
+[data-type="settings"] aside h3 {
+	font-weight: normal;
+	font-size: 12px;
+	margin: 0;
+	background-color: #e1e1e1;
+	padding: 6px 10px;
+	border-bottom: 1px solid #bdbdbd;
+	border-right: 1px solid #bdbdbd;
+	color: #888;
+	cursor: pointer;
+	margin-right: -1px;
+}
+
+[data-type="settings"] aside h3.activo {
+	background-color: white;
+	border-right: 1px solid white;
+	font-weight: bold;
+	color: #222;
+}
+
+[data-type="settings"] main {
+	display: table-cell;
+	vertical-align: top;
+	padding: 10px;
+}
+
+[data-type="settings"] main > div {
+	line-height: 24px;
+	display: none;
+}
+
+[data-type="settings"] main > .activo {
+	display: block;
+}
+
+[data-type="settings"] main > div > h4:first-child {
+	margin-top: 0 !important;
+}
+
+[data-type="settings"] .b_url {
+	font-size: 13px;
+	border: 0 !important;
+	border-bottom: 1px solid #333 !important;
+	outline: none;
+	padding: 0;
+	margin: 0;
+	padding-left: 2px;
+	-webkit-transform: translate(-5px, 2px);
+	    -ms-transform: translate(-5px, 2px);
+	        transform: translate(-5px, 2px);
+}
+
+img.bilneador {
+	max-width: 200px;
+	margin: 40px auto;
+	display: block;
+}
+
+[data-type="settings"] .wp-picker-container {
+	float: right;
+}
+
+[data-type="settings"] .wp-picker-container > button {
+	margin: 0;
+	border: 0;
+	border-radius: 0;
+	height: 24px;
+	border: 1px solid #ddd !important;
+	margin: 1px 6px 0 0 !important;
+}
+
+[data-type="settings"] .wp-picker-container > button .wp-color-result-text {
+	line-height: 22px;
+	border-radius: 0;
+	background-color: #fafafa;
+}
+
+[data-type="settings"] .wp-picker-holder {
+	position: absolute;
+	z-index: 10;
+}
+
+[data-type="settings"] .wp-picker-input-wrap {
+	position: absolute;
+	background-color: white;
+	white-space: nowrap;
+	padding: 8px 7px 5px 7px;
+	top: -2px;
+	z-index: 11;
+	margin-left: -1px;
+	border-right: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+}
+
+#admin-rrss > div {
+	padding: 4px;
+}
+
+#admin-rrss > div:not(:first-child) {
+	border-top: 1px solid #ddd;
+}
+
+
+/* Inputs */
+
+[data-type="settings"] input:not([type="submit"]),
+[data-type="settings"] textarea {
+	border-color: #ddd !important;
+	border-radius: 0;
+	outline: 0 !important;
+	-webkit-box-shadow: none !important;
+	        box-shadow: none !important;
+	background-image: none !important;
+}
+
+input[type="radio"] {
+	border-radius: 50% !important;
+}
+
+
+/* Select2 */
+
+select[data-size="100"] + span.select2 {
+	display: block;
+	width: 100% !important;
 }
 
 .select2-dropdown {
 	border-color: #ddd !important;
+	border-radius: 0 !important;
 }
 
 .select2-container .select2-selection--single {
-	height: 24px !important;
-	margin: 6px 0 0 0;
+	height: 25px !important;
+	margin: 0 0 0 0;
 	border-color: #ddd !important;
 	outline: 0 !important;
+	border-radius: 0 !important;
 	-webkit-box-shadow: none !important;
 	    -ms-box-shadow: none !important;
 	     -o-box-shadow: none !important;
@@ -42,11 +298,12 @@ para bilnea (bilnea.com)
 }
 
 .select2-container {
-	margin: -3px 0 !important;
+	margin: -1px 0 !important;
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-	background-color: #aaa !important;
+	background-color: #ddd !important;
+	color: black !important;
 }
 
 .select2-drop-active {
@@ -74,8 +331,8 @@ para bilnea (bilnea.com)
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-	top: 5px !important;
-	height: 24px !important;
+	top: 0 !important;
+	height: 25px !important;
 }
 
 .select2-container--default.select2-container--disabled .select2-selection--single {
@@ -88,10 +345,11 @@ para bilnea (bilnea.com)
 }
 
 .select2-container .select2-selection--multiple {
-	min-height: 24px !important;
+	min-height: 25px !important;
 	border-color: #ddd !important;
-	margin: 3px 0 !important;
+	margin: 1px 0 !important;
 	line-height: 12px !important;
+	border-radius: 0 !important
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
@@ -99,9 +357,11 @@ para bilnea (bilnea.com)
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
-	margin: 2px 2px 0 0 !important;
+	margin: 3px 2px 0 1px !important;
 	font-size: 10px !important;
 	line-height: 16px !important;
+	border: 0;
+	border-radius: 0;
 }
 
 .select2-container--default .select2-search--inline .select2-search__field {
@@ -112,53 +372,64 @@ para bilnea (bilnea.com)
 	line-height: 4px !important;
 }
 
-select[name="bilnea_settings[b_opt_search-order]"] + span {
-	margin-bottom: 10px !important;
+[data-type="elementor-link"]::before {
+	content: "\e800";
+    font-family: eicons;
+    position: relative;
+    margin-right: 8px;
+    display: inline-block;
 }
 
-hr {
-	border-bottom: 0;
-	border-top: 1px solid #ddd;
-	margin: 4px 0;
+[data-type="elementor-link"] {
+	background-color: #004c73;
+	color: white !important;
+	line-height: 25px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+	padding: 0 12px;
+	text-decoration: none;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
+	outline: 0;
 }
 
-#bilset input:not([type="submit"]) {
-	border-color: #ddd !important;
-	outline: 0 !important;
-	-webkit-box-shadow: none !important;
-	        box-shadow: none !important;
-	background-image: none !important;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.sp-input {
+	padding: 3px 7px !important;
 }
 
-img.bilneador {
-	max-width: 200px;
-	margin: 40px auto;
-	display: block;
-}
+
+
+
+
+
 
 .wp-submenu a[href="admin.php?page=bilnea"] {
 	display: none !important;
 }
 
-#bilset {
-	margin-right: 15px;
-	border: 1px solid #bdbdbd;
-	background-color: white;
-	display: table;
-	width: 739px;
-}
 
-#bilset .lateral {
-	width: 200px;
-	display: table-cell;
-	height: 100%;
-	border-right: 1px solid #BDBDBD;
-	background-color: #e1e1e1;
-}
-
-#bilset .lateral > h3:last-child {
-	margin-bottom: -1px;
-}
 
 #bilset input[type=radio] {
 	border: 1px solid #e1e1e1;
@@ -166,51 +437,7 @@ img.bilneador {
 	opacity: 1;
 }
 
-#bilnea h3 {
-	font-weight: normal;
-	font-size: 12px;
-	margin: 0;
-	background-color: #e1e1e1;
-	padding: 6px 10px;
-	border-bottom: 1px solid #bdbdbd;
-	border-right: 1px solid #bdbdbd;
-	color: #888;
-	cursor: pointer;
-	margin-right: -1px;
-}
 
-#bilnea h4 {
-	margin-top: 0;
-	background-color: #289DCC;
-	margin-bottom: 10px;
-	border-radius: 2px;
-	padding: 0 8px;
-	color: white;
-	text-transform: uppercase;
-	letter-spacing: 1px;
-}
-
-#bilnea .lateral h3.activo {
-	background-color: white;
-	border-right: 1px solid white;
-	font-weight: bold;
-	color: #222;
-}
-
-#bilset .central {
-	display: table-cell;
-	vertical-align: top;
-	padding: 10px;
-}
-
-#bilset .central > div {
-	line-height: 24px;
-	display: none;
-}
-
-#bilset .central > .activo {
-	display: block;
-}
 
 .child {
 	position: relative;
@@ -300,33 +527,6 @@ img.bilneador {
 	margin-right: 6px;
 }
 
-#bilset .aurl {
-	background-color: transparent;
-	font-size: 13px;
-	border: 0px;
-	border-bottom: 1px solid #333 !important;
-	-webkit-box-shadow: none;
-	    -ms-box-shadow: none;
-	     -o-box-shadow: none;
-	        box-shadow: none;
-	outline: none;
-	padding: 0;
-	margin: 0;
-	padding-left: 2px;
-	-webkit-transform: translate(-5px, 2px);
-	    -ms-transform: translate(-5px, 2px);
-	        transform: translate(-5px, 2px);
-}
-
-#bilset .notice {
-	display: block;
-	border: 1px solid #eee;
-	border-radius: 3px;
-	background-color: #fafafa;
-	line-height: 20px;
-	padding: 6px 10px;
-	margin: 12px 0 0 0;
-}
 
 /* Pestaña Estilos Tipográficos */
 
@@ -715,19 +915,6 @@ body > .sp-container .sp-clear {
 }
 
 /* Redes sociales */
-
-#admin-rrss i {
-	position: absolute;
-	width: 26px;
-	height: 26px;
-	line-height: 26px;
-	margin: 3px 0 0 1px;
-	background-color: #f0f0f0;
-	border-radius: 5px 0 0 5px;
-	text-align: center;
-	border-right: 1px solid #ddd;
-	cursor: ns-resize;
-}
 
 #admin-rrss .color-wrapper > div {
 	margin-top: 2px;

@@ -492,12 +492,6 @@ textarea {
 	resize: none;
 }
 
-#mobile-menu-button {
-	display: inline-block;
-	vertical-align: top;
-	margin: 15px;
-}
-
 #mobile-menu .sub-menu {
 	position: relative;
 	margin-top: 0 !important;
@@ -1059,113 +1053,6 @@ header#header nav li {
 	text-decoration: underline;
 }
 
-/* Menú */
-
-.menu > ul {
-	margin: 0;
-	list-style: none;
-}
-
-.menu > ul > li {
-	display: inline-block;
-}
-
-/* Barra superior */
-
-.header-top > div {
-	padding: 5px 10px;
-	text-align: right;
-}
-
-.header-top li {
-	list-style: none;
-	padding: 0 4px;
-	display: inline-block;
-}
-
-.header-top ul {
-	margin: 0;
-	padding: 0;
-}
-
-.header-top .top_bar_rrss li {
-	border: none;
-}
-
-.header-top .top_bar_rrss li {
-	padding: 0 2px;
-}
-
-.header-top li + ul > li:first-child {
-	padding-left: 4px;
-}
-
-.top_bar_rrss {
-	display: inline-block;
-}
-
-.selector-idioma-superior.en-linea,
-.selector-idioma-superior.en-linea * {
-	display: inline-block;
-}
-
-.selector-idioma-superior img {
-	width: auto;
-	margin-bottom: -1px;
-	margin-right: 3px;
-}
-
-.selector-idioma-superior.desplegable {
-	display: inline-block;
-}
-
-.selector-idioma-superior.desplegable ul {
-	position: absolute;
-	z-index: 1;
-	bottom: -5px;
-	-webkit-transform: translateY(100%);
-	    -ms-transform: translateY(100%);
-	        transform: translateY(100%);
-	width: 100%;
-	left: 0;
-	text-align: left;
-	background-color: rgba(0, 0, 0, 0.4);
-	display: none;
-}
-
-.selector-idioma-superior.desplegable > li {
-	position: relative;
-}
-
-.selector-idioma-superior.desplegable ul li {
-	padding: 5px 4px;
-	border: 0;
-}
-
-.selector-idioma-superior.desplegable .selector-abajo {
-	display: inline-block;
-	border-left: 4px solid transparent;
-	border-right: 4px solid transparent;
-	border-bottom: 1px solid transparent;
-	margin-left: 4px;
-}
-
-nav.ar {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-}
-
-html[lang="ar"] nav.ar {
-	right: inherit;
-	left: 0;
-}
-
-.fixed-bar.static {
-	position: fixed !important;
-	top: 0;
-	z-index: 1;
-}
 
 /* Bloque central de la cabecera */
 
@@ -1231,16 +1118,6 @@ header#header.animated {
 
 /* Menú principal */
 
-#main_menu ul {
-	margin: 0;
-}
-
-#main_menu li {
-	margin: 0;
-	padding: 0 8px;
-	display: inline-block;
-}
-
 header#header .searchform input[type="text"] {
 	font-size: 11px;
 	line-height: 11px;
@@ -1251,24 +1128,6 @@ header#header .searchform input[type="text"] {
 	outline: 0;
 }
 
-header ul.menu li.menu-item:after {
-	-webkit-transition: all 0.8s ease;
-	     -o-transition: all 0.8s ease;
-	        transition: all 0.8s ease;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 5px;
-	content: '';
-}
-
-header ul.menu li:hover:after {
-	-webkit-transition: all 0.4s ease;
-	     -o-transition: all 0.4s ease;
-	        transition: all 0.4s ease;
-}
-
 header#header #searchsubmit {
 	font-size: 14px;
 	top: 4px;
@@ -1276,8 +1135,8 @@ header#header #searchsubmit {
 
 /* Menú responsive */
 
-.mobile-button {
-	display: block;
+.elementor-widget-bilnea_switcher button {
+	display: inline-block;
 	position: relative;
 	overflow: hidden;
 	margin: 0;
@@ -1294,7 +1153,6 @@ header#header #searchsubmit {
 	     -o-box-shadow: none !important;
 	        box-shadow: none !important;
 	outline: 0;
-	border-radius: 0;
 	border: none;
 	cursor: pointer;
 	-webkit-transition: background 0.3s;
@@ -1302,11 +1160,11 @@ header#header #searchsubmit {
 	        transition: background 0.3s;
 }
 
-.mobile-button:focus {
+.elementor-widget-bilnea_switcher button:focus {
 	outline: none;
 }
 
-.mobile-button span {
+.elementor-widget-bilnea_switcher button span {
 	display: block;
 	position: absolute;
 	top: 14px;
@@ -1315,8 +1173,8 @@ header#header #searchsubmit {
 	height: 4px;
 }
 
-.mobile-button span::before,
-.mobile-button span::after {
+.elementor-widget-bilnea_switcher button span::before,
+.elementor-widget-bilnea_switcher button span::after {
 	position: absolute;
 	display: block;
 	left: 0;
@@ -1325,22 +1183,22 @@ header#header #searchsubmit {
 	content: '';
 }
 
-.mobile-button span::before {
+.elementor-widget-bilnea_switcher button span::before {
 	top: -12px;
 }
 
-.mobile-button span::after {
+.elementor-widget-bilnea_switcher button span::after {
 	bottom: -12px;
 }
 
-.mobile-button span {
+.elementor-widget-bilnea_switcher button span {
 	-webkit-transition: background 0s 0.3s;
 	     -o-transition: background 0s 0.3s;
 	        transition: background 0s 0.3s;
 }
 
-.mobile-button span::before,
-.mobile-button span::after {
+.elementor-widget-bilnea_switcher button span::before,
+.elementor-widget-bilnea_switcher button span::after {
 	-webkit-transition-duration: 0.3s, 0.3s;
 	     -o-transition-duration: 0.3s, 0.3s;
 	        transition-duration: 0.3s, 0.3s;
@@ -1349,7 +1207,7 @@ header#header #searchsubmit {
 	        transition-delay: 0.3s, 0s;
 }
 
-.mobile-button span::before {
+.elementor-widget-bilnea_switcher button span::before {
 	-webkit-transition-property: top, transform;
 	     -o-transition-property: top, transform;
 	        -webkit-transition-property: top, -webkit-transform;
@@ -1358,7 +1216,7 @@ header#header #searchsubmit {
 	        transition-property: top, transform, -webkit-transform;
 }
 
-.mobile-button span::after {
+.elementor-widget-bilnea_switcher button span::after {
 	-webkit-transition-property: bottom, transform;
 	     -o-transition-property: bottom, transform;
 	        -webkit-transition-property: bottom, -webkit-transform;
@@ -1367,153 +1225,70 @@ header#header #searchsubmit {
 	        transition-property: bottom, transform, -webkit-transform;
 }
 
-.mobile-button.active span {
-	background: none;
-}
-
-.mobile-button.active span::before {
+.elementor-widget-bilnea_switcher button.active span::before {
 	top: 0;
 	-webkit-transform: rotate(45deg);
 	    -ms-transform: rotate(45deg);
 	        transform: rotate(45deg);
 }
 
-.mobile-button.active span::after {
+.elementor-widget-bilnea_switcher button.active span::after {
 	bottom: 0;
 	-webkit-transform: rotate(-45deg);
 	    -ms-transform: rotate(-45deg);
 	        transform: rotate(-45deg);
 }
 
-.mobile-button.active span::before,
-.mobile-button.active span::after {
+.elementor-widget-bilnea_switcher button.active span::before,
+.elementor-widget-bilnea_switcher button.active span::after {
 	-webkit-transition-delay: 0s, 0.3s;
 	     -o-transition-delay: 0s, 0.3s;
 	        transition-delay: 0s, 0.3s;
 }
 
-/* Menú responsive #3 */
-
-#mobile-side-menu {
-	height: 100vh;
-	width: 80vw;
-	position: absolute;
-	z-index: 1;
-	margin-left: -80vw;
+.elementor-widget-bilnea_switcher button {
+	display: inline-block;
+	vertical-align: top;
+	margin: 15px;
 }
 
-#mobile-side-menu #mobile-menu {
+.elementor-widget-bilnea_switcher button.active span {
+	background: none !important;
+}
+
+
+/* Cabecera móvil */
+
+header#mobile-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	z-index: 10;
+}
+
+
+/* Menú móvil */
+
+#mobile-menu {
+	opacity: 0;
+	display: none;
+	z-index: -1;
+}
+
+#mobile-menu.open {
+	z-index: 9;
 	display: block;
-}
-
-.mobile-header-side a.logo {
-	position: absolute;
-	left: 50%;
-	-webkit-transform: translateX(-50%);
-	    -ms-transform: translateX(-50%);
-	        transform: translateX(-50%);
+	position: fixed;
+	top: 0;
+	left: 0;
+	opacity: 1;
 }
 
 /* Footer */
 
 #footer {
-	padding: 15px 0;
-}
-
-#footer .row {
-	margin: 0 15px;
-	width: auto;
-}
-
-#footer .container.row {
-	margin: 0 auto;
-}
-
-#footer .row > * {
-	padding: 15px 0;
-}
-
-#footer .row > * > div {
-	margin-top: 20px;
-}
-
-#footer .row > * > div:first-child {
-	margin-top: 0;
-}
-
-.footer-title {
-	margin-bottom: 10px;
-}
-
-#socket > div {
-	text-align: center;
-	padding: 2px 0;
-}
-
-#footer div[id^="footer-"] {
-	display: inline-block;
-	vertical-align: top;
-}
-
-/* Barra lateral */
-
-aside#sidebar {
-	position: absolute;
-	top: 0;
-}
-
-aside.sidebar-right {
-	right: 0;
-}
-
-aside.sidebar-left {
-	left: 0;
-}
-
-/* Cuerpo principal */
-
-.contenido-principal .container {
-	margin: 0 auto;
-}
-
-/* Animación */
-
-div[class^="slider-"] {
-	position: relative;
-}
-
-/* Botones */
-
-.boton-overlay {
-	display: block;
-	background-size: cover;
-	background-position: center;
-	cursor: pointer;
-	overflow: hidden;
-	position: relative;
-}
-
-.boton-overlay .overlay {
-	width: 100%;
-	height: 100%;
-	vertical-align: middle;
-	text-align: center;
-	opacity: 0;
-	position: absolute;
-	-webkit-transform: scale(2);
-	    -ms-transform: scale(2);
-	        transform: scale(2);
-	-webkit-transition: all 600ms cubic-bezier(0.365, 0, 0.145, 1);
-	-webkit-transition: all 600ms cubic-bezier(0.365, -0.005, 0.145, 1.005); 
-	     -o-transition: all 600ms cubic-bezier(0.365, -0.005, 0.145, 1.005); 
-	        transition: all 600ms cubic-bezier(0.365, -0.005, 0.145, 1.005);
-}
-
-.boton-overlay:hover .overlay {
-	opacity: 1;
-	-webkit-transform: scale(1);
-	    -ms-transform: scale(1);
-	        transform: scale(1);
+	padding: 0;
 }
 
 /* Parallax */
@@ -1533,20 +1308,6 @@ div[class^="slider-"] {
 .gm-style img {
 	max-height: inherit !important;
 	max-width: inherit !important;
-}
-
-/* Alineación de texto */
-
-.align-left {
-	text-align: left;
-}
-
-.align-center {
-	text-align: center;
-}
-
-.align-right {
-	text-align: right;
 }
 
 /* Lightbox */
@@ -1894,5 +1655,17 @@ img.alignright {
 
 img.alignleft {
 	float: left;
+	display: inline-block;
+}
+
+/* Elementor */
+
+.elementor-widget-bilnea_menu .menu {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.elementor-widget-bilnea_menu .menu > li {
 	display: inline-block;
 }

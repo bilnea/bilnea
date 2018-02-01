@@ -9,7 +9,7 @@ global $b_g_google_fonts;
 
 ?>
 
-<h4>Estilos tipográficos</h4>
+<h4 data-type="title">Estilos tipográficos</h4>
 
 <!-- Texto plano -->
 <div class="text-container">
@@ -38,7 +38,7 @@ global $b_g_google_fonts;
 	<?php b_f_fonts('hover'); ?>
 </div>
 
-<h4>Encabezados de los artículos</h4>
+<h4 data-type="title">Encabezados de los artículos</h4>
 
 <!-- H1 -->
 <div class="text-container">
@@ -81,7 +81,7 @@ global $b_g_google_fonts;
 	<?php b_f_fonts('h6'); ?>
 </div>
 
-<h4>Estilos tipográficos extra</h4>
+<h4 data-type="title">Estilos tipográficos cargados</h4>
 
 <?php
 

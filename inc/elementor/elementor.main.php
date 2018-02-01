@@ -11,9 +11,17 @@ use Elementorbilnea\Widgets\bilnea_Breadcrumb;
 use Elementorbilnea\Widgets\bilnea_Form;
 use Elementorbilnea\Widgets\bilnea_Mailchimp;
 use Elementorbilnea\Widgets\bilnea_Map;
+use Elementorbilnea\Widgets\bilnea_Menu;
 use Elementorbilnea\Widgets\bilnea_Recent;
+use Elementorbilnea\Widgets\bilnea_Recent_Slider;
+use Elementorbilnea\Widgets\bilnea_Search;
+use Elementorbilnea\Widgets\bilnea_Share;
 use Elementorbilnea\Widgets\bilnea_Slider;
+use Elementorbilnea\Widgets\bilnea_Switcher;
 use Elementorbilnea\Widgets\bilnea_Taxonomies;
+use Elementorbilnea\Widgets\bilnea_Woo_Add_to_Cart;
+use Elementorbilnea\Widgets\bilnea_Woo_Attribute;
+use Elementorbilnea\Widgets\bilnea_Woo_Quantity;
 
 if (! defined('ABSPATH')) exit;
 
@@ -41,13 +49,19 @@ class Plugin {
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Blog());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Breadcrumb());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Form());
-		if (b_f_option('b_opt_subscribers') == 1 && b_f_option('b_opt_newsl_service') == 'mailchimp') {
-			\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Mailchimp());
-		}
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Mailchimp());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Map());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Menu());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Recent());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Recent_Slider());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Search());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Share());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Slider());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Switcher());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Taxonomies());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Woo_Add_to_Cart());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Woo_Attribute());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Woo_Quantity());
 
 	}
 

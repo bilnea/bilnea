@@ -2,8 +2,6 @@ console.log('bilnea Theme '+bilnea.version+'\n');
 
 jQuery(function($) {
 	var hh = $('header#header').outerHeight();
-	$('header#header.sticky + .content-wrapper').css('padding-top', hh);
-	$('aside#sidebar').prev().addClass('has-sidebar');
 	$('a').each(function() {
 		$(this).attr('data-ajax','false');
 		if ($(this).text().replace(/\s+/g, '') == '' && $(this).find($('img')).length) {
@@ -19,57 +17,28 @@ jQuery(function($) {
 			$('body > .main-search').fadeOut();
 			$('body').removeClass('searching');
 		}
-	})
+	});
 	$('form.form input:radio:first').attr('checked', true);
 	$('.b_input_radio').each(function() {
 		var n = $(this).attr('name');
 		$('input:radio[name='+n+'][disabled=false]:first').attr('checked', true);
-	})
-	$('.selector-idioma-superior.desplegable > li > a').click(function(e) {
-		e.preventDefault();
-		$('.selector-idioma-superior.desplegable ul:visible').fadeOut(400);
-		$('.selector-idioma-superior.desplegable ul:hidden').fadeIn(400);
-	});
-	$('.selector-idioma-superior.desplegable > li ul > li').mouseenter(function() {
-		$('.selector-idioma-superior.desplegable > li ul').removeClass('visible');
-	});
-	$('.selector-idioma-superior.desplegable > li ul > li').mouseleave(function(event) {
-		$('.selector-idioma-superior.desplegable > li ul').addClass('visible');
-		setTimeout(b_js_hover(), 500);
 	});
 	$('input[type="checkbox"]:not(.b_input_checkbox)').each(function() {
 		var t = $(this);
 		$('<div class="fix-check"></div>').insertAfter(t);
 		$('<label for="'+t.attr('id')+'"></label>').appendTo(t.next());
 		t.prependTo(t.next());
-	})
-	$('.mobile-button').click(function() {
+	});
+	$('.elementor-widget-bilnea_switcher button').click(function() {
 		var t = $(this);
 		$('.sub-menu').hide();
 		if (!t.hasClass('active')) {
 			t.addClass('active');
-			if (!t.closest('header').hasClass('mobile-header-side')) {
-				$('#mobile-header, body').addClass('menu-fixed');
-				$('#mobile-menu').addClass('open');
-				b_js_animate();
-			};
-			$('#mobile-side-menu').animate({
-				'margin-left': 0
-			}, 400);
+			$('#mobile-menu').addClass('open');
 		} else {
 			t.removeClass('active');
-			if (!t.closest('header').hasClass('mobile-header-side')) {
-				$('html,body').animate({
-						scrollTop: 0
-				}, 400, function() {
-					$('#mobile-header, body').removeClass('menu-fixed');
-					$('#mobile-menu').removeClass('open');
-				});
-			}
+			$('#mobile-menu').removeClass('open');
 			jQuery('.animate').removeClass('animate');
-			$('#mobile-side-menu').animate({
-				'margin-left': '-80vw'
-			}, 400);
 		}
 	});
 	$('#mobile-header .menu-item-has-children').unbind('click').click(function() {
@@ -85,15 +54,14 @@ jQuery(function($) {
 			}
 		};
 	});
-	b_js_center_logo();
 	new WOW().init();
 });
 
-jQuery(window).on('resize', function() {
-	b_js_center_logo();
-});
-
 jQuery(window).on('load resize', function() {
+	if (jQuery(window).width() <= 767) {
+		var h = jQuery('header#mobile-header').height();
+	};
+	jQuery('.content-wrapper, #mobile-menu').css('padding-top', h);
 	b_js_adjust_height('.auto-height');
 	b_js_adjust_height('.elementor-bilnea-blog > div > .auto-height', true);
 });
@@ -131,31 +99,12 @@ function b_js_adjust_height(element, all) {
 	}
 }
 
-function b_js_center_logo() {
-	var a = jQuery('header#header .header').outerHeight(),
-		b = jQuery('header#header .logo_wrapper').outerHeight(),
-		c = jQuery('header#header nav').outerHeight();
-	if (jQuery('header#header .logo_wrapper').css('display') == 'inline-block' && a > b) {
-		d = ((a - b) / 2);
-		jQuery('header#header .logo_wrapper').css('margin', d+'px 0');
-	};
-}
-
 function b_js_hover() {
 	jQuery('.selector-idioma-superior.desplegable ul.visible').fadeOut(400).removeClass('visible');
 }
 
 function b_js_leading_zeros(str, max) {
 	return str.length < max ? b_js_leading_zeros('0'+str, max) : str;
-}
-
-function b_js_animate() {
-	jQuery('#mobile-menu #main_menu > ul > li').each(function(index) {
-		var t = jQuery(this);
-		setTimeout(function(){
-			t.children('a').addClass('animate');
-		}, index*60);
-	});
 }
 
 function b_js_check_email(email) {
