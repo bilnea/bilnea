@@ -59,9 +59,11 @@ class Plugin {
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Slider());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Switcher());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Taxonomies());
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Woo_Add_to_Cart());
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Woo_Attribute());
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Woo_Quantity());
+		if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+			\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Woo_Add_to_Cart());
+			\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Woo_Attribute());
+			\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Woo_Quantity());
+		}
 
 	}
 
