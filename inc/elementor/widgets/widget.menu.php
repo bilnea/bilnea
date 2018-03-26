@@ -145,7 +145,7 @@ class bilnea_Menu extends Widget_Base {
 
 		$settings = $this->get_settings();
 
-		echo wp_nav_menu($settings['menu']);
+		echo wp_nav_menu(array('menu' => $settings['menu']));
 		
 	}
 

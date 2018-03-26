@@ -398,7 +398,7 @@ class bilnea_Recent extends Widget_Base {
 
 		$settings = $this->get_settings();
 
-		$out = '<div class="elementor-bilnea-recents elementor-row">';
+		$out = '<div class="elementor-bilnea-recents">';
 
 		if ($settings['main_query'] == 'yes') {
 
@@ -409,6 +409,8 @@ class bilnea_Recent extends Widget_Base {
 				while (have_posts()) {
 
 					the_post();
+
+					print_r(get_the_ID());
 
 					if ($i%$settings['columns'] == 0 && $i > 0) {
 						$out .= '</div><div class="elementor-bilnea-recents elementor-row">';
@@ -424,6 +426,12 @@ class bilnea_Recent extends Widget_Base {
 						'{{b_excerpt}}' => wp_trim_words(get_the_content(), $settings['length']),
 						'{{b_image}}' => wp_get_attachment_image_src(get_post_thumbnail_id($id), 'medium')[0]
 					);
+
+					include_once(get_stylesheet_directory().'/elementor.php');
+
+					if (isset($b_c_recents)) {
+						$replacements = array_merge($replacements, $b_c_recents);
+					}
 
 					$temp .= strtr($settings['raw_content'], $replacements);
 
@@ -495,8 +503,14 @@ class bilnea_Recent extends Widget_Base {
 				'post_type' => array($settings['post_type']),
 				'post_status' => array('publish'),
 				'orderby' => $settings['order_by'],
+				'order' => 'ASC',
 				'posts_per_page' => $settings['post_page'],
 			);
+
+			if ($settings['pagination'] == 'yes') {
+				$current = trim(((isset($_GET['pg']) && $_GET['pg'] != '') ? $_GET['pg'] : 1), '/');
+				$args['paged'] = $current;
+			}
 
 			$tax = array();
 			$meta = array();
@@ -504,15 +518,15 @@ class bilnea_Recent extends Widget_Base {
 			foreach ($settings['queries'] as $query) {
 				switch ($query['type']) {
 					case 'tax':
-						$temp = array('taxonomy' => strtolower($query['taxonomy']), 'field' => strtolower($query['field']), 'terms' => preg_replace_callback("/{{b_current-([a-z]+)-([a-z]+)}}/", function($tax, $out) {
-								$out = array();
-								foreach (get_the_terms(get_the_ID(), $tax) as $term) {
-									switch ($out) {
+						$temp = '';
+						$temp = array('taxonomy' => strtolower($query['taxonomy']), 'field' => strtolower($query['field']), 'terms' => preg_replace_callback("/{{b_current-([a-z-_]+)-([a-z]+)}}/", function($tax, $out = array()) {
+								foreach (get_terms(array('taxonomy' => $tax[1], 'hide_empty' => false)) as $term) {
+									switch ($tax[2]) {
 										case 'id':
-											array_push($out, $term->term_id);
+											array_push($out, get_queried_object()->term_id);
 											break;
 										case 'slug':
-											array_push($out, $term->slug);
+											array_push($out, get_queried_object()->slug);
 											break;
 									}
 								}
@@ -541,107 +555,119 @@ class bilnea_Recent extends Widget_Base {
 
 			$i = 0;
 
-			foreach (get_posts($args) as $post) {
+			$query = new \WP_Query($args);
 
-				if ($i%$settings['columns'] == 0 && $i > 0) {
-					$out .= '</div><div class="elementor-bilnea-recents elementor-row">';
-				}
+			if ($query->have_posts()) {
 
-				$temp = '<div class="elementor-column elementor-col-'.round(100/$settings['columns']).'" data-id="'.get_post_type($post->ID).'-'.$post->ID.'">';
+				$out .= '<div class="elementor-row">';
+				
+				while ($query->have_posts()) {
 
-				if (get_the_excerpt($post->ID)) {
-					$excerpt = get_the_excerpt($post->ID);
-				} else {
-					$excerpt = wp_trim_words($post->post_content, $settings['length']);
-				}
+					$query->the_post();
 
-				$replacements = array(
-					'{{b_title}}' => get_the_title($post->ID),
-					'{{b_permalink}}' => get_permalink($post->ID),
-					'{{b_link}}' => get_permalink($post->ID),
-					'{{b_date}}' => get_the_date(get_option('date_format'), $post->ID),
-					'{{b_excerpt}}' => $excerpt,
-					'{{b_image}}' => wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'medium')[0]
-				);
+					if ($i%$settings['columns'] == 0 && $i > 0) {
+						$out .= '</div><div class="elementor-bilnea-recents elementor-row">';
+					}
 
-				if ($product = wc_get_product($post->ID)) {
-					$attributes = '';
-					foreach (array_reverse($product->get_attributes()) as $attribute) {
-						$attributes .= '<div class="attribute-wrap '.$attribute->get_name().'">';
-						if ($attribute['is_visible'] || ($attribute->is_taxonomy() && taxonomy_exists($attribute->get_name()))) {
-							foreach (get_the_terms($post->ID, $attribute->get_name()) as $term) {
-								if ($attribute->get_name() == 'pa_color') {
-									$attributes .= '<span style="background-color: '.$term->name.';"></span>';
-								} else {
-									$attributes .= '<span>'.$term->name.'</span>';
+					if (get_the_excerpt()) {
+						$excerpt = get_the_excerpt();
+					} else {
+						$excerpt = wp_trim_words($post->post_content, $settings['length']);
+					}
+
+					$temp = '<div class="elementor-column elementor-col-'.round(100/$settings['columns']).'" data-id="'.get_post_type().'-'.get_the_ID().'">';
+
+					$replacements = array(
+						'{{b_title}}' => get_the_title(),
+						'{{b_permalink}}' => get_permalink(),
+						'{{b_link}}' => get_permalink(),
+						'{{b_date}}' => get_the_date(get_option('date_format'), get_the_ID()),
+						'{{b_excerpt}}' => $excerpt,
+						'{{b_image}}' => wp_get_attachment_image_src(get_post_thumbnail_id(), 'medium')[0]
+					);
+
+					include(get_stylesheet_directory().'/elementor.php');
+
+					if (isset($b_c_recents)) {
+						$replacements = array_merge($replacements, $b_c_recents);
+					}
+
+					if (function_exists('wc_get_product') && $product = wc_get_product(get_the_ID())) {
+						$attributes = '';
+						foreach (array_reverse($product->get_attributes()) as $attribute) {
+							$attributes .= '<div class="attribute-wrap '.$attribute->get_name().'">';
+							if ($attribute['is_visible'] || ($attribute->is_taxonomy() && taxonomy_exists($attribute->get_name()))) {
+								foreach (get_the_terms($post->ID, $attribute->get_name()) as $term) {
+									if ($attribute->get_name() == 'pa_color') {
+										$attributes .= '<span style="background-color: '.$term->name.';"></span>';
+									} else {
+										$attributes .= '<span>'.$term->name.'</span>';
+									}
 								}
 							}
+							$attributes .= '</div>';
 						}
-						$attributes .= '</div>';
+						$replacements['{{b_w_sku}}'] = $product->get_sku();
+						$replacements['{{b_w_attributes}}'] = $attributes;
 					}
-					$replacements['{{b_w_sku}}'] = $product->get_sku();
-					$replacements['{{b_w_attributes}}'] = $attributes;
+
+					$temp .= strtr($settings['raw_content'], $replacements);
+
+					$temp .= '</div>';
+
+					$out .= preg_replace_callback("/{{b_tax-([a-z]+)}}/", function($matches) use($post) {
+						$terms = array();
+						foreach (wp_get_post_terms($post->ID, $matches[1]) as $term) {
+							array_push($terms, '<a href="'.get_term_link($term).'" data-term_id="'.$term->term_id.'">'.$term->name.'</a>');
+						}
+						return implode(', ', $terms);
+					}, $temp);
+
+					$i++;
+
 				}
 
-				$temp .= strtr($settings['raw_content'], $replacements);
+				$out .= '</div>';
 
-				$temp .= '</div>';
+				if ($settings['pagination'] == 'yes') {
 
-				$out .= preg_replace_callback("/{{b_tax-([a-z]+)}}/", function($matches) use($post) {
-					$terms = array();
-					foreach (wp_get_post_terms($post->ID, $matches[1]) as $term) {
-						array_push($terms, '<a href="'.get_term_link($term).'" data-term_id="'.$term->term_id.'">'.$term->name.'</a>');
-					}
-					return implode(', ', $terms);
-				}, $temp);
+					if ($query->max_num_pages >= 1) {
 
-				$i++;
+						$pagination_block = paginate_links( array(
+							'format' => '?pg=%#%',
+							'current' => $current,
+							'total' => $query->max_num_pages,
+							'prev_text' => '‹ <span>'.__('Previous', 'bilnea').'</span>',
+							'next_text' => '<span>'.__('Next', 'bilnea').'</span> ›'
+						));
 
-				if ($i == $settings['number']) {
-					break;
-				}
+						$out .= '<div class="b_pagination"><span class="total-pages">'.sprintf(__('Page %1$s of %2$s', 'bilnea'), $current, $query->max_num_pages).'</span>';
 
-			}
+						if ($current > 2 && $settings['pagination_first'] == 'yes') {
 
-			$out .= '</div></div>';
+							$out .= '<a class="first page-numbers" href="'.get_permalink().'">« <span>'.__('First', 'bilnea').'</span></a>';
 
-			if ($settings['pagination'] == 'yes') {
+						}
 
-				if ($query->max_num_pages >= 1) {
+						$out .= $pagination_block;
 
-					$current = max(1, get_query_var('paged'));
+						if ($current < ($query->max_num_pages-2) && $settings['pagination_first'] == 'yes') {
 
-					$pagination_block = paginate_links( array(
-						'format' => __('page', 'bilnea').'/%#%',
-						'current' => $current,
-						'total' => $query->max_num_pages,
-						'prev_text' => '‹ <span>'.__('Previous', 'bilnea').'</span>',
-						'next_text' => '<span>'.__('Next', 'bilnea').'</span> ›'
-					));
+							$out .= '<a class="last page-numbers" href="'.get_permalink().'/?pg='.($query->max_num_pages-2).'"><span>'.__('Last', 'bilnea').' »</span></a>';
 
-					$out .= '<div class="b_pagination"><span class="total-pages">'.sprintf(__('Page %1$s of %2$s', 'bilnea'), $current, $query->max_num_pages).'</span>';
+						}
 
-					if ($current > 2) {
-
-						$out .= '<a class="first page-numbers" href="'.get_permalink().'">« <span>'.__('First', 'bilnea').'</span></a>';
+						$out .= '</div>';
 
 					}
-
-					$out .= $pagination_block;
-
-					if ($current < ($query->max_num_pages-2)) {
-
-						$out .= '<a class="last page-numbers" href="'.get_permalink().'/'.__('page', 'bilnea').'/'.($query->max_num_pages-2).'"><span>'.__('Last', 'bilnea').' »</span></a>';
-
-					}
-
-					$out .= '</div>';
 
 				}
 
 			}
 
 		}
+
+		$out .= '</div>';
 
 		echo $out;
 		

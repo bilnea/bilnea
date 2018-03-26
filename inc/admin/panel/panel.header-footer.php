@@ -6,6 +6,29 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 ?>
 
+<h4 data-type="title">Favicon</h4>
+<div>
+	<div class="favicon iconico" id="favicon_div"></div>
+	<div style="position: relative; transform: translateY(3px);">
+		<span>Seleccionar imagen</span> / <span id="borra_logo">Borrar</span>
+		<br />
+		<?php
+		if (b_f_option('b_opt_favicon')) {
+		?>
+		<script type="text/javascript">
+			jQuery('#favicon_div').attr('style', 'background-image: url(<?= b_f_option('b_opt_favicon'); ?>)');
+			jQuery('#borra_logo').show();
+		</script>
+		<?php
+		}
+		?>
+		<input type="text" id="fav_main_url" class="gran" name="bilnea_settings[b_opt_favicon]" style="width: calc(100% - 32px);" value="<?= b_f_option('b_opt_favicon') ?>">
+		<button type="submit" id="subir_fav_main" value="Seleccionar imagen"  class="button-secondary subir-imagen">
+			<i class="fa fa-search" style="font-size: 12px;"></i>
+		</button>
+	</div>
+</div>
+
 <h4 data-type="title">Cabecera de página</h4>
 
 <?php
@@ -124,94 +147,11 @@ if (function_exists('icl_object_id')) {
 
 } else {
 
-	?>
+	echo b_f_admin_elementor('Cabecera de página', 'header');
 
-	<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-		Cabecera de página
-	</div>
+	echo b_f_admin_elementor('Cabecera móvil', 'mobile-header');
 
-	<div style="width: calc(50% - 10px); display: inline-block;">
-
-		<select name="bilnea_settings[b_opt_widget-header-es]" class="gran" style="margin-top: -2px; width: 100% !important;">
-			<option value="none" selected>Seleccionar widget</option>
-
-			<?php
-
-			$args = array(
-				'post_type'		 => 'elementor_library',
-				'posts_per_page' => -1,
-				'post_status'	 => 'publish'
-			);
-
-			foreach (get_posts($args) as $widget) {
-				echo '<option value="'.$widget->ID.'" '.selected(b_f_option('b_opt_widget-header-es'), $widget->ID).'>'.$widget->post_title.'</option>';
-			}
-
-			?>
-
-		</select>
-
-	</div>
-
-	<hr />
-
-	<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-		Cabecera móvil
-	</div>
-
-	<div style="width: calc(50% - 10px); display: inline-block;">
-
-		<select name="bilnea_settings[b_opt_widget-mobile-header-es]" class="gran" style="margin-top: -2px; width: 100% !important;">
-			<option value="none" selected>Seleccionar widget</option>
-
-			<?php
-
-			$args = array(
-				'post_type'		 => 'elementor_library',
-				'posts_per_page' => -1,
-				'post_status'	 => 'publish'
-			);
-
-			foreach (get_posts($args) as $widget) {
-				echo '<option value="'.$widget->ID.'" '.selected(b_f_option('b_opt_widget-mobile-header-es'), $widget->ID).'>'.$widget->post_title.'</option>';
-			}
-
-			?>
-
-		</select>
-
-	</div>
-
-	<hr />
-
-	<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-		Menú móvil
-	</div>
-
-	<div style="width: calc(50% - 10px); display: inline-block;">
-
-		<select name="bilnea_settings[b_opt_widget-mobile-menu-es]" class="gran" style="margin-top: -2px; width: 100% !important;">
-			<option value="none" selected>Seleccionar widget</option>
-
-			<?php
-
-			$args = array(
-				'post_type'		 => 'elementor_library',
-				'posts_per_page' => -1,
-				'post_status'	 => 'publish'
-			);
-
-			foreach (get_posts($args) as $widget) {
-				echo '<option value="'.$widget->ID.'" '.selected(b_f_option('b_opt_widget-mobile-menu-es'), $widget->ID).'>'.$widget->post_title.'</option>';
-			}
-
-			?>
-
-		</select>
-
-	</div>
-
-<?php
+	echo b_f_admin_elementor('Menú móvil', 'mobile-menu');
 
 }
 
@@ -347,36 +287,7 @@ if (function_exists('icl_object_id')) {
 
 } else {
 
-	?>
-
-	<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-		Pie de página
-	</div>
-
-	<div style="width: calc(50% - 10px); display: inline-block;">
-
-		<select name="bilnea_settings[b_opt_widget-footer-es]" class="gran" style="margin-top: -2px; width: 100% !important;">
-			<option value="none" selected>Seleccionar widget</option>
-
-			<?php
-
-			$args = array(
-				'post_type'		 => 'elementor_library',
-				'posts_per_page' => -1,
-				'post_status'	 => 'publish'
-			);
-
-			foreach (get_posts($args) as $widget) {
-				echo '<option value="'.$widget->ID.'" '.selected(b_f_option('b_opt_widget-footer-es'), $widget->ID).'>'.$widget->post_title.'</option>';
-			}
-
-			?>
-
-		</select>
-
-	</div>
-
-<?php
+	echo b_f_admin_elementor('Pie de página', 'footer');
 
 }
 

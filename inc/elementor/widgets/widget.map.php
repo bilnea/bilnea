@@ -241,7 +241,11 @@ class bilnea_Map extends Widget_Base {
 		}
 
 		$out .= '		],'."\n";
-		$out .= '		styles_'.$this->get_id().' = '.$settings['style'].';'."\n";
+		if ($settings['style'] != '') {
+			$out .= '		styles_'.$this->get_id().' = '.$settings['style'].';'."\n";
+		} else {
+			$out .= '		styles_'.$this->get_id().' = "";'."\n";
+		}
 		$out .= '</script>'."\n";
 
 		echo $out;

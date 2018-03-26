@@ -304,4 +304,15 @@ if (!function_exists('b_s_file')) {
 }
 
 
+if (!function_exists('b_s_year')) {
+
+	function b_s_year() {
+		return date('Y');
+	}
+
+	add_shortcode('b_year', 'b_s_year');
+
+}
+
+
 ?>

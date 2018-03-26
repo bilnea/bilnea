@@ -300,7 +300,7 @@ input[type=text],
 input[type=email],
 textarea {
 	color: #888888;
-	border: 1px solid #dddddd;
+	border: 0;
 	border-radius: 5px;
 }
 
@@ -490,6 +490,12 @@ textarea {
 	        box-shadow: none;
 	outline: 0;
 	resize: none;
+}
+
+.form-send.elementor-button {
+	display: block;
+	cursor: pointer;
+	width: 100%;
 }
 
 #mobile-menu .sub-menu {

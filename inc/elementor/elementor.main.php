@@ -8,6 +8,7 @@ if (! defined('ABSPATH')) {
 
 use Elementorbilnea\Widgets\bilnea_Blog;
 use Elementorbilnea\Widgets\bilnea_Breadcrumb;
+use Elementorbilnea\Widgets\bilnea_Elementor;
 use Elementorbilnea\Widgets\bilnea_Form;
 use Elementorbilnea\Widgets\bilnea_Mailchimp;
 use Elementorbilnea\Widgets\bilnea_Map;
@@ -22,8 +23,6 @@ use Elementorbilnea\Widgets\bilnea_Taxonomies;
 use Elementorbilnea\Widgets\bilnea_Woo_Add_to_Cart;
 use Elementorbilnea\Widgets\bilnea_Woo_Attribute;
 use Elementorbilnea\Widgets\bilnea_Woo_Quantity;
-
-if (! defined('ABSPATH')) exit;
 
 class Plugin {
 
@@ -48,6 +47,7 @@ class Plugin {
 	private function register_widget() {
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Blog());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Breadcrumb());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Elementor());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Form());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Mailchimp());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Map());

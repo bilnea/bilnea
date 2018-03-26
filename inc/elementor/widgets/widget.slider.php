@@ -390,11 +390,15 @@ class bilnea_Slider extends Widget_Base {
 						'min' => 10,
 						'max' => 100,
 					],
+					'vw' => [
+						'min' => 10,
+						'max' => 100,
+					],
 				],
 				'default' => [
 					'size' => 400,
 				],
-				'size_units' => ['px', 'vh', 'em'],
+				'size_units' => ['px', 'vh', 'vw', 'em'],
 				'selectors' => [
 					'{{WRAPPER}} .slick-slide' => 'height: {{SIZE}}{{UNIT}};',
 				],

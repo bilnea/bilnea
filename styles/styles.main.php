@@ -96,6 +96,26 @@ function b_i_s_fonts($var_font) {
 
 ?>
 
+body {
+	<?= b_i_s_fonts('text'); ?>
+}
+/*
+b, strong {
+	<?= b_i_s_fonts('bold'); ?>
+}
+
+a {
+	<?= b_i_s_fonts('link'); ?>
+	-webkit-transition: all .2s ease-in;
+	-o-transition: all .2s ease-in;
+	-webkit-transition: all .2s ease-in;
+	transition: all .2s ease-in;
+}
+
+a:hover {
+	<?= b_i_s_fonts('hover'); ?>
+}
+*/
 
 /* Encabezados */
 

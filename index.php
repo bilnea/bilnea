@@ -25,45 +25,7 @@ get_header();
 			// Variables globales
 			global $b_g_language;
 
-			//locales
-			$var_blog = '<div class="blog-wrapper">';
-			$var_id = 1;
-
-			if ($query->have_posts()) {
-
-				while ($query->have_posts()) {
-
-					$query->the_post();
-
-					include 'inc/data/data.blog.php';
-
-					switch ($var_id%2) {
-						case 0:
-							$var_blog .= '<div data-id="'.get_the_ID().'" class="entry-even auto-height">'.do_shortcode(preg_replace_callback("/{{b_image-([0-9a-zA-Z]+)}}/", "b_f_i_image", str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_blog-content-even-'.$b_g_language)))).'</div>';
-							break;
-						default:
-							$var_blog .= '<div data-id="'.get_the_ID().'" class="entry-odd auto-height">'.do_shortcode(preg_replace_callback("/{{b_image-([0-9a-zA-Z]+)}}/", "b_f_i_image", str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_blog-content-odd-'.$b_g_language)))).'</div>';
-							break;
-					}
-
-					$var_id++;
-
-				}
-
-				$var_blog .= '</div>';
-
-				include 'inc/data/data.pagination.php';
-
-				echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_blog-content-page-'.$b_g_language)));
-
-			} else {
-
-				$var_shortcodes = array('{{b_blog}}', '{{b_pagination}}');
-				$var_replace = array(__('Nothing found', 'bilnea'), '');
-
-				echo do_shortcode(str_replace($var_shortcodes, $var_replace, b_f_option('b_opt_blog-content-page-'.$b_g_language)));
-
-			}
+			echo do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-index-'.$b_g_language).'"]');
 
 			?>
 

@@ -1060,6 +1060,13 @@ class bilnea_Recent_Slider extends Widget_Base {
 
 			$slide_html .= '</div>';
 			$slide_html = '<div class="slick-slide-bg'.$ken_class.' elementor--h-position-'.$settings['horizontal_position'].' elementor--v-position-'.$settings['vertical_position'].'"'.$back_image.'></div><'.$slide_element.' '.$slide_attributes.' class="slick-slide-inner">'.$slide_html.'</'.$slide_element.'>';
+			$slide_html = preg_replace_callback("/{{b_tax-([a-z-_]+)}}/", function($matches) use($post) {
+				$terms = array();
+				foreach (wp_get_post_terms($post->ID, $matches[1]) as $term) {
+					array_push($terms, '<a href="'.get_term_link($term).'" data-term_id="'.$term->term_id.'">'.$term->name.'</a>');
+				}
+				return implode(', ', $terms);
+			}, $slide_html);
 			$slides[] = '<div class="elementor-repeater-item-'.$post->ID.' slick-slide">'.$slide_html.'</div>';
 			$slide_count++;
 		}

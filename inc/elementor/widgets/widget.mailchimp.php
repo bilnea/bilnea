@@ -3,6 +3,11 @@
 namespace Elementorbilnea\Widgets;
 
 use Elementor\Controls_Manager;
+use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Typography;
+use Elementor\Scheme_Color;
+use Elementor\Scheme_Typography;
 use Elementor\Widget_Base;
 
 if (! defined('ABSPATH')) {
@@ -44,8 +49,10 @@ class bilnea_Mailchimp extends Widget_Base {
 
 		$this->start_controls_tab('config', ['label' => __('Configuration', 'bilnea')]);
 
-		foreach (json_decode(b_f_i_mailchimp('https://'.substr(b_f_option('b_opt_newsl_api'),strpos(b_f_option('b_opt_newsl_api'),'-')+1).'.api.mailchimp.com/3.0/lists/', 'GET', b_f_option('b_opt_newsl_api'), array('fields' => 'lists', 'count' => 50)))->lists as $list) {
-			$lists[$list->id] = $list->name;
+		if (b_f_option('b_opt_newsl_api') != '') {
+			foreach (json_decode(b_f_i_mailchimp('https://'.substr(b_f_option('b_opt_newsl_api'),strpos(b_f_option('b_opt_newsl_api'),'-')+1).'.api.mailchimp.com/3.0/lists/', 'GET', b_f_option('b_opt_newsl_api'), array('fields' => 'lists', 'count' => 50)))->lists as $list) {
+				$lists[$list->id] = $list->name;
+			}
 		}
 
 		$this->add_control(
@@ -116,6 +123,317 @@ class bilnea_Mailchimp extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'input_style',
+			[
+				'label' => __('Input style', 'bilnea'),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'input_color',
+			[
+				'label' => __('Text Color', 'bilnea'),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} input' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'input_font',
+				'scheme' => Scheme_Typography::TYPOGRAPHY_4,
+				'selector' => '{{WRAPPER}} input',
+			]
+		);
+
+		$this->add_control(
+			'back_color',
+			[
+				'label' => __('Background color', 'bilnea'),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} input' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'padding',
+			[
+				'label' => __('Padding element', 'bilnea'),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => ['px', '%'],
+				'selectors' => [
+					'{{WRAPPER}} input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'margin',
+			[
+				'label' => __('Margin element', 'bilnea'),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => ['px', '%'],
+				'selectors' => [
+					'{{WRAPPER}} input' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			[
+				'name' => 'border',
+				'placeholder' => '1px',
+				'default' => '1px',
+				'selector' => '{{WRAPPER}} input, {{WRAPPER}} input.b_input_checkbox + label::before',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'border_radius',
+			[
+				'label' => __( 'Border Radius', 'elementor' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} input, {{WRAPPER}} input.b_input_checkbox + label::before' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'button_box_shadow',
+				'selector' => '{{WRAPPER}} input, {{WRAPPER}} input.b_input_checkbox + label::before',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'placeholder_color',
+			[
+				'label' => __('Placeholder Color', 'bilnea'),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} input::-webkit-input-placeholder' => 'color: {{VALUE}};',
+					'{{WRAPPER}} input:-ms-input-placeholder' => 'color: {{VALUE}};',
+					'{{WRAPPER}} input::-ms-input-placeholder' => 'color: {{VALUE}};',
+					'{{WRAPPER}} input::placeholder' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'placeholder_font',
+				'scheme' => Scheme_Typography::TYPOGRAPHY_4,
+				'selector' => '{{WRAPPER}} input::placeholder'
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'label_style',
+			[
+				'label' => __('Label style', 'bilnea'),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'label_color',
+			[
+				'label' => __('Text Color', 'bilnea'),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} label, {{WRAPPER}} label a' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'label_font',
+				'scheme' => Scheme_Typography::TYPOGRAPHY_4,
+				'selector' => '{{WRAPPER}} label, {{WRAPPER}} label a',
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'button_style',
+			[
+				'label' => __('Button', 'bilnea'),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'typography',
+				'scheme' => Scheme_Typography::TYPOGRAPHY_4,
+				'selector' => '{{WRAPPER}} .s_submit',
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_button_style' );
+
+		$this->start_controls_tab(
+			'tab_button_normal',
+			[
+				'label' => __( 'Normal', 'elementor' ),
+			]
+		);
+
+		$this->add_control(
+			'button_text_color',
+			[
+				'label' => __( 'Text Color', 'elementor' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .s_submit' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'background_color',
+			[
+				'label' => __( 'Background Color', 'elementor' ),
+				'type' => Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => Scheme_Color::get_type(),
+					'value' => Scheme_Color::COLOR_4,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .s_submit' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_button_hover',
+			[
+				'label' => __( 'Hover', 'elementor' ),
+			]
+		);
+
+		$this->add_control(
+			'hover_color',
+			[
+				'label' => __( 'Text Color', 'elementor' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .s_submit:hover' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_background_hover_color',
+			[
+				'label' => __( 'Background Color', 'elementor' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .s_submit:hover' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_hover_border_color',
+			[
+				'label' => __( 'Border Color', 'elementor' ),
+				'type' => Controls_Manager::COLOR,
+				'condition' => [
+					'border_border!' => '',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .s_submit:hover' => 'border-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'hover_animation',
+			[
+				'label' => __( 'Hover Animation', 'elementor' ),
+				'type' => Controls_Manager::HOVER_ANIMATION,
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			[
+				'name' => 'button_border',
+				'placeholder' => '1px',
+				'default' => '1px',
+				'selector' => '{{WRAPPER}} .s_submit',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'button_border_radius',
+			[
+				'label' => __( 'Border Radius', 'elementor' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .s_submit' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'button_shadow',
+				'selector' => '{{WRAPPER}} .s_submit',
+			]
+		);
+
+		$this->add_control(
+			'button_text_padding',
+			[
+				'label' => __( 'Padding', 'elementor' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .s_submit' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
 
 		$this->end_controls_section();
 
