@@ -122,7 +122,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 		<div id="mobile-menu">
 			<div class="container">
 
-				<?= do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-mobile-menu-'.$b_g_language).'"]'); ?>
+				<?= b_f_shortcode(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-mobile-menu-'.$b_g_language).'"]')) ?>
 
 			</div>
 		</div>
@@ -133,7 +133,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 			<!-- Cabecera de página escritorio -->
 			<header id="header" class="site-header<?php echo ((b_f_option('b_opt_sticky-menu') == 1) ? ' sticky' : ''); echo ((b_f_option('b_opt_sticky-menu-animated') == 1) ? ' animated' : ''); ?>" role="banner">
 
-				<?= do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-header-'.$b_g_language).'"]') ?>
+				<?= b_f_shortcode(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-header-'.$b_g_language).'"]')) ?>
 				
 			</header>
 
@@ -141,7 +141,7 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 	<header id="mobile-header">
 		<div class="container">
 					
-			<?= do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-mobile-header-'.$b_g_language).'"]'); ?>
+			<?= b_f_shortcode(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-mobile-header-'.$b_g_language).'"]')) ?>
 					
 		</div>
 	</header>

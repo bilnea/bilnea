@@ -391,14 +391,14 @@ class bilnea_Recent extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->end_controls_section();
-		
+
 	}
 
 	protected function render() {
 
 		$settings = $this->get_settings();
 
-		$out = '<div class="elementor-bilnea-recents">';
+		$out = '<div class="elementor-bilnea-recents elementor-row">';
 
 		if ($settings['main_query'] == 'yes') {
 
@@ -427,10 +427,10 @@ class bilnea_Recent extends Widget_Base {
 						'{{b_image}}' => wp_get_attachment_image_src(get_post_thumbnail_id($id), 'medium')[0]
 					);
 
-					include_once(get_stylesheet_directory().'/elementor.php');
+					include(get_stylesheet_directory().'/elementor.php');
 
-					if (isset($b_c_recents)) {
-						$replacements = array_merge($replacements, $b_c_recents);
+					if (isset($b_recents)) {
+						$replacements = array_merge($replacements, $b_recents);
 					}
 
 					$temp .= strtr($settings['raw_content'], $replacements);
@@ -559,8 +559,6 @@ class bilnea_Recent extends Widget_Base {
 
 			if ($query->have_posts()) {
 
-				$out .= '<div class="elementor-row">';
-				
 				while ($query->have_posts()) {
 
 					$query->the_post();
@@ -615,19 +613,21 @@ class bilnea_Recent extends Widget_Base {
 
 					$temp .= '</div>';
 
-					$out .= preg_replace_callback("/{{b_tax-([a-z]+)}}/", function($matches) use($post) {
+					$out .= preg_replace_callback("/{{b_meta-([a-z_-]+)}}/", function($matches) use($post) {
+						return get_post_meta(get_the_ID(), $matches[1], true);
+					}, preg_replace_callback("/{{b_tax-([a-z]+)}}/", function($matches) use($post) {
 						$terms = array();
 						foreach (wp_get_post_terms($post->ID, $matches[1]) as $term) {
 							array_push($terms, '<a href="'.get_term_link($term).'" data-term_id="'.$term->term_id.'">'.$term->name.'</a>');
 						}
 						return implode(', ', $terms);
-					}, $temp);
+					}, $temp));
 
 					$i++;
 
 				}
 
-				$out .= '</div>';
+				$out .= '</div></div>';
 
 				if ($settings['pagination'] == 'yes') {
 
@@ -663,17 +663,17 @@ class bilnea_Recent extends Widget_Base {
 
 				}
 
+				wp_reset_postdata();
+
 			}
 
 		}
 
-		$out .= '</div>';
-
 		echo $out;
-		
+
 	}
 
 	protected function content_template() {
-		
+
 	}
 }

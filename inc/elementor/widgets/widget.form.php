@@ -64,8 +64,11 @@ class bilnea_Form extends Widget_Base {
 					'legal' => __('Legal notice', 'bilnea'),
 					'file' => __('File', 'bilnea'),
 					'textarea' => __('Textarea', 'bilnea'),
+					'header' => __('Header', 'bilnea'),
+					'html' => __('HTML code', 'bilnea'),
 					'mailchimp' => __('Mailchimp checkbox', 'bilnea'),
-				]
+				],
+				'separator' => 'none'
 			]
 		);
 
@@ -75,6 +78,7 @@ class bilnea_Form extends Widget_Base {
 				'label' => __('Label', 'bilnea'),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
+				'separator' => 'none'
 			]
 		);
 
@@ -98,6 +102,11 @@ class bilnea_Form extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => '',
+				'separator' => 'none',
+				'condition' => [
+					'type' => array('header', 'html'),
+					'compare' => '!='
+				]
 			]
 		);
 
@@ -109,7 +118,8 @@ class bilnea_Form extends Widget_Base {
 				'default' => 4,
 				'condition' => [
 					'type' => 'textarea'
-				]
+				],
+				'separator' => 'none'
 			]
 		);
 
@@ -122,7 +132,8 @@ class bilnea_Form extends Widget_Base {
 				'default' => 'yes',
 				'condition' => [
 					'type' => array('email')
-				]
+				],
+				'separator' => 'none'
 			]
 		);
 
@@ -134,7 +145,33 @@ class bilnea_Form extends Widget_Base {
 				'default' => '',
 				'condition' => [
 					'type' => array('radio', 'select', 'mailer')
+				],
+				'separator' => 'none'
+			]
+		);
+
+		$repeater->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'font',
+				'scheme' => Scheme_Typography::TYPOGRAPHY_4,
+				'selector' => '{{WRAPPER}} {{CURRENT_ITEM}}',
+				'condition' => [
+					'type' => array('header')
 				]
+			]
+		);
+
+		$repeater->add_control(
+			'raw_content',
+			[
+				'label' => __('HTML content', 'bilnea'),
+				'type' => Controls_Manager::RAW_HTML,
+				'default' => '',
+				'condition' => [
+					'type' => array('html')
+				],
+				'separator' => 'none'
 			]
 		);
 
@@ -147,34 +184,41 @@ class bilnea_Form extends Widget_Base {
 				'default' => '',
 				'condition' => [
 					'type' => 'select'
-				]
-			]
-		);
-
-		$repeater->add_control(
-			'breakline',
-			[
-				'label' => __('Break line', 'bilnea'),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'default' => 'yes',
-				'separator' => 'before'
-			]
-		);
-
-		$repeater->add_control(
-			'separator',
-			[
-				'label' => __('Break position', 'bilnea'),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'after',
-				'options' => [
-					'before' => __('Before', 'bilnea'),
-					'after' => __('After', 'bilnea')
 				],
-				'condition' => [
-					'breakline' => 'yes'
-				]
+				'separator' => 'none'
+			]
+		);
+
+		$repeater->add_responsive_control(
+			'width',
+			[
+				'label' => __('Content Width', 'bilnea'),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 1000,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'size_units' => ['%'],
+				'default' => [
+					'size' => '100',
+					'unit' => '%',
+				],
+				'tablet_default' => [
+					'unit' => '%',
+				],
+				'mobile_default' => [
+					'unit' => '%',
+				],
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'none'
 			]
 		);
 
@@ -205,6 +249,7 @@ class bilnea_Form extends Widget_Base {
 					]
 				],
 				'fields' => array_values($repeater->get_controls()),
+				'title_field' => '{{{label}}}'
 			]
 		);
 
@@ -377,7 +422,7 @@ class bilnea_Form extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} input, {{WRAPPER}} textarea, {{WRAPPER}} select' => 'color: {{VALUE}};',
+					'{{WRAPPER}} input, {{WRAPPER}} textarea, {{WRAPPER}} select.selected' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -387,7 +432,7 @@ class bilnea_Form extends Widget_Base {
 			[
 				'name' => 'input_font',
 				'scheme' => Scheme_Typography::TYPOGRAPHY_4,
-				'selector' => '{{WRAPPER}} input, {{WRAPPER}} textarea, {{WRAPPER}} select',
+				'selector' => '{{WRAPPER}} input, {{WRAPPER}} textarea, {{WRAPPER}} select.selected',
 			]
 		);
 
@@ -411,7 +456,7 @@ class bilnea_Form extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} input, {{WRAPPER}} textarea, {{WRAPPER}} select' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} input, {{WRAPPER}} textarea, {{WRAPPER}} select, {{WRAPPER}} input.b_input_checkbox + label::before' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -497,7 +542,7 @@ class bilnea_Form extends Widget_Base {
 			[
 				'name' => 'placeholder_font',
 				'scheme' => Scheme_Typography::TYPOGRAPHY_4,
-				'selector' => '{{WRAPPER}} input::placeholder, {{WRAPPER}} textarea::placeholder'
+				'selector' => '{{WRAPPER}} input::placeholder, {{WRAPPER}} textarea::placeholder, {{WRAPPER}} select'
 			]
 		);
 
@@ -750,6 +795,14 @@ class bilnea_Form extends Widget_Base {
 
 			switch ($input['type']) {
 
+				case 'header':
+					$out .= '<div class="form-control elementor-column" data-type="header">'.$input['label'].'</div>';
+					break;
+
+				case 'html':
+					$out .= '<div class="form-control elementor-column" data-type="html">'.$input['raw_content'].'</div>';
+					break;
+
 				case 'email':
 					if ($input['placeholder'] == 'yes') {
 						$out .= '<div class="form-control elementor-column"><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="email"'.(($input['reply'] == 'yes') ? ' data-reply="yes"' : '').' type="text" name="b_i_email-'.$this->get_id().$i.'" placeholder="'.$input['label'].'" /></div>';
@@ -761,7 +814,7 @@ class bilnea_Form extends Widget_Base {
 				case 'legal':
 					$label = $input['label'];
 					if (empty($label)) {
-						$label = sprintf(__('I have read, understood and accept the <a href="%s" target="_blank">privacy policy</a>.'), get_permalink(b_f_option('b_opt_privacy-policy-'.$b_g_language)));
+						$label = sprintf(__('I have read, understood and accept the <a href="%s" target="_blank">privacy policy</a>.', 'bilnea'), get_permalink(b_f_option('b_opt_privacy-policy-'.$b_g_language)));
 					}
 					$out .= '<div class="form-control elementor-column" data-input="html">';
 					$out .= '<input class="b_input_checkbox"'.$data.' data-name="'.__('Legal notice', 'bilnea').'" data-type="legal" type="checkbox" id="legal-'.$this->get_id().$i.'" name="b_i_legal-'.$this->get_id().$i.'">';
@@ -783,7 +836,7 @@ class bilnea_Form extends Widget_Base {
 						if (count($values) > 1) {
 							$options .= '<option value="'.$values[0].'">'.$values[1].'</option>';
 						} else {
-							$options .= '<option value="'.$values.'">'.$values.'</option>';
+							$options .= '<option value="'.$values[0].'">'.$values[0].'</option>';
 						}
 					}
 					if ($input['placeholder'] == 'yes') {

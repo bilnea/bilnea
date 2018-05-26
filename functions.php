@@ -256,45 +256,11 @@ if (b_f_option('b_opt_favicon') != '') {
 		echo '<link rel="icon" type="image/png" href="'.b_f_option('b_opt_favicon').'" sizes="16x16">';
 		echo '<meta name="apple-mobile-web-app-title" content="'.get_option( 'blogname' ).'">';
 		echo '<meta name="application-name" content="'.get_option( 'blogname' ).'">';
-		echo '<meta name="msapplication-TileColor" content="'.b_f_option('b_opt_header-color').'">';
 		echo '<meta name="msapplication-TileImage" content="'.b_f_option('b_opt_favicon').'">';
-		echo '<meta name="theme-color" content="'.b_f_option('b_opt_header-color').'">';
 	}
+
 	add_action('wp_head', 'b_f_favicon');
-}
-
-if (b_f_option('b_opt_favicon-iphone') != '') {
-	function b_f_favicon_iphone() {
-		echo '<link rel="apple-touch-icon" sizes="57x57" href="'.b_f_option('b_opt_favicon-iphone').'">';
-		echo '<link rel="apple-touch-icon" sizes="60x60" href="'.b_f_option('b_opt_favicon-iphone').'">';
-	}
-	add_action('wp_head', 'b_f_favicon_iphone');
-}
-
-if (b_f_option('b_opt_favicon-ipad') != '') {
-	function b_f_favicon_ipad() {
-		echo '<link rel="apple-touch-icon" sizes="72x72" href="'.b_f_option('b_opt_favicon-ipad').'">';
-		echo '<link rel="apple-touch-icon" sizes="76x76" href="'.b_f_option('b_opt_favicon-ipad').'">';
-	}
-	add_action('wp_head', 'b_f_favicon_ipad');
-}
-
-if (b_f_option('b_opt_favicon-iphone-retina') != '') {
-	function b_f_favicon_iphone_retina() {
-		echo '<link rel="apple-touch-icon" sizes="114x114" href="'.b_f_option('b_opt_favicon-iphone-retina').'">';
-		echo '<link rel="apple-touch-icon" sizes="120x120" href="'.b_f_option('b_opt_favicon-iphone-retina').'">';
-		echo '<link rel="apple-touch-icon" sizes="144x144" href="'.b_f_option('b_opt_favicon-iphone-retina').'">';
-	}
-	add_action('wp_head', 'b_f_favicon_iphone_retina');
-}
-
-if (b_f_option('b_opt_favicon-ipad-retina') != '') {
-	function b_f_favicon_ipad_retina() {
-		echo '<link rel="apple-touch-icon" sizes="144x144" href="'.b_f_option('b_opt_favicon-ipad-retina').'">';
-		echo '<link rel="apple-touch-icon" sizes="152x152" href="'.b_f_option('b_opt_favicon-ipad-retina').'">';
-		echo '<link rel="apple-touch-icon" sizes="180x180" href="'.b_f_option('b_opt_favicon-ipad-retina').'">';
-	}
-	add_action('wp_head', 'b_f_favicon_ipad_retina');
+	
 }
 
 

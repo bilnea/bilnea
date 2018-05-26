@@ -151,7 +151,7 @@ class bilnea_Taxonomies extends Widget_Base {
 
 		foreach (get_terms($options) as $term) {
 			if (!in_array($term->term_id, $exclude)) {
-				$out .= '<li data-term_id="'.$term->term_id.'" data-taxonomy="'.$settings['taxonomy'].'"><a href="">'.$term->name.'</a></li>'."\n";
+				$out .= '<li data-term_id="'.$term->term_id.'" data-taxonomy="'.$settings['taxonomy'].'"><a href="'.get_term_link($term).'">'.$term->name.'</a></li>'."\n";
 			}
 		}
 

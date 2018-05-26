@@ -6,29 +6,6 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 ?>
 
-<h4 data-type="title">Favicon</h4>
-<div>
-	<div class="favicon iconico" id="favicon_div"></div>
-	<div style="position: relative; transform: translateY(3px);">
-		<span>Seleccionar imagen</span> / <span id="borra_logo">Borrar</span>
-		<br />
-		<?php
-		if (b_f_option('b_opt_favicon')) {
-		?>
-		<script type="text/javascript">
-			jQuery('#favicon_div').attr('style', 'background-image: url(<?= b_f_option('b_opt_favicon'); ?>)');
-			jQuery('#borra_logo').show();
-		</script>
-		<?php
-		}
-		?>
-		<input type="text" id="fav_main_url" class="gran" name="bilnea_settings[b_opt_favicon]" style="width: calc(100% - 32px);" value="<?= b_f_option('b_opt_favicon') ?>">
-		<button type="submit" id="subir_fav_main" value="Seleccionar imagen"  class="button-secondary subir-imagen">
-			<i class="fa fa-search" style="font-size: 12px;"></i>
-		</button>
-	</div>
-</div>
-
 <h4 data-type="title">Cabecera de página</h4>
 
 <?php

@@ -1,16 +1,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bilnea WordPress theme\n"
-"POT-Creation-Date: 2018-01-05 12:30+0100\n"
-"PO-Revision-Date: 2018-01-10 12:32+0100\n"
+"POT-Creation-Date: 2018-04-02 10:18+0200\n"
+"PO-Revision-Date: 2018-04-02 10:28+0200\n"
 "Last-Translator: \n"
-"Language-Team: \n"
+"Language-Team: Samuel E. Cerezo\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.3\n"
-"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-Basepath: ../Dropbox/Laboral/Autónomo/Desarrollo/Wordpress/Temas/"
+"bilnea\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: style.css\n"
@@ -20,10 +21,6 @@ msgstr ""
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
-
-#: archive.php:58 index.php:62
-msgid "Nothing found"
-msgstr "Sin resultados"
 
 #: functions.php:570
 msgid "* I have read, understood and accept the "
@@ -61,7 +58,7 @@ msgstr "Respuesta al mensaje enviado desde el sitio web \"%s\""
 msgid "Settings saved."
 msgstr "Configuración guardada."
 
-#: inc/ajax/ajax.backup.php:99 inc/ajax/ajax.form.php:137
+#: inc/ajax/ajax.backup.php:99 inc/ajax/ajax.form.php:121
 msgid ""
 "Your message has been sucesfully sent.<br /><br />Here is a copy of your "
 "message."
@@ -69,7 +66,7 @@ msgstr ""
 "Tu mensaje se ha enviado correctamente.<br /><br />Aquí tienes una copia del "
 "mismo."
 
-#: inc/ajax/ajax.backup.php:105 inc/ajax/ajax.form.php:143
+#: inc/ajax/ajax.backup.php:105 inc/ajax/ajax.form.php:127
 msgid ""
 "Please do not respond directly to this e-mail. The inbox of this account is "
 "disabled."
@@ -77,15 +74,15 @@ msgstr ""
 "Por favor, no respondas a este mensaje. La recepción de mensajes para esta "
 "cuenta está deshabilitada."
 
-#: inc/ajax/ajax.backup.php:108 inc/ajax/ajax.form.php:146
+#: inc/ajax/ajax.backup.php:108 inc/ajax/ajax.form.php:130
 msgid "Here is a copy of your message to"
 msgstr "Aquí tienes una copia de tu mensaje enviado a"
 
-#: inc/ajax/ajax.backup.php:112 inc/ajax/ajax.form.php:150
+#: inc/ajax/ajax.backup.php:112 inc/ajax/ajax.form.php:134
 msgid "Message sent sucesfully. Please wait a moment."
 msgstr "Mensaje enviado correctamente. Por favor, espera un momento."
 
-#: inc/ajax/ajax.backup.php:120 inc/ajax/ajax.form.php:158
+#: inc/ajax/ajax.backup.php:120 inc/ajax/ajax.form.php:142
 msgid ""
 "Sorry, an error has ocurred sending your message. Please try again later."
 msgstr ""
@@ -122,19 +119,19 @@ msgstr ""
 "Te has dado de baja de nuestro boletín de noticias correctamente. Sentimos "
 "tu marcha."
 
-#: inc/data/data.blog.php:27 single.php:58
+#: inc/data/data.blog.php:27
 msgid "No comments"
 msgstr "No hay comentarios"
 
-#: inc/data/data.blog.php:29 single.php:60
+#: inc/data/data.blog.php:29
 msgid " comments"
 msgstr " comentarios"
 
-#: inc/data/data.blog.php:31 single.php:62
+#: inc/data/data.blog.php:31
 msgid "1 comment"
 msgstr "1 comentario"
 
-#: inc/data/data.blog.php:35 single.php:66
+#: inc/data/data.blog.php:35
 msgid "Comments are disabled"
 msgstr "Comentarios deshabilitados"
 
@@ -188,30 +185,38 @@ msgid "December"
 msgstr "Diciembre"
 
 #: inc/data/data.pagination.php:10 inc/data/data.pagination.php:26
+#: inc/elementor/widgets/widget.recents.php:469
+#: inc/elementor/widgets/widget.recents.php:490
 #: inc/functions/functions.init.php:66 search.php:59 search.php:75
 msgid "page"
 msgstr "pagina"
 
-#: inc/data/data.pagination.php:13 inc/shortcodes/shortcodes.slider.php:85
-#: search.php:62
+#: inc/data/data.pagination.php:13 inc/elementor/widgets/widget.recents.php:472
+#: inc/elementor/widgets/widget.recents.php:640
+#: inc/shortcodes/shortcodes.slider.php:85 search.php:62
 msgid "Previous"
 msgstr "Anterior"
 
-#: inc/data/data.pagination.php:14 inc/shortcodes/shortcodes.slider.php:86
-#: search.php:63
+#: inc/data/data.pagination.php:14 inc/elementor/widgets/widget.recents.php:473
+#: inc/elementor/widgets/widget.recents.php:641
+#: inc/shortcodes/shortcodes.slider.php:86 search.php:63
 msgid "Next"
 msgstr "Siguiente"
 
-#: inc/data/data.pagination.php:17 inc/shortcodes.php:361 search.php:66
+#: inc/data/data.pagination.php:17 inc/elementor/widgets/widget.recents.php:477
+#: inc/elementor/widgets/widget.recents.php:644 inc/shortcodes.php:361
+#: search.php:66
 #, php-format
 msgid "Page %1$s of %2$s"
 msgstr "Página %1$s de %2$s"
 
-#: inc/data/data.pagination.php:20 search.php:69
+#: inc/data/data.pagination.php:20 inc/elementor/widgets/widget.recents.php:482
+#: inc/elementor/widgets/widget.recents.php:648 search.php:69
 msgid "First"
 msgstr "Primero"
 
-#: inc/data/data.pagination.php:26 search.php:75
+#: inc/data/data.pagination.php:26 inc/elementor/widgets/widget.recents.php:490
+#: inc/elementor/widgets/widget.recents.php:656 search.php:75
 msgid "Last"
 msgstr "Último"
 
@@ -227,7 +232,7 @@ msgstr ""
 msgid "Update Elementor Now"
 msgstr "Actualiza Elementor ahora"
 
-#: inc/elementor/elementor.main.php:59
+#: inc/elementor/elementor.main.php:75
 msgid "bilnea Widgets"
 msgstr "Elementos bilnea"
 
@@ -237,41 +242,46 @@ msgid "Blog"
 msgstr "BlogBlog"
 
 #: inc/elementor/widgets/widget.blog.php:44
-#: inc/elementor/widgets/widget.mailchimp.php:45
+#: inc/elementor/widgets/widget.mailchimp.php:50
 #: inc/elementor/widgets/widget.map.php:39
 #: inc/elementor/widgets/widget.recents.php:44
 msgid "Configuration"
 msgstr "Configuración"
 
 #: inc/elementor/widgets/widget.blog.php:60
-#: inc/elementor/widgets/widget.recents.php:60
+#: inc/elementor/widgets/widget.recents-slider.php:59
+#: inc/elementor/widgets/widget.recents.php:71
 msgid "Post type"
 msgstr "Tipo de objeto"
 
 #: inc/elementor/widgets/widget.blog.php:70
-#: inc/elementor/widgets/widget.recents.php:70
+#: inc/elementor/widgets/widget.recents-slider.php:69
+#: inc/elementor/widgets/widget.recents.php:84
 msgid "Order by"
 msgstr "Ordenar por"
 
 #: inc/elementor/widgets/widget.blog.php:74
-#: inc/elementor/widgets/widget.recents.php:74
+#: inc/elementor/widgets/widget.recents-slider.php:73
+#: inc/elementor/widgets/widget.recents.php:88
 msgid "Date"
 msgstr "Fecha"
 
 #: inc/elementor/widgets/widget.blog.php:75
 #: inc/elementor/widgets/widget.breadcrumb.php:88
-#: inc/elementor/widgets/widget.form.php:172
-#: inc/elementor/widgets/widget.form.php:206
-#: inc/elementor/widgets/widget.mailchimp.php:163
-#: inc/elementor/widgets/widget.recents.php:75
+#: inc/elementor/widgets/widget.form.php:190
+#: inc/elementor/widgets/widget.form.php:224
+#: inc/elementor/widgets/widget.mailchimp.php:481
+#: inc/elementor/widgets/widget.recents-slider.php:74
+#: inc/elementor/widgets/widget.recents.php:89
 #: inc/shortcodes/shortcodes.form.php:465
 #: inc/shortcodes/shortcodes.newsletter.php:49
-#: inc/shortcodes/shortcodes.newsletter.php:96 single.php:148
+#: inc/shortcodes/shortcodes.newsletter.php:96
 msgid "Name"
 msgstr "Nombre"
 
 #: inc/elementor/widgets/widget.blog.php:76
-#: inc/elementor/widgets/widget.recents.php:76
+#: inc/elementor/widgets/widget.recents-slider.php:75
+#: inc/elementor/widgets/widget.recents.php:90
 msgid "Random"
 msgstr "Aleatorio"
 
@@ -280,10 +290,12 @@ msgid "Offset"
 msgstr "Comenzar en"
 
 #: inc/elementor/widgets/widget.blog.php:93
+#: inc/elementor/widgets/widget.recents.php:138
 msgid "Posts per page"
 msgstr "Posts por página"
 
 #: inc/elementor/widgets/widget.blog.php:108
+#: inc/elementor/widgets/widget.recents.php:162
 msgid "Columns"
 msgstr "Columnas"
 
@@ -292,66 +304,59 @@ msgid "Equal height"
 msgstr "Alturas iguales"
 
 #: inc/elementor/widgets/widget.blog.php:133
-#: inc/elementor/widgets/widget.recents.php:99
 msgid "Taxonomy Query"
 msgstr "Consulta por taxonomía"
 
 #: inc/elementor/widgets/widget.blog.php:144
-#: inc/elementor/widgets/widget.recents.php:110
+#: inc/elementor/widgets/widget.recents-slider.php:118
+#: inc/elementor/widgets/widget.recents.php:209
 #: inc/elementor/widgets/widget.taxonomies.php:50
 msgid "Taxonomy"
 msgstr "Taxonomía"
 
 #: inc/elementor/widgets/widget.blog.php:156
-#: inc/elementor/widgets/widget.recents.php:122
+#: inc/elementor/widgets/widget.recents-slider.php:151
+#: inc/elementor/widgets/widget.recents.php:242
 msgid "Key"
 msgstr "Key"
 
 #: inc/elementor/widgets/widget.blog.php:160
-#: inc/elementor/widgets/widget.recents.php:126
 msgid "Term slug"
 msgstr "Term slug"
 
 #: inc/elementor/widgets/widget.blog.php:161
-#: inc/elementor/widgets/widget.recents.php:127
 msgid "Term ID"
 msgstr "Term ID"
 
 #: inc/elementor/widgets/widget.blog.php:172
-#: inc/elementor/widgets/widget.recents.php:138
 msgid "Values"
 msgstr "Valores"
 
 #: inc/elementor/widgets/widget.blog.php:184
 #: inc/elementor/widgets/widget.blog.php:253
-#: inc/elementor/widgets/widget.recents.php:150
-#: inc/elementor/widgets/widget.recents.php:219
 msgid "Operator"
 msgstr "Operador"
 
 #: inc/elementor/widgets/widget.blog.php:206
-#: inc/elementor/widgets/widget.recents.php:172
 msgid "Meta Query"
 msgstr "Consulta por metainformación"
 
 #: inc/elementor/widgets/widget.blog.php:217
-#: inc/elementor/widgets/widget.recents.php:183
 msgid "Meta tag"
 msgstr "Meta etiqueta"
 
 #: inc/elementor/widgets/widget.blog.php:229
-#: inc/elementor/widgets/widget.recents.php:195
 msgid "Meta key"
 msgstr "Meta key"
 
 #: inc/elementor/widgets/widget.blog.php:241
-#: inc/elementor/widgets/widget.recents.php:207
 msgid "Meta value"
 msgstr "Metavalor"
 
 #: inc/elementor/widgets/widget.blog.php:274
-#: inc/elementor/widgets/widget.mailchimp.php:104
-#: inc/elementor/widgets/widget.recents.php:240
+#: inc/elementor/widgets/widget.mailchimp.php:111
+#: inc/elementor/widgets/widget.recents-slider.php:429
+#: inc/elementor/widgets/widget.recents.php:377
 #: inc/elementor/widgets/widget.slider.php:224
 #: inc/elementor/widgets/widget.slider.php:229
 msgid "Content"
@@ -359,16 +364,18 @@ msgstr "Contenido"
 
 #: inc/elementor/widgets/widget.blog.php:279
 #: inc/elementor/widgets/widget.blog.php:299
-#: inc/elementor/widgets/widget.mailchimp.php:109
-#: inc/elementor/widgets/widget.recents.php:245
+#: inc/elementor/widgets/widget.mailchimp.php:116
+#: inc/elementor/widgets/widget.recents-slider.php:434
+#: inc/elementor/widgets/widget.recents.php:382
 #, php-format
 msgid "You can use the followings snippets %s"
 msgstr "Puedes utilizar los siguientes códigos %s"
 
 #: inc/elementor/widgets/widget.blog.php:282
 #: inc/elementor/widgets/widget.blog.php:302
-#: inc/elementor/widgets/widget.mailchimp.php:112
-#: inc/elementor/widgets/widget.recents.php:248
+#: inc/elementor/widgets/widget.mailchimp.php:119
+#: inc/elementor/widgets/widget.recents-slider.php:437
+#: inc/elementor/widgets/widget.recents.php:385
 msgid "Enter your enhaced content here"
 msgstr "Introduce aquí tu contenido"
 
@@ -407,7 +414,7 @@ msgid "Custom breadcrumbs"
 msgstr "Migas personalizadas"
 
 #: inc/elementor/widgets/widget.breadcrumb.php:90
-#: inc/elementor/widgets/widget.form.php:52
+#: inc/elementor/widgets/widget.form.php:57
 msgid "Text"
 msgstr "Texto"
 
@@ -439,180 +446,200 @@ msgctxt "Fecha para archivos anuales"
 msgid "Y"
 msgstr "Y"
 
-#: inc/elementor/widgets/widget.form.php:20
+#: inc/elementor/widgets/widget.elementor.php:17
+msgid "Elementor widget"
+msgstr "Widget de Elementor"
+
+#: inc/elementor/widgets/widget.elementor.php:36
+#: inc/elementor/widgets/widget.elementor.php:56
+msgid "Widget"
+msgstr "Widget"
+
+#: inc/elementor/widgets/widget.form.php:25
 msgid "Form"
 msgstr "Formulario"
 
-#: inc/elementor/widgets/widget.form.php:39
-#: inc/elementor/widgets/widget.form.php:166
+#: inc/elementor/widgets/widget.form.php:44
+#: inc/elementor/widgets/widget.form.php:184
 msgid "Inputs"
 msgstr "Elementos"
 
-#: inc/elementor/widgets/widget.form.php:48
+#: inc/elementor/widgets/widget.form.php:53
+#: inc/elementor/widgets/widget.recents-slider.php:204
+#: inc/elementor/widgets/widget.recents-slider.php:385
+#: inc/elementor/widgets/widget.recents.php:295
 #: inc/elementor/widgets/widget.slider.php:162
+#: inc/elementor/widgets/widget.woocommerce.attribute.php:60
 msgid "Type"
 msgstr "Tipo"
 
-#: inc/elementor/widgets/widget.form.php:53
-#: inc/elementor/widgets/widget.form.php:178
-#: inc/elementor/widgets/widget.mailchimp.php:165
-#: inc/shortcodes/shortcodes.form.php:144
-#: inc/shortcodes/shortcodes.newsletter.php:53
-#: inc/shortcodes/shortcodes.newsletter.php:98 single.php:149
-msgid "Email"
-msgstr "Correo electrónico"
-
-#: inc/elementor/widgets/widget.form.php:54
-msgid "Number"
-msgstr "Número"
-
-#: inc/elementor/widgets/widget.form.php:55
-msgid "Radio"
-msgstr "Radio"
-
-#: inc/elementor/widgets/widget.form.php:56
-msgid "Checkbox"
-msgstr "Checkbox"
-
-#: inc/elementor/widgets/widget.form.php:57
-msgid "Select"
-msgstr "Selector"
-
 #: inc/elementor/widgets/widget.form.php:58
-#: inc/elementor/widgets/widget.form.php:421
-msgid "Legal notice"
-msgstr "Aviso legal"
-
-#: inc/elementor/widgets/widget.form.php:59
-msgid "File"
-msgstr "Archivo"
-
-#: inc/elementor/widgets/widget.form.php:60
-msgid "Textarea"
-msgstr "Área de texto"
-
-#: inc/elementor/widgets/widget.form.php:61
-msgid "Mailchimp checkbox"
-msgstr "Checkbox de Mailchimp"
-
-#: inc/elementor/widgets/widget.form.php:69
-msgid "Label"
-msgstr "Etiqueta"
-
-#: inc/elementor/widgets/widget.form.php:78
-msgid "Label as placeholder"
-msgstr "Etiqueta como marcador"
-
-#: inc/elementor/widgets/widget.form.php:91
-msgid "Required"
-msgstr "Requerido"
-
-#: inc/elementor/widgets/widget.form.php:101
-msgid "Rows"
-msgstr "Filas"
-
-#: inc/elementor/widgets/widget.form.php:113
-msgid "Options. One per line, \"value::name\" format."
-msgstr "Opciones. Una por línea. Formato como “valor::nombre”."
-
-#: inc/elementor/widgets/widget.form.php:126
-msgid "Multiple"
-msgstr "Múltiple"
-
-#: inc/elementor/widgets/widget.form.php:139
-msgid "Break line"
-msgstr "Salto de línea"
-
-#: inc/elementor/widgets/widget.form.php:150
-msgid "Break position"
-msgstr "Crear división"
-
-#: inc/elementor/widgets/widget.form.php:154
-msgid "Before"
-msgstr "Antes"
-
-#: inc/elementor/widgets/widget.form.php:155
-msgid "After"
-msgstr "Después"
-
-#: inc/elementor/widgets/widget.form.php:184
-#: inc/shortcodes/shortcodes.form.php:155
-msgid "Message"
-msgstr "Mensaje"
-
-#: inc/elementor/widgets/widget.form.php:198
-msgid "Options"
-msgstr "Opciones"
-
-#: inc/elementor/widgets/widget.form.php:208
-#, php-format
-msgid "Form #%d / %s"
-msgstr "Form #%d / %s"
-
-#: inc/elementor/widgets/widget.form.php:215
+#: inc/elementor/widgets/widget.form.php:233
 #: inc/shortcodes/shortcodes.form.php:490
 msgid "Subject"
 msgstr "Asunto"
 
-#: inc/elementor/widgets/widget.form.php:217
+#: inc/elementor/widgets/widget.form.php:59
+#: inc/elementor/widgets/widget.form.php:196
+#: inc/elementor/widgets/widget.mailchimp.php:483
+#: inc/shortcodes/shortcodes.form.php:144
+#: inc/shortcodes/shortcodes.newsletter.php:53
+#: inc/shortcodes/shortcodes.newsletter.php:98
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: inc/elementor/widgets/widget.form.php:60
+msgid "Number"
+msgstr "Número"
+
+#: inc/elementor/widgets/widget.form.php:61
+#: inc/elementor/widgets/widget.woocommerce.attribute.php:65
+msgid "Radio"
+msgstr "Radio"
+
+#: inc/elementor/widgets/widget.form.php:62
+msgid "Checkbox"
+msgstr "Checkbox"
+
+#: inc/elementor/widgets/widget.form.php:63
+#: inc/elementor/widgets/widget.woocommerce.attribute.php:64
+msgid "Select"
+msgstr "Selector"
+
+#: inc/elementor/widgets/widget.form.php:64
+#: inc/elementor/widgets/widget.form.php:767
+msgid "Legal notice"
+msgstr "Aviso legal"
+
+#: inc/elementor/widgets/widget.form.php:65
+msgid "File"
+msgstr "Archivo"
+
+#: inc/elementor/widgets/widget.form.php:66
+msgid "Textarea"
+msgstr "Área de texto"
+
+#: inc/elementor/widgets/widget.form.php:67
+msgid "Mailchimp checkbox"
+msgstr "Checkbox de Mailchimp"
+
+#: inc/elementor/widgets/widget.form.php:75
+msgid "Label"
+msgstr "Etiqueta"
+
+#: inc/elementor/widgets/widget.form.php:84
+msgid "Label as placeholder"
+msgstr "Etiqueta como marcador"
+
+#: inc/elementor/widgets/widget.form.php:97
+msgid "Required"
+msgstr "Requerido"
+
+#: inc/elementor/widgets/widget.form.php:107
+msgid "Rows"
+msgstr "Filas"
+
+#: inc/elementor/widgets/widget.form.php:119
+msgid "Reply to this email adress."
+msgstr "Responder a esta dirección de correo electrónico."
+
+#: inc/elementor/widgets/widget.form.php:132
+msgid "Options. One per line, \"value::name\" format."
+msgstr "Opciones. Una por línea. Formato como “valor::nombre”."
+
+#: inc/elementor/widgets/widget.form.php:144
+msgid "Multiple"
+msgstr "Múltiple"
+
+#: inc/elementor/widgets/widget.form.php:157
+msgid "Break line"
+msgstr "Salto de línea"
+
+#: inc/elementor/widgets/widget.form.php:168
+msgid "Break position"
+msgstr "Crear división"
+
+#: inc/elementor/widgets/widget.form.php:172
+msgid "Before"
+msgstr "Antes"
+
+#: inc/elementor/widgets/widget.form.php:173
+msgid "After"
+msgstr "Después"
+
+#: inc/elementor/widgets/widget.form.php:202
+#: inc/shortcodes/shortcodes.form.php:155
+msgid "Message"
+msgstr "Mensaje"
+
+#: inc/elementor/widgets/widget.form.php:216
+msgid "Options"
+msgstr "Opciones"
+
+#: inc/elementor/widgets/widget.form.php:226
+#, php-format
+msgid "Form #%d / %s"
+msgstr "Form #%d / %s"
+
+#: inc/elementor/widgets/widget.form.php:235
 #: inc/shortcodes/shortcodes.form.php:25
 #, php-format
 msgid "Message sent from %s website form"
 msgstr "Mensaje enviado desde el formulario en el sitio web %s"
 
-#: inc/elementor/widgets/widget.form.php:224
+#: inc/elementor/widgets/widget.form.php:242
 msgid "Receivers"
 msgstr "Destinatarios"
 
-#: inc/elementor/widgets/widget.form.php:227
+#: inc/elementor/widgets/widget.form.php:245
 msgid "your@address.com"
 msgstr "tu@email.com"
 
-#: inc/elementor/widgets/widget.form.php:234
+#: inc/elementor/widgets/widget.form.php:252
 msgid "Store in database"
 msgstr "Guardar en base de datos"
 
-#: inc/elementor/widgets/widget.form.php:244
-#: inc/elementor/widgets/widget.mailchimp.php:74
+#: inc/elementor/widgets/widget.form.php:262
+#: inc/elementor/widgets/widget.mailchimp.php:81
 msgid "Redirect on success"
 msgstr "Redirigir en caso de envío exitoso"
 
-#: inc/elementor/widgets/widget.form.php:254
-#: inc/elementor/widgets/widget.mailchimp.php:84
+#: inc/elementor/widgets/widget.form.php:272
+#: inc/elementor/widgets/widget.mailchimp.php:91
 msgid "Where redirect"
 msgstr "Dónde redirigir"
 
-#: inc/elementor/widgets/widget.form.php:256
+#: inc/elementor/widgets/widget.form.php:274
 msgid "http://your-domain.com"
 msgstr "http://tu-dominio.com"
 
-#: inc/elementor/widgets/widget.form.php:266
+#: inc/elementor/widgets/widget.form.php:284
 msgid "Send text"
 msgstr "Texto del botón de envío"
 
-#: inc/elementor/widgets/widget.form.php:268
+#: inc/elementor/widgets/widget.form.php:286
 #: inc/shortcodes/shortcodes.form.php:23 inc/shortcodes/shortcodes.form.php:502
 msgid "Send"
 msgstr "Enviar"
 
-#: inc/elementor/widgets/widget.form.php:275
+#: inc/elementor/widgets/widget.form.php:293
 msgid "Sending text"
 msgstr "Texto para transición"
 
-#: inc/elementor/widgets/widget.form.php:277
+#: inc/elementor/widgets/widget.form.php:295
 #: inc/shortcodes/shortcodes.form.php:120
 msgid "Sending"
 msgstr "Enviando"
 
-#: inc/elementor/widgets/widget.form.php:286
+#: inc/elementor/widgets/widget.form.php:304
 msgid "Messages"
 msgstr "Mensajes"
 
-#: inc/elementor/widgets/widget.form.php:294
+#: inc/elementor/widgets/widget.form.php:312
 msgid "Success message"
 msgstr "Mensaje de éxito"
 
-#: inc/elementor/widgets/widget.form.php:296
+#: inc/elementor/widgets/widget.form.php:314
 #: inc/shortcodes/shortcodes.form.php:22
 msgid ""
 "Your message has been sent sucesfully. Your request will delay. A copy has "
@@ -621,66 +648,165 @@ msgstr ""
 "Mensaje enviado correctamente. Atenderemos su solicitud a la mayor brevedad. "
 "Se ha enviado una copia a su dirección de correo electrónico."
 
-#: inc/elementor/widgets/widget.form.php:303
+#: inc/elementor/widgets/widget.form.php:321
 msgid "Invalid inputs"
 msgstr "Campos inválidos"
 
-#: inc/elementor/widgets/widget.form.php:305
-#: inc/elementor/widgets/widget.mailchimp.php:132
+#: inc/elementor/widgets/widget.form.php:323
+#: inc/elementor/widgets/widget.mailchimp.php:450
 #: inc/shortcodes/shortcodes.form.php:50
-#: inc/shortcodes/shortcodes.newsletter.php:32 single.php:20
+#: inc/shortcodes/shortcodes.newsletter.php:32
 msgid "There are errors on the form. Please fix them before continuing"
 msgstr ""
 "Existen errores en el formulario. Por favor, corrígelos antes de continuar"
 
-#: inc/elementor/widgets/widget.form.php:312
+#: inc/elementor/widgets/widget.form.php:330
 msgid "Empty inputs"
 msgstr "Campos vacíos"
 
-#: inc/elementor/widgets/widget.form.php:314
-#: inc/elementor/widgets/widget.mailchimp.php:133
+#: inc/elementor/widgets/widget.form.php:332
+#: inc/elementor/widgets/widget.mailchimp.php:451
 #: inc/shortcodes/shortcodes.form.php:51
-#: inc/shortcodes/shortcodes.newsletter.php:33 single.php:21
+#: inc/shortcodes/shortcodes.newsletter.php:33
 msgid "Fill in all the required fields"
 msgstr "Completa todos los campos requeridos"
 
-#: inc/elementor/widgets/widget.form.php:321
+#: inc/elementor/widgets/widget.form.php:339
 msgid "Bad email"
 msgstr "Correo electrónico incorrecto"
 
-#: inc/elementor/widgets/widget.form.php:323
-#: inc/elementor/widgets/widget.mailchimp.php:134
+#: inc/elementor/widgets/widget.form.php:341
+#: inc/elementor/widgets/widget.mailchimp.php:452
 #: inc/shortcodes/shortcodes.form.php:52
-#: inc/shortcodes/shortcodes.newsletter.php:34 single.php:22
+#: inc/shortcodes/shortcodes.newsletter.php:34
 msgid "Enter a valid email address"
 msgstr "Introduce una dirección de correo electrónico válida"
 
-#: inc/elementor/widgets/widget.form.php:330
+#: inc/elementor/widgets/widget.form.php:348
 msgid "Bad captcha"
 msgstr "Verificación captcha errónea"
 
-#: inc/elementor/widgets/widget.form.php:332
+#: inc/elementor/widgets/widget.form.php:350
 #: inc/shortcodes/shortcodes.form.php:53
 msgid "Enter a correct captcha value"
 msgstr "Introduce el código de verificación correcto"
 
-#: inc/elementor/widgets/widget.form.php:339
+#: inc/elementor/widgets/widget.form.php:357
 msgid "Legal acceptance"
 msgstr "Aceptación del aviso legal"
 
-#: inc/elementor/widgets/widget.form.php:341
-#: inc/elementor/widgets/widget.mailchimp.php:135
+#: inc/elementor/widgets/widget.form.php:359
+#: inc/elementor/widgets/widget.mailchimp.php:453
 #: inc/shortcodes/shortcodes.form.php:54
-#: inc/shortcodes/shortcodes.newsletter.php:35 single.php:23
+#: inc/shortcodes/shortcodes.newsletter.php:35
 msgid "You must accept the legal advice"
 msgstr "Debes aceptar el aviso legal"
 
-#: inc/elementor/widgets/widget.form.php:364
+#: inc/elementor/widgets/widget.form.php:368
+#: inc/elementor/widgets/widget.mailchimp.php:132
+msgid "Input style"
+msgstr "Estilo del elemento"
+
+#: inc/elementor/widgets/widget.form.php:376
+#: inc/elementor/widgets/widget.form.php:517
+#: inc/elementor/widgets/widget.form.php:566
+#: inc/elementor/widgets/widget.form.php:602
+#: inc/elementor/widgets/widget.mailchimp.php:140
+#: inc/elementor/widgets/widget.mailchimp.php:264
+#: inc/elementor/widgets/widget.mailchimp.php:313
+#: inc/elementor/widgets/widget.mailchimp.php:349
+#: inc/elementor/widgets/widget.menu.php:98
+msgid "Text Color"
+msgstr "Color del texto"
+
+#: inc/elementor/widgets/widget.form.php:397
+msgid "Space between elements"
+msgstr "Espacio entre elementos"
+
+#: inc/elementor/widgets/widget.form.php:410
+#: inc/elementor/widgets/widget.mailchimp.php:161
+msgid "Background color"
+msgstr "Color del fondo"
+
+#: inc/elementor/widgets/widget.form.php:422
+#: inc/elementor/widgets/widget.mailchimp.php:173
+#: inc/elementor/widgets/widget.menu.php:119
+#: inc/elementor/widgets/widget.switcher.php:45
+msgid "Padding element"
+msgstr "Espaciado interior de los elementos"
+
+#: inc/elementor/widgets/widget.form.php:434
+#: inc/elementor/widgets/widget.mailchimp.php:185
+#: inc/elementor/widgets/widget.menu.php:131
+#: inc/elementor/widgets/widget.switcher.php:57
+msgid "Margin element"
+msgstr "Margen de los elementos"
+
+#: inc/elementor/widgets/widget.form.php:457
+#: inc/elementor/widgets/widget.form.php:661
+#: inc/elementor/widgets/widget.mailchimp.php:208
+#: inc/elementor/widgets/widget.mailchimp.php:408
+#: inc/elementor/widgets/widget.switcher.php:117
+msgid "Border Radius"
+msgstr "Radio del borde"
+
+#: inc/elementor/widgets/widget.form.php:478
+#: inc/elementor/widgets/widget.mailchimp.php:229
+msgid "Placeholder Color"
+msgstr "Color del marcador"
+
+#: inc/elementor/widgets/widget.form.php:509
+#: inc/elementor/widgets/widget.mailchimp.php:256
+msgid "Label style"
+msgstr "Estilo de la etiqueta"
+
+#: inc/elementor/widgets/widget.form.php:540
+#: inc/elementor/widgets/widget.mailchimp.php:287
+msgid "Button"
+msgstr "Botón"
+
+#: inc/elementor/widgets/widget.form.php:559
+#: inc/elementor/widgets/widget.mailchimp.php:306
+msgid "Normal"
+msgstr "Normal"
+
+#: inc/elementor/widgets/widget.form.php:578
+#: inc/elementor/widgets/widget.form.php:613
+#: inc/elementor/widgets/widget.mailchimp.php:325
+#: inc/elementor/widgets/widget.mailchimp.php:360
+#: inc/elementor/widgets/widget.switcher.php:80
+msgid "Background Color"
+msgstr "Color de fondo"
+
+#: inc/elementor/widgets/widget.form.php:595
+#: inc/elementor/widgets/widget.mailchimp.php:342
+msgid "Hover"
+msgstr "Encima"
+
+#: inc/elementor/widgets/widget.form.php:624
+#: inc/elementor/widgets/widget.mailchimp.php:371
+#: inc/elementor/widgets/widget.switcher.php:103
+msgid "Border Color"
+msgstr "Color del borde"
+
+#: inc/elementor/widgets/widget.form.php:638
+#: inc/elementor/widgets/widget.mailchimp.php:385
+msgid "Hover Animation"
+msgstr "Animación al pasar ratón"
+
+#: inc/elementor/widgets/widget.form.php:681
+#: inc/elementor/widgets/widget.mailchimp.php:428
+#: inc/elementor/widgets/widget.recents-slider.php:729
+#: inc/elementor/widgets/widget.slider.php:563
+msgid "Padding"
+msgstr "Relleno"
+
+#: inc/elementor/widgets/widget.form.php:710
 #: inc/shortcodes/shortcodes.form.php:55
 msgid "files selected"
 msgstr "archivos seleccionados"
 
-#: inc/elementor/widgets/widget.form.php:418
+#: inc/elementor/widgets/widget.form.php:764
 #, php-format
 msgid ""
 "I have read, understood and accept the <a href=\"%s\" target=\"_blank"
@@ -689,36 +815,36 @@ msgstr ""
 "He leído, entiendo y acepto la <a href=“%s” target=“_blank”>política de "
 "privacidad</a>."
 
-#: inc/elementor/widgets/widget.mailchimp.php:19
-#: inc/elementor/widgets/widget.mailchimp.php:39
+#: inc/elementor/widgets/widget.mailchimp.php:24
+#: inc/elementor/widgets/widget.mailchimp.php:44
 msgid "Mailchimp form"
 msgstr "Formulario Mailchimp"
 
-#: inc/elementor/widgets/widget.mailchimp.php:54
+#: inc/elementor/widgets/widget.mailchimp.php:61
 msgid "List"
 msgstr "Lista"
 
-#: inc/elementor/widgets/widget.mailchimp.php:64
+#: inc/elementor/widgets/widget.mailchimp.php:71
 msgid "Double opt-in"
 msgstr "Doble verificación"
 
-#: inc/elementor/widgets/widget.mailchimp.php:96
+#: inc/elementor/widgets/widget.mailchimp.php:103
 msgid "Button text"
 msgstr "Texto del botón"
 
-#: inc/elementor/widgets/widget.mailchimp.php:136
+#: inc/elementor/widgets/widget.mailchimp.php:454
 #: inc/shortcodes/shortcodes.newsletter.php:36
 msgid "Unsubscribing..."
 msgstr "Cancelando suscripción…"
 
-#: inc/elementor/widgets/widget.mailchimp.php:147
+#: inc/elementor/widgets/widget.mailchimp.php:465
 #: inc/shortcodes/shortcodes.form.php:194
 #: inc/shortcodes/shortcodes.newsletter.php:56
 #: inc/shortcodes/shortcodes.newsletter.php:80
 msgid "Privacy policy"
 msgstr "Política de privacidad"
 
-#: inc/elementor/widgets/widget.mailchimp.php:151
+#: inc/elementor/widgets/widget.mailchimp.php:469
 #: inc/shortcodes/shortcodes.form.php:204
 #: inc/shortcodes/shortcodes.newsletter.php:60
 #: inc/shortcodes/shortcodes.newsletter.php:84
@@ -726,7 +852,7 @@ msgctxt "female"
 msgid "the"
 msgstr "la"
 
-#: inc/elementor/widgets/widget.mailchimp.php:154
+#: inc/elementor/widgets/widget.mailchimp.php:472
 #: inc/shortcodes/shortcodes.form.php:207
 #: inc/shortcodes/shortcodes.newsletter.php:63
 #: inc/shortcodes/shortcodes.newsletter.php:87
@@ -734,33 +860,33 @@ msgctxt "male"
 msgid "the"
 msgstr "el"
 
-#: inc/elementor/widgets/widget.mailchimp.php:158
+#: inc/elementor/widgets/widget.mailchimp.php:476
 #: inc/shortcodes/shortcodes.form.php:211
 #: inc/shortcodes/shortcodes.newsletter.php:67
 #: inc/shortcodes/shortcodes.newsletter.php:91
 msgid "I have read, understood and accept"
 msgstr "He leído, entiendo y acepto"
 
-#: inc/elementor/widgets/widget.mailchimp.php:164
+#: inc/elementor/widgets/widget.mailchimp.php:482
 #: inc/shortcodes/shortcodes.form.php:478
 #: inc/shortcodes/shortcodes.newsletter.php:51
 #: inc/shortcodes/shortcodes.newsletter.php:97
 msgid "Last name"
 msgstr "Apellidos"
 
-#: inc/elementor/widgets/widget.mailchimp.php:167
+#: inc/elementor/widgets/widget.mailchimp.php:485
 #: inc/shortcodes/shortcodes.newsletter.php:68
 #: inc/shortcodes/shortcodes.newsletter.php:100
 msgid "If you want to unsubscribe from our newsletter, click"
 msgstr "Si quieres darte de baja en nuestro boletín de noticias, pulsa"
 
-#: inc/elementor/widgets/widget.mailchimp.php:167
+#: inc/elementor/widgets/widget.mailchimp.php:485
 #: inc/shortcodes/shortcodes.newsletter.php:68
 #: inc/shortcodes/shortcodes.newsletter.php:100
 msgid "here"
 msgstr "aquí"
 
-#: inc/elementor/widgets/widget.mailchimp.php:168
+#: inc/elementor/widgets/widget.mailchimp.php:486
 #: inc/shortcodes/shortcodes.newsletter.php:101
 msgid "Subscribing"
 msgstr "Suscribiendo"
@@ -771,10 +897,15 @@ msgstr "Mapa"
 
 #: inc/elementor/widgets/widget.map.php:48
 #: inc/elementor/widgets/widget.map.php:163
+#: inc/elementor/widgets/widget.menu.php:72
+#: inc/elementor/widgets/widget.recents-slider.php:465
+#: inc/elementor/widgets/widget.recents-slider.php:527
+#: inc/elementor/widgets/widget.recents-slider.php:751
+#: inc/elementor/widgets/widget.recents-slider.php:798
 #: inc/elementor/widgets/widget.slider.php:278
 #: inc/elementor/widgets/widget.slider.php:340
-#: inc/elementor/widgets/widget.slider.php:581
-#: inc/elementor/widgets/widget.slider.php:630
+#: inc/elementor/widgets/widget.slider.php:585
+#: inc/elementor/widgets/widget.slider.php:634
 msgid "Center"
 msgstr "Centro"
 
@@ -783,6 +914,7 @@ msgid "Zoom Level"
 msgstr "Nivel de zoom"
 
 #: inc/elementor/widgets/widget.map.php:76
+#: inc/elementor/widgets/widget.recents-slider.php:548
 #: inc/elementor/widgets/widget.slider.php:382
 msgid "Height"
 msgstr "Altura"
@@ -860,249 +992,533 @@ msgstr "Abajo a la derecha"
 msgid "Bubble info"
 msgstr "Bocadillo de información"
 
+#: inc/elementor/widgets/widget.menu.php:19
+#: inc/elementor/widgets/widget.menu.php:38
+msgid "Menu"
+msgstr "Menú"
+
+#: inc/elementor/widgets/widget.menu.php:53
+msgid "Select menu"
+msgstr "Seleccionar menú"
+
+#: inc/elementor/widgets/widget.menu.php:64
+msgid "Alignment"
+msgstr "Alineación"
+
+#: inc/elementor/widgets/widget.menu.php:68
+#: inc/elementor/widgets/widget.recents-slider.php:461
+#: inc/elementor/widgets/widget.recents-slider.php:523
+#: inc/elementor/widgets/widget.recents-slider.php:678
+#: inc/elementor/widgets/widget.recents-slider.php:747
+#: inc/elementor/widgets/widget.recents-slider.php:794
+#: inc/elementor/widgets/widget.slider.php:274
+#: inc/elementor/widgets/widget.slider.php:336
+#: inc/elementor/widgets/widget.slider.php:512
+#: inc/elementor/widgets/widget.slider.php:581
+#: inc/elementor/widgets/widget.slider.php:630
+msgid "Left"
+msgstr "Izquierda"
+
+#: inc/elementor/widgets/widget.menu.php:76
+#: inc/elementor/widgets/widget.recents-slider.php:469
+#: inc/elementor/widgets/widget.recents-slider.php:531
+#: inc/elementor/widgets/widget.recents-slider.php:677
+#: inc/elementor/widgets/widget.recents-slider.php:755
+#: inc/elementor/widgets/widget.recents-slider.php:802
+#: inc/elementor/widgets/widget.slider.php:282
+#: inc/elementor/widgets/widget.slider.php:344
+#: inc/elementor/widgets/widget.slider.php:511
+#: inc/elementor/widgets/widget.slider.php:589
+#: inc/elementor/widgets/widget.slider.php:638
+msgid "Right"
+msgstr "Derecha"
+
+#: inc/elementor/widgets/widget.menu.php:90
+msgid "Main menu"
+msgstr "Menú principal"
+
+#: inc/elementor/widgets/widget.recents-slider.php:20
+msgid "Recent posts slider"
+msgstr "Pase de diapositivas de entradas recientes"
+
+#: inc/elementor/widgets/widget.recents-slider.php:40
+msgid "Query"
+msgstr "Consulta"
+
+#: inc/elementor/widgets/widget.recents-slider.php:83
+#: inc/elementor/widgets/widget.recents.php:150
+msgid "Posts to show"
+msgstr "Publicaciones a mostrar"
+
+#: inc/elementor/widgets/widget.recents-slider.php:92
+#: inc/elementor/widgets/widget.recents.php:180
+msgid "Complex Query"
+msgstr "Consulta compleja"
+
+#: inc/elementor/widgets/widget.recents-slider.php:105
+#: inc/elementor/widgets/widget.recents.php:196
+msgid "Query type"
+msgstr "Tipo de consulta"
+
+#: inc/elementor/widgets/widget.recents-slider.php:108
+#: inc/elementor/widgets/widget.recents.php:199
+msgid "Taxonomy query"
+msgstr "Consulta por taxonomía"
+
+#: inc/elementor/widgets/widget.recents-slider.php:109
+#: inc/elementor/widgets/widget.recents.php:200
+msgid "Meta query"
+msgstr "Consulta por metainformación"
+
+#: inc/elementor/widgets/widget.recents-slider.php:129
+#: inc/elementor/widgets/widget.recents.php:220
+msgid "Field "
+msgstr "Campo "
+
+#: inc/elementor/widgets/widget.recents-slider.php:140
+#: inc/elementor/widgets/widget.recents.php:231
+msgid "Terms"
+msgstr "Términos"
+
+#: inc/elementor/widgets/widget.recents-slider.php:162
+#: inc/elementor/widgets/widget.recents.php:253
+msgid "Value"
+msgstr "Valor"
+
+#: inc/elementor/widgets/widget.recents-slider.php:173
+#: inc/elementor/widgets/widget.recents.php:264
+msgid "Compare"
+msgstr "Comparativo"
+
+#: inc/elementor/widgets/widget.recents-slider.php:227
+#: inc/elementor/widgets/widget.recents.php:318
+msgid "Excluding (NOT IN)"
+msgstr "Exclusivo (NOT IN)"
+
+#: inc/elementor/widgets/widget.recents-slider.php:240
+#: inc/elementor/widgets/widget.recents.php:331
+msgid "Custom queries"
+msgstr "Consulta personalizada"
+
+#: inc/elementor/widgets/widget.recents-slider.php:255
+#: inc/elementor/widgets/widget.recents.php:346
+msgid "Taxonomy operator"
+msgstr "Operador de taxonomía"
+
+#: inc/elementor/widgets/widget.recents-slider.php:258
+#: inc/elementor/widgets/widget.recents-slider.php:274
+#: inc/elementor/widgets/widget.recents.php:349
+#: inc/elementor/widgets/widget.recents.php:365
+msgid "AND"
+msgstr "AND"
+
+#: inc/elementor/widgets/widget.recents-slider.php:259
+#: inc/elementor/widgets/widget.recents-slider.php:275
+#: inc/elementor/widgets/widget.recents.php:350
+#: inc/elementor/widgets/widget.recents.php:366
+msgid "OR"
+msgstr "OR"
+
+#: inc/elementor/widgets/widget.recents-slider.php:271
+#: inc/elementor/widgets/widget.recents.php:362
+msgid "Meta operator"
+msgstr "Operador de metainformación"
+
+#: inc/elementor/widgets/widget.recents-slider.php:289
+#: inc/elementor/widgets/widget.recents-slider.php:689
+#: inc/elementor/widgets/widget.slider.php:39
+#: inc/elementor/widgets/widget.slider.php:361
+#: inc/elementor/widgets/widget.slider.php:523
+msgid "Slides"
+msgstr "Diapositivas"
+
+#: inc/elementor/widgets/widget.recents-slider.php:295
+#: inc/elementor/widgets/widget.slider.php:47
+msgid "Background"
+msgstr "Fondo"
+
+#: inc/elementor/widgets/widget.recents-slider.php:300
+#: inc/elementor/widgets/widget.recents-slider.php:356
+#: inc/elementor/widgets/widget.slider.php:52
+#: inc/elementor/widgets/widget.slider.php:121
+#: inc/elementor/widgets/widget.switcher.php:69
+#: inc/elementor/widgets/widget.woocommerce.attribute.php:66
+msgid "Color"
+msgstr "Color"
+
+#: inc/elementor/widgets/widget.recents-slider.php:312
+#: inc/elementor/widgets/widget.slider.php:64
+msgid "Image"
+msgstr "Imagen"
+
+#: inc/elementor/widgets/widget.recents-slider.php:322
+#: inc/elementor/widgets/widget.slider.php:75
+msgid "Background size"
+msgstr "Tamaño del fondo"
+
+#: inc/elementor/widgets/widget.recents-slider.php:326
+#: inc/elementor/widgets/widget.slider.php:79
+msgid "Cover"
+msgstr "Cubrir"
+
+#: inc/elementor/widgets/widget.recents-slider.php:327
+#: inc/elementor/widgets/widget.slider.php:80
+msgid "Contain"
+msgstr "Contener"
+
+#: inc/elementor/widgets/widget.recents-slider.php:328
+#: inc/elementor/widgets/widget.slider.php:81
+msgid "Auto"
+msgstr "Auto"
+
+#: inc/elementor/widgets/widget.recents-slider.php:342
+#: inc/elementor/widgets/widget.slider.php:101
+msgid "Background Overlay"
+msgstr "Superposición de fondo"
+
+#: inc/elementor/widgets/widget.recents-slider.php:371
+#: inc/elementor/widgets/widget.slider.php:142
+msgid "Animation"
+msgstr "Animación"
+
+#: inc/elementor/widgets/widget.recents-slider.php:389
+#: inc/elementor/widgets/widget.slider.php:166
+msgid "Zoom in"
+msgstr "Acercar"
+
+#: inc/elementor/widgets/widget.recents-slider.php:390
+#: inc/elementor/widgets/widget.slider.php:167
+msgid "Zoom out"
+msgstr "Alejar"
+
+#: inc/elementor/widgets/widget.recents-slider.php:401
+#: inc/elementor/widgets/widget.slider.php:184
+msgid "Parallax"
+msgstr "Animación parallax"
+
+#: inc/elementor/widgets/widget.recents-slider.php:415
+#: inc/elementor/widgets/widget.slider.php:204
+msgid "Parallax speed"
+msgstr "Velocidad parallax"
+
+#: inc/elementor/widgets/widget.recents-slider.php:445
+#: inc/elementor/widgets/widget.slider.php:240
+msgid "Link"
+msgstr "Enlace"
+
+#: inc/elementor/widgets/widget.recents-slider.php:456
+#: inc/elementor/widgets/widget.recents-slider.php:741
+#: inc/elementor/widgets/widget.slider.php:269
+#: inc/elementor/widgets/widget.slider.php:575
+msgid "Horizontal Position"
+msgstr "Posición horizontal"
+
+#: inc/elementor/widgets/widget.recents-slider.php:487
+#: inc/elementor/widgets/widget.recents-slider.php:765
+#: inc/elementor/widgets/widget.slider.php:300
+#: inc/elementor/widgets/widget.slider.php:600
+msgid "Vertical Position"
+msgstr "Posición vertical"
+
+#: inc/elementor/widgets/widget.recents-slider.php:492
+#: inc/elementor/widgets/widget.recents-slider.php:771
+#: inc/elementor/widgets/widget.slider.php:305
+#: inc/elementor/widgets/widget.slider.php:606
+msgid "Top"
+msgstr "Superior"
+
+#: inc/elementor/widgets/widget.recents-slider.php:496
+#: inc/elementor/widgets/widget.recents-slider.php:775
+#: inc/elementor/widgets/widget.slider.php:309
+#: inc/elementor/widgets/widget.slider.php:610
+msgid "Middle"
+msgstr "Medio"
+
+#: inc/elementor/widgets/widget.recents-slider.php:500
+#: inc/elementor/widgets/widget.recents-slider.php:779
+#: inc/elementor/widgets/widget.slider.php:313
+#: inc/elementor/widgets/widget.slider.php:614
+msgid "Bottom"
+msgstr "Abajo"
+
+#: inc/elementor/widgets/widget.recents-slider.php:518
+#: inc/elementor/widgets/widget.recents-slider.php:789
+#: inc/elementor/widgets/widget.slider.php:331
+#: inc/elementor/widgets/widget.slider.php:625
+msgid "Text Align"
+msgstr "Alineación de Texto"
+
+#: inc/elementor/widgets/widget.recents-slider.php:580
+#: inc/elementor/widgets/widget.slider.php:414
+msgid "Slider Options"
+msgstr "Opciones del pase de diapositivas"
+
+#: inc/elementor/widgets/widget.recents-slider.php:588
+#: inc/elementor/widgets/widget.recents-slider.php:818
+#: inc/elementor/widgets/widget.slider.php:422
+#: inc/elementor/widgets/widget.slider.php:654
+msgid "Navigation"
+msgstr "Navegación"
+
+#: inc/elementor/widgets/widget.recents-slider.php:592
+#: inc/elementor/widgets/widget.slider.php:426
+msgid "Arrows and Dots"
+msgstr "Flechas y puntos"
+
+#: inc/elementor/widgets/widget.recents-slider.php:593
+#: inc/elementor/widgets/widget.recents-slider.php:829
+#: inc/elementor/widgets/widget.slider.php:427
+#: inc/elementor/widgets/widget.slider.php:665
+msgid "Arrows"
+msgstr "Flechas"
+
+#: inc/elementor/widgets/widget.recents-slider.php:594
+#: inc/elementor/widgets/widget.recents-slider.php:891
+#: inc/elementor/widgets/widget.slider.php:428
+#: inc/elementor/widgets/widget.slider.php:727
+msgid "Dots"
+msgstr "Puntos"
+
+#: inc/elementor/widgets/widget.recents-slider.php:595
+#: inc/elementor/widgets/widget.recents-slider.php:674
+#: inc/elementor/widgets/widget.slider.php:429
+#: inc/elementor/widgets/widget.slider.php:508
+msgid "None"
+msgstr "No"
+
+#: inc/elementor/widgets/widget.recents-slider.php:603
+#: inc/elementor/widgets/widget.slider.php:437
+msgid "Pause on Hover"
+msgstr "Pausar al posicionarse sobre el pase"
+
+#: inc/elementor/widgets/widget.recents-slider.php:613
+#: inc/elementor/widgets/widget.slider.php:447
+msgid "Autoplay"
+msgstr "Reproducción automática"
+
+#: inc/elementor/widgets/widget.recents-slider.php:623
+#: inc/elementor/widgets/widget.slider.php:457
+msgid "Autoplay Speed"
+msgstr "Velocidad de la reproducción automática"
+
+#: inc/elementor/widgets/widget.recents-slider.php:638
+#: inc/elementor/widgets/widget.slider.php:472
+msgid "Infinite Loop"
+msgstr "Repetición infinita"
+
+#: inc/elementor/widgets/widget.recents-slider.php:648
+#: inc/elementor/widgets/widget.slider.php:482
+msgid "Transition"
+msgstr "Transición"
+
+#: inc/elementor/widgets/widget.recents-slider.php:652
+#: inc/elementor/widgets/widget.slider.php:486
+msgid "Slide"
+msgstr "Diapositiva"
+
+#: inc/elementor/widgets/widget.recents-slider.php:653
+#: inc/elementor/widgets/widget.slider.php:487
+msgid "Fade"
+msgstr "Desvanecer"
+
+#: inc/elementor/widgets/widget.recents-slider.php:661
+#: inc/elementor/widgets/widget.slider.php:495
+msgid "Transition Speed (ms)"
+msgstr "Velocidad de transición (ms)"
+
+#: inc/elementor/widgets/widget.recents-slider.php:670
+#: inc/elementor/widgets/widget.slider.php:504
+msgid "Content Animation"
+msgstr "Animación del contenido"
+
+#: inc/elementor/widgets/widget.recents-slider.php:675
+#: inc/elementor/widgets/widget.slider.php:509
+msgid "Down"
+msgstr "Abajo"
+
+#: inc/elementor/widgets/widget.recents-slider.php:676
+#: inc/elementor/widgets/widget.slider.php:510
+msgid "Up"
+msgstr "Arriba"
+
+#: inc/elementor/widgets/widget.recents-slider.php:679
+#: inc/elementor/widgets/widget.slider.php:513
+msgid "Zoom"
+msgstr "Ampliar"
+
+#: inc/elementor/widgets/widget.recents-slider.php:697
+#: inc/elementor/widgets/widget.slider.php:531
+msgid "Content Width"
+msgstr "Ancho de contenido"
+
+#: inc/elementor/widgets/widget.recents-slider.php:841
+#: inc/elementor/widgets/widget.slider.php:677
+msgid "Arrows Position"
+msgstr "Posición de flechas"
+
+#: inc/elementor/widgets/widget.recents-slider.php:845
+#: inc/elementor/widgets/widget.recents-slider.php:908
+#: inc/elementor/widgets/widget.slider.php:681
+#: inc/elementor/widgets/widget.slider.php:744
+msgid "Inside"
+msgstr "Interior"
+
+#: inc/elementor/widgets/widget.recents-slider.php:846
+#: inc/elementor/widgets/widget.recents-slider.php:907
+#: inc/elementor/widgets/widget.slider.php:682
+#: inc/elementor/widgets/widget.slider.php:743
+msgid "Outside"
+msgstr "Exterior"
+
+#: inc/elementor/widgets/widget.recents-slider.php:857
+#: inc/elementor/widgets/widget.slider.php:693
+msgid "Arrows Size"
+msgstr "Tamaño de las flechas"
+
+#: inc/elementor/widgets/widget.recents-slider.php:877
+#: inc/elementor/widgets/widget.slider.php:713
+msgid "Arrows Color"
+msgstr "Color de las flechas"
+
+#: inc/elementor/widgets/widget.recents-slider.php:903
+#: inc/elementor/widgets/widget.slider.php:739
+msgid "Dots Position"
+msgstr "Posición de los puntos"
+
+#: inc/elementor/widgets/widget.recents-slider.php:919
+#: inc/elementor/widgets/widget.slider.php:755
+msgid "Dots Size"
+msgstr "Tamaño de los puntos"
+
+#: inc/elementor/widgets/widget.recents-slider.php:939
+#: inc/elementor/widgets/widget.slider.php:775
+msgid "Dots Color"
+msgstr "Color de los puntos"
+
 #: inc/elementor/widgets/widget.recents.php:19
 #: inc/elementor/widgets/widget.recents.php:38
 msgid "Recent post"
 msgstr "Publicaciones recientes"
 
-#: inc/elementor/widgets/widget.recents.php:84
-msgid "Posts to show"
-msgstr "Publicaciones a mostrar"
+#: inc/elementor/widgets/widget.recents.php:49
+msgid "Get from main query"
+msgstr "Consulta principal"
+
+#: inc/elementor/widgets/widget.recents.php:102
+msgid "Show pagination"
+msgstr "Mostrar paginación"
+
+#: inc/elementor/widgets/widget.recents.php:112
+msgid "Show totals"
+msgstr "Mostrar total"
+
+#: inc/elementor/widgets/widget.recents.php:125
+msgid "Show first and last"
+msgstr "Mostrar primero y último"
+
+#: inc/elementor/widgets/widget.recents.php:171
+msgid "Excerpt length"
+msgstr "Longitud del extracto"
+
+#: inc/elementor/widgets/widget.search.php:16
+#: inc/elementor/widgets/widget.search.php:35
+msgid "Search form"
+msgstr "Buscar desde"
+
+#: inc/elementor/widgets/widget.search.php:42
+msgid "Placeholder"
+msgstr "Marcador"
+
+#: inc/elementor/widgets/widget.search.php:44 searchform.php:3
+msgid "Search"
+msgstr "Buscar"
+
+#: inc/elementor/widgets/widget.search.php:51
+msgid "Limit search"
+msgstr "Afinar la búsqueda"
+
+#: inc/elementor/widgets/widget.search.php:72
+msgid "Limit search to:"
+msgstr "Afinar la búsqueda a:"
+
+#: inc/elementor/widgets/widget.share.php:16
+msgid "Share"
+msgstr "Compartir"
+
+#: inc/elementor/widgets/widget.share.php:36
+msgid "Share it"
+msgstr "Compártelo"
+
+#: inc/elementor/widgets/widget.share.php:43
+msgid "Facebook"
+msgstr "Facebook"
+
+#: inc/elementor/widgets/widget.share.php:53
+msgid "Twitter"
+msgstr "Twitter"
+
+#: inc/elementor/widgets/widget.share.php:63
+msgid "Twitter user"
+msgstr "Usuario de Twitter"
+
+#: inc/elementor/widgets/widget.share.php:74
+msgid "Google plus"
+msgstr "Google Plus"
+
+#: inc/elementor/widgets/widget.share.php:84
+msgid "Linkedin"
+msgstr "Linkedin"
+
+#: inc/elementor/widgets/widget.share.php:94
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#: inc/elementor/widgets/widget.share.php:104
+msgid "Mail"
+msgstr "Correo electrónico"
+
+#: inc/elementor/widgets/widget.share.php:132
+#: inc/shortcodes/shortcodes.social.php:278
+msgid "Share in Facebook"
+msgstr "Compartir en Facebook"
+
+#: inc/elementor/widgets/widget.share.php:140
+#: inc/shortcodes/shortcodes.social.php:275
+msgid "Share in Twitter"
+msgstr "Compartir en Twitter"
+
+#: inc/elementor/widgets/widget.share.php:144
+#: inc/shortcodes/shortcodes.social.php:281
+msgid "Share in Linkedin"
+msgstr "Compartir en Linkedin"
+
+#: inc/elementor/widgets/widget.share.php:148
+#: inc/shortcodes/shortcodes.social.php:284
+msgid "Share in Google +"
+msgstr "Compartir en Google +"
+
+#: inc/elementor/widgets/widget.share.php:153
+#: inc/shortcodes/shortcodes.social.php:288
+msgid "Share in Whatsapp"
+msgstr "Compartir en Whatsapp"
+
+#: inc/elementor/widgets/widget.share.php:158
+#: inc/shortcodes/shortcodes.social.php:292
+msgid "Share by email"
+msgstr "Compartir por correo electrónico"
 
 #: inc/elementor/widgets/widget.slider.php:20
 msgid "Slider"
 msgstr "Pase de diapositivas"
 
-#: inc/elementor/widgets/widget.slider.php:39
-#: inc/elementor/widgets/widget.slider.php:361
-#: inc/elementor/widgets/widget.slider.php:519
-msgid "Slides"
-msgstr "Diapositivas"
-
-#: inc/elementor/widgets/widget.slider.php:47
-msgid "Background"
-msgstr "Fondo"
-
-#: inc/elementor/widgets/widget.slider.php:52
-#: inc/elementor/widgets/widget.slider.php:121
-msgid "Color"
-msgstr "Color"
-
-#: inc/elementor/widgets/widget.slider.php:64
-msgid "Image"
-msgstr "Imagen"
-
-#: inc/elementor/widgets/widget.slider.php:75
-msgid "Background size"
-msgstr "Tamaño del fondo"
-
-#: inc/elementor/widgets/widget.slider.php:79
-msgid "Cover"
-msgstr "Cubrir"
-
-#: inc/elementor/widgets/widget.slider.php:80
-msgid "Contain"
-msgstr "Contener"
-
-#: inc/elementor/widgets/widget.slider.php:81
-msgid "Auto"
-msgstr "Auto"
-
-#: inc/elementor/widgets/widget.slider.php:101
-msgid "Background Overlay"
-msgstr "Superposición de fondo"
-
-#: inc/elementor/widgets/widget.slider.php:142
-msgid "Animation"
-msgstr "Animación"
-
-#: inc/elementor/widgets/widget.slider.php:166
-msgid "Zoom in"
-msgstr "Acercar"
-
-#: inc/elementor/widgets/widget.slider.php:167
-msgid "Zoom out"
-msgstr "Alejar"
-
-#: inc/elementor/widgets/widget.slider.php:184
-msgid "Parallax"
-msgstr "Animación parallax"
-
-#: inc/elementor/widgets/widget.slider.php:204
-msgid "Parallax speed"
-msgstr "Velocidad parallax"
-
 #: inc/elementor/widgets/widget.slider.php:232
 msgid "Enter your embed code here"
 msgstr "Introduce el código aquí"
 
-#: inc/elementor/widgets/widget.slider.php:240
-msgid "Link"
-msgstr "Enlace"
-
-#: inc/elementor/widgets/widget.slider.php:269
-#: inc/elementor/widgets/widget.slider.php:571
-msgid "Horizontal Position"
-msgstr "Posición horizontal"
-
-#: inc/elementor/widgets/widget.slider.php:274
-#: inc/elementor/widgets/widget.slider.php:336
-#: inc/elementor/widgets/widget.slider.php:508
-#: inc/elementor/widgets/widget.slider.php:577
-#: inc/elementor/widgets/widget.slider.php:626
-msgid "Left"
-msgstr "Izquierda"
-
-#: inc/elementor/widgets/widget.slider.php:282
-#: inc/elementor/widgets/widget.slider.php:344
-#: inc/elementor/widgets/widget.slider.php:507
-#: inc/elementor/widgets/widget.slider.php:585
-#: inc/elementor/widgets/widget.slider.php:634
-msgid "Right"
-msgstr "Derecha"
-
-#: inc/elementor/widgets/widget.slider.php:300
-#: inc/elementor/widgets/widget.slider.php:596
-msgid "Vertical Position"
-msgstr "Posición vertical"
-
-#: inc/elementor/widgets/widget.slider.php:305
-#: inc/elementor/widgets/widget.slider.php:602
-msgid "Top"
-msgstr "Superior"
-
-#: inc/elementor/widgets/widget.slider.php:309
-#: inc/elementor/widgets/widget.slider.php:606
-msgid "Middle"
-msgstr "Medio"
-
-#: inc/elementor/widgets/widget.slider.php:313
-#: inc/elementor/widgets/widget.slider.php:610
-msgid "Bottom"
-msgstr "Abajo"
-
-#: inc/elementor/widgets/widget.slider.php:331
-#: inc/elementor/widgets/widget.slider.php:621
-msgid "Text Align"
-msgstr "Alineación de Texto"
-
-#: inc/elementor/widgets/widget.slider.php:410
-msgid "Slider Options"
-msgstr "Opciones del pase de diapositivas"
-
-#: inc/elementor/widgets/widget.slider.php:418
-#: inc/elementor/widgets/widget.slider.php:650
-msgid "Navigation"
-msgstr "Navegación"
-
-#: inc/elementor/widgets/widget.slider.php:422
-msgid "Arrows and Dots"
-msgstr "Flechas y puntos"
-
-#: inc/elementor/widgets/widget.slider.php:423
-#: inc/elementor/widgets/widget.slider.php:661
-msgid "Arrows"
-msgstr "Flechas"
-
-#: inc/elementor/widgets/widget.slider.php:424
-#: inc/elementor/widgets/widget.slider.php:723
-msgid "Dots"
-msgstr "Puntos"
-
-#: inc/elementor/widgets/widget.slider.php:425
-#: inc/elementor/widgets/widget.slider.php:504
-msgid "None"
-msgstr "No"
-
-#: inc/elementor/widgets/widget.slider.php:433
-msgid "Pause on Hover"
-msgstr "Pausar al posicionarse sobre el pase"
-
-#: inc/elementor/widgets/widget.slider.php:443
-msgid "Autoplay"
-msgstr "Reproducción automática"
-
-#: inc/elementor/widgets/widget.slider.php:453
-msgid "Autoplay Speed"
-msgstr "Velocidad de la reproducción automática"
-
-#: inc/elementor/widgets/widget.slider.php:468
-msgid "Infinite Loop"
-msgstr "Repetición infinita"
-
-#: inc/elementor/widgets/widget.slider.php:478
-msgid "Transition"
-msgstr "Transición"
-
-#: inc/elementor/widgets/widget.slider.php:482
-msgid "Slide"
-msgstr "Diapositiva"
-
-#: inc/elementor/widgets/widget.slider.php:483
-msgid "Fade"
-msgstr "Desvanecer"
-
-#: inc/elementor/widgets/widget.slider.php:491
-msgid "Transition Speed (ms)"
-msgstr "Velocidad de transición (ms)"
-
-#: inc/elementor/widgets/widget.slider.php:500
-msgid "Content Animation"
-msgstr "Animación del contenido"
-
-#: inc/elementor/widgets/widget.slider.php:505
-msgid "Down"
-msgstr "Abajo"
-
-#: inc/elementor/widgets/widget.slider.php:506
-msgid "Up"
-msgstr "Arriba"
-
-#: inc/elementor/widgets/widget.slider.php:509
-msgid "Zoom"
-msgstr "Ampliar"
-
-#: inc/elementor/widgets/widget.slider.php:527
-msgid "Content Width"
-msgstr "Ancho de contenido"
-
-#: inc/elementor/widgets/widget.slider.php:559
-msgid "Padding"
-msgstr "Relleno"
-
-#: inc/elementor/widgets/widget.slider.php:673
-msgid "Arrows Position"
-msgstr "Posición de flechas"
-
-#: inc/elementor/widgets/widget.slider.php:677
-#: inc/elementor/widgets/widget.slider.php:740
-msgid "Inside"
-msgstr "Interior"
-
-#: inc/elementor/widgets/widget.slider.php:678
-#: inc/elementor/widgets/widget.slider.php:739
-msgid "Outside"
-msgstr "Exterior"
-
-#: inc/elementor/widgets/widget.slider.php:689
-msgid "Arrows Size"
-msgstr "Tamaño de las flechas"
-
-#: inc/elementor/widgets/widget.slider.php:709
-msgid "Arrows Color"
-msgstr "Color de las flechas"
-
-#: inc/elementor/widgets/widget.slider.php:735
-msgid "Dots Position"
-msgstr "Posición de los puntos"
-
-#: inc/elementor/widgets/widget.slider.php:751
-msgid "Dots Size"
-msgstr "Tamaño de los puntos"
-
-#: inc/elementor/widgets/widget.slider.php:771
-msgid "Dots Color"
-msgstr "Color de los puntos"
+#: inc/elementor/widgets/widget.switcher.php:18
+#: inc/elementor/widgets/widget.switcher.php:38
+msgid "Switcher"
+msgstr "Conmutador"
 
 #: inc/elementor/widgets/widget.taxonomies.php:16
 #: inc/elementor/widgets/widget.taxonomies.php:35
@@ -1127,14 +1543,38 @@ msgid "\"All\" url"
 msgstr "Url para “todos”"
 
 #: inc/elementor/widgets/widget.taxonomies.php:94
+msgid "Exclude terms, comma separated"
+msgstr "Excluir términos, separados por comas"
+
+#: inc/elementor/widgets/widget.taxonomies.php:103
 msgid "Show empty"
 msgstr "Mostrar incluso vacías"
 
-#: inc/elementor/widgets/widget.taxonomies.php:104
+#: inc/elementor/widgets/widget.taxonomies.php:113
 msgid "Show childrens"
 msgstr "Mostrar hijos"
 
-#: inc/functions/functions.admin.php:845
+#: inc/elementor/widgets/widget.woocommerce.add-to-cart.php:15
+msgid "Woocommerce add to cart button"
+msgstr "Botón añadir al carrito de Woocommerce"
+
+#: inc/elementor/widgets/widget.woocommerce.attribute.php:16
+msgid "Woocommercer attribute"
+msgstr "Atributos de Woocommerce"
+
+#: inc/elementor/widgets/widget.woocommerce.attribute.php:36
+msgid "Woocommerce"
+msgstr "Woocommerce"
+
+#: inc/elementor/widgets/widget.woocommerce.attribute.php:49
+msgid "Attribute"
+msgstr "Atributo"
+
+#: inc/elementor/widgets/widget.woocommerce.quantity.php:16
+msgid "Woocommerce quantity input"
+msgstr "Selector de cantidad de Woocommerce"
+
+#: inc/functions/functions.admin.php:846
 msgid "Title"
 msgstr "Titulo "
 
@@ -1145,6 +1585,13 @@ msgstr "Semanal"
 #: inc/functions/functions.cron.php:19
 msgid "Monthly"
 msgstr "Mensual"
+
+#: inc/functions/functions.elementor.php:47
+#, php-format
+msgid ""
+"The <strong>Elementor Header Footer</strong> plugin requires <strong><a href="
+"\"%s\">Elementor</strong></a> plugin installed & activated."
+msgstr ""
 
 #: inc/functions/functions.init.php:63
 msgid "author"
@@ -1422,30 +1869,6 @@ msgstr "No se ha establecido una clave API de Twitter"
 msgid "We share?"
 msgstr "¿Compartimos?"
 
-#: inc/shortcodes/shortcodes.social.php:275 single.php:91 single.php:118
-msgid "Share in Twitter"
-msgstr "Compartir en Twitter"
-
-#: inc/shortcodes/shortcodes.social.php:278 single.php:94 single.php:119
-msgid "Share in Facebook"
-msgstr "Compartir en Facebook"
-
-#: inc/shortcodes/shortcodes.social.php:281 single.php:97 single.php:120
-msgid "Share in Linkedin"
-msgstr "Compartir en Linkedin"
-
-#: inc/shortcodes/shortcodes.social.php:284 single.php:100 single.php:121
-msgid "Share in Google +"
-msgstr "Compartir en Google +"
-
-#: inc/shortcodes/shortcodes.social.php:288 single.php:104 single.php:123
-msgid "Share in Whatsapp"
-msgstr "Compartir en Whatsapp"
-
-#: inc/shortcodes/shortcodes.social.php:292 single.php:108 single.php:125
-msgid "Share by email"
-msgstr "Compartir por correo electrónico"
-
 #: php/subscriber.php:35
 #, php-format
 msgid ""
@@ -1489,14 +1912,6 @@ msgstr ""
 "Pruebe a redefinir su búsqueda utilizando otro término o visite la página "
 "principal."
 
-#: searchform.php:3
-msgid "Search"
-msgstr "Buscar"
-
-#: single.php:151
-msgid "Comment"
-msgstr "Comentario"
-
 #. Theme Name of the plugin/theme
 msgid "bilnea WordPress theme"
 msgstr "Tema de WordPress bilnea"
@@ -1517,3 +1932,9 @@ msgstr ""
 #. Author of the plugin/theme
 msgid "Samuel E. Cerezo"
 msgstr "Samuel E. Cerezo"
+
+#~ msgid "Nothing found"
+#~ msgstr "Sin resultados"
+
+#~ msgid "Comment"
+#~ msgstr "Comentario"

@@ -18,7 +18,7 @@ if (!function_exists('b_f_dashboard')) {
 
 		});
 
-			
+
 
 	}
 
@@ -28,7 +28,7 @@ if (!function_exists('b_f_dashboard')) {
 
 
 if (!function_exists('b_f_fonts')) {
-	
+
 	function b_f_fonts($var_font) {
 
 		$var_fonts = json_decode(b_f_get_file_content(get_template_directory_uri().'/inc/data/data.google.fonts.json'));
@@ -55,7 +55,7 @@ if (!function_exists('b_f_fonts')) {
 				<option value="inherit" selected data="">Heredada</option>
 
 				<?php
-				
+
 				foreach ($b_g_google_fonts as $key => $value) {
 					$var_current_font = b_f_option('b_opt_'.$var_font.'_ttf-font', true);
 					echo '<option value="'.$value['name'].'" '.selected($var_current_font, $value['name']).' data="'.implode(',', $value['sizes']).'">'.str_replace('+', ' ', $value['name']).'</option>';
@@ -140,7 +140,7 @@ if (!function_exists('b_f_smtp_server')) {
 		if (b_f_option('b_opt_smtp-secure') == 1 && b_f_option('b_opt_smtp-protocol') == 'tls') {
 			$var_smtp->SMTPSecure = 'tls';
 		}
-		
+
 		$var_smtp->IsSMTP();
 
 	}
@@ -149,7 +149,7 @@ if (!function_exists('b_f_smtp_server')) {
 
 
 if (!function_exists('b_f_create_page')) {
-	
+
 	function b_f_create_page($var_page, $var_title, $var_language = 'es', $var_noindex = true) {
 
 		include_once('inc/'.$var_language.'/'.$var_page.'.php');
@@ -275,7 +275,7 @@ function b_f_i_term_edit_featured_image($term) {
 	if (!$var_value) {
 		$var_value = '';
 	}
-		
+
 	?>
 
 	<tr class="form-field term-meta-featured-image-wrap">
@@ -334,7 +334,7 @@ function b_f_i_term_edit_featured_image($term) {
 
 
 function b_f_i_term_save_featured_image($term_id) {
-	
+
 	if (!isset($_POST['term_featured_image_nonce']) || !wp_verify_nonce($_POST['term_featured_image_nonce'], basename(__FILE__)))
 		return;
 
@@ -387,7 +387,7 @@ add_action('init', 'b_f_i_register_term_metabox', 50);
 
 
 if (!function_exists('b_f_i_encrypt_decrypt')) {
-	
+
 	function b_f_i_encrypt_decrypt($action, $raw) {
 
 		// Variables globales
@@ -488,7 +488,7 @@ if (!function_exists('b_f_rich_editor')) {
 	}
 
 	add_filter('user_can_richedit', 'b_f_rich_editor');
-	
+
 }
 
 
@@ -512,12 +512,12 @@ if (!function_exists('b_f_sanitize_upload')) {
 // Añadir tema al panel de administración
 
 if (!function_exists('b_f_admin_menu')) {
-	
+
 	function b_f_admin_menu() {
 
 		// Variables globales
 		global $b_g_icon;
-		
+
 		add_menu_page('Opciones del tema', 'bilnea', 'manage_options', 'bilnea', 'b_f_options_page', $b_g_icon, 75);
 	}
 
@@ -526,8 +526,8 @@ if (!function_exists('b_f_admin_menu')) {
 }
 
 if (!function_exists('b_f_subscribers_menu')) {
-	
-	function b_f_subscribers_menu() { 
+
+	function b_f_subscribers_menu() {
 		add_submenu_page('bilnea', 'Suscriptores', 'Suscriptores', 'manage_options', 'subscribers', 'bilnea_subscribers_page');
 	}
 
@@ -541,8 +541,8 @@ if (!function_exists('b_f_subscribers_menu')) {
 // Variable para almacenar las opciones del tema
 
 if (!function_exists('b_f_variables')) {
-	
-	function b_f_variables() { 
+
+	function b_f_variables() {
 		register_setting('pluginPage', 'bilnea_settings');
 	}
 
@@ -560,7 +560,7 @@ if (strlen(b_f_option('b_opt_wp-admin')) > 0) {
 		global $wp_query;
 
 		$wp_query->set_404();
-		
+
 		status_header(404);
 
 		die;
@@ -618,91 +618,91 @@ if (strlen(b_f_option('b_opt_wp-admin')) > 0) {
 	}
 
 	if (!function_exists('b_f_wploaded')) {
-		
+
 		function b_f_wploaded() {
-		
+
 			global $pagenow;
-			
+
 			if (is_admin() && !is_user_logged_in() && !defined('DOING_AJAX')) {
-				
+
 				global $wp_query;
 
 				$wp_query->set_404();
-			
+
 				status_header(404);
-			
+
 			}
-			
+
 			$request = parse_url($_SERVER['REQUEST_URI']);
-			
+
 			if ($pagenow === 'wp-login.php' && $request['path'] !== user_trailingslashit($request['path']) && get_option('permalink_structure')) {
 
 				wp_safe_redirect(user_trailingslashit(b_f_login_url()).(!empty($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : ''));
-				
+
 				die;
-			
+
 			} elseif ($wp_login_php) {
-				
+
 				if (($referer = wp_get_referer()) && strpos($referer, 'wp-activate.php') !== false && ($referer = parse_url($referer)) && !empty($referer['query'])) {
-					
+
 					parse_str($referer['query'], $referer);
-					
+
 					if (!empty($referer['key']) && ($result = wpmu_activate_signup($referer['key'])) && is_wp_error($result) && ($result->get_error_code() === 'already_active' || $result->get_error_code() === 'blog_taken')) {
-						
+
 						wp_safe_redirect(b_f_login_url().(!empty($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : ''));
-						
+
 						die;
-					
+
 					}
-				
+
 				}
-				
+
 				b_f_load_template();
-			
+
 			} elseif ($pagenow === 'wp-login.php') {
-				
+
 				global $error, $interim_login, $action, $user_login;
-				
+
 				@require_once ABSPATH.'wp-login.php';
-				
+
 				die;
-			
+
 			}
-		
+
 		}
 
 	}
 
 	if (!function_exists('b_f_filter_login')) {
-		
+
 		function b_f_filter_login($url, $scheme = null) {
-			
+
 			if (strpos($url, 'wp-login.php') !== false) {
-				
+
 				if (is_ssl()) {
-					
+
 					$scheme = 'https';
-				
+
 				}
-				
+
 				$args = explode('?', $url);
-				
+
 				if (isset($args[1])) {
-					
+
 					parse_str($args[1], $args);
-					
+
 					$url = add_query_arg($args, b_f_login_url($scheme));
-				
+
 				} else {
-					
+
 					$url = b_f_login_url($scheme);
-				
+
 				}
-			
+
 			}
-			
+
 			return $url;
-		
+
 		}
 
 	}
@@ -722,7 +722,7 @@ if (strlen(b_f_option('b_opt_wp-admin')) > 0) {
 	}
 
 	if (!function_exists('b_f_load_template')) {
-		
+
 		function b_f_load_template() {
 
 			global $pagenow;
@@ -747,73 +747,73 @@ if (strlen(b_f_option('b_opt_wp-admin')) > 0) {
 	}
 
 	if (is_admin() && !is_user_logged_in() && !defined('DOING_AJAX')) {
-		
+
 		global $wp_query;
 
 		$wp_query->set_404();
-		
+
 		status_header(404);
 
 	}
 
-	
+
 
 	if (!is_multisite() && (strpos($_SERVER['REQUEST_URI'], 'wp-signup') !== false || strpos($_SERVER['REQUEST_URI'], 'wp-activate') !== false)) {
-		
+
 		global $wp_query;
 
 		$wp_query->set_404();
 
 		status_header(404);
-	
+
 	}
 
 	if ((strpos($_SERVER['REQUEST_URI'], 'wp-login.php') !== false || untrailingslashit($request['path']) === b_f_site_url(site_url(), 'wp-login', 'relative')) && !is_admin()) {
 
 		$wp_login_php = true;
-		
+
 		$_SERVER['REQUEST_URI'] = user_trailingslashit('/'.str_repeat('-/', 10));
-		
+
 		$pagenow = 'index.php';
-	
+
 	} elseif (untrailingslashit($request['path']) === home_url(b_f_login_slug(), 'relative') || (!get_option('permalink_structure') && isset($_GET[b_f_login_slug()]) && empty($_GET[b_f_login_slug()]))) {
-	
+
 		$pagenow = 'wp-login.php';
-	
+
 	}
 
 	if ($pagenow === 'wp-login.php' && $request['path'] !== user_trailingslashit($request['path']) && get_option('permalink_structure')) {
-		
+
 		wp_safe_redirect(user_trailingslashit(b_f_login_url()).(!empty($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : ''));
-		
+
 		die;
-	
+
 	} elseif ($wp_login_php) {
-		
+
 		if (($referer = wp_get_referer()) && strpos($referer, 'wp-activate.php') !== false && ($referer = parse_url($referer)) && !empty($referer['query'])) {
-			
+
 			parse_str($referer['query'], $referer);
-			
+
 			if (!empty($referer['key']) && ($result = wpmu_activate_signup($referer['key'])) && is_wp_error($result) && ($result->get_error_code() === 'already_active' || $result->get_error_code() === 'blog_taken')) {
-				
+
 				wp_safe_redirect(b_f_login_url().(!empty($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : ''));
-				
+
 				die;
 
 			}
-		
+
 		}
-		
+
 		b_f_load_template();
-		
+
 	} elseif ($pagenow === 'wp-login.php') {
-		
+
 		global $error, $interim_login, $action, $user_login;
-		
+
 		@require_once ABSPATH.'wp-login.php';
-		
+
 		die;
-	
+
 	}
 }
 
@@ -833,33 +833,28 @@ remove_filter('pre_term_description', 'wp_filter_kses');
 // Restrucuración de columnas
 
 if (!function_exists('b_f_change_admin_columns')) {
-	
-	function b_f_change_admin_columns($var_columns) {
 
-		$var_new = array();
+	function b_f_change_admin_columns($columns) {
 
-		if (isset($var_columns['wpseo-title'])) {
+		if ($_GET['post_type'] != 'elementor_library') {
 
-			foreach($var_columns as $key => $value) {
+			// Variables locales
+			$new_columns = array();
 
+			foreach ($columns as $key => $value) {
 				if ($key == 'title') {
-					$var_new['title'] = __('Title');
-					$var_new['wpseo-metadesc'] = $var_columns['wpseo-metadesc'];
+					$new_columns['admin_thumb'] = '';
 				}
-
-				if (!in_array($key, array('title', 'wpseo-title', 'wpseo-metadesc'))) {
-					$var_new[$key] = $value;
-				}
-
+				$new_columns[$key] = $value;
 			}
+
+			return $new_columns;
 
 		} else {
 
-			return $var_columns;
+			return $columns;
 
 		}
-
-		return $var_new;  
 	}
 
 	add_filter('manage_edit-posts_columns', 'b_f_change_admin_columns', 10, 1);
@@ -868,10 +863,10 @@ if (!function_exists('b_f_change_admin_columns')) {
 }
 
 if (!function_exists('b_f_seo_title')) {
-	
+
 	function b_f_seo_title($var_title, $var_id) {
 
-		if (is_plugin_active('wordpress-seo/wp-seo.php')) {
+		if (is_plugin_active('wordpress-seo/wp-seo.php') && get_post_type($var_id) != 'elementor_library') {
 			$var_title =  WPSEO_Frontend::get_instance()->get_content_title(get_post($var_id));
 		}
 
@@ -919,7 +914,7 @@ if (!function_exists('b_f_admin_elementor')) {
 		if (b_f_option('b_opt_widget-'.$slug.'-'.$b_g_language) != 'none' && !is_null(b_f_option('b_opt_widget-'.$slug.'-'.$b_g_language)) && current_user_can('edit_pages')) {
 			$out.= '		<a data-type="elementor-link" target="_blank" href="'.trim(site_url(), '/').'/wp-admin/post.php?post='.b_f_option('b_opt_widget-'.$slug.'-'.$b_g_language).'&action=elementor">Editar bloque</a>'."\n";
 		}
-			
+
 		$out .= '</div>'."\n";
 
 		return $out;

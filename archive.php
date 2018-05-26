@@ -13,8 +13,17 @@ get_header();
 
 				global $b_g_language;
 
-				if (is_category()) {
-					echo do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-category-'.$b_g_language).'"]');
+				$object = get_queried_object();
+
+				if (isset($object->taxonomy)) {
+
+					$replacements = array(
+						'{{b_title}}' => $object->name,
+						'{{b_content}}' => $object->description,
+						'{{b_image}}' => wp_get_attachment_image_src(get_term_meta($object->term_id, '_term-featured-image', true), 'full')[0]
+					);
+
+					echo strtr(b_f_shortcode(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-'.$object->taxonomy.'-'.$b_g_language).'"]')), $replacements);
 				}
 
 				?>

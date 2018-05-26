@@ -27,21 +27,6 @@ jQuery(function($) {
 	});
 	var inp = 'input[name="bilnea_settings';
 	
-	$('#subir_imagen').click(function(e) {
-		e.preventDefault();
-		var imagen = wp.media({
-			title: 'Seleccionar imagen',
-			multiple: false
-		}).open().on(
-			'select', function(e) {
-				var imagen_sel = imagen.state().get('selection').first(),
-					imagen_url = imagen_sel.toJSON().url;
-				$('#logo_url').val(imagen_url);
-				$('#logo_principal').attr('style', 'background-image: url('+imagen_url+')');
-				$('#borra_logo').parent().show();
-			}
-		)
-	})
 	$('#subir_logo_inicio').click(function(e) {
 		e.preventDefault();
 		var imagen = wp.media({
@@ -67,127 +52,16 @@ jQuery(function($) {
 				var imagen_sel = imagen.state().get('selection').first(),
 					imagen_url = imagen_sel.toJSON().url;
 				$('#fav_main_url').val(imagen_url);
-				$('#favicon_div').attr('style', 'background-image: url('+imagen_url+')');
-				$('#borra_logo1').show();
+				$('#favicon').attr('style', 'background-image: url('+imagen_url+')');
+				$('#del-favicon').show();
 			}
 		)
-	})
-	$('#subir_iph_fav').click(function(e) {
-		e.preventDefault();
-		var imagen = wp.media({
-			title: 'Seleccionar imagen',
-			multiple: false
-		}).open().on(
-			'select', function(e) {
-				var imagen_sel = imagen.state().get('selection').first(),
-					imagen_url = imagen_sel.toJSON().url;
-				$('#iph_fav_url').val(imagen_url);
-				$('#iphone_div').attr('style', 'background-image: url('+imagen_url+')');
-				$('#borra_logo2').show();
-			}
-		)
-	})
-	$('#subir_iph_ret').click(function(e) {
-		e.preventDefault();
-		var imagen = wp.media({
-			title: 'Seleccionar imagen',
-			multiple: false
-		}).open().on(
-			'select', function(e) {
-				var imagen_sel = imagen.state().get('selection').first(),
-					imagen_url = imagen_sel.toJSON().url;
-				$('#iph_ret_url').val(imagen_url);
-				$('#iphoneret_div').attr('style', 'background-image: url('+imagen_url+')');
-				$('#borra_logo3').show();
-			}
-		)
-	})
-	$('#subir_ipa_fav').click(function(e) {
-		e.preventDefault();
-		var imagen = wp.media({
-			title: 'Seleccionar imagen',
-			multiple: false
-		}).open().on(
-			'select', function(e) {
-				var imagen_sel = imagen.state().get('selection').first(),
-					imagen_url = imagen_sel.toJSON().url;
-				$('#ipa_fav_url').val(imagen_url);
-				$('#ipad_div').attr('style', 'background-image: url('+imagen_url+')');
-				$('#borra_logo4').show();
-			}
-		)
-	})
-	$('#subir_ipa_ret').click(function(e) {
-		e.preventDefault();
-		var imagen = wp.media({
-			title: 'Seleccionar imagen',
-			multiple: false
-		}).open().on(
-			'select', function(e) {
-				var imagen_sel = imagen.state().get('selection').first(),
-					imagen_url = imagen_sel.toJSON().url;
-				$('#ipa_ret_url').val(imagen_url);
-				$('#ipadret_div').attr('style', 'background-image: url('+imagen_url+')');
-				$('#borra_logo5').show();
-			}
-		)
-	})
-	$('#subir_pos_log').click(function(e) {
-		e.preventDefault();
-		var imagen = wp.media({
-			title: 'Seleccionar imagen',
-			multiple: false
-		}).open().on(
-			'select', function(e) {
-				var imagen_sel = imagen.state().get('selection').first(),
-					imagen_url = imagen_sel.toJSON().url;
-				$('#pos_logo_url').val(imagen_url);
-				$('#positive_div').attr('style', 'background-image: url('+imagen_url+')');
-				$('#borra_logo6').show();
-			}
-		)
-	})
-	$('#subir_neg_log').click(function(e) {
-		e.preventDefault();
-		var imagen = wp.media({
-			title: 'Seleccionar imagen',
-			multiple: false
-		}).open().on(
-			'select', function(e) {
-				var imagen_sel = imagen.state().get('selection').first(),
-					imagen_url = imagen_sel.toJSON().url;
-				$('#neg_logo_url').val(imagen_url);
-				$('#negative_div').attr('style', 'background-image: url('+imagen_url+')');
-				$('#borra_logo7').show();
-			}
-		)
-	})
-	$('#logo_principal').click(function() {
-		$('#subir_imagen').click();
 	})
 	$('#logo_inicio').click(function() {
 		$('#subir_logo_inicio').click();
 	})
-	$('#favicon_div').click(function() {
+	$('#favicon').click(function() {
 		$('#subir_fav_main').click();
-	})
-	$('#iphone_div').click(function() {
-		$('#subir_iph_fav').click();
-	})
-	$('#iphoneret_div').click(function() {
-		$('#subir_iph_ret').click();
-	})
-	$('#ipad_div').click(function() {
-		$('#subir_ipa_fav').click();
-	})
-	$('#ipadret_div').click(function() {
-		$('#subir_ipa_ret').click();
-	})
-	$('#positive_div').click(function() {
-		$('#subir_pos_log').click();
-	})
-	$('#negative_div').click(function() {
-		$('#subir_neg_log').click();
 	})
 	$('.color').each(function() {
 		var c = $(this).closest('.color-container').next().find($('.color-alt')).val();
@@ -248,46 +122,11 @@ jQuery(function($) {
 			}
 		});
 	});
-	$('#borra_logo').click(function() {
-		$('#logo_url').val('');
-		$('#logo_principal').attr('style', 'background-image: url('+img_url+')');
-		$('#borra_logo').parent().hide();
-	})
-	$('#borra_logo1').click(function() {
+	$('#del-favicon').click(function() {
 		$('#fav_main_url').val('');
-		$('#favicon_div').attr('style', 'background-image: url()');
-		$('#borra_logo1').hide();
+		$('#favicon').attr('style', 'background-image: url()');
+		$('#del-favicon').hide();
 	})
-	$('#borra_logo2').click(function() {
-		$('#iph_fav_url').val('');
-		$('#iphone_div').attr('style', 'background-image: url()');
-		$('#borra_logo2').hide();
-	})
-	$('#borra_logo3').click(function() {
-		$('#iph_ret_url').val('');
-		$('#iphoneret_div').attr('style', 'background-image: url()');
-		$('#borra_logo3').hide();
-	})
-	$('#borra_logo4').click(function() {
-		$('#ipa_fav_url').val('');
-		$('#ipad_div').attr('style', 'background-image: url()');
-		$('#borra_logo4').hide();
-	})
-	$('#borra_logo5').click(function() {
-		$('#ipa_ret_url').val('');
-		$('#ipadret_div').attr('style', 'background-image: url()');
-		$('#borra_logo5').hide();
-	})
-	$('#borra_logo6').click(function() {
-		$('#pos_logo_url').val('');
-		$('#positive_div').attr('style', 'background-image: url()');
-		$('#borra_logo6').hide();
-	})
-	$('#borra_logo7').click(function() {
-		$('#neg_logo_url').val('');
-		$('#negative_div').attr('style', 'background-image: url()');
-		$('#borra_logo7').hide();
-	});
 	$('input.disabler').each(function() {
 		var t = $(this),
 			d = t.attr('data-connect');

@@ -45,6 +45,10 @@ class bilnea_Menu extends Widget_Base {
 			$types[$menu->term_id] = __($menu->name);
 		}
 
+		foreach (get_registered_nav_menus() as $menu => $name) {
+			$types['loc_'.$menu] = $name;
+		}
+
 		reset($types);
 
 		$this->add_control(
@@ -99,7 +103,7 @@ class bilnea_Menu extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .menu > li > a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} ul[class*="menu"] > li > a' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -109,7 +113,7 @@ class bilnea_Menu extends Widget_Base {
 			[
 				'name' => 'typography',
 				'scheme' => Scheme_Typography::TYPOGRAPHY_4,
-				'selector' => '{{WRAPPER}} .menu > li > a',
+				'selector' => '{{WRAPPER}} ul[class*="menu"] > li > a',
 			]
 		);
 
@@ -120,7 +124,7 @@ class bilnea_Menu extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors' => [
-					'{{WRAPPER}} .menu > li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} ul[class*="menu"] > li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -132,24 +136,30 @@ class bilnea_Menu extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors' => [
-					'{{WRAPPER}} .menu > li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} ul[class*="menu"] > li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
 
 		$this->end_controls_section();
-		
+
 	}
 
 	protected function render() {
 
 		$settings = $this->get_settings();
 
-		echo wp_nav_menu(array('menu' => $settings['menu']));
-		
+		if (substr($settings['menu'], 0, 4) == 'loc_') {
+			$args = array('theme_location' => substr($settings['menu'], 4));
+		} else {
+			$args = array('menu' => $settings['menu']);
+		}
+
+		echo wp_nav_menu($args);
+
 	}
 
 	protected function content_template() {
-		
+
 	}
 }

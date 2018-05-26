@@ -229,6 +229,15 @@ textarea {
 	*vertical-align: middle;
 }
 
+select {
+	-webkit-appearance: none;
+	width: 100%;
+	outline: 0;
+	border: 0;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
+}
+
 button,
 input {
 	line-height: normal;
@@ -645,6 +654,7 @@ pre {
 }
 
 a {
+	color: inherit;
 	-webkit-transition: all 0.25s ease-in-out;
 	     -o-transition: all 0.25s ease-in-out;
 	        transition: all 0.25s ease-in-out;

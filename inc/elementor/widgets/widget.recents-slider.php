@@ -948,11 +948,11 @@ class bilnea_Recent_Slider extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-		
+
 	}
 
 	protected function render() {
-		
+
 		$settings = $this->get_settings();
 
 		wp_enqueue_style('elementor.slider', get_template_directory_uri().'/css/internal/elementor.slider.css', array(), b_f_versions());
@@ -1002,73 +1002,105 @@ class bilnea_Recent_Slider extends Widget_Base {
 			$args['meta_query'] = $meta;
 		}
 
-		foreach (get_posts($args) as $post) {
-			$slide_html = $slide_attributes = '';
-			$btn_element = $slide_element = 'div';
+		$query = new \WP_Query($args);
 
-			if ($settings['full_link'] == 'yes') {
-				$this->add_render_attribute('slide_link'.$slide_count , 'href', get_permalink($post->ID));
+		if ($query->have_posts()) {
+			while ($query->have_posts()) {
+				$query->the_post();
+				$slide_html = $slide_attributes = '';
+				$btn_element = $slide_element = 'div';
 
-			    $slide_element = 'a';
-				$slide_attributes = $this->get_render_attribute_string('slide_link'.$slide_count);
-			}
+				if ($settings['full_link'] == 'yes') {
+					$this->add_render_attribute('slide_link'.$slide_count , 'href', get_permalink());
 
-			if ($settings['background_overlay'] == 'yes') {
-				$slide_html .= '<div class="elementor-background-overlay"></div>';
-			}
-
-			$shortcodes = array(
-				'{{b_title}}',
-				'{{b_permalink}}',
-				'{{b_link}}',
-				'{{b_date}}',
-				'{{b_image}}',
-				'{{b_excerpt}}');
-
-			$replace = array(
-				get_the_title($post->ID),
-				get_permalink($post->ID),
-				get_permalink($post->ID),
-				get_the_date(get_option('date_format()'), $post->ID),
-				wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full', true)[0],
-				wp_trim_words(get_the_content($post->ID))
-			);
-
-			$content = str_replace($shortcodes, $replace, $settings['slider_content']);
-
-			$content = preg_replace_callback("/{{b_tax-([a-z]+)}}/", function($matches) use($post) {
-				$terms = array();
-				foreach (wp_get_post_terms($post->ID, $matches[1]) as $term) {
-					array_push($terms, '<a href="'.get_term_link($term).'" data-term_id="'.$term->term_id.'">'.$term->name.'</a>');
+					$slide_element = 'a';
+					$slide_attributes = $this->get_render_attribute_string('slide_link'.$slide_count);
 				}
-				return implode(', ', $terms);
-			}, $content);
 
-			$slide_html .= '<div class="elementor-slide-content"><div class="elementor-slide-description">'.$content.'</div>';
-
-			$ken_class = '';
-
-			if ('' != $settings['background_animation']) {
-				$ken_class = ' elementor-ken-'.$settings['zoom_direction'];
-			}
-
-			$back_image = '';
-
-			if ('' != $settings['background_image']) {
-				$back_image = ' style="background-image: url('.wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full', true)[0].');"';
-			}
-
-			$slide_html .= '</div>';
-			$slide_html = '<div class="slick-slide-bg'.$ken_class.' elementor--h-position-'.$settings['horizontal_position'].' elementor--v-position-'.$settings['vertical_position'].'"'.$back_image.'></div><'.$slide_element.' '.$slide_attributes.' class="slick-slide-inner">'.$slide_html.'</'.$slide_element.'>';
-			$slide_html = preg_replace_callback("/{{b_tax-([a-z-_]+)}}/", function($matches) use($post) {
-				$terms = array();
-				foreach (wp_get_post_terms($post->ID, $matches[1]) as $term) {
-					array_push($terms, '<a href="'.get_term_link($term).'" data-term_id="'.$term->term_id.'">'.$term->name.'</a>');
+				if ($settings['background_overlay'] == 'yes') {
+					$slide_html .= '<div class="elementor-background-overlay"></div>';
 				}
-				return implode(', ', $terms);
-			}, $slide_html);
-			$slides[] = '<div class="elementor-repeater-item-'.$post->ID.' slick-slide">'.$slide_html.'</div>';
-			$slide_count++;
+
+				$replacements = array(
+					'{{b_title}}' => get_the_title(),
+					'{{b_permalink}}' => get_permalink(),
+					'{{b_link}}' => get_permalink(),
+					'{{b_date}}' => get_the_date(get_option('date_format()')),
+					'{{b_image}}' => wp_get_attachment_image_src(get_post_thumbnail_id(), 'full', true)[0],
+					'{{b_content}}' => get_the_content()
+				);
+
+				include(get_stylesheet_directory().'/elementor.php');
+
+				if (isset($b_recents_slider)) {
+					$replacements = array_merge($replacements, $b_recents_slider);
+				}
+
+				$content = strtr($settings['slider_content'], $replacements);
+
+				$post_id = get_the_ID();
+
+				$content = preg_replace_callback("/{{b_meta-([a-z_-]+)}}/", function($matches) use($post_id) {
+					return get_post_meta($post_id, $matches[1], true);
+				}, $content);
+
+				$content = preg_replace_callback("/{{b_excerpt(-)?([0-9]+)?}}/", function($matches) use($post_id) {
+					if (!isset($matches[2])) {
+						$matches[2] = 50;
+					}
+					return wp_trim_words(get_the_content($post_id), $matches[2]);
+				}, $content);
+
+				$content = preg_replace_callback("/{{b_tax-([a-z]+)}}/", function($matches) use($post_id) {
+					$terms = array();
+					foreach (wp_get_post_terms($post_id, $matches[1]) as $term) {
+						array_push($terms, '<a href="'.get_term_link($term).'" data-term_id="'.$term->term_id.'">'.$term->name.'</a>');
+					}
+					return implode(', ', $terms);
+				}, $content);
+
+				$content = preg_replace_callback("/{{b_tax_name-([a-z]+)}}/", function($matches) use($post_id) {
+					$terms = array();
+					foreach (wp_get_post_terms($post_id, $matches[1]) as $term) {
+						array_push($terms, $term->name);
+					}
+					return implode(', ', $terms);
+				}, $content);
+
+				$slide_html .= '<div class="elementor-slide-content"><div class="elementor-slide-description">'.$content.'</div>';
+
+				$ken_class = '';
+
+				if ('' != $settings['background_animation']) {
+					$ken_class = ' elementor-ken-'.$settings['zoom_direction'];
+				}
+
+				$back_image = '';
+
+				if ('' != $settings['background_image']) {
+					$back_image = ' style="background-image: url('.wp_get_attachment_image_src(get_post_thumbnail_id(), 'full', true)[0].');"';
+				}
+
+				$slide_html .= '</div>';
+				$slide_html = '<div class="slick-slide-bg'.$ken_class.' elementor--h-position-'.$settings['horizontal_position'].' elementor--v-position-'.$settings['vertical_position'].'"'.$back_image.'></div><'.$slide_element.' '.$slide_attributes.' class="slick-slide-inner">'.$slide_html.'</'.$slide_element.'>';
+				$slide_html = preg_replace_callback("/{{b_tax-([a-z-_]+)}}/", function($matches) use($post_id) {
+					$terms = array();
+					foreach (wp_get_post_terms($post_id, $matches[1]) as $term) {
+						array_push($terms, '<a href="'.get_term_link($term).'" data-term_id="'.$term->term_id.'">'.$term->name.'</a>');
+					}
+					return implode(', ', $terms);
+				}, $slide_html);
+				$slide_html = preg_replace_callback("/{{b_tax_name-([a-z-_]+)}}/", function($matches) use($post_id) {
+					$terms = array();
+					foreach (wp_get_post_terms($post_id, $matches[1]) as $term) {
+						array_push($terms, $term->name);
+					}
+					return implode(', ', $terms);
+				}, $slide_html);
+				$slides[] = '<div class="elementor-repeater-item-'.get_the_ID().' slick-slide">'.$slide_html.'</div>';
+				$slide_count++;
+			}
+			wp_reset_postdata();
 		}
 
 		$is_rtl = is_rtl();
@@ -1115,10 +1147,9 @@ class bilnea_Recent_Slider extends Widget_Base {
 			</div>
 		</div>
 		<?php
-		
 	}
 
 	protected function content_template() {
-		
+
 	}
 }

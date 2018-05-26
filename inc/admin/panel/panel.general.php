@@ -82,6 +82,32 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 	¡IMPORTANTE! Recuerda guardar esta url. Será la nueva ruta de acceso al panel de administración de WordPress y el acceso wp-admin ya no funcionará.
 </div>
 
+<!-- Favicon -->
+
+<h4 data-type="title">Icono web</h4>
+
+<div data-type="block">
+	<div class="favicon iconico" id="favicon"></div>
+	<div>
+		<i class="fa fa-trash" id="del-favicon"></i>Icono del sitio web
+		<br />
+		<?php
+		if (b_f_option('b_opt_favicon')) {
+		?>
+		<script type="text/javascript">
+			jQuery('#favicon').attr('style', 'background-image: url(<?= b_f_option('b_opt_favicon'); ?>)');
+			jQuery('#del-favicon').show();
+		</script>
+		<?php
+		}
+		?>
+		<input type="text" id="fav_main_url" class="gran" name="bilnea_settings[b_opt_favicon]" style="width: calc(100% - 32px);" value="<?= b_f_option('b_opt_favicon') ?>">
+		<button type="submit" id="subir_fav_main" value="Seleccionar imagen" class="button-secondary subir-imagen">
+			<i class="fa fa-search" style="font-size: 12px;"></i>
+		</button>
+	</div>
+</div>
+
 
 <!-- Redes sociales -->
 
