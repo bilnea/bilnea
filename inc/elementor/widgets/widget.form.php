@@ -38,6 +38,13 @@ class bilnea_Form extends Widget_Base {
 	}
 
 	protected function _register_controls() {
+
+		if (function_exists('pll_current_language')) {
+			add_filter('locale', function($locale) {
+				return pll_current_language('locale');
+			});
+		}
+
 		$this->start_controls_section(
 			'section_form',
 			[
@@ -104,8 +111,7 @@ class bilnea_Form extends Widget_Base {
 				'default' => '',
 				'separator' => 'none',
 				'condition' => [
-					'type' => array('header', 'html'),
-					'compare' => '!='
+					'type' => array('text', 'subject', 'email', 'number', 'radio', 'checkbox', 'select', 'legal', 'file', 'textarea')
 				]
 			]
 		);
@@ -166,7 +172,7 @@ class bilnea_Form extends Widget_Base {
 			'raw_content',
 			[
 				'label' => __('HTML content', 'bilnea'),
-				'type' => Controls_Manager::RAW_HTML,
+				'type' => Controls_Manager::CODE,
 				'default' => '',
 				'condition' => [
 					'type' => array('html')
@@ -195,13 +201,10 @@ class bilnea_Form extends Widget_Base {
 				'label' => __('Content Width', 'bilnea'),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 1000,
-					],
 					'%' => [
 						'min' => 0,
 						'max' => 100,
+						'step' => 10
 					],
 				],
 				'size_units' => ['%'],
@@ -214,9 +217,6 @@ class bilnea_Form extends Widget_Base {
 				],
 				'mobile_default' => [
 					'unit' => '%',
-				],
-				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'none'
 			]
@@ -734,13 +734,19 @@ class bilnea_Form extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-		
+
 	}
 
 	protected function render() {
-		
+
 		// Variables globales
 		global $b_g_language;
+
+		if (function_exists('pll_current_language')) {
+			add_filter('locale', function($locale) {
+				return pll_current_language('locale');
+			});
+		}
 
 		$settings = $this->get_settings();
 
@@ -793,21 +799,31 @@ class bilnea_Form extends Widget_Base {
 				$data = '';
 			}
 
+			$classes = ' elementor-col-'.(('' !== $input['width']['size'] ) ? $input['width']['size'] : '100');
+
+			if ($input['width_tablet']['size'] != '') {
+				$classes .= ' elementor-md-'.(('' !== $input['width_tablet']['size'] ) ? $input['width_tablet']['size'] : '100');
+			}
+
+			if ($input['width_mobile']['size'] != '') {
+				$classes .= ' elementor-sm-'.(('' !== $input['width_mobile']['size'] ) ? $input['width_mobile']['size'] : '100');
+			}
+
 			switch ($input['type']) {
 
 				case 'header':
-					$out .= '<div class="form-control elementor-column" data-type="header">'.$input['label'].'</div>';
+					$out .= '<div class="form-control elementor-column'.$classes.'" data-type="header">'.$input['label'].'</div>';
 					break;
 
 				case 'html':
-					$out .= '<div class="form-control elementor-column" data-type="html">'.$input['raw_content'].'</div>';
+					$out .= '<div class="form-control elementor-column'.$classes.'" data-type="html">'.$input['raw_content'].'</div>';
 					break;
 
 				case 'email':
 					if ($input['placeholder'] == 'yes') {
-						$out .= '<div class="form-control elementor-column"><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="email"'.(($input['reply'] == 'yes') ? ' data-reply="yes"' : '').' type="text" name="b_i_email-'.$this->get_id().$i.'" placeholder="'.$input['label'].'" /></div>';
+						$out .= '<div class="form-control elementor-column'.$classes.'"><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="email"'.(($input['reply'] == 'yes') ? ' data-reply="yes"' : '').' type="text" name="b_i_email-'.$this->get_id().$i.'" placeholder="'.$input['label'].'" /></div>';
 					} else {
-						$out .= '<div class="form-control elementor-column"><label><span>'.$input['label'].'</span><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="email"'.(($input['reply'] == 'yes') ? ' data-reply="yes"' : '').' type="text" name="b_i_email-'.$this->get_id().$i.'" /></label></div>';
+						$out .= '<div class="form-control elementor-column'.$classes.'"><label><span>'.$input['label'].'</span><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="email"'.(($input['reply'] == 'yes') ? ' data-reply="yes"' : '').' type="text" name="b_i_email-'.$this->get_id().$i.'" /></label></div>';
 					}
 					break;
 
@@ -816,16 +832,16 @@ class bilnea_Form extends Widget_Base {
 					if (empty($label)) {
 						$label = sprintf(__('I have read, understood and accept the <a href="%s" target="_blank">privacy policy</a>.', 'bilnea'), get_permalink(b_f_option('b_opt_privacy-policy-'.$b_g_language)));
 					}
-					$out .= '<div class="form-control elementor-column" data-input="html">';
+					$out .= '<div class="form-control elementor-column'.$classes.'" data-input="legal">';
 					$out .= '<input class="b_input_checkbox"'.$data.' data-name="'.__('Legal notice', 'bilnea').'" data-type="legal" type="checkbox" id="legal-'.$this->get_id().$i.'" name="b_i_legal-'.$this->get_id().$i.'">';
 					$out .= '<label for="legal-'.$this->get_id().$i.'">'.$label.'</label></div>';
 					break;
 
 				case 'number':
 					if ($input['placeholder'] == 'yes') {
-						$out .= '<div class="form-control elementor-column"><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="number" type="number" name="b_i_number-'.$this->get_id().$i.'" placeholder="'.$input['label'].'" /></div>';
+						$out .= '<div class="form-control elementor-column'.$classes.'"><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="number" type="number" name="b_i_number-'.$this->get_id().$i.'" placeholder="'.$input['label'].'" /></div>';
 					} else {
-						$out .= '<div class="form-control elementor-column"><label><span>'.$input['label'].'</span><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="number" type="number" name="b_i_number-'.$this->get_id().$i.'" /></label></div>';
+						$out .= '<div class="form-control elementor-column'.$classes.'"><label><span>'.$input['label'].'</span><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="number" type="number" name="b_i_number-'.$this->get_id().$i.'" /></label></div>';
 					}
 					break;
 
@@ -840,26 +856,44 @@ class bilnea_Form extends Widget_Base {
 						}
 					}
 					if ($input['placeholder'] == 'yes') {
-						$out .= '<div class="form-control elementor-column form-select"><select class="input"'.$data.' data-name="'.$input['label'].'" data-type="select" name="b_i_select-'.$this->get_id().$i.'"><option selected disabled>'.$input['label'].'</option>'.$options.'</select></div>';
+						$out .= '<div class="form-control elementor-column'.$classes.' form-select" data-type="select"><select class="input"'.$data.' data-name="'.$input['label'].'" data-type="select" name="b_i_select-'.$this->get_id().$i.'"><option selected disabled>'.$input['label'].'</option>'.$options.'</select></div>';
 					} else {
-						$out .= '<div class="form-control elementor-column"><label><span>'.$input['label'].'</span><select class="input"'.$data.' data-name="'.$input['label'].'" data-type="select" name="b_i_select-'.$this->get_id().$i.'">'.$options.'</select></label></div>';
+						$out .= '<div class="form-control elementor-column'.$classes.'" data-type="select"><label><span>'.$input['label'].'</span><select class="input"'.$data.' data-name="'.$input['label'].'" data-type="select" name="b_i_select-'.$this->get_id().$i.'">'.$options.'</select></label></div>';
 					}
 					break;
 
 				case 'text':
 					if ($input['placeholder'] == 'yes') {
-						$out .= '<div class="form-control elementor-column"><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="text" type="text" name="b_i_text-'.$this->get_id().$i.'" placeholder="'.$input['label'].'" /></div>';
+						$out .= '<div class="form-control elementor-column'.$classes.'" data-type="text"><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="text" type="text" name="b_i_text-'.$this->get_id().$i.'" placeholder="'.$input['label'].'" /></div>';
 					} else {
-						$out .= '<div class="form-control elementor-column"><label><span>'.$input['label'].'</span><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="text" type="text" name="b_i_text-'.$this->get_id().$i.'" /></label></div>';
+						$out .= '<div class="form-control elementor-column'.$classes.'" data-type="text"><label><span>'.$input['label'].'</span><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="text" type="text" name="b_i_text-'.$this->get_id().$i.'" /></label></div>';
 					}
 					break;
 
 				case 'textarea':
 					if ($input['placeholder'] == 'yes') {
-						$out .= '<div class="form-control elementor-column"><textarea'.$data.' data-name="'.$input['label'].'" data-type="textarea" name="b_i_textarea-'.$this->get_id().$i.'" class="input" placeholder="'.$input['label'].'" rows="'.$input['rows'].'"></textarea></div>';
+						$out .= '<div class="form-control elementor-column'.$classes.'" data-input="textarea"><textarea'.$data.' data-name="'.$input['label'].'" data-type="textarea" name="b_i_textarea-'.$this->get_id().$i.'" class="input" placeholder="'.$input['label'].'" rows="'.$input['rows'].'"></textarea></div>';
 					} else {
-						$out .= '<div class="form-control elementor-column"><label><span>'.$input['label'].'</span><textarea'.$data.' data-name="'.$input['label'].'" data-type="textarea" name="b_i_textarea-'.$this->get_id().$i.'" class="input" rows="'.$input['rows'].'"></textarea></label></div>';
+						$out .= '<div class="form-control elementor-column'.$classes.'"><label><span>'.$input['label'].'</span><textarea'.$data.' data-name="'.$input['label'].'" data-type="textarea" name="b_i_textarea-'.$this->get_id().$i.'" class="input" rows="'.$input['rows'].'"></textarea></label></div>';
 					}
+					break;
+
+				case 'radio':
+					$out .= '<div class="form-control elementor-column'.$classes.'" data-input="radio">';
+					$i = 0;
+					$uid = uniqid();
+					foreach (explode("\n", $input['options']) as $option) {
+						$values = explode('::', $option);
+						if (count($values) > 1) {
+							$out .= '<input class="b_input_radio"'.$data.' data-name="'.$input['label'].'" type="radio" id="radio-'.$uid.$i.'" name="radio-'.$uid.'" value="'.$values[0].'">';
+							$out .= '<label>'.$values[1].'</label>';
+						} else {
+							$out .= '<input class="b_input_radio"'.$data.' data-name="'.$input['label'].'" type="radio" id="radio-'.$uid.$i.'" name="radio-'.$uid.'" value="'.$values[0].'">';
+							$out .= '<label for="radio-'.$uid.$i.'">'.$values[0].'</label>';
+						}
+						$i++;
+					}
+					$out .= '</div>';
 					break;
 
 			}
@@ -887,10 +921,10 @@ class bilnea_Form extends Widget_Base {
 		$out .= '</form>';
 
 		echo $out;
-		
+
 	}
 
 	protected function content_template() {
-		
+
 	}
 }

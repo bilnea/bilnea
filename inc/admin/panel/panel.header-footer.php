@@ -10,125 +10,41 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 <?php
 
-if (function_exists('icl_object_id')) {
+if (function_exists('pll_languages_list')) {
 
-	// Variables globales
-	global $sitepress;
+	$count = 0;
 
-	// Variables locales
-	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	foreach (get_terms(array('taxonomy' => 'term_language', 'hide_empty' => false)) as $language) {
 
-	if (!empty($var_languages)) {
+		echo ($count != 0) ? '<br /><br />' : '';
 
-		$i = 0;
+		?>
 
-		foreach ($var_languages as $var_language) {
+		<strong style="display: block;"><?= $language->name ?></strong>
 
-			$sitepress->switch_lang($var_language['language_code']);
+		<?= b_f_admin_elementor('Cabecera de página', 'header-'.str_replace('pll_', '', str_replace('pll_', '', $language->slug))) ?>
 
-			?>
+		<hr />
 
-			<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-				Cabecera de página (<?= strtolower($var_language['translated_name']); ?>)
-			</div>
+		<?= b_f_admin_elementor('Cabecera móvil', 'mobile-header-'.str_replace('pll_', '', str_replace('pll_', '', $language->slug))) ?>
 
-			<div style="width: calc(50% - 10px); display: inline-block;">
+		<hr />
 
-				<select name="bilnea_settings[b_opt_widget-header-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
-					<option value="none" selected>Seleccionar widget</option>
+		<?= b_f_admin_elementor('Menú móvil', 'mobile-menu-'.str_replace('pll_', '', str_replace('pll_', '', $language->slug))) ?>
 
-					<?php
+		<?php
 
-					$args = array(
-						'post_type'		 => 'elementor_library',
-						'posts_per_page' => -1,
-						'post_status'	 => 'publish'
-					);
-
-					foreach (get_posts($args) as $widget) {
-						echo '<option value="'.$widget->ID.'" '.selected(b_f_option('b_opt_widget-header-'.$var_language['language_code']), $widget->ID).'>'.$widget->post_title.'</option>';
-					}
-
-					?>
-
-				</select>
-
-			</div>
-
-			<hr />
-
-			<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-				Cabecera móvil (<?= strtolower($var_language['translated_name']); ?>)
-			</div>
-
-			<div style="width: calc(50% - 10px); display: inline-block;">
-
-				<select name="bilnea_settings[b_opt_widget-mobile-header-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
-					<option value="none" selected>Seleccionar widget</option>
-
-					<?php
-
-					$args = array(
-						'post_type'		 => 'elementor_library',
-						'posts_per_page' => -1,
-						'post_status'	 => 'publish'
-					);
-
-					foreach (get_posts($args) as $widget) {
-						echo '<option value="'.$widget->ID.'" '.selected(b_f_option('b_opt_widget-mobile-header-'.$var_language['language_code']), $widget->ID).'>'.$widget->post_title.'</option>';
-					}
-
-					?>
-
-				</select>
-
-			</div>
-
-			<hr />
-
-			<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-				Menú móvil (<?= strtolower($var_language['translated_name']); ?>)
-			</div>
-
-			<div style="width: calc(50% - 10px); display: inline-block;">
-
-				<select name="bilnea_settings[b_opt_widget-mobile-menu-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
-					<option value="none" selected>Seleccionar widget</option>
-
-					<?php
-
-					$args = array(
-						'post_type'		 => 'elementor_library',
-						'posts_per_page' => -1,
-						'post_status'	 => 'publish'
-					);
-
-					foreach (get_posts($args) as $widget) {
-						echo '<option value="'.$widget->ID.'" '.selected(b_f_option('b_opt_widget-mobile-menu-'.$var_language['language_code']), $widget->ID).'>'.$widget->post_title.'</option>';
-					}
-
-					?>
-
-				</select>
-
-			</div>
-			
-			<?php
-
-			$i++;
-		}
+		$count++;
 
 	}
 
-	$sitepress->switch_lang('es');
-
 } else {
 
-	echo b_f_admin_elementor('Cabecera de página', 'header');
+	echo b_f_admin_elementor('Cabecera de página', 'header-es');
 
-	echo b_f_admin_elementor('Cabecera móvil', 'mobile-header');
+	echo b_f_admin_elementor('Cabecera móvil', 'mobile-header-es');
 
-	echo b_f_admin_elementor('Menú móvil', 'mobile-menu');
+	echo b_f_admin_elementor('Menú móvil', 'mobile-menu-es');
 
 }
 
@@ -150,117 +66,25 @@ if (function_exists('icl_object_id')) {
 
 <?php
 
-if (function_exists('icl_object_id')) {
+if (function_exists('pll_languages_list')) {
 
-	// Variables globales
-	global $sitepress;
+	$count = 0;
 
-	// Variables locales
-	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	foreach (get_terms(array('taxonomy' => 'term_language', 'hide_empty' => false)) as $language) {
 
-	if (!empty($var_languages)) {
+		echo ($count != 0) ? '<br /><br />' : '';
 
-		$i = 0;
+		?>
 
-		foreach ($var_languages as $var_language) {
+		<strong style="display: block;"><?= $language->name ?></strong>
 
-			$sitepress->switch_lang($var_language['language_code']);
+		<?= b_f_admin_elementor('Pie de página', 'footer-'.str_replace('pll_', '', str_replace('pll_', '', $language->slug))) ?>
 
-			?>
+		<?php
 
-			<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-				Cabecera de página (<?= strtolower($var_language['translated_name']); ?>)
-			</div>
-
-			<div style="width: calc(50% - 10px); display: inline-block;">
-
-				<select name="bilnea_settings[b_opt_widget-header-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
-					<option value="none" selected>Seleccionar widget</option>
-
-					<?php
-
-					$args = array(
-						'post_type'		 => 'elementor_library',
-						'posts_per_page' => -1,
-						'post_status'	 => 'publish'
-					);
-
-					foreach (get_posts($args) as $widget) {
-						echo '<option value="'.$widget->ID.'" '.selected(b_f_option('b_opt_widget-header-'.$var_language['language_code']), $widget->ID).'>'.$widget->post_title.'</option>';
-					}
-
-					?>
-
-				</select>
-
-			</div>
-
-			<hr />
-
-			<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-				Cabecera móvil (<?= strtolower($var_language['translated_name']); ?>)
-			</div>
-
-			<div style="width: calc(50% - 10px); display: inline-block;">
-
-				<select name="bilnea_settings[b_opt_widget-mobile-header-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
-					<option value="none" selected>Seleccionar widget</option>
-
-					<?php
-
-					$args = array(
-						'post_type'		 => 'elementor_library',
-						'posts_per_page' => -1,
-						'post_status'	 => 'publish'
-					);
-
-					foreach (get_posts($args) as $widget) {
-						echo '<option value="'.$widget->ID.'" '.selected(b_f_option('b_opt_widget-mobile-header-'.$var_language['language_code']), $widget->ID).'>'.$widget->post_title.'</option>';
-					}
-
-					?>
-
-				</select>
-
-			</div>
-
-			<hr />
-
-			<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-				Menú móvil (<?= strtolower($var_language['translated_name']); ?>)
-			</div>
-
-			<div style="width: calc(50% - 10px); display: inline-block;">
-
-				<select name="bilnea_settings[b_opt_widget-mobile-menu-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
-					<option value="none" selected>Seleccionar widget</option>
-
-					<?php
-
-					$args = array(
-						'post_type'		 => 'elementor_library',
-						'posts_per_page' => -1,
-						'post_status'	 => 'publish'
-					);
-
-					foreach (get_posts($args) as $widget) {
-						echo '<option value="'.$widget->ID.'" '.selected(b_f_option('b_opt_widget-mobile-menu-'.$var_language['language_code']), $widget->ID).'>'.$widget->post_title.'</option>';
-					}
-
-					?>
-
-				</select>
-
-			</div>
-			
-			<?php
-
-			$i++;
-		}
+		$count++;
 
 	}
-
-	$sitepress->switch_lang('es');
 
 } else {
 

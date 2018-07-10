@@ -21,35 +21,35 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 	<?php
 
-	$var_exclude = array('attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'elementor_library');
-	$var_search_types = ((b_f_option('b_opt_search-include') == null) ? array() : b_f_option('b_opt_search-include'));
+	$exclude = array('attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'elementor_library', 'amn_exact-metrics', 'jet-menu', 'user_request', 'polylang_mo', 'acf-field-group', 'acf-field');
+	$search_types = ((b_f_option('b_opt_search-include') == null) ? array() : b_f_option('b_opt_search-include'));
 
-	foreach (get_post_types() as $var_type) {
-		if (!in_array($var_type, $var_exclude)) {
-			$var_selected = (in_array($var_type, $var_search_types) ? ' checked' : '');
-			echo '<div data-size="33" data-type="block"><input type="checkbox" name="bilnea_settings[b_opt_search-include][]"'.$var_selected.' value="'.$var_type.'" /> '.get_post_type_object($var_type)->labels->name.'</div>';
+	foreach (get_post_types() as $type) {
+		if (!in_array($type, $exclude)) {
+			$selected = (in_array($type, $search_types) ? ' checked' : '');
+			echo '<div data-size="33" data-type="block"><input type="checkbox" name="bilnea_settings[b_opt_search-include][]"'.$selected.' value="'.$type.'" /> '.get_post_type_object($type)->labels->name.'</div>';
 		}
 	}
 
 	?>
-	
+
 </div>
 
 <hr />
 
 <div data-type="black">
-	
+
 	Mostrar los resultados en este orden
 	<select id="search-order" multiple name="bilnea_settings[b_opt_search-order][]" style="display: block; width: 100%;">
-		
+
 		<?php
-		foreach (b_f_option('b_opt_search-order') as $var_type) {
-			echo '<option value="'.$var_type.'" selected>'.get_post_type_object($var_type)->labels->name.'</option>';
+		foreach (b_f_option('b_opt_search-order') as $type) {
+			echo '<option value="'.$type.'" selected>'.get_post_type_object($type)->labels->name.'</option>';
 		}
 
-		foreach (get_post_types() as $var_type) {
-			if (!in_array($var_type, $var_exclude) && !in_array($var_type, b_f_option('b_opt_search-order'))) {
-				echo '<option value="'.$var_type.'">'.get_post_type_object($var_type)->labels->name.'</option>';
+		foreach (get_post_types() as $type) {
+			if (!in_array($type, $exclude) && !in_array($type, b_f_option('b_opt_search-order'))) {
+				echo '<option value="'.$type.'">'.get_post_type_object($type)->labels->name.'</option>';
 			}
 		}
 
@@ -63,30 +63,22 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 <?php
 
-if (function_exists('icl_object_id')) {
+if (function_exists('pll_languages_list')) {
 
-	// Variables globakles
-	global $sitepress;
-
-	// Variables locales
-	$var_language = $sitepress->get_current_language();
-	$sitepress->switch_lang('es');
-	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
-	if (!empty($var_languages)) {
-		$int = 0;
-		$out = '<div class="lang-wrapper">';
-		foreach ($var_languages as $var_lang) {
-			$out .= ($int != 0) ? ' | ' : '';
-			$out .= '<a class="lang-switcher" data-lang="'.$var_lang['language_code'].'">'.ucfirst($var_lang['translated_name']).'</a>';
-			$int++;
-		}
-		$out .= '</div><div class="lang-wrapper">';
-		foreach ($var_languages as $var_lang) {
-			$out .= '<textarea data-lang="'.$var_lang['language_code'].'" name="bilnea_settings[b_opt_search-block-'.$var_lang['language_code'].']" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_search-block-'.$var_lang['language_code']).'</textarea>';
-		}
-		$out .= '</div>';
-		echo $out;
+	$out = '<div class="lang-wrapper">';
+	foreach (get_terms(array('taxonomy' => 'term_language', 'hide_empty' => false)) as $language) {
+		$out .= ($int != 0) ? ' | ' : '';
+		$out .= '<a class="lang-switcher" data-lang="'.str_replace('pll_', '', $language->slug).'">'.ucfirst($language->name).'</a>';
+		$int++;
 	}
+	$out .= '</div><div class="lang-wrapper">';
+	foreach (get_terms(array('taxonomy' => 'term_language', 'hide_empty' => false)) as $language) {
+		$out .= '<textarea data-lang="'.str_replace('pll_', '', $language->slug).'" name="bilnea_settings[b_opt_search-block-'.str_replace('pll_', '', $language->slug).']" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_search-block-'.str_replace('pll_', '', $language->slug)).'</textarea>';
+	}
+	$out .= '</div>';
+
+	echo $out;
+
 } else {
 
 	?>
@@ -94,7 +86,7 @@ if (function_exists('icl_object_id')) {
 	<div data-type="block">Maquetación de un bloque de los resultados.</div>
 
 	<div data-type="block" data-size="50">
-		
+
 		<select name="bilnea_settings[b_opt_widget-search-es]" style="margin-top: -2px; width: 100% !important;">
 			<option value="none" selected>Seleccionar widget</option>
 
@@ -125,7 +117,7 @@ if (function_exists('icl_object_id')) {
 		}
 
 		?>
-		
+
 	</div>
 
 	<?php
@@ -147,12 +139,12 @@ if (function_exists('icl_object_id')) {
 
 <?php
 
-$var_search_types = ((b_f_option('b_opt_search-date') == null) ? array() : b_f_option('b_opt_search-date'));
+$search_types = ((b_f_option('b_opt_search-date') == null) ? array() : b_f_option('b_opt_search-date'));
 
-foreach (get_post_types() as $var_type) {
-	if (!in_array($var_type, $var_exclude)) {
-		$var_selected = (in_array($var_type, $var_search_types) ? ' checked' : '');
-		echo '<div data-type="block" data-size="33"><input type="checkbox" name="bilnea_settings[b_opt_search-date][]"'.$var_selected.' value="'.$var_type.'" /> '.get_post_type_object($var_type)->labels->name.'</div>';
+foreach (get_post_types() as $type) {
+	if (!in_array($type, $exclude)) {
+		$selected = (in_array($type, $search_types) ? ' checked' : '');
+		echo '<div data-type="block" data-size="33"><input type="checkbox" name="bilnea_settings[b_opt_search-date][]"'.$selected.' value="'.$type.'" /> '.get_post_type_object($type)->labels->name.'</div>';
 	}
 }
 
@@ -166,12 +158,12 @@ foreach (get_post_types() as $var_type) {
 
 <?php
 
-$var_search_types = ((b_f_option('b_opt_search-author') == null) ? array() : b_f_option('b_opt_search-author'));
+$search_types = ((b_f_option('b_opt_search-author') == null) ? array() : b_f_option('b_opt_search-author'));
 
-foreach (get_post_types() as $var_type) {
-	if (!in_array($var_type, $var_exclude)) {
-		$var_selected = (in_array($var_type, $var_search_types) ? ' checked' : '');
-		echo '<div data-type="block" data-size="33"><input type="checkbox" name="bilnea_settings[b_opt_search-author][]"'.$var_selected.' value="'.$var_type.'" /> '.get_post_type_object($var_type)->labels->name.'</div>';
+foreach (get_post_types() as $type) {
+	if (!in_array($type, $exclude)) {
+		$selected = (in_array($type, $search_types) ? ' checked' : '');
+		echo '<div data-type="block" data-size="33"><input type="checkbox" name="bilnea_settings[b_opt_search-author][]"'.$selected.' value="'.$type.'" /> '.get_post_type_object($type)->labels->name.'</div>';
 	}
 }
 

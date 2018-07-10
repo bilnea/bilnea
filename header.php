@@ -10,7 +10,7 @@ if (function_exists('icl_object_id')) {
 	global $sitepress;
 }
 
-$var_search = '<i class="fa fa-search main-search-button"></i>';
+$search = '<i class="fa fa-search main-search-button"></i>';
 
 ?>
 
@@ -62,25 +62,28 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 		if (b_f_option('b_opt_cookies-warning') == 1) {
 
 			if (!isset($_COOKIE['cookies_viewed']) || $_COOKIE['cookies_viewed'] != 'yes') {
-			
+
 			?>
-		
+
 			<div id="cookie_warning">
 				<div class="container">
-					
+
 					<?php
-					
-					if (function_exists('icl_object_id')) {
-						$var_url = get_permalink(b_f_option('b_opt_cookies-policy-'.$b_g_language));						
+
+					$url = get_permalink(b_f_option('b_opt_cookies-policy-'.$b_g_language));
+
+					if (b_f_option('b_opt_cookies-advice-'.$b_g_language)) {
+
+						echo strtr(b_f_option('b_opt_cookies-advice-'.$b_g_language), array('{{b_link}}' => $url, '{{b_close}}' => '<div class="ok">'.__('Ok', 'bilnea').'</div>'));
+
 					} else {
-						$var_url = get_permalink(b_f_option('b_opt_cookies-policy-es'));
+
+						printf(__('We use our own and third-part <em>cookies</em> to analyse the use and measurement of our web in order to improve our services. If you go on surfing, we assume you acceept their use. <br />You can change your settings or find more information <a href="%1$s" target="_blank" title="%2$s cookies policy">here</a>.', 'bilnea').'<div class="ok">'.__('Ok', 'bilnea').'</div>', $url, get_bloginfo('name'));
+
 					}
 
-					printf(__('We use our own and third-part <em>cookies</em> to analyse the use and measurement of our web in order to improve our services. If you go on surfing, we assume you acceept their use. <br />You can change your settings or find more information <a href="%1$s" target="_blank" title="%2$s cookies policy">here</a>.', 'bilnea'), $var_url, get_bloginfo('name'));
-				
 					?>
-				
-					<div class="ok"><?= __('Ok', 'bilnea') ?></div>
+
 				</div>
 			</div>
 			<script type="text/javascript">
@@ -134,15 +137,15 @@ $var_search = '<i class="fa fa-search main-search-button"></i>';
 			<header id="header" class="site-header<?php echo ((b_f_option('b_opt_sticky-menu') == 1) ? ' sticky' : ''); echo ((b_f_option('b_opt_sticky-menu-animated') == 1) ? ' animated' : ''); ?>" role="banner">
 
 				<?= b_f_shortcode(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-header-'.$b_g_language).'"]')) ?>
-				
+
 			</header>
 
 	<!-- Cabecera para dispositivos móviles -->
 	<header id="mobile-header">
 		<div class="container">
-					
+
 			<?= b_f_shortcode(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-mobile-header-'.$b_g_language).'"]')) ?>
-					
+
 		</div>
 	</header>
 

@@ -40,47 +40,40 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 <?php
 
 	if (b_f_option('b_opt_newsl_api') != '') {
-		$var_lists = json_decode(b_f_i_mailchimp('https://'.substr(b_f_option('b_opt_newsl_api'),strpos(b_f_option('b_opt_newsl_api'),'-')+1).'.api.mailchimp.com/3.0/lists/', 'GET', b_f_option('b_opt_newsl_api'), array('fields' => 'lists')))->lists;
+		$lists = json_decode(b_f_i_mailchimp('https://'.substr(b_f_option('b_opt_newsl_api'),strpos(b_f_option('b_opt_newsl_api'),'-')+1).'.api.mailchimp.com/3.0/lists/', 'GET', b_f_option('b_opt_newsl_api'), array('fields' => 'lists')))->lists;
 	}
-	
 
-	if (function_exists('icl_object_id')) {
 
-		// Variables globales
-		global $sitepress;
+	if (function_exists('pll_languages_list')) {
 
-		// Variables locales
-		$var_languages = icl_get_languages('skip_missing=0&orderby=name');
-		$var_count = 0;
+		$count = 0;
 
-		if (!empty($var_languages)) {
-			foreach ($var_languages as $var_language) {
-				$sitepress->switch_lang($var_language['language_code']);
+		foreach (get_terms(array('taxonomy' => 'term_language', 'hide_empty' => false)) as $language) {
 
-				?>
+			?>
 
-				<hr />
-				<strong style="display: block;"><?= $var_language['translated_name'] ?></strong>
-				<div style="width: calc(50% - 7px); display: inline-block; float: left; margin-right: 14px;">
-					Lista de suscripción
-					<select id="b_opt_newsl_list-<?= $var_language['language_code'] ?>" name="bilnea_settings[b_opt_newsl_list-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
-						<option selected disabled>Selecciona una lista</option>
-						<option value="none" <?php selected(b_f_option('b_opt_newsl_list-'.$var_language['language_code']), 'none') ?>>Sin suscripción</option>
-						<?php
-						foreach ($var_lists as $var_list) {
-							(b_f_option('b_opt_newsl_list-'.$var_language['language_code']) == $var_list->id) ? $var_selected = ' selected="selected"' : $var_selected = '';
-							echo '<option value="'.$var_list->id.'"'.$var_selected.'>'.$var_list->name.' ('.$var_list->stats->member_count.')</option>';
-						}
-						?>
-					</select>
-				</div>
-				<div style="width: calc(50% - 7px); display: inline-block;">
-					Página de redirección al enviar
-					<select name="bilnea_settings[b_opt_newsl-thanks-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
-						<option selected disabled>Selecciona una página</option>
-						<option value="none" <?php selected(b_f_option('b_opt_newsl-thanks-'.$var_language['language_code']), 'none') ?>>Sin redirección</option>
+			<hr />
+			<strong style="display: block;"><?= $language->name ?></strong>
+			<div style="width: calc(50% - 7px); display: inline-block; float: left; margin-right: 14px;">
+				Lista de suscripción
+				<select id="b_opt_newsl_list-<?= str_replace('pll_', '', $language->slug) ?>" name="bilnea_settings[b_opt_newsl_list-<?= str_replace('pll_', '', $language->slug) ?>]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
+					<option selected disabled>Selecciona una lista</option>
+					<option value="none" <?php selected(b_f_option('b_opt_newsl_list-'.str_replace('pll_', '', $language->slug)), 'none') ?>>Sin suscripción</option>
+					<?php
+					foreach ($lists as $list) {
+						(b_f_option('b_opt_newsl_list-'.str_replace('pll_', '', $language->slug)) == $list->id) ? $selected = ' selected="selected"' : $selected = '';
+							echo '<option value="'.$list->id.'"'.$selected.'>'.$list->name.' ('.$list->stats->member_count.')</option>';
+					}
+					?>
+				</select>
+			</div>
+			<div style="width: calc(50% - 7px); display: inline-block;">
+				Página de redirección al enviar
+				<select name="bilnea_settings[b_opt_newsl-thanks-<?= str_replace('pll_', '', $language->slug) ?>]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
+					<option selected disabled>Selecciona una página</option>
+					<option value="none" <?php selected(b_f_option('b_opt_newsl-thanks-'.str_replace('pll_', '', $language->slug)), 'none') ?>>Sin redirección</option>
 
-						<?php 
+					<?php
 
 						$args = array(
 							'sort_order' => 'asc',
@@ -92,19 +85,18 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 						$pages = get_pages($args);
 
 						foreach ($pages as $page) {
-							echo '<option value="'.$page->ID.'" '.selected(b_f_option('b_opt_newsl-thanks-'.$var_language['language_code']), $page->ID).'>'.$page->post_title.'</option>';
+							echo '<option value="'.$page->ID.'" '.selected(b_f_option('b_opt_newsl-thanks-'.str_replace('pll_', '', $language->slug)), $page->ID).'>'.$page->post_title.'</option>';
 						}
 
-						?>
+					?>
 
-					</select>
-				</div>
+				</select>
+			</div>
 
-				<?php
+			<?php
 
-				$var_count++;
-				$sitepress->switch_lang('es');
-			}
+			$count++;
+
 		}
 
 } else {
@@ -119,9 +111,9 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 			<option selected disabled>Selecciona una lista</option>
 			<option value="none" <?php selected(b_f_option('b_opt_newsl_list-es'), 'none') ?>>Sin suscripción</option>
 			<?php
-			foreach ($var_lists as $var_list) {
-				(b_f_option('b_opt_newsl_list-es') == $var_list->id) ? $var_selected = ' selected="selected"' : $var_selected = '';
-				echo '<option value="'.$var_list->id.'"'.$var_selected.'>'.$var_list->name.' ('.$var_list->stats->member_count.')</option>';
+			foreach ($lists as $list) {
+				(b_f_option('b_opt_newsl_list-es') == $list->id) ? $selected = ' selected="selected"' : $selected = '';
+				echo '<option value="'.$list->id.'"'.$selected.'>'.$list->name.' ('.$list->stats->member_count.')</option>';
 			}
 			?>
 		</select>
@@ -133,7 +125,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 			<option selected disabled>Selecciona una página</option>
 			<option value="none" <?php selected(b_f_option('b_opt_newsl-thanks-es'), 'none') ?>>Sin redirección</option>
 
-			<?php 
+			<?php
 
 			$args = array(
 				'sort_order' => 'asc',

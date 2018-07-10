@@ -6,7 +6,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 ?>
 
-<h4>Datos personales</h4>
+<h4 data-type="title">Datos personales</h4>
 <div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
 	Nombre o Razón Social
 	<br />
@@ -30,99 +30,83 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 Dirección postal
 <br />
 <input type="text" id="user_address" class="gran" name="bilnea_settings[user_address]" style="width: 100%;" value="<?= b_f_option('user_address') ?>" />
-<em class="notice" style="font-size: 12px;">
-	Información que se mostrará en las páginas de textos legales, en caso de crearlas de manera automática.
-</em>
+<div data-type="notice">Información que se mostrará en las páginas de textos legales, en caso de crearlas de manera automática.</div>
 
+<h4 data-type="title">Páginas de información legal</h4>
 <?php
 
-if (function_exists('icl_object_id')) {
+if (function_exists('pll_languages_list')) {
 
-	// Variables globales
-	global $sitepress;
+	$i = 0;
 
-	// Variables locales
-	$var_languages = icl_get_languages('skip_missing=0&orderby=name');
+	foreach (get_terms(array('taxonomy' => 'term_language', 'hide_empty' => false)) as $language) {
 
-	if (!empty($var_languages)) {
+		?>
 
-		$i = 0;
+		<h4 style="margin-top: 10px;"><?= $language->name; ?> </h4>
 
-		foreach ($var_languages as $var_language) {
+		<!-- Aviso legal -->
+		<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
+			Aviso legal
+		</div>
+		<div style="width: calc(50% - 10px); display: inline-block;">
+			<select name="bilnea_settings[b_opt_legal-advice-<?= str_replace('pll_', '', $language->slug) ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
+				<option value="none" selected>Seleccionar opción</option>
+				<option value="new">Crear página</option>
+				<?php
+				foreach (get_pages() as $page) {
+					$varid = icl_object_id($page->ID, 'category', true, str_replace('pll_', '', $language->slug));
+					echo '<option value="'.$varid.'" '.selected(b_f_option('b_opt_legal-advice-'.str_replace('pll_', '', $language->slug)), $varid).'>'.$page->post_title.'</option>';
+				}
+				?>
+			</select>
+		</div>
+		<hr />
 
-			$sitepress->switch_lang($var_language['language_code']);
+		<!-- Política de privacidad -->
+		<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
+			Política de privacidad
+		</div>
+		<div style="width: calc(50% - 10px); display: inline-block;">
+			<select name="bilnea_settings[b_opt_privacy-policy-<?= str_replace('pll_', '', $language->slug) ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
+				<option value="none" selected>Seleccionar opción</option>
+				<option value="new">Crear página</option>
+				<?php
+				foreach (get_pages() as $page) {
+					$varid = icl_object_id($page->ID, 'category', true, str_replace('pll_', '', $language->slug));
+					echo '<option value="'.$varid.'" '.selected(b_f_option('b_opt_privacy-policy-'.str_replace('pll_', '', $language->slug)), $varid).'>'.$page->post_title.'</option>';
+				}
+				?>
+			</select>
+		</div>
+		<hr />
 
-			?>
+		<!-- Aviso legal -->
+		<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
+			Política de cookies
+		</div>
+		<div style="width: calc(50% - 10px); display: inline-block;">
+			<select name="bilnea_settings[b_opt_cookies-policy-<?= str_replace('pll_', '', $language->slug) ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
+				<option value="none" selected>Seleccionar opción</option>
+				<option value="new">Crear página</option>
+				<?php
+				foreach (get_pages() as $page) {
+					$varid = icl_object_id($page->ID, 'category', true, str_replace('pll_', '', $language->slug));
+					echo '<option value="'.$varid.'" '.selected(b_f_option('b_opt_cookies-policy-'.str_replace('pll_', '', $language->slug)), $varid).'>'.$page->post_title.'</option>';
+				}
+				?>
+			</select>
+		</div>
 
-			<h4 style="margin-top: 10px;">Páginas en <?= strtolower($var_language['translated_name']); ?> </h4>
+		<?php
 
-			<!-- Aviso legal -->
-			<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-				Aviso legal
-			</div>
-			<div style="width: calc(50% - 10px); display: inline-block;">
-				<select name="bilnea_settings[b_opt_legal-advice-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
-					<option value="none" selected>Seleccionar opción</option>
-					<option value="new">Crear página</option>
-					<?php
-					foreach (get_pages() as $page) {
-						$var_id = icl_object_id($page->ID, 'category', true, $var_language['language_code']);
-						echo '<option value="'.$var_id.'" '.selected(b_f_option('b_opt_legal-advice-'.$var_language['language_code']), $var_id).'>'.$page->post_title.'</option>';
-					}
-					?>
-				</select>
-			</div>
-			<hr />
-
-			<!-- Política de privacidad -->
-			<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-				Política de privacidad
-			</div>
-			<div style="width: calc(50% - 10px); display: inline-block;">
-				<select name="bilnea_settings[b_opt_privacy-policy-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
-					<option value="none" selected>Seleccionar opción</option>
-					<option value="new">Crear página</option>
-					<?php
-					foreach (get_pages() as $page) {
-						$var_id = icl_object_id($page->ID, 'category', true, $var_language['language_code']);
-						echo '<option value="'.$var_id.'" '.selected(b_f_option('b_opt_privacy-policy-'.$var_language['language_code']), $var_id).'>'.$page->post_title.'</option>';
-					}
-					?>
-				</select>
-			</div>
-			<hr />
-
-			<!-- Aviso legal -->
-			<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
-				Política de cookies
-			</div>
-			<div style="width: calc(50% - 10px); display: inline-block;">
-				<select name="bilnea_settings[b_opt_cookies-policy-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -2px; width: 100% !important;">
-					<option value="none" selected>Seleccionar opción</option>
-					<option value="new">Crear página</option>
-					<?php
-					foreach (get_pages() as $page) {
-						$var_id = icl_object_id($page->ID, 'category', true, $var_language['language_code']);
-						echo '<option value="'.$var_id.'" '.selected(b_f_option('b_opt_cookies-policy-'.$var_language['language_code']), $var_id).'>'.$page->post_title.'</option>';
-					}
-					?>
-				</select>
-			</div>
-			
-			<?php
-
-			$i++;
-		}
+		$i++;
 
 	}
-
-	$sitepress->switch_lang('es');
 
 } else {
 
 	?>
-
-	<h4>Páginas</h4>
 
 	<!-- Aviso legal -->
 	<div style="width: calc(50% - 10px); margin-right: 16px; display: inline-block;">
@@ -180,3 +164,28 @@ if (function_exists('icl_object_id')) {
 <input type="checkbox" name="bilnea_settings[b_opt_create-cookies-table]" <?php checked(b_f_option('b_opt_create-cookies-table'), 1); ?> value="1"> <span>Generar tabla de cookies de manera automática</span>
 <hr />
 <input type="checkbox" name="bilnea_settings[b_opt_cookies-warning]" <?php checked(b_f_option('b_opt_cookies-warning'), 1); ?> value="1"> <span>Mostrar el aviso legal de cookies</span>
+<hr />
+<h4 data-type="title">Aviso de cookies</h4>
+<?php
+
+if (function_exists('pll_languages_list')) {
+
+	$out = '<div>';
+
+	foreach (get_terms(array('taxonomy' => 'term_language', 'hide_empty' => false)) as $language) {
+		$out .= '<strong>'.$language->name.'</strong><textarea data-lang="'.str_replace('pll_', '', $language->slug).'" name="bilnea_settings[b_opt_cookies-advice-'.str_replace('pll_', '', $language->slug).']" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_cookies-advice-'.str_replace('pll_', '', $language->slug)).'</textarea>';
+	}
+
+	$out .= '</div>';
+
+	echo $out;
+
+} else {
+
+	echo '<textarea data-lang="es" name="bilnea_settings[b_opt_cookies-advice-es]" rows="10" style="font-size: 12px; border-color: #ddd !important; width: 100%; box-shadow: none; border-radius: 5px; resize: none; margin: 10px 0 0 0;">'.b_f_option('b_opt_cookies-advice-es').'</textarea>';
+
+}
+
+?>
+
+<div data-type="notice">Se pueden utilizar los shortcodes {{b_link}} para la url a la política de cookies y {{b_close}} para mostrar el botón de cerrar.</div>

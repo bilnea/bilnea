@@ -15,7 +15,11 @@ if (!function_exists('b_f_i_url')) {
 
 		} else {
 
-			return get_permalink($arg[1]);
+			if (function_exists('pll_get_post')) {
+				return get_permalink(pll_get_post($arg[1]));
+			} else {
+				return get_permalink($arg[1]);
+			}
 
 		}
 
@@ -42,7 +46,7 @@ if (!function_exists('b_f_i_menu')) {
 
 		return wp_nav_menu(array('menu' => $arg[1], 'container_id' => 'menu-'.$arg[1], 'echo' => false));
 	}
-	
+
 }
 
 
@@ -78,7 +82,7 @@ if (!function_exists('b_f_p_upload')) {
 
 
 if (!function_exists('b_f_p_featured')) {
-	
+
 	function b_f_p_featured($content) {
 
 		$content = str_replace('{{b_featured-image}}', wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'full')[0], $content);
@@ -121,7 +125,7 @@ add_filter('the_content','b_f_p_svg');
 
 
 if (!function_exists('b_f_shortcode')) {
-	
+
 	function b_f_shortcode($var_content = null, $var_shortcode = true) {
 
 		$content = (($var_shortcode == true) ? do_shortcode($var_content) : $var_content);

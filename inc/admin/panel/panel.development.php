@@ -13,58 +13,51 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 <?php
 
-	if (function_exists('icl_object_id')) {
-
-		// Variables globales
-		global $sitepress;
+	if (function_exists('pll_languages_list')) {
 
 		// Variables locales
-		$var_languages = icl_get_languages('skip_missing=0&orderby=name');
-		$var_count = 0;
+		$count = 0;
 
-		if (!empty($var_languages)) {
-			foreach ($var_languages as $var_language) {
-				$sitepress->switch_lang($var_language['language_code']);
-				echo ($var_count != 0) ? '<br /><hr style="margin: 8px 0;" />' : '';
+		foreach (get_terms(array('taxonomy' => 'term_language', 'hide_empty' => false)) as $language) {
 
-				?>
+			echo ($count != 0) ? '<br /><hr style="margin: 8px 0;" />' : '';
 
-				<strong style="display: block;"><?= $var_language['translated_name'] ?></strong>
-				<div style="width: calc(50% - 7px); display: inline-block; float: left; margin-right: 14px;">
-					Correo electrónico de destino
-					<input type="text" class="gran" style="width: 100%; margin-top: 5px !important;" name="bilnea_settings[b_opt_form-email-<?= $var_language['language_code'] ?>]" value="<?= b_f_option('b_opt_form-email-'.$var_language['language_code']); ?>" placeholder="<?= b_f_default('b_opt_form-email-'.$var_language['language_code']); ?>" />
-				</div>
-				<div style="width: calc(50% - 7px); display: inline-block;">
-					Página de redirección al enviar
-					<select name="bilnea_settings[b_opt_form-thanks-<?= $var_language['language_code'] ?>]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
-						<option selected disabled>Selecciona una página</option>
-						<option value="none" <?php selected(b_f_option('b_opt_form-thanks-'.$var_language['language_code']), 'none') ?>>Sin redirección</option>
+			?>
 
-						<?php 
+			<strong style="display: block;"><?= $language->name ?></strong>
+			<div style="width: calc(50% - 7px); display: inline-block; float: left; margin-right: 14px;">
+				Correo electrónico de destino
+				<input type="text" class="gran" style="width: 100%; margin-top: 5px !important;" name="bilnea_settings[b_opt_form-email-<?= str_replace('pll_', '', $language->slug) ?>]" value="<?= b_f_option('b_opt_form-email-'.str_replace('pll_', '', $language->slug)); ?>" placeholder="<?= b_f_default('b_opt_form-email-'.str_replace('pll_', '', $language->slug)); ?>" />
+			</div>
+			<div style="width: calc(50% - 7px); display: inline-block;">
+				Página de redirección al enviar
+				<select name="bilnea_settings[b_opt_form-thanks-<?= str_replace('pll_', '', $language->slug) ?>]" class="gran" style="margin-top: -4px; width: 100%; margin-bottom: 0;">
+					<option selected disabled>Selecciona una página</option>
+					<option value="none" <?php selected(b_f_option('b_opt_form-thanks-'.str_replace('pll_', '', $language->slug)), 'none') ?>>Sin redirección</option>
 
-						$args = array(
-							'sort_order' => 'asc',
-							'sort_column' => 'post_title',
-							'post_type' => 'page',
-							'post_status' => 'publish'
-						);
+					<?php
 
-						$pages = get_pages($args);
+					$args = array(
+						'sort_order' => 'asc',
+						'sort_column' => 'post_title',
+						'post_type' => 'page',
+						'post_status' => 'publish'
+					);
 
-						foreach ($pages as $page) {
-							echo '<option value="'.$page->ID.'" '.selected(b_f_option('b_opt_form-thanks-'.$var_language['language_code']), $page->ID).'>'.$page->post_title.'</option>';
-						}
+					$pages = get_pages($args);
 
-						?>
+					foreach ($pages as $page) {
+						echo '<option value="'.$page->ID.'" '.selected(b_f_option('b_opt_form-thanks-'.str_replace('pll_', '', $language->slug)), $page->ID).'>'.$page->post_title.'</option>';
+					}
 
-					</select>
-				</div>
+					?>
 
-				<?php
+				</select>
+			</div>
 
-				$var_count++;
-				$sitepress->switch_lang('es');
-			}
+			<?php
+
+			$count++;
 		}
 
 	} else {
@@ -89,30 +82,24 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 	}
 
-	if (function_exists('icl_object_id')) {
-
-		// Variables globales
-		global $sitepress;
+	if (function_exists('pll_languages_list')) {
 
 		// Variables locales
-		$var_languages = icl_get_languages('skip_missing=0&orderby=name');
-		$var_count = 0;
+		$count = 0;
 
-		if (!empty($var_languages)) {
-			foreach ($var_languages as $var_language) {
+		foreach (get_terms(array('taxonomy' => 'term_language', 'hide_empty' => false)) as $language) {
 
-				?>
+			?>
 
-				<strong style="display: block;"><?= $var_language['translated_name'] ?></strong>
-				<div style="width: 100%; display: inline-block; float: left; margin-right: 14px;">
-					Mensaje en correo electrónico de respuesta
-					<input type="text" class="gran" style="width: 100%; margin-top: 5px !important;" name="bilnea_settings[b_opt_response-email-<?= $var_language['language_code'] ?>]" value="<?= b_f_option('b_opt_response-email-'.$var_language['language_code']); ?>" placeholder="<?= b_f_default('b_opt_response-email-'.$var_language['language_code']); ?>" />
-				</div>
-				<hr style="margin-bottom: 4px; width: 100%;" />
+			<br /><hr style="margin: 8px 0;" />
+			<strong style="display: block;"><?= $language->name ?></strong>
+			<div style="width: 100%; display: inline-block; float: left; margin-right: 14px;">
+				Mensaje en correo electrónico de respuesta
+				<input type="text" class="gran" style="width: 100%; margin-top: 5px !important;" name="bilnea_settings[b_opt_response-email-<?= str_replace('pll_', '', $language->slug) ?>]" value="<?= b_f_option('b_opt_response-email-'.str_replace('pll_', '', $language->slug)); ?>" placeholder="<?= b_f_default('b_opt_response-email-'.str_replace('pll_', '', $language->slug)); ?>" />
+			</div>
 
-				<?php
+			<?php
 
-			}
 		}
 	}
 

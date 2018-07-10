@@ -46,7 +46,18 @@ class bilnea_Menu extends Widget_Base {
 		}
 
 		foreach (get_registered_nav_menus() as $menu => $name) {
-			$types['loc_'.$menu] = $name;
+			$value = 'loc_'.$menu;
+			if (function_exists('pll_languages_list')) {
+				foreach (get_terms(array('taxonomy' => 'term_language', 'hide_empty' => false)) as $language) {
+					if (pll_current_language() != str_replace('pll_', '', $language->slug)) {
+						$types[$value.'___'.str_replace('pll_', '', $language->slug)] = $name.' ('.$language->name.')';
+					} else {
+						$types[$value] = $name.' ('.$language->name.')';
+					}
+				}
+			} else {
+				$types[$value] = $name;
+			}
 		}
 
 		reset($types);

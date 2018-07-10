@@ -894,7 +894,7 @@ if (!function_exists('b_f_admin_elementor')) {
 
 		$out = '<div data-type="block">'.$title.'</div>'."\n";
 		$out .= '<div data-type="block" data-size="50">'."\n";
-		$out .= '	<select name="bilnea_settings[b_opt_widget-'.$slug.'-'.$b_g_language.']" style="margin-top: -2px; width: 100% !important;">'."\n";
+		$out .= '	<select name="bilnea_settings[b_opt_widget-'.$slug.']" style="margin-top: -2px; width: 100% !important;">'."\n";
 		$out .= '		<option value="none" selected>Seleccionar widget</option>'."\n";
 
 		$args = array(
@@ -904,15 +904,15 @@ if (!function_exists('b_f_admin_elementor')) {
 		);
 
 		foreach (get_posts($args) as $widget) {
-			$out .= '		<option value="'.$widget->ID.'"'.((b_f_option('b_opt_widget-'.$slug.'-'.$b_g_language) == $widget->ID) ? ' selected' : '').'>'.$widget->post_title.'</option>'."\n";
+			$out .= '		<option value="'.$widget->ID.'"'.((b_f_option('b_opt_widget-'.$slug) == $widget->ID) ? ' selected' : '').'>'.$widget->post_title.'</option>'."\n";
 		}
 
 		$out .= '	</select>'."\n";
 		$out .= '</div>'."\n";
 		$out .= '<div data-type="block" data-size="50" data-float="right">'."\n";
 
-		if (b_f_option('b_opt_widget-'.$slug.'-'.$b_g_language) != 'none' && !is_null(b_f_option('b_opt_widget-'.$slug.'-'.$b_g_language)) && current_user_can('edit_pages')) {
-			$out.= '		<a data-type="elementor-link" target="_blank" href="'.trim(site_url(), '/').'/wp-admin/post.php?post='.b_f_option('b_opt_widget-'.$slug.'-'.$b_g_language).'&action=elementor">Editar bloque</a>'."\n";
+		if (b_f_option('b_opt_widget-'.$slug) != 'none' && !is_null(b_f_option('b_opt_widget-'.$slug)) && current_user_can('edit_pages')) {
+			$out.= '		<a data-type="elementor-link" target="_blank" href="'.trim(site_url(), '/').'/wp-admin/post.php?post='.b_f_option('b_opt_widget-'.$slug).'&action=elementor">Editar bloque</a>'."\n";
 		}
 
 		$out .= '</div>'."\n";

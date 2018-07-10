@@ -73,6 +73,9 @@ jQuery(window).on('load scroll', function() {
 	} else {
 		jQuery('header#header').removeClass('scrolled');
 	}
+	if (jQuery(window).width() > 767) {
+		jQuery('.content-wrapper').css('padding-top', jQuery('header#header').height());
+	}
 });
 
 function b_js_adjust_height(element, all) {
@@ -85,17 +88,17 @@ function b_js_adjust_height(element, all) {
 					var b = jQuery(this).height();
 					if (b > a) { a = b; };
 				})
-				jQuery(this).parent().children(element).height(a);
+				jQuery(this).parent().children(element).outerHeight(a);
 				jQuery(this).parent().attr('data-height', a+'px');
 			};
 		});
 	} else {
 		var a = 0;
 		jQuery(element).each(function() {
-			var b = jQuery(this).height();
+			var b = jQuery(this).outerHeight();
 			if (b > a) { a = b; };
 		});
-		jQuery(element).height(a);
+		jQuery(element).outerHeight(a);
 	}
 }
 
@@ -209,7 +212,7 @@ function b_js_set_cookie(cname, cvalue, exdays) {
 	var d = new Date();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
 	var expires = "expires="+d.toUTCString();
-	document.cookie = cname + "=" + cvalue + "; " + expires;
+	document.cookie = cname + "=" + cvalue + "; " + expires + '; path=/;';
 }
 
 function b_js_get_cookie(cname) {
@@ -321,7 +324,7 @@ jQuery('.commentlist .avatar').each(function() {
 })
 
 jQuery('*').filter(function() {
-	if (this.currentStyle) 
+	if (this.currentStyle)
 		return this.currentStyle['backgroundImage'] !== 'none';
 	else if (window.getComputedStyle)
 		return document.defaultView.getComputedStyle(this,null).getPropertyValue('background-image') !== 'none';
