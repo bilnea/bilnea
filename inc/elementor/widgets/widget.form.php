@@ -69,6 +69,7 @@ class bilnea_Form extends Widget_Base {
 					'checkbox' => __('Checkbox', 'bilnea'),
 					'select' => __('Select', 'bilnea'),
 					'legal' => __('Legal notice', 'bilnea'),
+					'hidden' => __('Hidden', 'bilnea'),
 					'file' => __('File', 'bilnea'),
 					'textarea' => __('Textarea', 'bilnea'),
 					'header' => __('Header', 'bilnea'),
@@ -90,6 +91,18 @@ class bilnea_Form extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'value',
+			[
+				'label' => __('Value', 'bilnea'),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'condition' => [
+					'type' => array('hidden')
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'placeholder',
 			[
 				'label' => __('Label as placeholder', 'bilnea'),
@@ -97,7 +110,7 @@ class bilnea_Form extends Widget_Base {
 				'return_value' => 'yes',
 				'default' => '',
 				'condition' => [
-					'type' => array('text', 'email', 'number', 'select', 'textarea')
+					'type' => array('text','email', 'number', 'select', 'textarea')
 				]
 			]
 		);
@@ -161,7 +174,7 @@ class bilnea_Form extends Widget_Base {
 			[
 				'name' => 'font',
 				'scheme' => Scheme_Typography::TYPOGRAPHY_4,
-				'selector' => '{{WRAPPER}} {{CURRENT_ITEM}}',
+				'selector' => '{{CURRENT_ITEM}}',
 				'condition' => [
 					'type' => array('header')
 				]
@@ -218,7 +231,10 @@ class bilnea_Form extends Widget_Base {
 				'mobile_default' => [
 					'unit' => '%',
 				],
-				'separator' => 'none'
+				'separator' => 'none',
+				'condition' => [
+					'type' => array('text', 'subject', 'email', 'number', 'radio', 'checkbox', 'select', 'legal', 'file', 'textarea', 'header', 'html', 'mailchimp')
+				],
 			]
 		);
 
@@ -783,13 +799,15 @@ class bilnea_Form extends Widget_Base {
 
 		$out .= '<div class="elementor-row">';
 
-		$i = 0;
+		$i = $w = 0;
+
+		$replacements = array(
+			'{{b_title}}' => get_the_title(),
+			'{{b_id}}' => get_the_ID(),
+			'{{b_url}}' => get_permalink()
+		);
 
 		foreach ($settings['inputs'] as $input) {
-
-			if ($input['breakline'] && $input['separator'] == 'before') {
-				$out .= '</div><div class="elementor-row">';
-			}
 
 			if ($input['required'] == 'yes') {
 				$required = '* ';
@@ -799,7 +817,7 @@ class bilnea_Form extends Widget_Base {
 				$data = '';
 			}
 
-			$classes = ' elementor-col-'.(('' !== $input['width']['size'] ) ? $input['width']['size'] : '100');
+			$classes = ' elementor-col-'.(('' !== $input['width']['size'] ) ? $input['width']['size'] : (($input['type'] == 'hidden') ? '0' : '100'));
 
 			if ($input['width_tablet']['size'] != '') {
 				$classes .= ' elementor-md-'.(('' !== $input['width_tablet']['size'] ) ? $input['width_tablet']['size'] : '100');
@@ -819,6 +837,10 @@ class bilnea_Form extends Widget_Base {
 					$out .= '<div class="form-control elementor-column'.$classes.'" data-type="html">'.$input['raw_content'].'</div>';
 					break;
 
+				case 'hidden':
+					$out .= '<input class="input" data-name="'.$input['label'].'" data-type="text" type="hidden" name="b_i_text-'.$this->get_id().$i.'" value="'.strtr($input['value'], $replacements).'" />';
+					break;
+
 				case 'email':
 					if ($input['placeholder'] == 'yes') {
 						$out .= '<div class="form-control elementor-column'.$classes.'"><input class="input"'.$data.' data-name="'.$input['label'].'" data-type="email"'.(($input['reply'] == 'yes') ? ' data-reply="yes"' : '').' type="text" name="b_i_email-'.$this->get_id().$i.'" placeholder="'.$input['label'].'" /></div>';
@@ -834,7 +856,7 @@ class bilnea_Form extends Widget_Base {
 					}
 					$out .= '<div class="form-control elementor-column'.$classes.'" data-input="legal">';
 					$out .= '<input class="b_input_checkbox"'.$data.' data-name="'.__('Legal notice', 'bilnea').'" data-type="legal" type="checkbox" id="legal-'.$this->get_id().$i.'" name="b_i_legal-'.$this->get_id().$i.'">';
-					$out .= '<label for="legal-'.$this->get_id().$i.'">'.$label.'</label></div>';
+					$out .= '<label for="legal-'.$this->get_id().$i.'">'.strtr($label, array('“' => '', '”' => '')).'</label></div>';
 					break;
 
 				case 'number':
@@ -898,7 +920,15 @@ class bilnea_Form extends Widget_Base {
 
 			}
 
-			if ($input['breakline'] && $input['separator'] == 'after') {
+			if (($w + $input['width']['size']) > 100) {
+				$w = 0;
+				$out .= '</div><div class="elementor-row">';
+			} else {
+				$w = $w + $input['width']['size'];
+			}
+
+			if ($w == 100) {
+				$w = 0;
 				$out .= '</div><div class="elementor-row">';
 			}
 
