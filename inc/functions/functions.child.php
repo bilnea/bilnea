@@ -17,6 +17,10 @@ if (!file_exists(get_stylesheet_directory().'/js')) {
 	mkdir(get_stylesheet_directory().'/js', 0755, true);
 }
 
+if (!file_exists(get_stylesheet_directory().'/fonts')) {
+	mkdir(get_stylesheet_directory().'/fonts', 0755, true);
+}
+
 foreach ($var_new_files as $var_new_file) {
 	if (!file_exists(get_stylesheet_directory().'/'.$var_new_file)) {
 		fopen(get_stylesheet_directory().'/'.$var_new_file, 'w');
