@@ -28,7 +28,7 @@ class bilnea_Woo_Add_to_Cart extends Widget_Base {
 	}
 
 	protected function _register_controls() {
-		
+
 	}
 
 	protected function render() {
@@ -36,6 +36,8 @@ class bilnea_Woo_Add_to_Cart extends Widget_Base {
 		if (wc_get_product(get_queried_object_id()) != false) {
 
 		global $post, $product;
+
+		$pid = $post;
 
 		$post = setup_postdata(get_post(get_queried_object_id()));
 		$product = wc_get_product(get_queried_object_id());
@@ -74,7 +76,7 @@ class bilnea_Woo_Add_to_Cart extends Widget_Base {
 				}
 
 				break;
-			
+
 			case 'variable':
 				woocommerce_variable_add_to_cart();
 				break;
@@ -82,11 +84,11 @@ class bilnea_Woo_Add_to_Cart extends Widget_Base {
 			}
 		}
 
-				
-		
+		$post = $pid;
+
 	}
 
 	protected function content_template() {
-		
+
 	}
 }

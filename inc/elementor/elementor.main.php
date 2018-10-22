@@ -6,7 +6,7 @@ if (! defined('ABSPATH')) {
 	exit;
 }
 
-use Elementorbilnea\Widgets\bilnea_Blog;
+use Elementorbilnea\Widgets\bilnea_Query;
 use Elementorbilnea\Widgets\bilnea_Breadcrumb;
 use Elementorbilnea\Widgets\bilnea_Elementor;
 use Elementorbilnea\Widgets\bilnea_Form;
@@ -45,7 +45,7 @@ class Plugin {
 	}
 
 	private function register_widget() {
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Blog());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Query());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Breadcrumb());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Elementor());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new bilnea_Form());

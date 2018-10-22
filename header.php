@@ -44,7 +44,7 @@ $search = '<i class="fa fa-search main-search-button"></i>';
 		</script>
 
 		<?php
-		if (b_f_option('b_opt_loader') == 1) {
+		if (b_f_option('b_opt_loader') == '1') {
 			wp_enqueue_script('functions.design.loader', get_stylesheet_directory_uri().'/js/loader.js', array('jquery'), $b_g_version, true);
 			?>
 			<div id="loader-wrap">

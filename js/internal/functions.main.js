@@ -54,7 +54,6 @@ jQuery(function($) {
 			}
 		};
 	});
-	new WOW().init();
 });
 
 jQuery(window).on('load resize', function() {

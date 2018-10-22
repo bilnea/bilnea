@@ -31,43 +31,43 @@ $b_g_months = array(
 
 $b_g_uniqid = uniqid();
 
-$var_curl = curl_init();
-curl_setopt($var_curl, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($var_curl, CURLOPT_URL, 'https://www.googleapis.com/webfonts/v1/webfonts?key='.$b_g_google_api);
-curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+$curl = curl_init();
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_URL, 'https://www.googleapis.com/webfonts/v1/webfonts?key='.$b_g_google_api);
+curl_setopt($curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
 
-$var_temp_url = curl_exec($var_curl);
+$temp_url = curl_exec($curl);
 
-curl_close($var_curl);
+curl_close($curl);
 
-$var_fonts = json_decode($var_temp_url);
+$fonts = json_decode($temp_url);
 
-if (isset($var_fonts->error)) {
-	$var_curl = curl_init();
-	curl_setopt($var_curl, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($var_curl, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($var_curl, CURLOPT_URL, get_template_directory_uri().'/inc/data/data.google.fonts.json');
-	curl_setopt($var_curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+if (isset($fonts->error)) {
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl, CURLOPT_URL, get_template_directory_uri().'/inc/data/data.google.fonts.json');
+	curl_setopt($curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
 
-	$var_temp_url = curl_exec($var_curl);
-	
-	curl_close($var_curl);
+	$temp_url = curl_exec($curl);
+
+	curl_close($curl);
 }
 
-$var_fonts = json_decode($var_temp_url);
+$fonts = json_decode($temp_url);
 
 $b_g_google_fonts = array();
 
-foreach ($var_fonts->items as $font) {
-	$var_sizes = $font->variants;
-	foreach ($var_sizes as &$temp) {
+foreach ($fonts->items as $font) {
+	$sizes = $font->variants;
+	foreach ($sizes as &$temp) {
 		if ($temp == 'regular') { $temp = '400'; }
 		if ($temp == 'italic') { $temp = '400italic'; }
 	}
 	$b_g_google_fonts[str_replace(' ', '+', $font->family)] = array(
 		'name' => '"'.$font->family.'", '.$font->category,
-		'sizes' => $var_sizes
+		'sizes' => $sizes
 	);
 }
 
@@ -221,7 +221,7 @@ $b_g_languages = array(
 	'sl' => array('name' => 'Slovene', 'nativeName' => 'slovenščina'),
 	'so' => array('name' => 'Somali', 'nativeName' => 'Soomaaliga, af Soomaali'),
 	'st' => array('name' => 'Southern Sotho', 'nativeName' => 'Sesotho'),
-	'es' => array('name' => 'Spanish; Castilian', 'nativeName' => 'español, castellano'),
+	'es' => array('name' => 'Spanish', 'nativeName' => 'Español'),
 	'su' => array('name' => 'Sundanese', 'nativeName' => 'Basa Sunda'),
 	'sw' => array('name' => 'Swahili', 'nativeName' => 'Kiswahili'),
 	'ss' => array('name' => 'Swati', 'nativeName' => 'SiSwati'),

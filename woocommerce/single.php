@@ -13,12 +13,14 @@
 
 						the_post();
 
+						$post_id = get_the_ID();
+
 						ob_start();
 						the_content();
 						$content = ob_get_clean();
 
 						add_filter('the_content', 'b_f_i_empty_content');
- 
+
 						function b_f_i_empty_content($content) {
 							return '';
 						}
@@ -48,7 +50,13 @@
 							'{{b_w_sku}}' => $product->get_sku()
 						);
 
-						echo strtr(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-product-'.$b_g_language).'"]'), $replacements);
+						$temp = strtr(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-'.get_post_type().'-'.$b_g_language).'"]'), $replacements);
+
+						$temp = preg_replace_callback("/{{b_meta-([a-z_-]+)}}/", function($matches) use($post_id) {
+								return get_post_meta($post_id, $matches[1], true);
+							}, $temp);
+
+						echo $temp;
 
 					}
 

@@ -88,7 +88,7 @@ if (function_exists('pll_languages_list')) {
 
 } else {
 
-	echo b_f_admin_elementor('Pie de página', 'footer');
+	echo b_f_admin_elementor('Pie de página', 'footer-es');
 
 }
 

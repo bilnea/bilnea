@@ -227,6 +227,10 @@ textarea {
 	margin: 0;
 	vertical-align: baseline;
 	*vertical-align: middle;
+	border-radius: 0;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
+	outline: 0;
 }
 
 select {
@@ -249,33 +253,11 @@ html input[type="button"],
 input[type="reset"],
 input[type="submit"] {
 	border: none;
-	border-radius: 10px;
 	background: #ccc;
 	color: rgba(0, 0, 0, 0.8);
 	cursor: pointer;
-	-webkit-appearance: button;
+	-webkit-appearance: none;
 	line-height: 1;
-	padding: 1.12em 1.5em 1em;
-}
-
-button:hover,
-html input[type="button"]:hover,
-input[type="reset"]:hover,
-input[type="submit"]:hover {
-	-webkit-box-shadow: 0 0 3px rgba(0,0,0,0.5);
-	        box-shadow: 0 0 3px rgba(0,0,0,0.5);
-}
-
-button:focus,
-html input[type="button"]:focus,
-input[type="reset"]:focus,
-input[type="submit"]:focus,
-button:active,
-html input[type="button"]:active,
-input[type="reset"]:active,
-input[type="submit"]:active {
-	-webkit-box-shadow: 0 0 3px rgba(0,0,0,0.5);
-	        box-shadow: 0 0 3px rgba(0,0,0,0.5);
 }
 
 input[type="checkbox"],
@@ -311,12 +293,6 @@ textarea {
 	color: #888888;
 	border: 0;
 	border-radius: 5px;
-}
-
-input[type=text]:focus,
-input[type=email]:focus,
-textarea:focus {
-	color: #101010;
 }
 
 input[type=text],
@@ -502,9 +478,7 @@ textarea {
 }
 
 .form-send.elementor-button {
-	display: block;
 	cursor: pointer;
-	width: 100%;
 }
 
 #mobile-menu .sub-menu {
@@ -1229,6 +1203,10 @@ header#mobile-header {
 	overflow: hidden;
 }
 
+[class*="parallax"] > div:not(.parallax-bg) {
+	z-index: 1;
+}
+
 .parallax-bg {
 	position: absolute;
 	width: 100%;
@@ -1236,11 +1214,12 @@ header#mobile-header {
 	top: 0;
 }
 
-/* Google maps */
+/* Mapbox */
 
-.gm-style img {
-	max-height: inherit !important;
-	max-width: inherit !important;
+.map-wrapper .marker {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 /* Lightbox */
@@ -1603,4 +1582,9 @@ img.alignleft {
 
 .elementor-widget-bilnea_menu .menu > li {
 	display: inline-block;
+}
+
+[class^="elementor-bilnea-"] > .elementor-row {
+	-ms-flex-wrap: wrap;
+	    flex-wrap: wrap;
 }

@@ -13,7 +13,7 @@ Desarrollado por Samuel E. Cerezo para bilnea Digital S.L.
 $b_g_version = '3.0';
 
 if (!function_exists('b_f_versions')) {
-	
+
 	function b_f_versions($var_resource = null) {
 
 		// Variables globales
@@ -106,6 +106,11 @@ if (!function_exists('b_f_versions')) {
 				return '0.5.1';
 				break;
 
+			// Mapbox
+			case 'mapbox':
+				return '0.49.0';
+				break;
+
 			// bilnea Theme
 			default:
 				return $b_g_version;
@@ -121,7 +126,7 @@ if (!function_exists('b_f_versions')) {
 // Carga de ficheros por directorio
 
 if (!function_exists('b_f_include')) {
-	
+
 	function b_f_include($var_dir, $var_recursively = true) {
 
 		if (is_dir($var_dir)) {
@@ -147,11 +152,11 @@ if (!function_exists('b_f_include')) {
 }
 
 if (!function_exists('b_f_sort_array')) {
-	
+
 	function b_f_sort_array(&$var_array, $var_value) {
 
 		if (count($var_array) > 0 && strpos(implode('', $var_array), $var_value) !== false) {
-			
+
 			// Variables globales
 			$var_key = array_keys(preg_grep('/('.$var_value.')/i', $var_array))[0];
 			$var_value = $var_array[$var_key];
@@ -160,9 +165,9 @@ if (!function_exists('b_f_sort_array')) {
 				unset($var_array[$var_key]);
 			}
 
-			array_unshift($var_array, $var_value); 
+			array_unshift($var_array, $var_value);
 
-		} 
+		}
 
 		return $var_array;
 	}
@@ -260,7 +265,7 @@ if (b_f_option('b_opt_favicon') != '') {
 	}
 
 	add_action('wp_head', 'b_f_favicon');
-	
+
 }
 
 
@@ -270,7 +275,7 @@ add_filter('widget_text', 'do_shortcode');
 
 
 if (!function_exists('b_f_login_scripts')) {
-	
+
 	function b_f_login_scripts() {
 
 		wp_enqueue_script('jquery');
@@ -336,14 +341,14 @@ add_filter( 'excerpt_more', 'custom_excerpt_more' );
 // Creamos el metabox para poder seleccionar la barra lateral
 
 function crear_metabox_sidebar() {
-	add_meta_box( 
+	add_meta_box(
 	'custom_sidebar',
 		'Barra lateral',
 		'metabox_sidebar_callback',
 		'post',
 		'side'
 	);
-	add_meta_box( 
+	add_meta_box(
 		'custom_sidebar',
 		'Barra lateral',
 		'metabox_sidebar_callback',
@@ -396,7 +401,7 @@ function metabox_sidebar_guardar($post_id) {
 		$data = $_POST['custom_sidebar'];
 		update_post_meta($post_id, 'custom_sidebar', $data);
 	}
-	
+
 }
 
 add_action('add_meta_boxes', 'crear_metabox_sidebar');
@@ -471,7 +476,7 @@ if (function_exists('icl_object_id')) {
 	$lng = icl_get_languages('skip_missing=0&orderby=code');
 	if (!empty($lng)) {
 		foreach ($lng as $l) {
-			
+
 		}
 	}
 } else {
@@ -488,7 +493,7 @@ if (function_exists('icl_object_id')) {
 	$lng = icl_get_languages('skip_missing=0&orderby=code');
 	if (!empty($lng)) {
 		foreach ($lng as $l) {
-			
+
 		}
 	}
 } else {

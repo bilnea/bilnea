@@ -431,6 +431,28 @@ class bilnea_Slider extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'display',
+			[
+				'label' => __('Slides displayed', 'bilnea'),
+				'type' => Controls_Manager::NUMBER,
+				'desktop_default' => 1,
+				'tablet_default' => 1,
+				'mobile_default' => 1
+			]
+		);
+
+		$this->add_responsive_control(
+			'scroll',
+			[
+				'label' => __('Slides to scroll', 'bilnea'),
+				'type' => Controls_Manager::NUMBER,
+				'desktop_default' => 1,
+				'tablet_default' => 1,
+				'mobile_default' => 1
+			]
+		);
+
 		$this->add_control(
 			'pause_on_hover',
 			[
@@ -784,11 +806,11 @@ class bilnea_Slider extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-		
+
 	}
 
 	protected function render() {
-		
+
 		$settings = $this->get_settings();
 
 		wp_enqueue_style('elementor.slider', get_template_directory_uri().'/css/internal/elementor.slider.css', array(), b_f_versions());
@@ -840,7 +862,8 @@ class bilnea_Slider extends Widget_Base {
 		$show_arrows = (in_array($settings['navigation'], ['arrows', 'both']));
 
 		$slick_options = [
-			'slidesToShow' => absint(1),
+			'slidesToShow' => $settings['display'],
+			'slidesToScroll' => $settings['scroll'],
 			'autoplaySpeed' => absint($settings['autoplay_speed']),
 			'autoplay' => ('yes' === $settings['autoplay']),
 			'infinite' => ('yes' === $settings['infinite']),
@@ -849,6 +872,19 @@ class bilnea_Slider extends Widget_Base {
 			'arrows' => $show_arrows,
 			'dots' => $show_dots,
 			'rtl' => $is_rtl,
+			'responsive' => array([
+				'breakpoint' => 1024,
+				'settings' => [
+					'slidesToShow' => $settings['display_tablet'],
+					'slidesToScroll' => $settings['scroll_tablet']
+				]
+			],[
+				'breakpoint' => 767,
+				'settings' => [
+					'slidesToShow' => $settings['display_mobile'],
+					'slidesToScroll' => $settings['scroll_mobile']
+				]
+			])
 		];
 
 		if ('fade' === $settings['transition']) {
@@ -878,10 +914,10 @@ class bilnea_Slider extends Widget_Base {
 			</div>
 		</div>
 		<?php
-		
+
 	}
 
 	protected function content_template() {
-		
+
 	}
 }

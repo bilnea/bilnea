@@ -186,7 +186,7 @@ function b_f_i_register_term_metabox() {
 	register_meta('term', '_term-featured-image', 'b_f_i_sanitize_text_field');
 
 	foreach (get_taxonomies() as $term) {
-		if (!in_array($term, array('post_tag', 'nav_menu', 'link_category', 'post_format'))) {
+		if (!in_array($term, array('post_tag', 'nav_menu', 'link_category', 'post_format', 'product_cat'))) {
 			add_action($term.'_add_form_fields', 'b_f_i_term_add_meta_field');
 			add_action($term.'_edit_form_fields', 'b_f_i_term_edit_featured_image');
 			add_action('edit_'.$term, 'b_f_i_term_save_featured_image');

@@ -31,6 +31,8 @@ if (is_null($check) || $check == 'none') {
 
 							the_post();
 
+							$post_id = get_the_ID();
+
 							ob_start();
 							the_content();
 							$content = ob_get_clean();
@@ -65,7 +67,13 @@ if (is_null($check) || $check == 'none') {
 								'{{b_image}}' => wp_get_attachment_image_src(get_post_thumbnail_id($id), 'full')[0]
 							);
 
-							echo strtr(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-'.get_post_type().'-'.$b_g_language).'"]'), $replacements);
+							$temp = strtr(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-'.get_post_type().'-'.$b_g_language).'"]'), $replacements);
+
+							$temp = preg_replace_callback("/{{b_meta-([a-z_-]+)}}/", function($matches) use($post_id) {
+									return get_post_meta($post_id, $matches[1], true);
+								}, $temp);
+
+							echo $temp;
 
 						}
 

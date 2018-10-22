@@ -8,7 +8,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 // Tabla formularios de contacto
 
 if (!function_exists('b_f_table_contact')) {
-	
+
 	function b_f_table_contact() {
 
 		// Variables globales
@@ -30,16 +30,16 @@ if (!function_exists('b_f_table_contact')) {
 					`email` varchar(200),
 					`formname` varchar(100),
 					`status` varchar(100),
-					`read` varchar(10) DEFAULT "no",
+					`read` varchar(20) DEFAULT "no",
 					`lang` varchar(10) DEFAULT "es",
-					`response` longtext,
+					`response` longtext
 					PRIMARY KEY (id),
 					UNIQUE KEY (id)) '.$var_charset.';';
 
 				require_once(ABSPATH.'wp-admin/includes/upgrade.php');
 
 				dbDelta($var_query);
-				
+
 		}
 	}
 

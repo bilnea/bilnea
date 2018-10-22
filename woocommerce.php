@@ -10,9 +10,11 @@ get_header();
 		<?php
 
 		if (is_product()) {
-			include 'woocommerce/single-product.php';
+			include 'woocommerce/single.php';
 		} else if (is_shop()) {
 			include 'woocommerce/shop.php';
+		} else if (is_archive()) {
+			include 'woocommerce/archive.php';
 		} else {
 			woocommerce_content();
 		}

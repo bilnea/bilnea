@@ -20,7 +20,7 @@ get_header();
 					$replacements = array(
 						'{{b_title}}' => $object->name,
 						'{{b_content}}' => $object->description,
-						'{{b_image}}' => wp_get_attachment_image_src(get_term_meta($object->term_id, '_term-featured-image', true), 'full')[0]
+						'{{b_image}}' => wp_get_attachment_image_src(get_term_meta($term_id, 'thumbnail_id', true), 'medium', true)[0]
 					);
 
 					echo strtr(b_f_shortcode(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-'.$object->taxonomy.'-'.$b_g_language).'"]')), $replacements);

@@ -6,7 +6,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 
 if (!function_exists('b_f_to_bytes')) {
-	
+
 	function b_f_to_bytes($var_size){
 		$var_unit = substr($var_size,0,-2);
 		switch(strtoupper(substr($var_size,-2))){
@@ -65,7 +65,7 @@ if (!function_exists('b_f_get_excerpt')) {
 				$var_excerpt = $var_text;
 			}
 		}
-		
+
 		return $var_excerpt;
 	}
 }
@@ -73,7 +73,7 @@ if (!function_exists('b_f_get_excerpt')) {
 // Función que devuelve un valor en métrica
 
 if (!function_exists('b_f_size')) {
-	
+
 	function b_f_size($var_arg = '', $var_overflow = 0) {
 		$var_num = preg_replace('/\s+/', '', b_f_option($var_arg, true));
 		$var_num = str_replace('px', '', $var_num);
@@ -87,14 +87,14 @@ if (!function_exists('b_f_size')) {
 }
 
 if (!function_exists('b_f_size_unit')) {
-	
+
 	function b_f_size_unit($var_size) {
 
 		$var_number = str_replace('px', '', preg_replace('/\s+/', '', $var_size));
 		if (is_numeric($var_number)) {
 			$var_number .= 'px';
 		}
-		
+
 		return $var_number;
 	}
 
@@ -104,7 +104,7 @@ if (!function_exists('b_f_size_unit')) {
 // Función que devuelve un color
 
 if (!function_exists('b_f_color')) {
-	
+
 	function b_f_color($var_arg='') {
 
 		$var_color = preg_replace('/\s+/', '', b_f_option($var_arg, true));
@@ -122,7 +122,7 @@ if (!function_exists('b_f_color')) {
 // Añadir clase si se accede desde dispositivo móvil
 
 if (!function_exists('b_f_mobile_class')) {
-	
+
 	function b_f_mobile_class($var_classes = '') {
 
 		if (wp_is_mobile()){
@@ -139,7 +139,7 @@ if (!function_exists('b_f_mobile_class')) {
 
 
 if (!function_exists('b_f_get_file_content')) {
-	
+
 	function b_f_get_file_content($var_url) {
 
 		if ((substr($var_url, 0, 7) != 'http://') && (substr($var_url, 0, 8) != 'https://')) {
@@ -162,5 +162,15 @@ if (!function_exists('b_f_get_file_content')) {
 	}
 
 }
+
+function b_f_array_unique($array) {
+
+	$serialized = array_map('serialize', $array);
+	$unique = array_unique($serialized);
+
+	return array_intersect_key($array, $unique);
+
+}
+
 
 ?>

@@ -114,7 +114,7 @@ class bilnea_Breadcrumb extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-		
+
 	}
 
 	protected function render() {
@@ -122,7 +122,7 @@ class bilnea_Breadcrumb extends Widget_Base {
 		$settings = $this->get_settings();
 
 		$sep = ' <span class="separator">'.$settings['separator'].'</span> ';
-		
+
 		if (!is_front_page()) {
 
 			$breadcrumbs = array();
@@ -138,13 +138,15 @@ class bilnea_Breadcrumb extends Widget_Base {
 			} else {
 				if (is_category() || (is_single() && get_post_type() == 'post')) {
 					array_push($breadcrumbs, the_category('title_li=').'a');
-				} elseif (is_archive() || is_singular('post')) {
+				} else if (is_archive() || is_singular('post')) {
 					if (is_day()) {
 						array_push($breadcrumbs, printf(__('%s', 'bilnea'), get_the_date()));
-					} elseif (is_month()) {
+					} else if (is_month()) {
 						array_push($breadcrumbs, printf(__('%s', 'bilnea'), get_the_date(_x('F Y', 'Fecha para archivos mensuales', 'bilnea'))));
-					} elseif (is_year()) {
+					} else if (is_year()) {
 						array_push($breadcrumbs, printf(__('%s', 'bilnea'), get_the_date(_x('Y', 'Fecha para archivos anuales', 'bilnea'))));
+					} else if (is_archive()) {
+						array_push($breadcrumbs, '<span class="current">'.get_queried_object()->name.'</span>');
 					}
 				}
 				foreach (get_post_ancestors(get_the_ID()) as $parent) {
@@ -155,24 +157,24 @@ class bilnea_Breadcrumb extends Widget_Base {
 			if (is_singular()) {
 				array_push($breadcrumbs, '<span class="current">'.get_the_title().'</span>');
 			}
-		
+
 			if (is_home()) {
 				global $post;
-				if (get_option('page_for_posts')) { 
+				if (get_option('page_for_posts')) {
 					$post = get_page(get_option('page_for_posts'));
 					setup_postdata($post);
 					array_push($breadcrumbs, '<span class="current">'.get_the_title().'</span>');
 					rewind_posts();
 				}
 			}
-			
+
 		}
 
 		echo '<div class="b_breadcrumbs">'.implode($sep, $breadcrumbs).'</div>';
-		
+
 	}
 
 	protected function content_template() {
-		
+
 	}
 }

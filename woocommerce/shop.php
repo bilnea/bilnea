@@ -12,7 +12,7 @@
 						$content = ob_get_clean();
 
 						add_filter('the_content', 'b_f_i_empty_content');
- 
+
 						function b_f_i_empty_content($content) {
 							return '';
 						}
@@ -34,30 +34,37 @@
 
 						$attributes = '';
 
-						foreach (array_reverse($product->get_attributes()) as $attribute) {
-							$attributes .= '<div class="attribute-wrap '.$attribute->get_name().'">';
-							if ($attribute['is_visible'] || ($attribute->is_taxonomy() && taxonomy_exists($attribute->get_name()))) {
-								foreach (get_the_terms(get_queried_object_id(), $attribute->get_name()) as $term) {
-									if ($attribute->get_name() == 'pa_color') {
-										$attributes .= '<span style="background-color: '.$term->name.';"></span>';
-									} else {
-										$attributes .= '<span>'.$term->name.'</span>';
-									}
-								}
-							}
-							$attributes .= '</div>';
-						}
-
 						$replacements = array(
 							'{{b_title}}' => get_the_title(),
 							'{{b_permalink}}' => get_permalink(),
 							'{{b_content}}' => '<div class="b_content">'.$content.'</div>',
 							'{{b_date}}' => get_the_date(),
 							'{{b_categories}}' => $categories,
-							'{{b_image}}' => wp_get_attachment_image_src(get_post_thumbnail_id($id), 'full')[0],
-							'{{b_w_sku}}' => $product->get_sku(),
-							'{{b_w_attributes}}' => $attributes
+							'{{b_image}}' => wp_get_attachment_image_src(get_post_thumbnail_id($id), 'full')[0]
 						);
+
+						if ($product) {
+
+							foreach (array_reverse($product->get_attributes()) as $attribute) {
+								$attributes .= '<div class="attribute-wrap '.$attribute->get_name().'">';
+								if ($attribute['is_visible'] || ($attribute->is_taxonomy() && taxonomy_exists($attribute->get_name()))) {
+									foreach (get_the_terms(get_queried_object_id(), $attribute->get_name()) as $term) {
+										if ($attribute->get_name() == 'pa_color') {
+											$attributes .= '<span style="background-color: '.$term->name.';"></span>';
+										} else {
+											$attributes .= '<span>'.$term->name.'</span>';
+										}
+									}
+								}
+								$attributes .= '</div>';
+							}
+
+							$replacements['{{b_w_sku}}'] = $product->get_sku();
+							$replacements['{{b_w_attributes}}'] = $attributes;
+
+						}
+
+
 
 						echo strtr(do_shortcode('[b_elementor id="'.b_f_option('b_opt_widget-store-'.$b_g_language).'"]'), $replacements);
 

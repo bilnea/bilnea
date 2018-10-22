@@ -7,7 +7,7 @@ if (__FILE__ == $_SERVER['PHP_SELF']) {
 
 // Registro de contactos
 
-function b_f_forms_menu() { 
+function b_f_forms_menu() {
 	add_submenu_page('bilnea', 'Formularios', 'Formularios', 'manage_options', 'contact_forms', 'b_p_forms');
 }
 
@@ -22,32 +22,33 @@ if (!function_exists('b_p_forms')) {
 		global $b_g_languages;
 
 		// Variables locales
-		$var_url = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
+		$url = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
 
-		(isset($_GET['order']) && $_GET['order'] == 'asc') ? $var_order = 'des' : $var_order = 'asc';
+		(isset($_GET['order']) && $_GET['order'] == 'asc') ? $order = 'des' : $order = 'asc';
 
 		if (isset($_GET['orderby'])) {
-			$var_sorts = array('date' => 'sortable asc', 'email' => 'sortable asc', 'data' => 'sortable asc', 'formname' => 'sortable asc');
-			$var_sorts[$_GET['orderby']] = 'sorted '.$var_order;
+			$sorts = array('date' => 'sortable asc', 'email' => 'sortable asc', 'data' => 'sortable asc', 'formname' => 'sortable asc');
+			$sorts[$_GET['orderby']] = 'sorted '.$order;
 		} else {
-			$var_sorts = array('date' => 'sorted '.$var_order, 'email' => 'sortable asc', 'data' => 'sortable asc', 'formname' => 'sortable asc');
+			$sorts = array('date' => 'sorted '.$order, 'email' => 'sortable asc', 'data' => 'sortable asc', 'formname' => 'sortable asc');
 		}
 
-		(isset($_GET['orderby']) && $_GET['orderby'] != '') ? $var_orderby = ' ORDER BY '.$_GET['orderby'] : $var_orderby = ' ORDER BY `date`';
-		($var_order == 'des') ? $var_ordered = ' DESC' : $var_ordered = ' ASC';
+		(isset($_GET['orderby']) && $_GET['orderby'] != '') ? $orderby = ' ORDER BY '.$_GET['orderby'] : $orderby = ' ORDER BY `date`';
+		($order == 'des') ? $ordered = ' DESC' : $ordered = ' ASC';
 
 		// Conexión a la base de datos
-		$var_table = $wpdb->prefix.'form_users';
+		$table = $wpdb->prefix.'form_users';
 
 		if (isset($_GET['delete']) && $_GET['delete'] != '') {
-			$var_data = $wpdb->get_results('SELECT * FROM '.$var_table.' WHERE id = '.$_GET['delete'], ARRAY_A)[0];
-			if (count(unserialize($var_data['attachments'])) > 0) {
-				b_f_i_rmdir(pathinfo(ABSPATH.'wp-content'.explode('/wp-content', unserialize($var_data['attachments'])[0])[1])['dirname']);
+			$data = $wpdb->get_results('SELECT * FROM '.$table.' WHERE id = '.$_GET['delete'], ARRAY_A)[0];
+			foreach (unserialize($data['attachments']) as $attachment) {
+				$file = ABSPATH.'wp-content/mail'.explode('/uploads/mail/', $attachment)[1];
+				unlink($file);
 			}
-			$wpdb->delete($var_table, array('id' => $_GET['delete']));
+			$wpdb->delete($table, array('id' => $_GET['delete']));
 		}
 
-		$var_users = $wpdb->get_results('SELECT * FROM '.$var_table.$var_orderby.$var_ordered, ARRAY_A);
+		$users = $wpdb->get_results('SELECT * FROM '.$table.$orderby.$ordered, ARRAY_A);
 
 		// Respuesta
 
@@ -57,29 +58,29 @@ if (!function_exists('b_p_forms')) {
 				add_action('phpmailer_init', 'b_f_smtp_server');
 			}
 
-			$var_data = array();
-			$var_data['subject'] = $_POST['subject'];
-			$var_data['message'] = $_POST['message'];
-			$var_data['date'] = $_POST['response_date'];
+			$data = array();
+			$data['subject'] = $_POST['subject'];
+			$data['message'] = $_POST['message'];
+			$data['date'] = $_POST['response_date'];
 
-			$var_data = array('response' => serialize($var_data));
+			$data = array('response' => serialize($data));
 
 			// Variables locales
-			$var_headers = 'From: '.get_bloginfo('name').' <'.b_f_option('b_opt_form-email').'>'."\r\n";
-			$var_headers .= 'charset=UTF-8';
+			$headers = 'From: '.get_bloginfo('name').' <'.b_f_option('b_opt_form-email').'>'."\r\n";
+			$headers .= 'charset=UTF-8';
 
 			// Envío del formulario
-			if (wp_mail($_POST['email'], $_POST['subject'], $_POST['message'], $var_headers)) {
-				$wpdb->update($var_table, $var_data, array('id' => $_GET['contact']));
+			if (wp_mail($_POST['email'], $_POST['subject'], $_POST['message'], $headers)) {
+				$wpdb->update($table, $data, array('id' => $_GET['contact']));
 			}
 		}
 
 		if (isset($_GET['contact']) && $_GET['contact'] != '') {
 
-			$var_user = $wpdb->get_results('SELECT * FROM '.$var_table.' WHERE id = '.$_GET['contact'], ARRAY_A)[0];
+			$user = $wpdb->get_row('SELECT * FROM '.$table.' WHERE id = '.$_GET['contact'], ARRAY_A);
 
-			$wpdb->update($var_table, array('read' => 'yes'), array('id' => $_GET['contact']));
-			
+			$wpdb->update($table, array('read' => date('d/m/Y H:i', strtotime((substr(get_option('gmt_offset'), 0, 1) == '-' ? '' : '+').get_option('gmt_offset').' hours'))), array('id' => $_GET['contact'], 'read' => 'no'));
+
 			?>
 
 			<div class="wrap">
@@ -96,11 +97,14 @@ if (!function_exists('b_p_forms')) {
 
 										<?php
 
-										$var_data = unserialize($var_user['data']);
+										$data = unserialize($user['data']);
 
-										foreach ($var_data as $key => $value) {
+										foreach ($data as $key => $value) {
 											$key = ucfirst($key);
-											echo '<strong style="display: block; vertical-align: top;">'.$key.'</strong><div style="display: block; vertical-align: top; margin-bottom: 16px;">'.$value.'</div>';
+											if (trim($key) != '') {
+												echo '<strong style="display: block; vertical-align: top;">'.$key.'</strong><div style="display: block; vertical-align: top; margin-bottom: 16px;">'.$value.'</div>';
+											}
+
 										}
 
 										?>
@@ -116,16 +120,16 @@ if (!function_exists('b_p_forms')) {
 
 											<?php
 
-											if ($var_user['response'] != '') {
-												
-												$var_response = unserialize($var_user['response']);
+											if ($user['response'] != '') {
+
+												$response = unserialize($user['response']);
 
 												?>
 
 												<strong>Asunto</strong>
-												<div style="display: block; font-size: 12px; margin-bottom: 16px; width: 100%;"><?= $var_response['subject'] ?></div>
+												<div style="display: block; font-size: 12px; margin-bottom: 16px; width: 100%;"><?= $response['subject'] ?></div>
 												<strong>Mensaje</strong>
-												<div style="display: block; font-size: 12px; width: 100%;"><?= $var_response['message'] ?></div>
+												<div style="display: block; font-size: 12px; width: 100%;"><?= $response['message'] ?></div>
 
 												<?php
 
@@ -137,7 +141,7 @@ if (!function_exists('b_p_forms')) {
 												<strong>Mensaje</strong>
 												<textarea name="message" rows="6" style="font-size: 12px; border: 1px solid #ddd; border-radius: 5px; resize: none; box-shadow: none; width: 100%; outline: 0;"></textarea>
 												<input type="hidden" name="response_date" value="<?= date('c') ?>" />
-												<input type="hidden" name="email" value="<?= $var_user['email'] ?>" />
+												<input type="hidden" name="email" value="<?= $user['email'] ?>" />
 
 												<?php
 
@@ -150,14 +154,14 @@ if (!function_exists('b_p_forms')) {
 
 											<?php
 
-											if ($var_user['response'] != '') {
-												
-												$var_response = unserialize($var_user['response']);
+											if ($user['response'] != '') {
+
+												$response = unserialize($user['response']);
 
 												?>
 
 												<div id="delete-action">
-													Respuesta enviada el <?= date('j M \d\e Y \@ G:i', strtotime($var_response['date'])) ?>
+													Respuesta enviada el <?= date('j M \d\e Y \@ G:i', strtotime($response['date'])) ?>
 												</div>
 
 												<?php
@@ -171,7 +175,7 @@ if (!function_exists('b_p_forms')) {
 
 												<?php
 
-												if ($var_user['response'] != '') {
+												if ($user['response'] != '') {
 													echo '<input name="save" type="submit" class="button button-primary button-large" id="publish" value="Enviar mensaje" disabled>';
 												} else {
 													echo '<input name="save" type="submit" class="button button-primary button-large" id="publish" value="Enviar mensaje">';
@@ -198,19 +202,19 @@ if (!function_exists('b_p_forms')) {
 												<div id="misc-publishing-actions">
 													<div class="misc-pub-section misc-pub-post-status">
 														<label for="post_status">Estado:</label>
-														<span id="post-status-display"><?php echo ($var_user['status'] == 'sent') ? 'Enviado sin errores' : 'Error al enviar'; ?></span>
+														<span id="post-status-display"><?php echo ($user['status'] == 'sent') ? 'Enviado sin errores' : 'Error al enviar'; ?></span>
 													</div>
-													<div class="misc-pub-section misc-pub-visibility" id="visibility"> Leído: <span id="post-visibility-display"><?php echo ($var_user['read'] == 'no') ? 'No leído' : 'Leído'; ?></span>
+													<div class="misc-pub-section misc-pub-visibility" id="visibility"> Leído: <span id="post-visibility-display"><?php echo ($user['read'] == 'no') ? 'No leído' : 'Leído'; ?></span>
 													</div>
 													<div class="misc-pub-section curtime misc-pub-curtime">
-														<span id="timestamp"> Enviado el: <b><?= date('j M \d\e Y \@ G:i', strtotime($var_user['date'])) ?></b></span>
+														<span id="timestamp"> Enviado el: <b><?= date('j M \d\e Y \@ G:i', strtotime($user['date'])) ?></b></span>
 													</div>
 												</div>
 												<div class="clear"></div>
 											</div>
 											<div id="major-publishing-actions">
 												<div id="delete-action">
-													<a class="submitdelete deletion" href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&delete=<?= $var_user['id'] ?>">Eliminar mensaje</a>
+													<a class="submitdelete deletion" href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&delete=<?= $user['id'] ?>">Eliminar mensaje</a>
 												</div>
 												<div class="clear"></div>
 											</div>
@@ -224,15 +228,15 @@ if (!function_exists('b_p_forms')) {
 									<div class="inside">
 										<p>
 											<strong>Idioma</strong><br />
-											<?= $b_g_languages[$var_user['lang']]['nativeName'] ?>
+											<?= $b_g_languages[$user['lang']]['nativeName'] ?>
 										</p>
 										<p>
 											<strong>Correo electrónico</strong><br />
-											<a href="mailto:<?= $var_user['email'] ?>"><?= $var_user['email'] ?></a>
+											<a href="mailto:<?= $user['email'] ?>"><?= $user['email'] ?></a>
 										</p>
 										<p>
 											<strong>Dirección IP</strong><br />
-											<?= $var_user['ip'] ?>
+											<?= $user['ip'] ?>
 										</p>
 									</div>
 								</div>
@@ -243,19 +247,19 @@ if (!function_exists('b_p_forms')) {
 									<div class="inside">
 										<p>
 											<strong>Ubicación</strong><br />
-											<a href="mailto:<?= get_permalink($var_user['page']) ?>"><?= get_the_title($var_user['page']) ?></a>
+											<a href="mailto:<?= get_permalink($user['page']) ?>"><?= get_the_title($user['page']) ?></a>
 										</p>
 										<p>
 											<strong>Nombre</strong><br />
-											<?= $var_user['formname'] ?>
+											<?= $user['formname'] ?>
 										</p>
 									</div>
 								</div>
-								
+
 								<?php
 
-								if (count(unserialize($var_user['attachments'])) > 0) {
-									
+								if (count(unserialize($user['attachments'])) > 0) {
+
 									?>
 
 									<div id="attachments" class="postbox">
@@ -266,7 +270,7 @@ if (!function_exists('b_p_forms')) {
 
 											<?php
 
-											foreach (unserialize($var_user['attachments']) as $file_url) {
+											foreach (unserialize($user['attachments']) as $file_url) {
 
 												switch (end(explode('.', $file_url))) {
 													case 'pdf':
@@ -334,176 +338,560 @@ if (!function_exists('b_p_forms')) {
 
 		} else {
 
-			?>
-			
-			<div class="wrap">
-				<h1>Formularios de contacto</h1>
-				<table class="wp-list-table widefat fixed striped pages">
-					<thead>
-						<tr>
-							<td id="cb" class="manage-column column-cb check-column">
-								<label class="screen-reader-text" for="cb-select-all-1">Seleccionar todos</label>
-								<input id="cb-select-all-1" type="checkbox">
-							</td>
-							<th scope="col" id="data" class="manage-column column-title <?= $var_sorts['data'] ?>">
-								<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=data&order=<?= $var_order ?>">
-									<span>Nombre</span>
-									<span class="sorting-indicator"></span>
-								</a>
-							</th>
-							<th scope="col" id="email" class="manage-column column-title <?= $var_sorts['email'] ?>">
-								<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=email&order=<?= $var_order ?>">
-									<span>Correo electrónico</span>
-									<span class="sorting-indicator"></span>
-								</a>
-							</th>
-							<th scope="col" id="date" class="manage-column column-title <?= $var_sorts['date'] ?>">
-								<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=date&order=<?= $var_order ?>">
-									<span>Fecha</span>
-									<span class="sorting-indicator"></span>
-								</a>
-							</th>
-							<th scope="col" id="form" class="manage-column column-title <?= $var_sorts['formname'] ?>">
-								<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=formname&order=<?= $var_order ?>">
-									<span>Formulario</span>
-									<span class="sorting-indicator"></span>
-								</a>
-							</th>
-							<th style="width: 30px;">
-							</th>
-						</tr>
-					</thead>
-					<tbody>
+			if (isset($_GET['form']) && $_GET['form'] != '') {
 
-						<?php
+				$fingerprint = base64_decode(urldecode($_GET['form']));
 
-						if (count($var_users) == 0) {
+				$users = $wpdb->get_results('SELECT * FROM `'.$table.'` WHERE CONCAT(`formname`, `lang`) = "'.$fingerprint.'" '.$orderby.$ordered, ARRAY_A);
 
-							echo '<tr><td colspan="6">No se han encontrado registros.</td></tr>';
+				$page = 1;
 
-						} else {
+				if (isset($_GET['index']) && $_GET['index'] != '') {
+					$page = (int)$_GET['index'];
+				}
 
-							foreach ($var_users as $var_user) {
+				$i = 0;
 
-								?>
+				$all = $seen = $unseen = $error = 0;
 
-								<tr id="subscriber-<?= $var_user['id'] ?>" class="iedit author-self level-0 post-<?= $var_user['id'] ?> status-publish hentry">
-									<th scope="row" class="check-column">
-										<label class="screen-reader-text" for="cb-select-<?= $var_user['id'] ?>">Elige usuario</label>
-										<input id="cb-select-<?= $var_user['id'] ?>" type="checkbox" name="post[]" value="<?= $var_user['id'] ?>">
-										<div class="locked-indicator"></div>
-									</th>
-									<td class="date column-name" data-colname="Nombre">
-										<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&contact=<?= $var_user['id'] ?>">
-											<?php
+				foreach ($users as $index => $user) {
 
-											$var_data = unserialize($var_user['data']);
+					$unset = 0;
 
-											if ($var_user['read'] == 'no') {
-												$out = '<strong>';
-											} else {
-												$out = '';
-											}
+					if ($_GET['start'] != '' || $_GET['end'] != '') {
 
-											if ($var_data['Nombre'] == '' && $var_data['Apellidos'] == '') {
-												$out .= '(Sin nombre)';
-											} else {
-												if ($var_data['Nombre'] != '') {
-													$out .= ' '.$var_data['Nombre'];
-												}
-												
-												if ($var_data['Apellidos'] != '') {
-													$out .= ' '.$var_data['Apellidos'];
-												}
-											}
+						$date = date('Ymd', strtotime($user['date']));
 
-											if ($var_user['read'] == 'no') {
-												$out .= '</strong>';
-											}
-
-											if (count(unserialize($var_user['attachments'])) > 0) {
-												$out .= ' <span class="dashicons dashicons-admin-page"></span>';
-											}
-
-											echo $out;
-											
-											?>
-										</a>
-									</td>
-									<td class="title column-email has-row-actions column-primary page-title" data-colname="Correo electrónico">
-										<a class="row-email" href="mailto:<?= $var_user['email'] ?>">
-											<?= $var_user['email'] ?>
-										</a>
-									</td>
-									<td class="date column-date" data-colname="Fecha">
-										<?php
-
-										if ($var_user['status'] == 'error') {
-											echo '<span class="dashicons dashicons-warning"></span>&nbsp;';
-										}
-
-										echo date('d/m/Y G:i', strtotime($var_user['date']));
-										
-										?>
-									</td>
-									<td class="date column-form" data-colname="Formulario">
-										<a href="<?= get_permalink($var_user['page']) ?>"><?= $var_user['formname'] ?></a>
-									</td>
-									<td>
-										<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&delete=<?= $var_user['id'] ?>"><span class="dashicons dashicons-trash"></span></a>
-									</td>
-								</tr>
-
-								<?php
-							}
-
+						if ($_GET['start'] != '' && $date < date('Ymd', strtotime($_GET['start']))) {
+							$unset++;
 						}
 
-						?>
+						if ($_GET['end'] != '' && $date > date('Ymd', strtotime($_GET['end']))) {
+							$unset++;
+						}
 
-					</tbody>
-					<tfoot>
-						<tr>
-							<td id="cb" class="manage-column column-cb check-column">
-								<label class="screen-reader-text" for="cb-select-all-1">Seleccionar todos</label>
-								<input id="cb-select-all-1" type="checkbox">
-							</td>
-							<th scope="col" id="data" class="manage-column column-title <?= $var_sorts['data'] ?>">
-								<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=data&order=<?= $var_order ?>">
-									<span>Nombre</span>
-									<span class="sorting-indicator"></span>
-								</a>
-							</th>
-							<th scope="col" id="email" class="manage-column column-title <?= $var_sorts['email'] ?>">
-								<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=email&order=<?= $var_order ?>">
-									<span>Correo electrónico</span>
-									<span class="sorting-indicator"></span>
-								</a>
-							</th>
-							<th scope="col" id="date" class="manage-column column-title <?= $var_sorts['date'] ?>">
-								<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=date&order=<?= $var_order ?>">
-									<span>Fecha</span>
-									<span class="sorting-indicator"></span>
-								</a>
-							</th>
-							<th scope="col" id="form" class="manage-column column-title <?= $var_sorts['formname'] ?>">
-								<a href="<?= 'http'.((is_ssl()) ? 's' : '').'://'."{$_SERVER['HTTP_HOST']}{$var_url}" ?>?page=contact_forms&orderby=formname&order=<?= $var_order ?>">
-									<span>Formulario</span>
-									<span class="sorting-indicator"></span>
-								</a>
-							</th>
-							<th style="width: 30px;">
-							</th>
-						</tr>
-					</tfoot>
-				</table>
-			</div>
+					}
 
-			<?php
+					if (isset($_GET['seen']) && $user['read'] != 'yes') {
+						$unset++;
+					}
+
+					if (isset($_GET['unseen']) && $user['read'] == 'yes') {
+						$unset++;
+					}
+
+					if (isset($_GET['warning']) && $user['status'] != 'error') {
+						$unset++;
+					}
+
+					if ($user['read'] == 'yes') {
+						$seen++;
+					} else {
+						$unseen++;
+					}
+
+					if ($user['status'] == 'error') {
+						$error++;
+					}
+
+					$all++;
+
+					if ($unset > 0) {
+						unset($users[$index]);
+						continue;
+					} else {
+						$i++;
+						if ($i < (($page-1)*50) || $i > ($page*50)) {
+							unset($users[$index]);
+							continue;
+						}
+					}
+
+					$users[$index]['data'] = unserialize($user['data']);
+
+				}
+
+				?>
+
+				<div class="wrap">
+					<h1>Formularios de contacto</h1>
+					<ul class="subsubsub">
+						<li class="all">
+							<a href="<?= site_url('wp-admin/admin.php?page=contact_forms') ?>" class="current" aria-current="page">Volver</a> |
+						</li>
+						<li>
+							<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&form=<?= $_GET['form'] ?>&orderby=date&order=<?= $order ?>">Todos <span class="count">(<?= $all ?>)</span></a> |
+						</li>
+						<li>
+							<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&form=<?= $_GET['form'] ?>&orderby=date&order=<?= $order ?>&seen">Leídos <span class="count">(<?= $seen ?>)</span></a> |
+						</li>
+						<li>
+							<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&form=<?= $_GET['form'] ?>&orderby=date&order=<?= $order ?>&unseen">No leídos <span class="count">(<?= $unseen ?>)</span></a> |
+						</li>
+						<li>
+							<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&form=<?= $_GET['form'] ?>&orderby=date&order=<?= $order ?>&warning">Error <span class="count">(<?= $error ?>)</span></a>
+						</li>
+					</ul>
+					<div class="tablenav top" style="padding-bottom: 10px;">
+						<div class="alignleft actions">
+							<form mhetod="get">
+								<?php
+								foreach ($_GET as $index => $value) {
+									if (!in_array($index, array('start', 'end'))) {
+										echo '<input type="hidden" name="'.$index.'" value="'.$value.'">';
+									}
+								}
+								?>
+								<span>Desde</span>
+								<input type="date" name="start" value="<?= ($_GET['start'] ? $_GET['start'] : '') ?>">
+								<span>Hasta</span>
+								<input type="date" name="end" value="<?= ($_GET['end'] ? $_GET['end'] : '') ?>">
+								<input type="submit" class="button action" value="Filtrar">
+								<input type="submit" name="csv" class="button action" value="Descargar CSV">
+							</form>
+						</div>
+						<div class="tablenav-pages">
+							<span class="displaying-num"><?= $all ?> elementos</span>
+							<span class="pagination-links">
+								<?php
+									$gets = array();
+									foreach ($_GET as $key => $value) {
+										if ($key != 'index') {
+											array_push($gets, $key.'='.$value);
+										}
+									}
+									$url = site_url('wp-admin/admin.php').'?'.implode('&', $gets);
+									if ($page == 1) {
+										?>
+										<span class="tablenav-pages-navspan" aria-hidden="true">«</span>
+										<span class="tablenav-pages-navspan" aria-hidden="true">‹</span>
+										<?php
+									} else {
+										?>
+										<a class="first-page" href="<?= $url ?>">
+											<span aria-hidden="true">«</span>
+										</a>
+										<a class="prev-page" href="<?= $url.($page > 1 ? '&index='.($page-1) : '') ?>">
+											<span aria-hidden="true">‹</span>
+										</a>
+										<?php
+									}
+								?>
+								<span class="paging-input">
+									<label for="current-page-selector" class="screen-reader-text">Página actual</label>
+									<input class="current-page" id="current-page-selector" type="text" name="paged" value="<?= $page ?>" size="1" aria-describedby="table-paging">
+									<span class="tablenav-paging-text"> de <span class="total-pages"><?= ceil($all/50) ?></span></span>
+								</span>
+								<?php
+									if ($page == ceil($all/50)) {
+										?>
+										<span class="tablenav-pages-navspan" aria-hidden="true">›</span>
+										<span class="tablenav-pages-navspan" aria-hidden="true">»</span>
+										<?php
+									} else {
+										?>
+										<a class="next-page" href="<?= $url.($page < ceil($all/50) ? '&index='.($page+1) : '') ?>">
+											<span aria-hidden="true">›</span>
+										</a>
+										<a class="last-page" href="<?= $url.'&index='.ceil($all/50) ?>">
+											<span aria-hidden="true">»</span>
+										</a>
+										<?php
+									}
+								?>
+							</span>
+						</div>
+					</div>
+					<table class="wp-list-table widefat fixed striped pages">
+						<thead>
+							<tr>
+								<th style="width: 30px;">
+									&nbsp;
+								</th>
+								<th scope="col" id="date" class="manage-column column-date <?= $sorts['date'] ?>">
+									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&form=<?= $_GET['form'] ?>&orderby=date&order=<?= $order ?>">
+										<span>Fecha</span>
+										<span class="sorting-indicator"></span>
+									</a>
+								</th>
+								<th scope="col" id="date" class="manage-column column-email <?= $sorts['email'] ?>">
+									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&form=<?= $_GET['form'] ?>&orderby=email&order=<?= $order ?>">
+										<span>Correo electrónico</span>
+										<span class="sorting-indicator"></span>
+									</a>
+								</th>
+								<th scope="col" id="date" class="manage-column column-status <?= $sorts['status'] ?>">
+									<span>Estado</span>
+								</th>
+								<th scope="col" id="fields" class="manage-column column-fields">
+									<span>Número de campos</span>
+								</th>
+								<th style="width: 30px;">
+									&nbsp;
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<?php
+
+							if (count($users) == 0) {
+
+								echo '<tr><td colspan="5">No se han encontrado registros.</td></tr>';
+
+							} else {
+
+								foreach ($users as $user) {
+
+									?>
+									<tr id="subscriber-<?= $user['id'] ?>" class="iedit author-self level-0 post-<?= $user['id'] ?> status-publish hentry">
+										<td>
+											<?php
+
+											if ($user['status'] == 'error') {
+												echo '<span class="dashicons dashicons-warning"></span>&nbsp;';
+											}
+
+											?>
+										</td>
+										<td class="date column-date" data-colname="Fecha">
+											<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&contact=<?= $user['id'] ?>">
+											<?= date('d/m/Y G:i', strtotime($user['date'])) ?>
+											</a>
+										</td>
+										<td class="date column-email" data-colname="Correo electrónico">
+											<?php if ($user['email'] == '') { ?>
+												Sin correo electrónico
+											<?php } else { ?>
+												<a href="mailto:<?= $user['email'] ?>">
+												<?= $user['email'] ?>
+												</a>
+											<?php } ?>
+										</td>
+										<td>
+											<?php
+											if ($user['read'] == 'no') {
+												echo 'No leído';
+											} else {
+												echo 'Leído '.$user['read'];
+											}
+											?>
+										</td>
+										<td>
+											<?= count($user['data']) ?>
+										</td>
+										<td>
+											<a class="submitdelete deletion" href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&delete=<?= $user['id'] ?>"><span class="dashicons dashicons-trash"></span></a>
+										</td>
+									</tr>
+
+									<?php
+								}
+
+							}
+
+							?>
+
+						</tbody>
+						<tfoot>
+							<tr>
+								<th style="width: 30px;">
+									&nbsp;
+								</th>
+								<th scope="col" id="date" class="manage-column column-date <?= $sorts['date'] ?>">
+									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&form=<?= $_GET['form'] ?>&orderby=date&order=<?= $order ?>">
+										<span>Fecha</span>
+										<span class="sorting-indicator"></span>
+									</a>
+								</th>
+								<th scope="col" id="date" class="manage-column column-email <?= $sorts['email'] ?>">
+									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&form=<?= $_GET['form'] ?>&orderby=email&order=<?= $order ?>">
+										<span>Correo electrónico</span>
+										<span class="sorting-indicator"></span>
+									</a>
+								</th>
+								<th scope="col" id="date" class="manage-column column-status <?= $sorts['status'] ?>">
+									<span>Estado</span>
+								</th>
+								<th scope="col" id="fields" class="manage-column column-fields">
+									<span>Número de campos</span>
+								</th>
+								<th style="width: 30px;">
+									&nbsp;
+								</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+
+				<?php
+
+			} else {
+
+				$order = (isset($_GET['order']) && $_GET['order'] == 'des') ? 'asc' : 'des';
+
+				$sorts = array(
+					'title' => 'sortable asc',
+					'page' 	=> 'sortable asc',
+					'lang' 	=> 'sortable asc',
+					'date' 	=> 'sortable asc',
+					'count' => 'sortable asc'
+				);
+
+				if (isset($_GET['orderby'])) {
+
+					$sorts[$_GET['orderby']] = 'sorted '.$order;
+
+				} else {
+
+					$sorts['count'] = 'sorted '.$order;
+
+				}
+
+				$orderby = (isset($_GET['orderby']) && $_GET['orderby'] != '') ? ' ORDER BY `'.$_GET['orderby'].'`' : ' ORDER BY `count`';
+
+				$orderby .= ($order == 'des') ? ' ASC' : ' DESC';
+
+				?>
+
+				<div class="wrap">
+					<h1>Formularios de contacto</h1>
+					<table class="wp-list-table widefat fixed striped pages">
+						<thead>
+							<tr>
+								<th scope="col" id="title" class="column-title <?= $sorts['title'] ?>">
+									<a><span>Formulario</span></a>
+								</th>
+								<th scope="col" id="language" class="manage-column column-language">
+									<span>Idioma</span>
+								</th>
+								<th scope="col" id="page" class="manage-column column-page <?= $sorts['page'] ?>">
+									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&orderby=page&order=<?= $order ?>">
+										<span>Página</span>
+										<span class="sorting-indicator"></span>
+									</a>
+								</th>
+								<th scope="col" id="date" class="manage-column column-date <?= $sorts['date'] ?>">
+									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&orderby=date&order=<?= $order ?>">
+										<span>Fecha último registro</span>
+										<span class="sorting-indicator"></span>
+									</a>
+								</th>
+								<th scope="col" id="count" class="manage-column column-date <?= $sorts['count'] ?>">
+									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&orderby=count&order=<?= $order ?>">
+										<span>Registros</span>
+										<span class="sorting-indicator"></span>
+									</a>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<?php
+
+							global $b_g_languages;
+
+							$forms = $wpdb->get_results('SELECT `date`, `page` AS "page_id", `post_title` AS "page", `formname` AS "title", `lang`, COUNT(*) AS "count", MAX(`date`) as "date", CONCAT(`formname`, `lang`) AS "uid" FROM `'.$table.'` AS t1 LEFT JOIN `'.$wpdb->prefix.'posts` AS t2 ON t1.page = t2.id GROUP BY `uid`'.$orderby, ARRAY_A);
+
+							if (count($forms) == 0) {
+
+								echo '<tr><td colspan="4">No se han encontrado formularios.</td></tr>';
+
+							} else {
+
+								foreach ($forms as $id => $form) {
+
+									?>
+
+									<tr class="iedit author-self level-0 form-<?= substr($id, 2) ?> status-publish hentry">
+										<td class="date column-name" data-colname="Nombre">
+											<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&form=<?= base64_encode($form['uid']) ?>">
+												<strong><?= $form['title'] ?></strong>
+											</a>
+										</td>
+										<td class="title column-language" data-colname="Idioma">
+											<?php
+
+											if (function_exists('icl_object_id')) {
+												echo apply_filters( 'wpml_post_language_details', NULL, $form['page_id'])['display_name'];
+											} else if (function_exists('pll_the_languages')) {
+												echo get_term_by('slug', $form['lang'], 'language')->name;
+											} else {
+												echo 'Español';
+											}
+
+											?>
+										</td>
+										<td class="title column-email" data-colname="Página">
+											<a class="row-email" href="<?= get_permalink($form['page_id']) ?>">
+												<?= $form['page'] ?>
+											</a>
+										</td>
+										<td class="date column-date" data-colname="Fecha">
+											<?= date('d/m/Y H:i', strtotime($form['date'])) ?>
+										</td>
+										<td class="date column-date" data-colname="Formulario">
+											<?= $form['count'] ?>
+										</td>
+									</tr>
+
+									<?php
+								}
+
+							}
+
+							?>
+
+						</tbody>
+						<tfoot>
+							<tr>
+								<th scope="col" id="title" class="manage-column column-title <?= $sorts['title'] ?>">
+									<a><span>Formulario</span></a>
+								</th>
+								<th scope="col" id="language" class="manage-column column-language">
+									<span>Idioma</span>
+								</th>
+								<th scope="col" id="page" class="manage-column column-page <?= $sorts['page'] ?>">
+									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&orderby=page&order=<?= $order ?>">
+										<span>Página</span>
+										<span class="sorting-indicator"></span>
+									</a>
+								</th>
+								<th scope="col" id="date" class="manage-column column-date <?= $sorts['date'] ?>">
+									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&orderby=date&order=<?= $order ?>">
+										<span>Fecha último registro</span>
+										<span class="sorting-indicator"></span>
+									</a>
+								</th>
+								<th scope="col" id="count" class="manage-column column-posts <?= $sorts['count'] ?>">
+									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&orderby=count&order=<?= $order ?>">
+										<span>Registros</span>
+										<span class="sorting-indicator"></span>
+									</a>
+								</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+
+				<?php
+
+			}
 
 		}
+
 	}
 
 }
+
+function b_i_csv() {
+
+	if (isset($_GET['csv']) && $_GET['csv'] != '') {
+
+		header('Content-Type: text/csv');
+		header('Content-Disposition: attachment; filename="Form '.date('y-m-d-H-i').'.csv"');
+
+		global $wpdb;
+
+		(isset($_GET['orderby']) && $_GET['orderby'] != '') ? $orderby = ' ORDER BY '.$_GET['orderby'] : $orderby = ' ORDER BY `date`';
+		($order == 'des') ? $ordered = ' DESC' : $ordered = ' ASC';
+
+		// Conexión a la base de datos
+		$table = $wpdb->prefix.'form_users';
+
+		$fingerprint = base64_decode(urldecode($_GET['form']));
+
+		$users = $wpdb->get_results('SELECT * FROM `'.$table.'` WHERE CONCAT(`formname`, `lang`) = "'.$fingerprint.'" '.$orderby.$ordered, ARRAY_A);
+
+		$columns = array('ID', 'Procedencia', 'date', 'Hora');
+
+		$i = 1;
+
+		foreach ($users as $index => $user) {
+
+			$unset = 0;
+
+			if ($_GET['start'] != '' || $_GET['end'] != '') {
+
+				$date = date('Ymd', strtotime($user['date']));
+
+				if ($_GET['start'] != '' && $date < date('Ymd', strtotime($_GET['start']))) {
+					$unset++;
+				}
+
+				if ($_GET['end'] != '' && $date > date('Ymd', strtotime($_GET['end']))) {
+					$unset++;
+				}
+
+			}
+
+			if (isset($_GET['seen']) && $user['read'] != 'yes') {
+				$unset++;
+			}
+
+			if (isset($_GET['unseen']) && $user['read'] == 'yes') {
+				$unset++;
+			}
+
+			if (isset($_GET['warning']) && $user['status'] != 'error') {
+				$unset++;
+			}
+
+			foreach (unserialize($user['data']) as $key => $value) {
+				if (!in_array($key, $columns)) {
+					array_push($columns, $key);
+				}
+			}
+
+
+			$users[$index]['ID'] = $i;
+
+			$i++;
+
+			if ($unset > 0) {
+				unset($users[$index]);
+				continue;
+			}
+
+			$users[$index]['data'] = unserialize($user['data']);
+
+		}
+
+		$csv = array($columns);
+
+		foreach ($users as $user) {
+			$temp = array($user['ID'], get_the_title(icl_object_id($users[0]['page'], get_post_type($users[0]['page']) ,false, 'es')).' // '.apply_filters( 'wpml_post_language_details', NULL, $users[0]['page'])['display_name'], date('d/m/Y', strtotime($user['date'])), date('H:i', strtotime($user['date'])));
+			foreach ($columns as $column) {
+				if (!in_array($column, array('ID', 'Procedencia', 'date', 'Hora'))) {
+					if (!isset($user['data'][$column])) {
+						array_push($temp, '');
+					} else {
+						array_push($temp, $user['data'][$column]);
+					}
+				}
+			}
+			array_push($csv, $temp);
+			$i++;
+		}
+
+		$fp = fopen('php://output', 'wb');
+
+		fputs($fp, $bom = (chr(0xEF).chr(0xBB).chr(0xBF)));
+
+		foreach ($csv as $line) {
+
+			fputcsv($fp, $line, ';');
+
+		}
+
+		fclose($fp);
+
+		die();
+
+	}
+
+}
+
+add_action('admin_init', 'b_i_csv');
 
 ?>

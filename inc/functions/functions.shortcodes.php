@@ -117,18 +117,66 @@ if (!function_exists('b_f_i_svg')) {
 }
 
 
+if (!function_exists('b_f_wc')) {
+
+	function b_f_wc($content) {
+
+		global $woocommerce;
+
+		if (!is_null($woocommerce->cart)) {
+
+			$replacements = array(
+				'{{b_wc_cart_total_items}}' => $woocommerce->cart->cart_contents_count,
+				'{{b_wc_cart_total}}' => $woocommerce->cart->get_cart_total()
+			);
+
+			$content = strtr($content, $replacements);
+
+		}
+
+		return $content;
+
+	}
+
+}
+
+if (!function_exists('b_f_p_custom')) {
+
+	function b_f_p_custom($content) {
+
+		include(get_stylesheet_directory().'/elementor.php');
+
+		$replacements = array();
+
+		if (isset($b_content)) {
+			$replacements = array_merge($replacements, $b_content);
+			$content = strtr($content, $replacements);
+		}
+
+		return $content;
+
+	}
+
+}
+
+
 add_filter('the_content','b_f_p_id');
 add_filter('the_content','b_f_p_root');
 add_filter('the_content','b_f_p_upload');
 add_filter('the_content','b_f_p_featured');
 add_filter('the_content','b_f_p_svg');
+add_filter('the_content','b_f_p_custom');
+
+if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+	add_filter('the_content','b_f_wc');
+}
 
 
 if (!function_exists('b_f_shortcode')) {
 
-	function b_f_shortcode($var_content = null, $var_shortcode = true) {
+	function b_f_shortcode($content = null, $shortcode = true) {
 
-		$content = (($var_shortcode == true) ? do_shortcode($var_content) : $var_content);
+		$content = (($shortcode == true) ? do_shortcode($content) : $content);
 
 		return b_f_p_id(b_f_p_root(b_f_p_upload($content)));
 
