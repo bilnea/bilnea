@@ -42,8 +42,10 @@ if (!function_exists('b_p_forms')) {
 		if (isset($_GET['delete']) && $_GET['delete'] != '') {
 			$data = $wpdb->get_results('SELECT * FROM '.$table.' WHERE id = '.$_GET['delete'], ARRAY_A)[0];
 			foreach (unserialize($data['attachments']) as $attachment) {
-				$file = ABSPATH.'wp-content/mail'.explode('/uploads/mail/', $attachment)[1];
-				unlink($file);
+				if ($attachment != '') {
+					$file = ABSPATH.'wp-content/mail'.explode('/uploads/mail/', $attachment)[1];
+					unlink($file);
+				}
 			}
 			$wpdb->delete($table, array('id' => $_GET['delete']));
 		}
@@ -247,7 +249,7 @@ if (!function_exists('b_p_forms')) {
 									<div class="inside">
 										<p>
 											<strong>Ubicación</strong><br />
-											<a href="mailto:<?= get_permalink($user['page']) ?>"><?= get_the_title($user['page']) ?></a>
+											<a href="<?= get_permalink($user['page']) ?>"><?= get_the_title($user['page']) ?></a>
 										</p>
 										<p>
 											<strong>Nombre</strong><br />
@@ -520,6 +522,9 @@ if (!function_exists('b_p_forms')) {
 										<span class="sorting-indicator"></span>
 									</a>
 								</th>
+								<th scope="col" id="page" class="manage-columns column-page">
+									<span>Ubicación</span>
+								</th>
 								<th scope="col" id="date" class="manage-column column-status <?= $sorts['status'] ?>">
 									<span>Estado</span>
 								</th>
@@ -569,6 +574,11 @@ if (!function_exists('b_p_forms')) {
 											<?php } ?>
 										</td>
 										<td>
+											<a href="<?= get_permalink($user['page']) ?>">
+												<span><?= get_the_title($user['page']) ?></span>
+											</a>
+										</td>
+										<td>
 											<?php
 											if ($user['read'] == 'no') {
 												echo 'No leído';
@@ -609,6 +619,9 @@ if (!function_exists('b_p_forms')) {
 										<span>Correo electrónico</span>
 										<span class="sorting-indicator"></span>
 									</a>
+								</th>
+								<th scope="col" id="page" class="manage-columns column-page">
+									<span>Ubicación</span>
 								</th>
 								<th scope="col" id="date" class="manage-column column-status <?= $sorts['status'] ?>">
 									<span>Estado</span>
@@ -665,15 +678,9 @@ if (!function_exists('b_p_forms')) {
 								<th scope="col" id="language" class="manage-column column-language">
 									<span>Idioma</span>
 								</th>
-								<th scope="col" id="page" class="manage-column column-page <?= $sorts['page'] ?>">
-									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&orderby=page&order=<?= $order ?>">
-										<span>Página</span>
-										<span class="sorting-indicator"></span>
-									</a>
-								</th>
 								<th scope="col" id="date" class="manage-column column-date <?= $sorts['date'] ?>">
 									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&orderby=date&order=<?= $order ?>">
-										<span>Fecha último registro</span>
+										<span>Último registro</span>
 										<span class="sorting-indicator"></span>
 									</a>
 								</th>
@@ -722,11 +729,6 @@ if (!function_exists('b_p_forms')) {
 
 											?>
 										</td>
-										<td class="title column-email" data-colname="Página">
-											<a class="row-email" href="<?= get_permalink($form['page_id']) ?>">
-												<?= $form['page'] ?>
-											</a>
-										</td>
 										<td class="date column-date" data-colname="Fecha">
 											<?= date('d/m/Y H:i', strtotime($form['date'])) ?>
 										</td>
@@ -751,15 +753,9 @@ if (!function_exists('b_p_forms')) {
 								<th scope="col" id="language" class="manage-column column-language">
 									<span>Idioma</span>
 								</th>
-								<th scope="col" id="page" class="manage-column column-page <?= $sorts['page'] ?>">
-									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&orderby=page&order=<?= $order ?>">
-										<span>Página</span>
-										<span class="sorting-indicator"></span>
-									</a>
-								</th>
 								<th scope="col" id="date" class="manage-column column-date <?= $sorts['date'] ?>">
 									<a href="<?= site_url('wp-admin/admin.php') ?>?page=contact_forms&orderby=date&order=<?= $order ?>">
-										<span>Fecha último registro</span>
+										<span>Último registro</span>
 										<span class="sorting-indicator"></span>
 									</a>
 								</th>
@@ -791,7 +787,7 @@ function b_i_csv() {
 		header('Content-Type: text/csv');
 		header('Content-Disposition: attachment; filename="Form '.date('y-m-d-H-i').'.csv"');
 
-		global $wpdb;
+		global $wpdb, $b_g_languages;
 
 		(isset($_GET['orderby']) && $_GET['orderby'] != '') ? $orderby = ' ORDER BY '.$_GET['orderby'] : $orderby = ' ORDER BY `date`';
 		($order == 'des') ? $ordered = ' DESC' : $ordered = ' ASC';
@@ -803,7 +799,7 @@ function b_i_csv() {
 
 		$users = $wpdb->get_results('SELECT * FROM `'.$table.'` WHERE CONCAT(`formname`, `lang`) = "'.$fingerprint.'" '.$orderby.$ordered, ARRAY_A);
 
-		$columns = array('ID', 'Procedencia', 'date', 'Hora');
+		$columns = array('ID', 'Procedencia', 'Idioma', 'Fecha', 'Hora');
 
 		$i = 1;
 
@@ -838,7 +834,7 @@ function b_i_csv() {
 			}
 
 			foreach (unserialize($user['data']) as $key => $value) {
-				if (!in_array($key, $columns)) {
+				if (!in_array($key, $columns) && $key != '') {
 					array_push($columns, $key);
 				}
 			}
@@ -860,9 +856,18 @@ function b_i_csv() {
 		$csv = array($columns);
 
 		foreach ($users as $user) {
-			$temp = array($user['ID'], get_the_title(icl_object_id($users[0]['page'], get_post_type($users[0]['page']) ,false, 'es')).' // '.apply_filters( 'wpml_post_language_details', NULL, $users[0]['page'])['display_name'], date('d/m/Y', strtotime($user['date'])), date('H:i', strtotime($user['date'])));
+
+			if (function_exists('icl_object_id')) {
+				echo apply_filters( 'wpml_post_language_details', NULL, $form['page_id'])['display_name'];
+			} else if (function_exists('pll_the_languages')) {
+				echo get_term_by('slug', $form['lang'], 'language')->name;
+			} else {
+				echo 'Español';
+			}
+
+			$temp = array($user['ID'], get_the_title($user['page']), $b_g_languages[$user['lang']]['nativeName'], date('d/m/Y', strtotime($user['date'])), date('H:i', strtotime($user['date'])));
 			foreach ($columns as $column) {
-				if (!in_array($column, array('ID', 'Procedencia', 'date', 'Hora'))) {
+				if (!in_array($column, array('ID', 'Procedencia', 'Idioma', 'Fecha', 'Hora'))) {
 					if (!isset($user['data'][$column])) {
 						array_push($temp, '');
 					} else {
