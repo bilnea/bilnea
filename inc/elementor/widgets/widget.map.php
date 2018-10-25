@@ -177,6 +177,14 @@ class bilnea_Map extends Widget_Base {
 		);
 
 		$this->add_control(
+			'token',
+			[
+				'label' => __('Access token', 'bilnea'),
+				'type' => Controls_Manager::TEXT
+			]
+		);
+
+		$this->add_control(
 			'style',
 			[
 				'label' => __('Style. <a href="https://www.mapbox.com/studio" target="_blank">Get styles</a>.', 'bilnea'),
@@ -295,6 +303,12 @@ class bilnea_Map extends Widget_Base {
 			$center = array('lat' => trim(explode(',', $settings['center'])[0]), 'lng' => trim(explode(',', $settings['center'])[1]));
 		}
 
+
+		$temp = array(
+			'token' => $settings['token']
+		);
+		wp_localize_script('functions.maps.mapbox', 'mapbox', $temp);
+
 		wp_enqueue_style('styles.maps.mapbox');
 		wp_enqueue_script('functions.maps.mapbox');
 
@@ -376,25 +390,6 @@ class bilnea_Map extends Widget_Base {
 			}
 			$out .= '		],'."\n";
 		}
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
-		$out .= ''."\n";
 		$out .= '	};'."\n";
 		if ($settings['autocenter'] == 'yes' && count($settings['markers']) > 0) {
 			$temp = array();
@@ -405,21 +400,21 @@ class bilnea_Map extends Widget_Base {
 			$temp = $padding = array();
 			foreach ($settings['center_padding'] as $key => $value) {
 				if (!in_array($key, array('unit', 'isLinked'))) {
-					array_push($temp, $key.': '.$value);
+					array_push($temp, $key.': '.($value == '' ? 0 : $value));
 				}
 			}
 			array_push($padding, '{'.implode(', ', $temp).'}');
 			$temp = array();
 			foreach ($settings['center_padding_tablet'] as $key => $value) {
 				if (!in_array($key, array('unit', 'isLinked'))) {
-					array_push($temp, $key.': '.$value);
+					array_push($temp, $key.': '.($value == '' ? 0 : $value));
 				}
 			}
 			array_push($padding, '{'.implode(', ', $temp).'}');
 			$temp = array();
 			foreach ($settings['center_padding_mobile'] as $key => $value) {
 				if (!in_array($key, array('unit', 'isLinked'))) {
-					array_push($temp, $key.': '.$value);
+					array_push($temp, $key.': '.($value == '' ? 0 : $value));
 				}
 			}
 			array_push($padding, '{'.implode(', ', $temp).'}');

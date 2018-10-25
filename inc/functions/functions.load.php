@@ -72,10 +72,6 @@ if (!function_exists('b_f_load_scripts')) {
 
 		// Mapbox
 		wp_register_script('functions.maps.mapbox', get_template_directory_uri().'/js/external/functions.maps.mapbox.js', array('jquery'), b_f_versions('mapbox'), false);
-		$temp = array(
-			'token' => 'pk.eyJ1Ijoic2FtdWVsY2VyZXpvIiwiYSI6ImNqbW1jcDFuaTA1N2IzcW96eWZkOTN1a2gifQ.RWw5OA7GydKti0XEfL-kHQ'
-		);
-		wp_localize_script('functions.maps.mapbox', 'mapbox', $temp);
 
 	}
 
