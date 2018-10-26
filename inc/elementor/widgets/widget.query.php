@@ -652,6 +652,8 @@ class bilnea_Query extends Widget_Base {
 
 	protected function render() {
 
+		global $b_g_language;
+
 		if (get_post_type() != 'elementor_library') {
 
 		$settings = $this->get_settings();
@@ -745,72 +747,27 @@ class bilnea_Query extends Widget_Base {
 
 					$query = new \WP_Query($args);
 
+					$i = 1;
+
 					if ($query->have_posts()) {
 
 						while ($query->have_posts()) {
 
 							$query->the_post();
 
-								$post_id = get_the_ID();
-
-								$temp = '<div class="{{oddeven}}'.(($settings['height'] == 'yes') ? 'auto-height ' : '').'elementor-column elementor-col-'.round(100/$settings['columns']['size']).'" data-id="'.get_post_type().'-'.$post_id.'">';
-
-								$replacements = array(
-									'{{b_title}}' => get_the_title(),
-									'{{b_permalink}}' => get_permalink(),
-									'{{b_date}}' => get_the_date(b_f_option('b_opt_blog-date-es')),
-									'{{b_image}}' => wp_get_attachment_image_src(get_post_thumbnail_id(), 'medium', true)[0],
-									'{{b_content}}' => get_the_content()
-								);
-
-								include(get_stylesheet_directory().'/elementor.php');
-
-								if (isset($b_query)) {
-									$replacements = array_merge($replacements, $b_query);
-								}
-
-								if ($settings['even_content'] == 'yes' && ($i % 2 == 0)) {
-									$temp .= strtr($settings['raw_content_even'], $replacements);
-								} else {
-									$temp .= strtr($settings['raw_content'], $replacements);
-								}
-
-								$temp .= '</div>';
-
-								$temp = preg_replace_callback("/{{b_meta-([a-z_-]+)}}/", function($matches) use($post_id) {
-									return get_post_meta($post_id, $matches[1], true);
-								}, $temp);
-
-								$temp = preg_replace_callback("/{{b_tax_name-([a-z_-]+)}}/", function($matches) use($post_id) {
-									$terms = array();
-									foreach (wp_get_post_terms($post_id, $matches[1]) as $term) {
-										array_push($terms, $term->name);
-									}
-									return implode(', ', $terms);
-								}, $temp);
-
-								$temp = preg_replace_callback("/{{b_tax-([a-z_-]+)}}/", function($matches) use($post_id) {
-									$terms = array();
-									foreach (wp_get_post_terms($post_id, $matches[1]) as $term) {
-										array_push($terms, '<a href="'.get_term_link($term).'" data-term_id="'.$term->term_id.'">'.$term->name.'</a>');
-									}
-									return implode(', ', $terms);
-								}, $temp);
-
-								$temp = preg_replace_callback("/{{b_excerpt(-)?([0-9]+)?}}/", function($matches) use($post_id) {
-									if (!isset($matches[2])) {
-										$matches[2] = 50;
-									}
-									return wp_trim_words(get_the_content($post_id), $matches[2]);
-								}, $temp);
-
-								array_push($wrapper, array('name' => get_the_title(), 'date' => get_the_date('Ymd'), 'content' => $temp));
-
-							}
+							array_push($wrapper, array(
+								'name' => get_the_title(),
+								'date' => get_the_date('Ymd'),
+								'odd' => b_i_f_content_replace_query($settings['raw_content'], get_the_ID()),
+								'even' => b_i_f_content_replace_query($settings['raw_content_even'], get_the_ID()),
+								'id' => get_post_type().'-'.get_the_ID()
+							));
 
 						}
 
-						wp_reset_postdata();
+					}
+
+					wp_reset_postdata();
 
 					break;
 
@@ -888,39 +845,13 @@ class bilnea_Query extends Widget_Base {
 
 						$term_id = $term->term_id;
 
-						$temp = '<div class="{{oddeven}}'.(($settings['height'] == 'yes') ? 'auto-height ' : '').'elementor-column elementor-col-'.round(100/$settings['columns']['size']).'" data-id="'.$taxonomy.'-'.$term->term_id.'">';
-
-						$replacements = array(
-							'{{b_title}}' => $term->name,
-							'{{b_permalink}}' => get_term_link($term_id),
-							'{{b_date}}' => '',
-							'{{b_image}}' => b_f_i_sanitize_text_field(get_term_meta($term_id, '_term-featured-image', true)),
-							'{{b_content}}' => term_description($term_id)
-						);
-
-						if ($taxonomy == 'product_cat') {
-							$replacements['{{b_image}}'] = wp_get_attachment_image_src(get_term_meta($term_id, 'thumbnail_id', true), 'medium', true)[0];
-						}
-
-						include(get_stylesheet_directory().'/elementor.php');
-
-						if (isset($b_query)) {
-							$replacements = array_merge($replacements, $b_query);
-						}
-
-						if ($settings['even_content'] == 'yes' && ($i % 2 == 0)) {
-							$temp .= strtr($settings['raw_content_even'], $replacements);
-						} else {
-							$temp .= strtr($settings['raw_content'], $replacements);
-						}
-
-						$temp .= '</div>';
-
-						$temp = preg_replace_callback("/{{b_meta-([a-z_-]+)}}/", function($matches) use ($term_id) {
-							return get_term_meta($term_id, $matches[1], true);
-						}, $temp);
-
-						array_push($wrapper, array('name' => $term->name, 'date' => '', 'content' => $temp));
+						array_push($wrapper, array(
+							'name' => $term->name,
+							'date' => '',
+							'odd' => b_i_f_content_replace_tax($settings['raw_content'], $term_id),
+							'even' => b_i_f_content_replace_tax($settings['raw_content_even'], $term_id),
+							'id' => $taxonomy.'-'.$term->term_id
+						));
 
 					}
 
@@ -936,94 +867,23 @@ class bilnea_Query extends Widget_Base {
 
 						$term_id = $term->term_id;
 
-						$temp = '<div class="{{oddeven}}'.(($settings['height'] == 'yes') ? 'auto-height ' : '').'elementor-column elementor-col-'.round(100/$settings['columns']['size']).'" data-id="'.$term->taxonomy.'-'.$term->term_id.'">';
-
-						$replacements = array(
-							'{{b_title}}' => $term->name,
-							'{{b_permalink}}' => get_term_link($term_id),
-							'{{b_date}}' => '',
-							'{{b_image}}' => b_f_i_sanitize_text_field(get_term_meta($term_id, '_term-featured-image', true)),
-							'{{b_content}}' => term_description($term_id)
-						);
-
-						if ($term->taxonomy == 'product_cat') {
-							$replacements['{{b_image}}'] = wp_get_attachment_image_src(get_term_meta($term_id, 'thumbnail_id', true), 'medium', true)[0];
-						}
-
-						include(get_stylesheet_directory().'/elementor.php');
-
-						if (isset($b_query)) {
-							$replacements = array_merge($replacements, $b_query);
-						}
-
-						if ($settings['even_content'] == 'yes' && ($i % 2 == 0)) {
-							$temp .= strtr($settings['raw_content_even'], $replacements);
-						} else {
-							$temp .= strtr($settings['raw_content'], $replacements);
-						}
-
-						$temp .= '</div>';
-
-						$temp = preg_replace_callback("/{{b_meta-([a-z_-]+)}}/", function($matches) use ($term_id) {
-							return get_term_meta($term_id, $matches[1], true);
-						}, $temp);
-
-						array_push($wrapper, array('name' => $term->name, 'date' => '', 'content' => $temp));
+						array_push($wrapper, array(
+							'name' => $term->name,
+							'date' => '',
+							'odd' => b_i_f_content_replace_tax($settings['raw_content'], $term_id),
+							'even' => b_i_f_content_replace_tax($settings['raw_content_even'], $term_id),
+							'id' => $taxonomy.'-'.$term->term_id
+						));
 
 					} else {
 
-						$temp = '<div class="{{oddeven}}'.(($settings['height'] == 'yes') ? 'auto-height ' : '').'elementor-column elementor-col-'.round(100/$settings['columns']['size']).'" data-id="'.get_post_type($object).'-'.$object.'">';
-
-						$replacements = array(
-							'{{b_title}}' => get_the_title($object),
-							'{{b_permalink}}' => get_permalink($object),
-							'{{b_date}}' => get_the_date(b_f_option('b_opt_blog-date-es'), $object),
-							'{{b_image}}' => wp_get_attachment_image_src(get_post_thumbnail_id($object), 'medium', true)[0],
-							'{{b_content}}' => get_the_content($object)
-						);
-
-						include(get_stylesheet_directory().'/elementor.php');
-
-						if (isset($b_query)) {
-							$replacements = array_merge($replacements, $b_query);
-						}
-
-						if ($settings['even_content'] == 'yes' && ($i % 2 == 0)) {
-							$temp .= strtr($settings['raw_content_even'], $replacements);
-						} else {
-							$temp .= strtr($settings['raw_content'], $replacements);
-						}
-
-						$temp .= '</div>';
-
-						$temp = preg_replace_callback("/{{b_meta-([a-z_-]+)}}/", function($matches) use($object) {
-							return get_post_meta($object, $matches[1], true);
-						}, $temp);
-
-						$temp = preg_replace_callback("/{{b_tax_name-([a-z_-]+)}}/", function($matches) use($object) {
-							$terms = array();
-							foreach (wp_get_post_terms($object, $matches[1]) as $term) {
-								array_push($terms, $term->name);
-							}
-							return implode(', ', $terms);
-						}, $temp);
-
-						$temp = preg_replace_callback("/{{b_tax-([a-z_-]+)}}/", function($matches) use($object) {
-							$terms = array();
-							foreach (wp_get_post_terms($object, $matches[1]) as $term) {
-								array_push($terms, '<a href="'.get_term_link($term).'" data-term_id="'.$term->term_id.'">'.$term->name.'</a>');
-							}
-							return implode(', ', $terms);
-						}, $temp);
-
-						$temp = preg_replace_callback("/{{b_excerpt(-)?([0-9]+)?}}/", function($matches) use($object) {
-							if (!isset($matches[2])) {
-								$matches[2] = 50;
-							}
-							return wp_trim_words(get_the_content($object), $matches[2]);
-						}, $temp);
-
-						array_push($wrapper, array('name' => get_the_title($object), 'date' => get_the_date('Ymd', $object), 'content' => $temp));
+						array_push($wrapper, array(
+							'name' => get_the_title(),
+							'date' => get_the_date('Ymd'),
+							'odd' => b_i_f_content_replace_query($settings['raw_content'], $object),
+							'even' => b_i_f_content_replace_query($settings['raw_content_even'], $object),
+							'id' => get_post_type().'-'.$object
+						));
 
 					}
 
@@ -1050,23 +910,30 @@ class bilnea_Query extends Widget_Base {
 			$wrapper = array_reverse($wrapper);
 		}
 
-		$i = $j = 0;
+		$i = $j = 1;
 
 		$paged = (is_integer(end(explode('/', trim($_SERVER['PHP_SELF'], '/')))) ? end(explode('/', trim($_SERVER['PHP_SELF'], '/'))) : 1);
 
 		foreach ($wrapper as $element) {
 
+			$oddeven = (($j % 2 == 0) ? 'even ' : 'odd ');
+
 			if ($settings['pagination'] == 'yes') {
+
 				if ($i > ($settings['number']*($paged-1)) && $i <= ($settings['number']*$paged)) {
-					$oddeven = (($j % 2 == 0) ? 'even ' : 'odd ');
-					$out .= str_replace('{{oddeven}}', $oddeven, $element['content']);
+
+					$out .= '<div class="'.$oddeven.(($settings['height'] == 'yes') ? 'auto-height ' : '').'elementor-column elementor-col-'.round(100/$settings['columns']['size']).'" data-id="'.$element['id'].'">'.$element[trim($oddeven)].'</div>';
+
 					$j++;
 
 				}
+
 			} else {
-				$oddeven = (($j % 2 == 0) ? 'even ' : 'odd ');
-				$out .= str_replace('{{oddeven}}', $oddeven, $element['content']);
+
+				$out .= '<div class="'.$oddeven.(($settings['height'] == 'yes') ? 'auto-height ' : '').'elementor-column elementor-col-'.round(100/$settings['columns']['size']).'" data-id="'.$element['id'].'">'.$element[trim($oddeven)].'</div>';
+
 				$j++;
+
 			}
 
 			$i++;
