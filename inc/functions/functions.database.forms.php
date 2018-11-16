@@ -32,7 +32,7 @@ if (!function_exists('b_f_table_contact')) {
 					`status` varchar(100),
 					`read` varchar(20) DEFAULT "no",
 					`lang` varchar(10) DEFAULT "es",
-					`response` longtext
+					`response` longtext,
 					PRIMARY KEY (id),
 					UNIQUE KEY (id)) '.$var_charset.';';
 
