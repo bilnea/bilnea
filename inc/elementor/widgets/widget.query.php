@@ -811,18 +811,6 @@ class bilnea_Query extends Widget_Base {
 
 							break;
 
-						case 'name':
-							usort($terms, function($a, $b) {
-								return $a->name <=> $b->name;
-							});
-							break;
-
-						default:
-							usort($terms, function($a, $b) {
-								return $a->term_order <=> $b->term_order;
-							});
-							break;
-
 					}
 
 					if ($query['order'] == 'yes') {
@@ -896,12 +884,6 @@ class bilnea_Query extends Widget_Base {
 
 		$wrapper = b_f_array_unique($wrapper);
 
-		if (in_array($settings['orderby'], array('date', 'name'))) {
-			usort($wrapper, function($a, $b) {
-				return $a[$settings['order']] <=> $b[$settings['order']];
-			});
-		}
-
 		if ($settings['orderby'] == 'rand') {
 			shuffle($wrapper);
 		}
@@ -916,23 +898,31 @@ class bilnea_Query extends Widget_Base {
 
 		foreach ($wrapper as $element) {
 
-			$oddeven = (($j % 2 == 0) ? 'even ' : 'odd ');
+			if ($i <= $settings['number']*$paged && $i > $settings['nummber']*($paged-1)) {
 
-			if ($settings['pagination'] == 'yes') {
+				$oddeven = 'odd ';
 
-				if ($i > ($settings['number']*($paged-1)) && $i <= ($settings['number']*$paged)) {
+				if ($settings['even_content'] == 'yes') {
+					$oddeven = (($j % 2 == 0) ? 'even ' : 'odd ');
+				}
+
+				if ($settings['pagination'] == 'yes') {
+
+					if ($i > ($settings['number']*($paged-1)) && $i <= ($settings['number']*$paged)) {
+
+						$out .= '<div class="'.$oddeven.(($settings['height'] == 'yes') ? 'auto-height ' : '').'elementor-column elementor-col-'.round(100/$settings['columns']['size']).'" data-id="'.$element['id'].'">'.$element[trim($oddeven)].'</div>';
+
+						$j++;
+
+					}
+
+				} else {
 
 					$out .= '<div class="'.$oddeven.(($settings['height'] == 'yes') ? 'auto-height ' : '').'elementor-column elementor-col-'.round(100/$settings['columns']['size']).'" data-id="'.$element['id'].'">'.$element[trim($oddeven)].'</div>';
 
 					$j++;
 
 				}
-
-			} else {
-
-				$out .= '<div class="'.$oddeven.(($settings['height'] == 'yes') ? 'auto-height ' : '').'elementor-column elementor-col-'.round(100/$settings['columns']['size']).'" data-id="'.$element['id'].'">'.$element[trim($oddeven)].'</div>';
-
-				$j++;
 
 			}
 
@@ -946,7 +936,7 @@ class bilnea_Query extends Widget_Base {
 				'base' => get_permalink().'/%_%',
 				'format' => '%#%',
 				'current' => $paged,
-				'total' => (count($wrapper)/$settings['number']),
+				'total' => ceil(count($wrapper)/$settings['number']),
 			);
 
 			$out .= '</div><div class="elementor-row b_pagination">'.paginate_links($args).'</div>';
