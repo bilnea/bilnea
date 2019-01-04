@@ -149,10 +149,14 @@ if ('b_i_f_content_replace_query') {
 		}, $content);
 
 		$content = preg_replace_callback("/{{b_excerpt(-)?([0-9]+)?}}/", function($matches) use($post_id) {
-			if (!isset($matches[2])) {
-				$matches[2] = 50;
+			if (get_the_excerpt() != '' && get_the_excerpt() != '...') {
+				return get_the_excerpt($post_id);
+			} else {
+				if (!isset($matches[2])) {
+					$matches[2] = 50;
+				}
+				return wp_trim_words(get_the_content($post_id), $matches[2]);
 			}
-			return wp_trim_words(get_the_content($post_id), $matches[2]);
 		}, $content);
 
 		return $content;

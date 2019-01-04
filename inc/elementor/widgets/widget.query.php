@@ -1,4 +1,5 @@
 <?php
+
 namespace Elementorbilnea\Widgets;
 
 use Elementor\Controls_Manager;
@@ -894,7 +895,9 @@ class bilnea_Query extends Widget_Base {
 
 		$i = $j = 1;
 
-		$paged = (is_integer(end(explode('/', trim($_SERVER['PHP_SELF'], '/')))) ? end(explode('/', trim($_SERVER['PHP_SELF'], '/'))) : 1);
+		$end = end(explode('/', trim($_SERVER['REQUEST_URI'], '/')));
+
+		$paged = ((strlen((int)$end) == strlen($end) && (int)$end > 0) ? (int)$end : 1);
 
 		foreach ($wrapper as $element) {
 
@@ -933,7 +936,7 @@ class bilnea_Query extends Widget_Base {
 		if ($settings['pagination'] == 'yes' && $settings['number'] > 0) {
 
 			$args = array(
-				'base' => get_permalink().'/%_%',
+				'base' => get_permalink(get_option('page_for_posts')).'%_%',
 				'format' => '%#%',
 				'current' => $paged,
 				'total' => ceil(count($wrapper)/$settings['number']),
@@ -952,3 +955,5 @@ class bilnea_Query extends Widget_Base {
 
 	}
 }
+
+?>
