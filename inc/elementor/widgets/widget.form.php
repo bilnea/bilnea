@@ -130,6 +130,33 @@ class bilnea_Form extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'filetypes',
+			[
+				'label' => __('File types', 'bilnea'),
+				'type' => Controls_Manager::TEXT,
+				'return_value' => 'yes',
+				'default' => '',
+				'separator' => 'none',
+				'condition' => [
+					'type' => array('file')
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'max_size',
+			[
+				'label' => __('Max. file size (Mb)', 'bilnea'),
+				'type' => Controls_Manager::NUMBER,
+				'default' => '',
+				'separator' => 'none',
+				'condition' => [
+					'type' => array('file')
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'rows',
 			[
 				'label' => __('Rows', 'bilnea'),
@@ -188,7 +215,7 @@ class bilnea_Form extends Widget_Base {
 				'type' => Controls_Manager::CODE,
 				'default' => '',
 				'condition' => [
-					'type' => array('html')
+					'type' => array('html', 'file')
 				],
 				'separator' => 'none'
 			]
@@ -946,6 +973,20 @@ class bilnea_Form extends Widget_Base {
 						}
 						$i++;
 					}
+					$out .= '</div>';
+					break;
+
+				case 'file':
+					$replacements = array(
+						' ' => '',
+						';' => ','
+					);
+					$filetypes = explode(',', trim(strtr($input['filetypes'], $replacements)));
+					$filetypes[0] = '.'.$filetypes[0];
+					$filetypes = implode(',.', $filetypes);
+					$out .= '<div class="form-control elementor-column'.$classes.'" data-type="file">';
+					$out .= '<input type="file"'.($filetypes != '' ? ' accept="'.$filetypes.'"' : '').' data-size="'.$input['max_size'].'" name="b_i_file-'.$this->get_id().'-'.$i.'" />';
+					$out .= '<div class="file-html" data-id="'.$this->get_id().'-'.$i.'">'.$input['raw_content'].'</div>';
 					$out .= '</div>';
 					break;
 
