@@ -50,15 +50,35 @@ if (!function_exists('b_a_send_form')) {
 
 				$attachments = array();
 
-				foreach ($files['name'] as $key => $value) {
-					if ($files['name'][$key]) {
+				if (is_array($files['name'])) {
+					foreach ($files['name'] as $key => $value) {
+						if ($files['name'][$key]) {
+
+							$file = array(
+								'name' => $files['name'][$key],
+								'type' => $files['type'][$key],
+								'tmp_name' => $files['tmp_name'][$key],
+								'error' => $files['error'][$key],
+								'size' => $files['size'][$key]
+							);
+
+							array_push($uploaded_files, wp_upload_dir()['baseurl'].'/mail/'.$b_g_uniqid.'/'.$file['name']);
+
+							$movefile = wp_handle_upload($file, $upload_overrides);
+
+							$attachments[] = $movefile['file'];
+
+						}
+					}
+				} else {
+					if ($files['name']) {
 
 						$file = array(
-							'name' => $files['name'][$key],
-							'type' => $files['type'][$key],
-							'tmp_name' => $files['tmp_name'][$key],
-							'error' => $files['error'][$key],
-							'size' => $files['size'][$key]
+							'name' => $files['name'],
+							'type' => $files['type'],
+							'tmp_name' => $files['tmp_name'],
+							'error' => $files['error'],
+							'size' => $files['size']
 						);
 
 						array_push($uploaded_files, wp_upload_dir()['baseurl'].'/mail/'.$b_g_uniqid.'/'.$file['name']);

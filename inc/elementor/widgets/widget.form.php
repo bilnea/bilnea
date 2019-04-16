@@ -1019,6 +1019,7 @@ class bilnea_Form extends Widget_Base {
 		$out .= '<input type="hidden" value="'.b_f_i_encrypt_decrypt('encrypt', $settings['redirect']['url']).'" name="b_i_redirect" />';
 		$out .= '<input type="hidden" value="" name="b_i_names" />';
 		$out .= '<input type="hidden" value="" name="b_i_reply" />';
+		$out .= '<input type="hidden" value="true" name="b_i_response" />';
 		if ($settings['store']) {
 			$out .= '<input type="hidden" value="" name="b_i_store" />';
 		}
